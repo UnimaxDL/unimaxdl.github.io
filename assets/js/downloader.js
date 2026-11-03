@@ -22,6 +22,11 @@ const UDL_DOWNLOADER = (() => {
   }
 
   let backendUrl = localStorage.getItem(STORAGE_KEY) || defaultBackend;
+  // If stored value is the cloud backend or old placeholder, clear it to avoid cold-start network lag
+  if (backendUrl && (backendUrl.includes('onrender.com') || backendUrl.includes('unimaxdl.com'))) {
+    backendUrl = '';
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+  }
   let currentMedia = null;
   let pollInterval = null;
   let isAnalyzing = false;
@@ -787,25 +792,44 @@ const UDL_DOWNLOADER = (() => {
     }
   }
 
+  let emptyPollCount = 0;
+
   // Polling Active Server Tasks (Only active if local server is connected)
   async function pollTasks() {
-    if (!backendUrl) return [];
+    const isLocalhost = isServerConnected && backendUrl && (backendUrl.includes('localhost') || backendUrl.includes('127.0.0.1'));
+    if (!isLocalhost) return [];
+
     try {
-      const res = await fetch(`${backendUrl}/api/tasks`);
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 1200);
+      const res = await fetch(`${backendUrl}/api/tasks`, { signal: controller.signal });
+      clearTimeout(timeoutId);
       if (!res.ok) return [];
       const data = await res.json();
-      return data.tasks || [];
+      const tasks = data.tasks || [];
+      if (tasks.length === 0) {
+        emptyPollCount++;
+        if (emptyPollCount >= 3) stopPolling();
+      } else {
+        emptyPollCount = 0;
+      }
+      return tasks;
     } catch {
+      stopPolling();
       return [];
     }
   }
 
   function startPolling(callback) {
     stopPolling();
+    const isLocalhost = isServerConnected && backendUrl && (backendUrl.includes('localhost') || backendUrl.includes('127.0.0.1'));
+    if (!isLocalhost) return;
+
+    emptyPollCount = 0;
     pollInterval = setInterval(async () => {
       const tasks = await pollTasks();
       if (callback && tasks.length > 0) callback(tasks);
-    }, 1500);
+    }, 2000);
   }
 
   function stopPolling() {
