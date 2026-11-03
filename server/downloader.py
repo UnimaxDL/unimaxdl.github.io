@@ -156,6 +156,22 @@ def _domain(url: str) -> str:
 # Metadata extraction
 # ---------------------------------------------------------------------------
 
+def cleanup_old_downloads(max_age_seconds: int = 1800) -> None:
+    """Purge files older than 30 minutes to protect container disk space."""
+    import time
+    now = time.time()
+    try:
+        for p in DOWNLOADS_DIR.iterdir():
+            if p.is_file() and not p.name.startswith("."):
+                if now - p.stat().st_mtime > max_age_seconds:
+                    try:
+                        p.unlink()
+                    except Exception:
+                        pass
+    except Exception:
+        pass
+
+
 def extract_info(url: str) -> Dict[str, Any]:
     """Extract metadata and available formats from *url*.
 
@@ -168,6 +184,11 @@ def extract_info(url: str) -> Dict[str, Any]:
         "no_warnings": True,
         "extract_flat": False,
         "skip_download": True,
+        "extractor_args": {
+            "youtube": {
+                "player_client": ["android", "ios", "web"]
+            }
+        },
     }
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
@@ -247,6 +268,7 @@ def create_download_task(
 
     Returns the ``task_id``.
     """
+    cleanup_old_downloads()
     task_id = uuid.uuid4().hex[:12]
 
     task: Dict[str, Any] = {
@@ -324,6 +346,11 @@ def start_download_thread(
         "no_warnings": True,
         "overwrites": True,
         "noprogress": True,
+        "extractor_args": {
+            "youtube": {
+                "player_client": ["android", "ios", "web"]
+            }
+        },
     }
 
     if FFMPEG_AVAILABLE:

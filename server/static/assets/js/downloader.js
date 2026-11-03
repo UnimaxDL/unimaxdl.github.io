@@ -12,7 +12,8 @@ const UDL_DOWNLOADER = (() => {
   const STORAGE_KEY = 'udl_backend_url';
 
   // Auto-detect local server if running on localhost or custom port
-  let defaultBackend = '';
+  const PRODUCTION_API = 'https://unimaxdl-api.onrender.com';
+  let defaultBackend = PRODUCTION_API;
   if (typeof window !== 'undefined') {
     if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
       defaultBackend = window.location.origin;
@@ -20,6 +21,12 @@ const UDL_DOWNLOADER = (() => {
   }
 
   let backendUrl = localStorage.getItem(STORAGE_KEY) || defaultBackend;
+  // If stored value is old placeholder or invalid, point to live production API
+  if (backendUrl && backendUrl.includes('api.unimaxdl.com')) {
+    backendUrl = PRODUCTION_API;
+    localStorage.setItem(STORAGE_KEY, backendUrl);
+  }
+
   let currentMedia = null;
   let pollInterval = null;
   let isAnalyzing = false;
@@ -355,8 +362,8 @@ const UDL_DOWNLOADER = (() => {
       });
     }
 
-    if (isServerConnected && backendUrl) {
-      showToast(`Initiating ${quality} download on local server...`);
+    if (backendUrl) {
+      showToast(`Starting ${quality} download on UnimaxDL server...`);
       try {
         const res = await fetch(`${backendUrl}/api/download`, {
           method: 'POST',
@@ -370,12 +377,20 @@ const UDL_DOWNLOADER = (() => {
           })
         });
         if (res.ok) {
-          showToast("Download started on your PC");
-          pollTasks();
+          showToast("Download processing on UnimaxDL Server");
+          isServerConnected = true;
+          const tasksContainer = document.getElementById('tasks-container');
+          if (tasksContainer) {
+            tasksContainer.classList.remove('hidden');
+            tasksContainer.scrollIntoView({ behavior: 'smooth' });
+          }
+          startPolling((tasks) => {
+            renderTasks(tasks, document.getElementById('tasks-container'));
+          });
           return;
         }
       } catch (e) {
-        console.warn("Server download failed, opening download assistant:", e);
+        console.warn("Server download failed, opening direct stream options:", e);
       }
     }
 
@@ -608,7 +623,7 @@ const UDL_DOWNLOADER = (() => {
 
   // ── Polling Active Server Tasks ──
   async function pollTasks() {
-    if (!isServerConnected || !backendUrl) return [];
+    if (!backendUrl) return [];
     try {
       const res = await fetch(`${backendUrl}/api/tasks`);
       if (!res.ok) return [];
@@ -645,6 +660,7 @@ const UDL_DOWNLOADER = (() => {
         ${tasks.map(t => {
           const isDone = t.status === 'completed';
           const isError = t.status === 'error';
+          const downloadUrl = `${backendUrl}/api/download-file/${t.id}`;
           return `
             <div class="glass-card p-4 rounded-2xl border border-white/10 space-y-2.5">
               <div class="flex items-center justify-between text-xs">
@@ -652,12 +668,21 @@ const UDL_DOWNLOADER = (() => {
                 <span class="px-2 py-0.5 rounded-full font-mono text-[10px] font-bold ${isDone ? 'bg-emerald-500/20 text-emerald-300' : isError ? 'bg-red-500/20 text-red-300' : 'bg-amber-500/20 text-amber-300 animate-pulse'} uppercase">${t.status}</span>
               </div>
               <div class="w-full bg-[#0c0c12] h-2 rounded-full overflow-hidden p-0.5 border border-white/5">
-                <div class="h-full rounded-full ${isDone ? 'bg-emerald-400' : 'bg-amber-500'} transition-all duration-300" style="width: ${t.percent}%"></div>
+                <div class="h-full rounded-full ${isDone ? 'bg-emerald-400' : 'bg-amber-500'} transition-all duration-300" style="width: ${t.progress || t.percent || 0}%"></div>
               </div>
               <div class="flex items-center justify-between text-[11px] text-gray-500 font-mono">
                 <span>${t.downloaded || '0 MB'} of ${t.total || '0 MB'}</span>
-                <span class="text-gray-300 font-bold">${t.percent}% · ${t.speed || ''}</span>
+                <span class="text-gray-300 font-bold">${t.progress || t.percent || 0}% &bull; ${t.speed || ''}</span>
               </div>
+              ${isDone ? `
+                <a href="${downloadUrl}" download class="mt-2 w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:brightness-110 text-dark-950 font-black text-xs text-center transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20">
+                  <svg class="w-4 h-4 fill-none stroke-current" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                  <span>Save File to Device</span>
+                </a>
+              ` : ''}
+              ${isError ? `
+                <p class="text-[11px] text-red-400 font-medium">${t.error || 'Download failed on server'}</p>
+              ` : ''}
             </div>
           `;
         }).join('')}

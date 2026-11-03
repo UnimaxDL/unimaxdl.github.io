@@ -64,6 +64,11 @@ app.mount("/media", StaticFiles(directory=str(DOWNLOADS_DIR)), name="media")
 # Serve front-end assets at /static/
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
+# Mount /assets if present in static folder (resolves icons and JS when visiting root API URL)
+ASSETS_DIR = STATIC_DIR / "assets"
+if ASSETS_DIR.exists():
+    app.mount("/assets", StaticFiles(directory=str(ASSETS_DIR)), name="assets")
+
 
 # ---------------------------------------------------------------------------
 # Request / response models
@@ -169,6 +174,27 @@ async def task_status(task_id: str) -> Dict[str, Any]:
     if task is None:
         raise HTTPException(status_code=404, detail="Task not found")
     return {"status": "ok", "task": task}
+
+
+@app.get("/api/download-file/{task_id}")
+async def download_file(task_id: str) -> Any:
+    """Stream the completed video/audio file directly to browser as attachment."""
+    task = get_task(task_id)
+    if not task or not task.get("filename"):
+        raise HTTPException(status_code=404, detail="Task or file not found")
+
+    filename = task["filename"]
+    filepath = (DOWNLOADS_DIR / filename).resolve()
+    if not filepath.exists() or not str(filepath).startswith(str(DOWNLOADS_DIR.resolve())):
+        raise HTTPException(status_code=404, detail="File no longer available")
+
+    mime, _ = mimetypes.guess_type(filename)
+    return FileResponse(
+        path=str(filepath),
+        filename=filename,
+        media_type=mime or "application/octet-stream",
+        headers={"Content-Disposition": f'attachment; filename="{filename}"'}
+    )
 
 
 @app.get("/api/library")
