@@ -23,13 +23,13 @@ logger = logging.getLogger("unimaxdl.analytics")
 # Configuration — set via environment or replace these placeholders
 # ---------------------------------------------------------------------------
 SUPABASE_URL: str = os.getenv(
-    "SUPABASE_URL", "https://YOUR_PROJECT.supabase.co"
+    "SUPABASE_URL", "https://olxgfytiyiupfzthoris.supabase.co"
 )
 SUPABASE_KEY: str = os.getenv(
-    "SUPABASE_KEY", "YOUR_ANON_KEY"
+    "SUPABASE_KEY", "sb_publishable_n836xYAnIUD0d0qIyoXLTQ_GQ0KJSH0"
 )
 ANALYTICS_ENABLED: bool = (
-    os.getenv("UNIMAXDL_ANALYTICS", "false").lower() == "true"
+    os.getenv("UNIMAXDL_ANALYTICS", "true").lower() == "true"
 )
 
 _HEADERS = {

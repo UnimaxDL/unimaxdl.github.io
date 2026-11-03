@@ -1,18 +1,16 @@
 /**
  * UnimaxDL Analytics Module (v1.3.0)
  * ─────────────────────────────────────────────────────────────
- * Tracks anonymous visitor metrics and download events:
- * - Persistent anonymous user ID (localStorage)
- * - Session tracking (sessionStorage)
- * - Download logs: video title, source URL, platform, resolution, format
- * - Direct ingestion into Supabase PostgreSQL REST API.
+ * Anonymous visitor metrics & download telemetry via Supabase.
+ * - Tracks daily unique users (persistent UUID in localStorage)
+ * - Tracks sessions (sessionStorage)
+ * - Logs download events: video title, video URL, platform, resolution, format
  * ─────────────────────────────────────────────────────────────
  */
 
 const UDL_ANALYTICS = (() => {
-  // Replace these with your Supabase Project credentials:
-  const SUPABASE_URL = 'YOUR_SUPABASE_URL';
-  const SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY';
+  const SUPABASE_URL = 'https://olxgfytiyiupfzthoris.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_n836xYAnIUD0d0qIyoXLTQ_GQ0KJSH0';
 
   function getUserId() {
     try {
@@ -45,7 +43,6 @@ const UDL_ANALYTICS = (() => {
 
   async function postToSupabase(table, payload) {
     if (!SUPABASE_URL || SUPABASE_URL === 'YOUR_SUPABASE_URL') {
-      // Analytics unconfigured or offline — silent pass
       return;
     }
     try {
@@ -60,23 +57,22 @@ const UDL_ANALYTICS = (() => {
         body: JSON.stringify(payload)
       });
     } catch (e) {
-      // Fire-and-forget: never disrupt the user's download experience
+      // Fire-and-forget: silently ignore network errors so downloads never stall
     }
   }
 
-  // Track visit / page view
+  // 1. Record visitor hit
   async function trackVisit() {
     return postToSupabase('user_visits', {
       user_id: USER_ID,
       session_id: SESSION_ID,
       platform: 'web',
       page: window.location.pathname || '/',
-      referrer: document.referrer || '',
-      user_agent: navigator.userAgent || ''
+      referrer: document.referrer || ''
     });
   }
 
-  // Track download event
+  // 2. Record media download event
   async function trackDownload(data = {}) {
     return postToSupabase('download_events', {
       user_id: USER_ID,
@@ -89,24 +85,22 @@ const UDL_ANALYTICS = (() => {
       video_url: data.video_url || '',
       duration_sec: data.duration_sec || null,
       page: window.location.pathname || '/',
-      referrer: document.referrer || '',
-      user_agent: navigator.userAgent || ''
+      referrer: document.referrer || ''
     });
   }
 
-  // Track app installation clicks
+  // 3. Record app installation click
   async function trackAppInstall(os) {
     return postToSupabase('user_visits', {
       user_id: USER_ID,
       session_id: SESSION_ID,
       platform: 'web',
       page: `/download.html#${os}`,
-      referrer: document.referrer || '',
-      user_agent: navigator.userAgent || ''
+      referrer: document.referrer || ''
     });
   }
 
-  // Auto-record page view on DOM ready
+  // Auto-record page view on load
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', trackVisit);
   } else {
@@ -118,9 +112,6 @@ const UDL_ANALYTICS = (() => {
     SESSION_ID,
     trackVisit,
     trackDownload,
-    trackAppInstall,
-    setCredentials(url, key) {
-      // Dynamically configurable if injected via environment
-    }
+    trackAppInstall
   };
 })();
