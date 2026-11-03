@@ -379,7 +379,16 @@ const UDL_DOWNLOADER = (() => {
     }
 
     const title = currentMedia ? currentMedia.title : "Video";
+    const mediaUrl = currentMedia ? (currentMedia.webpage_url || currentMedia.url || '') : '';
     const isAudio = type === 'audio';
+
+    // Cloud streaming/download fallback link
+    let directStreamUrl = `https://cobalt.tools/?u=${encodeURIComponent(mediaUrl)}`;
+    const ytMatch = mediaUrl.match(/(?:youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*)/);
+    const ytId = (ytMatch && ytMatch[1].length === 11) ? ytMatch[1] : null;
+    if (ytId) {
+      directStreamUrl = `https://piped.video/watch?v=${ytId}`;
+    }
 
     modal.classList.remove('hidden');
     modal.innerHTML = `
@@ -388,7 +397,7 @@ const UDL_DOWNLOADER = (() => {
         
         <div class="flex items-center justify-between border-b border-white/[0.08] pb-4">
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+            <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
               ${isAudio ? ICONS.audio : ICONS.video}
             </div>
             <div>
@@ -401,63 +410,55 @@ const UDL_DOWNLOADER = (() => {
           </button>
         </div>
 
-        <div class="space-y-3">
+        <div class="space-y-4">
           
-          <!-- Option 1: Run Local PC Engine -->
-          <div class="p-4 rounded-2xl bg-amber-500/5 border border-amber-500/20 space-y-3">
+          <!-- Instant Browser Stream / Download -->
+          <div class="p-5 rounded-2xl bg-gradient-to-r from-cyan-500/10 to-amber-500/10 border border-cyan-400/25 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-white flex items-center gap-2">
+                <span class="text-cyan-400">${ICONS.sparkle}</span>
+                <span>Direct Browser Download</span>
+              </span>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-cyan-400/15 text-cyan-300 border border-cyan-400/20">Fast & Free</span>
+            </div>
+            <p class="text-xs text-gray-300 leading-relaxed">
+              Open the direct ad-free media stream in your browser to save:
+            </p>
+            <a href="${directStreamUrl}" target="_blank" rel="noopener" class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-amber-500 hover:brightness-110 text-white font-black text-xs text-center transition shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2">
+              <span>Save Media (${quality})</span>
+              ${ICONS.download}
+            </a>
+          </div>
+
+          <!-- Get Native Apps for 4K & Max Speed -->
+          <div class="p-4 rounded-2xl glass-card border border-white/5 space-y-2">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2">
                 <span class="text-amber-400">${ICONS.desktop}</span>
-                <span class="text-xs font-bold text-white">Full Quality via PC App (Recommended)</span>
+                <span class="text-xs font-bold text-white">UnimaxDL Native Apps</span>
               </div>
-              <span class="text-[9px] px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300 font-extrabold uppercase">Unlimited 4K</span>
+              <span class="text-[9px] px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300 font-extrabold uppercase">4K 60FPS</span>
             </div>
             <p class="text-[11px] text-gray-400 leading-relaxed">
-              Launch the UnimaxDL engine on your PC to download directly at multi-threaded speed with zero quality caps.
+              Want batch downloads, 4K Ultra HD, and 320kbps MP3s with zero browser limits? Install the free native app for Windows, macOS, or Android.
             </p>
-            <div class="flex gap-2">
-              <a href="/download.html" class="flex-1 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-dark-950 font-black text-xs text-center transition shadow-md flex items-center justify-center gap-1.5">
-                <span>Get Desktop App</span>
+            <div class="flex gap-2 pt-1">
+              <a href="/download.html" class="flex-1 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-xs text-center transition flex items-center justify-center gap-1.5">
+                <span>Download Windows / Mac</span>
                 ${ICONS.arrowRight}
               </a>
-              <button onclick="UDL_DOWNLOADER.showSettingsModal(); UDL_DOWNLOADER.closeDownloadModal();" class="px-4 py-2.5 rounded-xl glass-card hover:bg-white/10 text-xs font-bold text-gray-200 transition">
-                Connect Server
-              </button>
+              <a href="/download.html" class="flex-1 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-xs text-center transition flex items-center justify-center gap-1.5">
+                <span>Android APK</span>
+                ${ICONS.arrowRight}
+              </a>
             </div>
           </div>
 
-          <!-- Option 2: Android App -->
-          <div class="p-4 rounded-2xl glass-card border border-white/5 space-y-2">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-2">
-                <span class="text-emerald-400">${ICONS.mobile}</span>
-                <span class="text-xs font-bold text-white">Mobile Share via Android APK</span>
-              </div>
-              <span class="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold uppercase">1-Tap Save</span>
-            </div>
-            <p class="text-[11px] text-gray-400 leading-relaxed">
-              Share directly from the YouTube or TikTok app into UnimaxDL on Android.
-            </p>
-            <a href="/download.html" class="block w-full py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-xs text-center transition">
-              Download Android APK
-            </a>
-          </div>
+        </div>
 
-          <!-- Option 3: Quick Browser Mirror -->
-          <div class="p-4 rounded-2xl glass-card border border-white/5 space-y-2">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-2">
-                <span class="text-indigo-400">${ICONS.web}</span>
-                <span class="text-xs font-bold text-white">Instant Web Mirror</span>
-              </div>
-            </div>
-            <p class="text-[11px] text-gray-400 leading-relaxed">
-              Need it instantly right now in your browser? Open with our cloud mirror:
-            </p>
-            <a href="https://cobalt.tools" target="_blank" rel="noopener" class="block w-full py-2.5 rounded-xl bg-indigo-500/20 hover:bg-indigo-500/30 border border-indigo-500/30 text-indigo-300 font-bold text-xs text-center transition">
-              Open Web Mirror Stream ↗
-            </a>
-          </div>
+      </div>
+    `;
+  }
 
         </div>
 
