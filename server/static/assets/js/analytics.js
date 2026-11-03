@@ -115,3 +115,7 @@ const UDL_ANALYTICS = (() => {
     trackAppInstall
   };
 })();
+
+if (typeof window !== 'undefined') {
+  window.UDL_ANALYTICS = UDL_ANALYTICS;
+}

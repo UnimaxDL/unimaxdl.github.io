@@ -225,10 +225,11 @@ const UDL_DOWNLOADER = (() => {
     isAnalyzing = true;
 
     try {
-      if (backendUrl) {
+      // Only call custom backend if explicitly marked as connected
+      if (isServerConnected && backendUrl && !backendUrl.includes('api.unimaxdl.com')) {
         try {
           const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 3500);
+          const timeoutId = setTimeout(() => controller.abort(), 2500);
           const res = await fetch(`${backendUrl}/api/analyze`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -241,15 +242,14 @@ const UDL_DOWNLOADER = (() => {
             const data = await res.json();
             const media = data.data || data;
             currentMedia = media;
-            isServerConnected = true;
-            updateStatusBadge(true);
             return media;
           }
         } catch (e) {
-          console.warn("Backend server not responding, falling back to smart web extractor:", e);
+          console.warn("Backend server not responding, falling back to instant client extractor:", e);
         }
       }
 
+      // Fast standalone client resolver (YouTube, Shorts, TikTok, Instagram, Twitter, etc.)
       const clientMedia = await resolveClientMedia(url);
       currentMedia = clientMedia;
       return clientMedia;
@@ -268,28 +268,33 @@ const UDL_DOWNLOADER = (() => {
 
     let ytId = null;
     if (isYouTube) {
-      const match = url.match(/(?:youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*)/);
+      const match = url.match(/(?:youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|shorts\/)([^#&?]*)/);
       ytId = (match && match[1].length === 11) ? match[1] : null;
     }
 
-    let title = "Online Media Video";
-    let uploader = "Web Creator";
-    let thumbnail = "";
+    let title = isYouTube ? "YouTube Video" : isTikTok ? "TikTok Video" : isInstagram ? "Instagram Reel" : "Online Video";
+    let uploader = isYouTube ? "YouTube Creator" : isTikTok ? "TikTok Creator" : isInstagram ? "Instagram Creator" : "Web Creator";
+    let thumbnail = ytId ? `https://i.ytimg.com/vi/${ytId}/hqdefault.jpg` : "";
     let duration = "03:45";
 
+    // Fast oEmbed / NoEmbed metadata lookup with 2s timeout
     try {
-      const r = await fetch(`https://noembed.com/embed?url=${encodeURIComponent(url)}`);
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 2000);
+      const r = await fetch(`https://noembed.com/embed?url=${encodeURIComponent(url)}`, { signal: controller.signal });
+      clearTimeout(timeoutId);
       if (r.ok) {
         const d = await r.json();
         if (d.title) title = d.title;
         if (d.author_name) uploader = d.author_name;
         if (d.thumbnail_url) thumbnail = d.thumbnail_url;
       }
-    } catch {}
+    } catch (e) {
+      // Non-blocking: fallback metadata already assigned above
+    }
 
-    if (isYouTube && ytId) {
-      if (!thumbnail) thumbnail = `https://i.ytimg.com/vi/${ytId}/maxresdefault.jpg`;
-      if (title === "Online Media Video") title = "YouTube Video";
+    if (isYouTube && ytId && !thumbnail) {
+      thumbnail = `https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`;
     }
 
     if (!thumbnail) {
@@ -454,16 +459,6 @@ const UDL_DOWNLOADER = (() => {
             </div>
           </div>
 
-        </div>
-
-      </div>
-    `;
-  }
-
-        </div>
-
-        <div class="text-center pt-1">
-          <button onclick="UDL_DOWNLOADER.closeDownloadModal()" class="text-xs text-gray-500 hover:text-gray-300 transition">Close window</button>
         </div>
 
       </div>
@@ -680,3 +675,7 @@ const UDL_DOWNLOADER = (() => {
     ICONS
   };
 })();
+
+if (typeof window !== 'undefined') {
+  window.UDL_DOWNLOADER = UDL_DOWNLOADER;
+}
