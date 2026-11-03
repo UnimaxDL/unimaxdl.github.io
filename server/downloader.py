@@ -156,6 +156,19 @@ def _domain(url: str) -> str:
 # Metadata extraction
 # ---------------------------------------------------------------------------
 
+def get_cookie_file() -> Optional[str]:
+    """Return path to cookie file if present, or write from YOUTUBE_COOKIES env var."""
+    cookie_file = BASE_DIR / "cookies.txt"
+    if not cookie_file.exists():
+        content = os.environ.get("YOUTUBE_COOKIES", "").strip()
+        if content:
+            try:
+                cookie_file.write_text(content, encoding="utf-8")
+            except Exception:
+                pass
+    return str(cookie_file) if cookie_file.exists() else None
+
+
 def cleanup_old_downloads(max_age_seconds: int = 1800) -> None:
     """Purge files older than 30 minutes to protect container disk space."""
     import time
@@ -190,6 +203,10 @@ def extract_info(url: str) -> Dict[str, Any]:
             }
         },
     }
+
+    cookies = get_cookie_file()
+    if cookies:
+        ydl_opts["cookiefile"] = cookies
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         info: Dict[str, Any] = ydl.extract_info(url, download=False)  # type: ignore[arg-type]
@@ -352,6 +369,10 @@ def start_download_thread(
             }
         },
     }
+
+    cookies = get_cookie_file()
+    if cookies:
+        ydl_opts["cookiefile"] = cookies
 
     if FFMPEG_AVAILABLE:
         ydl_opts["ffmpeg_location"] = shutil.which("ffmpeg")

@@ -681,7 +681,17 @@ const UDL_DOWNLOADER = (() => {
                 </a>
               ` : ''}
               ${isError ? `
-                <p class="text-[11px] text-red-400 font-medium">${t.error || 'Download failed on server'}</p>
+                <div class="space-y-2 pt-1 border-t border-white/5">
+                  <p class="text-[11px] text-amber-400 font-medium">
+                    ${(t.error || '').toLowerCase().includes('bot') || (t.error || '').toLowerCase().includes('sign in')
+                      ? 'YouTube cloud IP verification required. Direct stream ready below:'
+                      : 'Cloud server stream limit. Use direct stream below:'}
+                  </p>
+                  <a href="${(t.url || '').includes('youtu') ? `https://piped.video/watch?v=${(t.url.match(/(?:youtu\.be\/|v\/|watch\?v=|shorts\/)([^#&?]*)/) || [])[1] || ''}` : (t.url || '').includes('instagram') ? `${t.url}media/?size=l` : `https://cobalt.tools`}" target="_blank" rel="noopener" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-amber-500 hover:brightness-110 text-dark-950 font-black text-xs text-center transition flex items-center justify-center gap-1.5 shadow-md">
+                    <svg class="w-3.5 h-3.5 fill-none stroke-current" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    <span>Save / Stream Video Directly</span>
+                  </a>
+                </div>
               ` : ''}
             </div>
           `;
