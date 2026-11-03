@@ -272,9 +272,15 @@ const UDL_DOWNLOADER = (() => {
       ytId = (match && match[1].length === 11) ? match[1] : null;
     }
 
-    let title = isYouTube ? "YouTube Video" : isTikTok ? "TikTok Video" : isInstagram ? "Instagram Reel" : "Online Video";
+    let igCode = null;
+    if (isInstagram) {
+      const match = url.match(/(?:instagram\.com\/(?:p|reel|tv)\/)([\w-]+)/);
+      igCode = match ? match[1] : null;
+    }
+
+    let title = isYouTube ? "YouTube Video" : isTikTok ? "TikTok Video" : isInstagram ? "Instagram Media" : "Online Video";
     let uploader = isYouTube ? "YouTube Creator" : isTikTok ? "TikTok Creator" : isInstagram ? "Instagram Creator" : "Web Creator";
-    let thumbnail = ytId ? `https://i.ytimg.com/vi/${ytId}/hqdefault.jpg` : "";
+    let thumbnail = ytId ? `https://i.ytimg.com/vi/${ytId}/hqdefault.jpg` : (igCode ? `https://www.instagram.com/p/${igCode}/media/?size=l` : "");
     let duration = "03:45";
 
     // Fast oEmbed / NoEmbed metadata lookup with 2s timeout
@@ -295,6 +301,9 @@ const UDL_DOWNLOADER = (() => {
 
     if (isYouTube && ytId && !thumbnail) {
       thumbnail = `https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`;
+    }
+    if (isInstagram && igCode && !thumbnail) {
+      thumbnail = `https://www.instagram.com/p/${igCode}/media/?size=l`;
     }
 
     if (!thumbnail) {
@@ -388,11 +397,19 @@ const UDL_DOWNLOADER = (() => {
     const isAudio = type === 'audio';
 
     // Cloud streaming/download fallback link
-    let directStreamUrl = `https://cobalt.tools/?u=${encodeURIComponent(mediaUrl)}`;
-    const ytMatch = mediaUrl.match(/(?:youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*)/);
+    let directStreamUrl = 'https://cobalt.tools';
+    const ytMatch = mediaUrl.match(/(?:youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|shorts\/)([^#&?]*)/);
     const ytId = (ytMatch && ytMatch[1].length === 11) ? ytMatch[1] : null;
+    const igMatch = mediaUrl.match(/(?:instagram\.com\/(?:p|reel|tv)\/)([\w-]+)/);
+    const igCode = igMatch ? igMatch[1] : null;
+
+    let buttonLabel = `Save Media (${quality})`;
     if (ytId) {
       directStreamUrl = `https://piped.video/watch?v=${ytId}`;
+      buttonLabel = `Open Video Stream (${quality})`;
+    } else if (igCode) {
+      directStreamUrl = `https://www.instagram.com/p/${igCode}/media/?size=l`;
+      buttonLabel = `Open High-Res Instagram Media`;
     }
 
     modal.classList.remove('hidden');
@@ -406,7 +423,7 @@ const UDL_DOWNLOADER = (() => {
               ${isAudio ? ICONS.audio : ICONS.video}
             </div>
             <div>
-              <h3 class="text-base font-bold text-white">Download Ready · ${quality}</h3>
+              <h3 class="text-base font-bold text-white">Download Ready &bull; ${quality}</h3>
               <p class="text-xs text-gray-400 truncate max-w-xs">${title}</p>
             </div>
           </div>
@@ -422,7 +439,7 @@ const UDL_DOWNLOADER = (() => {
             <div class="flex items-center justify-between">
               <span class="text-xs font-black text-white flex items-center gap-2">
                 <span class="text-cyan-400">${ICONS.sparkle}</span>
-                <span>Direct Browser Download</span>
+                <span>Direct Browser Stream</span>
               </span>
               <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-cyan-400/15 text-cyan-300 border border-cyan-400/20">Fast & Free</span>
             </div>
@@ -430,7 +447,7 @@ const UDL_DOWNLOADER = (() => {
               Open the direct ad-free media stream in your browser to save:
             </p>
             <a href="${directStreamUrl}" target="_blank" rel="noopener" class="w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-amber-500 hover:brightness-110 text-white font-black text-xs text-center transition shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2">
-              <span>Save Media (${quality})</span>
+              <span>${buttonLabel}</span>
               ${ICONS.download}
             </a>
           </div>
