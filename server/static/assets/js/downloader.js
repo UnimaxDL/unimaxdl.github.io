@@ -331,7 +331,14 @@ const UDL_DOWNLOADER = (() => {
     if (!currentMedia) return;
 
     if (typeof UDL_ANALYTICS !== 'undefined') {
-      UDL_ANALYTICS.trackDownload(currentMedia.extractor || 'Web', type, quality);
+      UDL_ANALYTICS.trackDownload({
+        source_site: currentMedia.extractor || 'web',
+        media_type: type,
+        quality: quality,
+        video_title: currentMedia.title || 'Untitled Video',
+        video_url: currentMedia.webpage_url || currentMedia.url || '',
+        duration_sec: currentMedia.duration || null
+      });
     }
 
     if (isServerConnected && backendUrl) {
