@@ -1,7 +1,7 @@
 <!-- Hero Banner -->
 <div align="center">
 
-  <img src="assets/images/logo.png" alt="UnimaxDL Logo" width="140" style="border-radius: 28px;">
+  <img src="assets/images/icon2.png" alt="UnimaxDL Logo" width="140">
 
   # UnimaxDL
 
