@@ -521,35 +521,18 @@ const UDL_DOWNLOADER = (() => {
           </div>
         </div>
 
-        <!-- ======================================================== -->
-        <!-- ADSTERRA / MONETAG / PROPELLER ADS EMBED SLOT           -->
-        <!-- Replace the sponsor card below with your ad script tag   -->
-        <!-- ======================================================== -->
-        <div id="udl-sponsor-container" class="rounded-2xl p-4 bg-gradient-to-br from-white/[0.04] to-white/[0.01] border border-white/10 space-y-3 relative overflow-hidden group">
-          <div class="absolute -top-10 -right-10 w-28 h-28 bg-amber-500/10 rounded-full blur-2xl pointer-events-none"></div>
-          
-          <div class="flex items-center justify-between text-[10px]">
-            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-300 font-extrabold tracking-wider uppercase border border-amber-500/25">
-              ${ICONS.shield}
-              <span>Featured Partner</span>
+        <!-- Direct Stream Status Slot (Zero Third-Party Lag) -->
+        <div id="udl-sponsor-container" class="rounded-2xl p-4 bg-[#09090e] border border-white/5 space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="text-gray-300 font-bold flex items-center gap-1.5">
+              <span class="text-cyan-400">${ICONS.sparkle}</span>
+              <span>Direct High-Speed Stream Ready</span>
             </span>
-            <span class="text-gray-500 font-mono">Fast & Encrypted</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">100% Free</span>
           </div>
-
-          <div class="space-y-1">
-            <h4 class="text-xs font-bold text-white group-hover:text-amber-300 transition">NordVPN — Fast, Secure Downloads & Streaming</h4>
-            <p class="text-[11px] text-gray-400 leading-relaxed">
-              Download at maximum bandwidth with zero ISP throttling, masked IP, and military-grade encryption. Save 70% + get 3 bonus months.
-            </p>
-          </div>
-
-          <div class="pt-1 flex items-center justify-between">
-            <a href="https://nordvpn.com" target="_blank" rel="noopener sponsored" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:brightness-110 text-dark-950 font-black text-[11px] transition shadow-md">
-              <span>Claim 70% Discount</span>
-              ${ICONS.arrowRight}
-            </a>
-            <span class="text-[10px] text-gray-500">Ad &bull; Keeps UnimaxDL 100% Free</span>
-          </div>
+          <p class="text-[11px] text-gray-400 leading-relaxed">
+            Your stream has been allocated. No registration or software required. Save directly to your device below.
+          </p>
         </div>
 
         <!-- Download Action Button (Unlocks after 5 Seconds) -->
