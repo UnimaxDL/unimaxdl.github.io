@@ -8,12 +8,18 @@
   <meta name="keywords" content="universal video downloader, youtube downloader 4k, tiktok downloader without watermark, instagram reels saver, video to mp3, unimaxdl" />
   <link rel="canonical" href="https://unimaxdl.github.io/" />
 
+  <!-- Favicon & Touch Icons -->
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://unimaxdl.github.io/" />
   <meta property="og:title" content="UnimaxDL — Free Universal Media Downloader" />
   <meta property="og:description" content="Download any video in 4K or convert to MP3. 1000+ sites, zero ads, zero tracking." />
-  <meta property="og:image" content="https://unimaxdl.github.io/assets/images/og-banner.png" />
+  <meta property="og:image" content="https://unimaxdl.github.io/assets/images/logo-192.png" />
 
   <!-- Schema.org SoftwareApplication JSON-LD -->
   <script type="application/ld+json">
@@ -49,6 +55,10 @@
               500: '#f59e0b',
               600: '#d97706',
             },
+            cyan: {
+              400: '#22d3ee',
+              500: '#06b6d4',
+            },
             dark: {
               950: '#07070a',
               900: '#0f0f15',
@@ -65,9 +75,9 @@
     body {
       background-color: #07070a;
       background-image: 
-        radial-gradient(at 0% 0%, rgba(245, 158, 11, 0.14) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.12) 0px, transparent 50%),
-        radial-gradient(at 50% 50%, rgba(15, 15, 21, 0.9) 0px, #07070a 100%);
+        radial-gradient(at 0% 0%, rgba(34, 211, 238, 0.12) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(245, 158, 11, 0.12) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(15, 15, 21, 0.95) 0px, #07070a 100%);
       background-attachment: fixed;
     }
     .glass-card {
@@ -78,10 +88,10 @@
       box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
     }
     .glass-card:hover {
-      border-color: rgba(245, 158, 11, 0.35);
+      border-color: rgba(34, 211, 238, 0.35);
     }
     .shimmer-text {
-      background: linear-gradient(90deg, #f59e0b 0%, #fde68a 50%, #f59e0b 100%);
+      background: linear-gradient(90deg, #22d3ee 0%, #fde68a 50%, #f59e0b 100%);
       background-size: 200% auto;
       color: transparent;
       -webkit-background-clip: text;
@@ -91,25 +101,31 @@
       to { background-position: 200% center; }
     }
     .glow-search:focus-within {
-      box-shadow: 0 0 25px -5px rgba(245, 158, 11, 0.25);
-      border-color: rgba(245, 158, 11, 0.5);
+      box-shadow: 0 0 25px -5px rgba(34, 211, 238, 0.25);
+      border-color: rgba(34, 211, 238, 0.5);
     }
   </style>
 </head>
-<body class="text-gray-100 font-sans antialiased selection:bg-amber-500/30 selection:text-amber-300">
+<body class="text-gray-100 font-sans antialiased selection:bg-cyan-500/30 selection:text-cyan-300">
 
   <!-- Top Navigation Bar -->
   <header class="sticky top-0 z-50 bg-[#07070a]/80 backdrop-blur-xl border-b border-white/[0.08]">
     <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
       
-      <!-- Brand Logo -->
+      <!-- Brand Logo with 4K Compressed Brand Icon -->
       <a href="/" class="flex items-center gap-3 group">
-        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/25 text-dark-950 font-black text-xl group-hover:scale-105 transition-transform">
-          ⬇️
+        <div class="relative">
+          <img 
+            src="/assets/images/logo.png" 
+            alt="UnimaxDL Icon" 
+            class="w-10 h-10 rounded-2xl object-cover shadow-lg shadow-cyan-500/20 border border-cyan-400/30 group-hover:scale-105 group-hover:border-cyan-400/60 transition-all duration-300"
+          />
+          <span class="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-cyan-400 animate-ping opacity-75"></span>
+          <span class="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
         </div>
         <div class="flex items-center gap-2">
-          <span class="font-black text-lg tracking-tight text-white">Unimax<span class="text-amber-400">DL</span></span>
-          <span class="text-[9px] font-extrabold px-2 py-0.5 rounded-full bg-amber-400/10 text-amber-400 border border-amber-400/20 uppercase tracking-wider">v1.2</span>
+          <span class="font-black text-lg tracking-tight text-white">Unimax<span class="text-cyan-400">DL</span></span>
+          <span class="text-[9px] font-extrabold px-2 py-0.5 rounded-full bg-cyan-400/10 text-cyan-400 border border-cyan-400/20 uppercase tracking-wider">v1.3</span>
         </div>
       </a>
 
@@ -118,20 +134,20 @@
         
         <!-- Live Server Status Indicator Pill -->
         <div id="udl-server-status">
-          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-400 text-xs font-semibold cursor-pointer" onclick="UDL_DOWNLOADER.showSettingsModal()">
-            <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-400 text-xs font-semibold cursor-pointer" onclick="UDL_DOWNLOADER.showSettingsModal()">
+            <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
             <span>Server Ready</span>
           </span>
         </div>
 
         <nav class="hidden md:flex items-center gap-5 text-xs font-semibold text-gray-300">
-          <a href="/download.html" class="hover:text-amber-400 transition">Get Apps</a>
-          <a href="/youtube-downloader.html" class="hover:text-amber-400 transition">YouTube</a>
-          <a href="/tiktok-downloader.html" class="hover:text-amber-400 transition">TikTok</a>
-          <a href="/instagram-downloader.html" class="hover:text-amber-400 transition">Instagram</a>
+          <a href="/download.html" class="hover:text-cyan-400 transition">Get Apps</a>
+          <a href="/youtube-downloader.html" class="hover:text-red-400 transition">YouTube</a>
+          <a href="/tiktok-downloader.html" class="hover:text-teal-400 transition">TikTok</a>
+          <a href="/instagram-downloader.html" class="hover:text-fuchsia-400 transition">Instagram</a>
         </nav>
 
-        <!-- Actions -->
+        <!-- Action Buttons -->
         <div class="flex items-center gap-2">
           <button onclick="UDL_DOWNLOADER.showSettingsModal()" class="p-2 rounded-xl glass-card text-gray-400 hover:text-white transition" title="Server Settings">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
@@ -146,11 +162,12 @@
     </div>
   </header>
 
-  <!-- Hero Headline -->
+  <!-- Hero Section -->
   <section class="pt-14 pb-10 px-4 text-center">
     <div class="max-w-4xl mx-auto space-y-4">
-      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gradient-to-r from-amber-500/10 to-indigo-500/10 border border-amber-500/25 text-amber-400 text-xs font-bold shadow-sm">
-        <span>✨ 1000+ Platforms · 4K UHD · Pure Ad-Free</span>
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gradient-to-r from-cyan-500/10 to-amber-500/10 border border-cyan-500/25 text-cyan-400 text-xs font-bold shadow-sm">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        <span>1000+ Platforms · 4K UHD · Pure Ad-Free</span>
       </div>
 
       <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-white leading-tight">
@@ -172,15 +189,19 @@
       <div class="space-y-2">
         <div class="flex items-center justify-between text-xs">
           <label for="url-input" class="font-bold text-gray-300 uppercase tracking-wider flex items-center gap-1.5">
-            <span>🔗</span> Paste Media Link
+            <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+            <span>Paste Media Link</span>
           </label>
-          <button onclick="pasteClipboard()" class="text-amber-400 hover:text-amber-300 font-bold flex items-center gap-1 text-[11px] transition">
-            <span>📋</span> Paste from Clipboard
+          <button onclick="pasteClipboard()" class="text-cyan-400 hover:text-cyan-300 font-bold flex items-center gap-1.5 text-[11px] transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+            <span>Paste from Clipboard</span>
           </button>
         </div>
 
         <div class="relative flex items-center glow-search rounded-2xl border border-white/10 bg-[#0c0c12] transition-all">
-          <span class="pl-4 text-gray-500 text-lg">🔍</span>
+          <span class="pl-4 text-gray-500">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          </span>
           <input 
             type="url" 
             id="url-input" 
@@ -190,34 +211,44 @@
           
           <!-- Clear Button -->
           <button id="clear-btn" onclick="clearInput()" class="hidden p-2 text-gray-500 hover:text-white transition" title="Clear">
-            ✖
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
           </button>
 
           <!-- Analyze Action Button -->
           <button 
             id="analyze-btn" 
             onclick="handleAnalyze()" 
-            class="mr-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-dark-950 font-black text-xs shadow-md transition flex items-center gap-1.5 flex-shrink-0">
+            class="mr-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-amber-500 hover:brightness-110 text-dark-950 font-black text-xs shadow-md transition flex items-center gap-1.5 flex-shrink-0">
             <span id="btn-text">Analyze</span>
-            <span id="btn-spinner" class="hidden animate-spin">⏳</span>
+            <span id="btn-spinner" class="hidden animate-spin">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+            </span>
           </button>
         </div>
       </div>
 
-      <!-- Quick Platform Sample Pills -->
+      <!-- Quick Platform Sample Pills with Real Vector Logos -->
       <div class="flex flex-wrap items-center gap-2 pt-1 text-xs text-gray-400">
         <span class="text-gray-500 font-medium text-[11px]">Quick try:</span>
-        <button onclick="setSample('https://www.youtube.com/watch?v=dQw4w9WgXcQ')" class="px-2.5 py-1 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-300 border border-red-500/20 transition flex items-center gap-1">
-          <span>▶️</span> YouTube
+        
+        <button onclick="setSample('https://www.youtube.com/watch?v=dQw4w9WgXcQ')" class="px-2.5 py-1 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-300 border border-red-500/20 transition flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 fill-current text-red-500" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          <span>YouTube</span>
         </button>
-        <button onclick="setSample('https://www.tiktok.com/@tiktok/video/7123456789')" class="px-2.5 py-1 rounded-xl bg-teal-500/10 hover:bg-teal-500/20 text-teal-300 border border-teal-500/20 transition flex items-center gap-1">
-          <span>🎵</span> TikTok
+
+        <button onclick="setSample('https://www.tiktok.com/@tiktok/video/7123456789')" class="px-2.5 py-1 rounded-xl bg-teal-500/10 hover:bg-teal-500/20 text-teal-300 border border-teal-500/20 transition flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 fill-current text-teal-400" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+          <span>TikTok</span>
         </button>
-        <button onclick="setSample('https://www.instagram.com/reel/C3abc123/')" class="px-2.5 py-1 rounded-xl bg-fuchsia-500/10 hover:bg-fuchsia-500/20 text-fuchsia-300 border border-fuchsia-500/20 transition flex items-center gap-1">
-          <span>📸</span> Instagram
+
+        <button onclick="setSample('https://www.instagram.com/reel/C3abc123/')" class="px-2.5 py-1 rounded-xl bg-fuchsia-500/10 hover:bg-fuchsia-500/20 text-fuchsia-300 border border-fuchsia-500/20 transition flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 fill-current text-fuchsia-400" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          <span>Instagram</span>
         </button>
-        <button onclick="setSample('https://twitter.com/NASA/status/160123456789')" class="px-2.5 py-1 rounded-xl bg-blue-500/10 hover:bg-blue-500/20 text-blue-300 border border-blue-500/20 transition flex items-center gap-1">
-          <span>🐦</span> Twitter/X
+
+        <button onclick="setSample('https://twitter.com/NASA/status/160123456789')" class="px-2.5 py-1 rounded-xl bg-blue-500/10 hover:bg-blue-500/20 text-blue-300 border border-blue-500/20 transition flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5 fill-current text-sky-400" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          <span>Twitter/X</span>
         </button>
       </div>
 
@@ -231,8 +262,9 @@
             <div class="h-3 bg-white/5 rounded w-1/4"></div>
           </div>
         </div>
-        <div class="text-center text-xs font-semibold text-amber-400">
-          ⚡ Resolving audio and video streams...
+        <div class="text-center text-xs font-semibold text-cyan-400 flex items-center justify-center gap-2">
+          <svg class="w-4 h-4 animate-spin text-cyan-400" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+          <span>Resolving media streams & codecs...</span>
         </div>
       </div>
 
@@ -245,47 +277,66 @@
     </div>
   </section>
 
-  <!-- Platform Cards Grid -->
+  <!-- Platform Cards Grid with Real SVGs -->
   <section class="max-w-5xl mx-auto px-4 py-8 border-t border-white/[0.06]">
     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+      
       <a href="/youtube-downloader.html" class="glass-card p-4 rounded-2xl text-center hover:-translate-y-1 transition group">
-        <span class="text-3xl block mb-1 group-hover:scale-110 transition-transform">▶️</span>
-        <span class="font-bold text-xs text-white group-hover:text-amber-400">YouTube</span>
+        <div class="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+          <svg class="w-5 h-5 fill-current text-red-500" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </div>
+        <span class="font-bold text-xs text-white group-hover:text-red-400">YouTube</span>
         <span class="text-[10px] text-gray-500 block">4K & Shorts</span>
       </a>
+
       <a href="/tiktok-downloader.html" class="glass-card p-4 rounded-2xl text-center hover:-translate-y-1 transition group">
-        <span class="text-3xl block mb-1 group-hover:scale-110 transition-transform">🎵</span>
-        <span class="font-bold text-xs text-white group-hover:text-amber-400">TikTok</span>
+        <div class="w-10 h-10 rounded-xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+          <svg class="w-5 h-5 fill-current text-teal-400" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+        </div>
+        <span class="font-bold text-xs text-white group-hover:text-teal-400">TikTok</span>
         <span class="text-[10px] text-gray-500 block">No Watermark</span>
       </a>
+
       <a href="/instagram-downloader.html" class="glass-card p-4 rounded-2xl text-center hover:-translate-y-1 transition group">
-        <span class="text-3xl block mb-1 group-hover:scale-110 transition-transform">📸</span>
-        <span class="font-bold text-xs text-white group-hover:text-amber-400">Instagram</span>
+        <div class="w-10 h-10 rounded-xl bg-fuchsia-500/10 border border-fuchsia-500/20 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+          <svg class="w-5 h-5 fill-current text-fuchsia-400" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </div>
+        <span class="font-bold text-xs text-white group-hover:text-fuchsia-400">Instagram</span>
         <span class="text-[10px] text-gray-500 block">Reels & Stories</span>
       </a>
+
       <div class="glass-card p-4 rounded-2xl text-center hover:-translate-y-1 transition group">
-        <span class="text-3xl block mb-1 group-hover:scale-110 transition-transform">🐦</span>
-        <span class="font-bold text-xs text-white group-hover:text-amber-400">Twitter / X</span>
+        <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+          <svg class="w-5 h-5 fill-current text-sky-400" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </div>
+        <span class="font-bold text-xs text-white group-hover:text-sky-400">Twitter / X</span>
         <span class="text-[10px] text-gray-500 block">HD Video</span>
       </div>
+
       <div class="glass-card p-4 rounded-2xl text-center hover:-translate-y-1 transition group">
-        <span class="text-3xl block mb-1 group-hover:scale-110 transition-transform">📘</span>
-        <span class="font-bold text-xs text-white group-hover:text-amber-400">Facebook</span>
+        <div class="w-10 h-10 rounded-xl bg-blue-600/10 border border-blue-600/20 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+          <svg class="w-5 h-5 fill-current text-blue-500" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </div>
+        <span class="font-bold text-xs text-white group-hover:text-blue-400">Facebook</span>
         <span class="text-[10px] text-gray-500 block">Public Reels</span>
       </div>
+
       <div class="glass-card p-4 rounded-2xl text-center hover:-translate-y-1 transition group">
-        <span class="text-3xl block mb-1 group-hover:scale-110 transition-transform">🤖</span>
-        <span class="font-bold text-xs text-white group-hover:text-amber-400">Reddit</span>
+        <div class="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+          <svg class="w-5 h-5 fill-current text-orange-500" viewBox="0 0 24 24"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .868.182 1.17.472 1.19-.844 2.825-1.401 4.629-1.48l.942-4.417 3.323.702c.08-.66.643-1.18 1.164-1.18z"/></svg>
+        </div>
+        <span class="font-bold text-xs text-white group-hover:text-orange-400">Reddit</span>
         <span class="text-[10px] text-gray-500 block">With Audio</span>
       </div>
+
     </div>
   </section>
 
   <!-- Desktop & Android Callout Banner -->
   <section class="max-w-4xl mx-auto px-4 py-12">
-    <div class="glass-card rounded-3xl p-6 sm:p-8 border border-amber-500/20 bg-gradient-to-r from-amber-500/10 via-transparent to-indigo-500/10 flex flex-col sm:flex-row items-center justify-between gap-6">
+    <div class="glass-card rounded-3xl p-6 sm:p-8 border border-cyan-500/20 bg-gradient-to-r from-cyan-500/10 via-transparent to-amber-500/10 flex flex-col sm:flex-row items-center justify-between gap-6">
       <div class="space-y-2 text-center sm:text-left">
-        <div class="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-amber-400/20 text-amber-300 text-[10px] font-black uppercase">
+        <div class="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-cyan-400/20 text-cyan-300 text-[10px] font-black uppercase">
           Desktop & Mobile Apps Available
         </div>
         <h3 class="text-xl font-bold text-white">Want Unlimited 4K 60fps & Background Downloads?</h3>
@@ -293,8 +344,9 @@
           Download our ultra-lightweight Windows, Mac, Linux, or Android companion app for 100% offline-ready downloads.
         </p>
       </div>
-      <a href="/download.html" class="px-6 py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-dark-950 font-black text-xs shadow-lg transition whitespace-nowrap">
-        Download Free Apps ➔
+      <a href="/download.html" class="px-6 py-3 rounded-2xl bg-cyan-500 hover:bg-cyan-400 text-dark-950 font-black text-xs shadow-lg transition whitespace-nowrap flex items-center gap-2">
+        <span>Download Free Apps</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
       </a>
     </div>
   </section>
@@ -303,7 +355,7 @@
   <footer class="border-t border-white/[0.08] bg-[#050508] py-12 px-4 text-xs text-gray-400">
     <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
       <div class="flex items-center gap-3">
-        <div class="w-8 h-8 rounded-xl bg-amber-500 flex items-center justify-center text-dark-950 font-black">⬇️</div>
+        <img src="/assets/images/logo.png" alt="UnimaxDL" class="w-8 h-8 rounded-xl object-cover shadow-sm border border-cyan-400/30" />
         <div>
           <span class="font-bold text-white text-sm">UnimaxDL</span>
           <p class="text-[11px] text-gray-500">Universal Media Downloader · Open Source</p>
@@ -320,7 +372,7 @@
       </div>
 
       <div class="text-center md:text-right text-[11px] text-gray-500">
-        <span>Built with ❤️ by Atomic Dhruba</span><br/>
+        <span>Built with passion by Atomic Dhruba</span><br/>
         <span>Licensed under MIT</span>
       </div>
     </div>

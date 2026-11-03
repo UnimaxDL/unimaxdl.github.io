@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>YouTube Video Downloader — Download 4K, 1080p Videos Free | UnimaxDL</title>
+  <meta name="description" content="Download YouTube videos and Shorts in 4K, 1080p, 720p or extract audio to MP3 320kbps. Free, fast, open-source, and 100% ad-free with UnimaxDL." />
+  <meta name="keywords" content="youtube video downloader, download youtube video 4k, youtube to mp3 320, youtube shorts download, free youtube downloader no ads" />
+  <link rel="canonical" href="https://unimaxdl.github.io/youtube-downloader.html" />
+
+  <!-- Favicon & Touch Icons -->
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+
+  <!-- Schema.org HowTo & FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to Download YouTube Videos in 4K with UnimaxDL",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "name": "Copy YouTube URL",
+        "text": "Copy the link of the YouTube video or Short from your browser or the YouTube app."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Paste in UnimaxDL",
+        "text": "Paste the link into the UnimaxDL search box and click Analyze."
+      },
+      {
+        "@type": "HowToStep",
+        "name": "Select Resolution & Download",
+        "text": "Choose your preferred video quality (4K, 1080p, 720p) or audio format (MP3) and click Download."
+      }
+    ]
+  }
+  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #07070a;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(239, 68, 68, 0.14) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(245, 158, 11, 0.12) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(15, 15, 21, 0.9) 0px, #07070a 100%);
+      background-attachment: fixed;
+    }
+    .glass-card {
+      background: rgba(22, 22, 32, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
+    }
+    .glass-card:hover {
+      border-color: rgba(239, 68, 68, 0.4);
+    }
+  </style>
+</head>
+<body class="text-gray-100 font-sans antialiased selection:bg-red-500/30 selection:text-red-300">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-[#07070a]/80 backdrop-blur-xl border-b border-white/[0.08]">
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3 group">
+        <img src="/assets/images/logo.png" alt="UnimaxDL" class="w-10 h-10 rounded-2xl object-cover shadow-lg shadow-red-500/20 border border-red-500/30 group-hover:scale-105 transition-transform" />
+        <div class="flex items-center gap-2">
+          <span class="font-black text-lg tracking-tight text-white">Unimax<span class="text-red-400">DL</span></span>
+          <span class="text-[9px] font-extrabold px-2 py-0.5 rounded-full bg-red-500/10 text-red-400 border border-red-500/20">YOUTUBE</span>
+        </div>
+      </a>
+
+      <div class="flex items-center gap-4">
+        <div id="udl-server-status"></div>
+        <nav class="hidden md:flex items-center gap-6 text-sm font-semibold text-gray-300">
+          <a href="/" class="hover:text-red-400 transition">All Tools</a>
+          <a href="/youtube-downloader.html" class="text-red-400 font-bold">YouTube</a>
+          <a href="/tiktok-downloader.html" class="hover:text-red-400 transition">TikTok</a>
+          <a href="/instagram-downloader.html" class="hover:text-red-400 transition">Instagram</a>
+          <a href="/download.html" class="hover:text-red-400 transition">Download App</a>
+        </nav>
+        <button onclick="UDL_DOWNLOADER.showSettingsModal()" class="p-2.5 rounded-xl glass-card text-gray-400 hover:text-white transition" title="Server Settings">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3" stroke-width="2"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="pt-14 pb-10 px-4 text-center">
+    <div class="max-w-3xl mx-auto space-y-4">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/25 text-red-400 text-xs font-bold">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+        <span>4K UHD · 60FPS · Shorts · Audio Extractor</span>
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight">
+        YouTube Video Downloader
+      </h1>
+      <p class="text-gray-400 text-sm sm:text-base max-w-xl mx-auto">
+        Fast, safe, and completely ad-free. Download any YouTube video in up to 4K or extract high-bitrate MP3 music directly.
+      </p>
+    </div>
+  </section>
+
+  <!-- Downloader Widget -->
+  <section class="max-w-3xl mx-auto px-4 pb-16">
+    <div class="glass-card rounded-3xl p-6 sm:p-8 space-y-5">
+      <div class="space-y-2">
+        <div class="flex items-center justify-between text-xs">
+          <label for="url-input" class="font-bold text-gray-300 uppercase tracking-wider">Paste YouTube URL (Video, Short, or Playlist)</label>
+          <button onclick="pasteClipboard()" class="text-red-400 hover:text-red-300 font-bold flex items-center gap-1.5 text-[11px] transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+            <span>Paste</span>
+          </button>
+        </div>
+        <div class="relative flex items-center rounded-2xl border border-white/10 bg-[#0c0c12]">
+          <span class="pl-4 text-red-500 flex items-center">
+            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </span>
+          <input 
+            type="url" 
+            id="url-input" 
+            placeholder="https://www.youtube.com/watch?v=... or https://youtu.be/..." 
+            class="w-full bg-transparent py-4 pl-3 pr-28 text-sm text-white placeholder-gray-500 focus:outline-none"
+          />
+          <button 
+            id="analyze-btn" 
+            onclick="handleAnalyze()" 
+            class="mr-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-red-500 to-amber-500 hover:brightness-110 text-white font-black text-xs shadow-md transition flex-shrink-0 flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <span id="btn-text">Analyze</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Result Card Container -->
+      <div id="media-card-container"></div>
+      <div id="tasks-container"></div>
+    </div>
+  </section>
+
+  <!-- Format Grid -->
+  <section class="max-w-4xl mx-auto px-4 pb-16 space-y-6">
+    <div class="glass-card rounded-3xl p-8 space-y-4">
+      <h2 class="text-xl font-bold text-white">Supported YouTube Resolutions & Codecs</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs text-gray-300">
+        <div class="p-4 bg-white/5 rounded-2xl border border-white/5">
+          <strong class="text-red-400 block mb-1 text-sm">4K UHD (2160p)</strong>
+          <span>3840×2160 · 60fps VP9/AV1</span>
+        </div>
+        <div class="p-4 bg-white/5 rounded-2xl border border-white/5">
+          <strong class="text-red-400 block mb-1 text-sm">Full HD (1080p)</strong>
+          <span>1920×1080 · 60fps MP4</span>
+        </div>
+        <div class="p-4 bg-white/5 rounded-2xl border border-white/5">
+          <strong class="text-red-400 block mb-1 text-sm">Standard (720p/480p)</strong>
+          <span>Fast download for mobile</span>
+        </div>
+        <div class="p-4 bg-white/5 rounded-2xl border border-white/5">
+          <strong class="text-amber-400 block mb-1 text-sm">Audio (MP3 / M4A)</strong>
+          <span>320kbps & 192kbps Hi-Fi</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/[0.08] bg-[#050508] py-8 text-center text-xs text-gray-500">
+    <p>UnimaxDL · Open-Source YouTube Media Downloader</p>
+  </footer>
+
+  <script src="/assets/js/analytics.js"></script>
+  <script src="/assets/js/downloader.js"></script>
+  <script>
+    async function pasteClipboard() {
+      try {
+        const text = await navigator.clipboard.readText();
+        if (text) {
+          document.getElementById('url-input').value = text;
+          handleAnalyze();
+        }
+      } catch {}
+    }
+
+    async function handleAnalyze() {
+      const url = document.getElementById('url-input').value.trim();
+      const mediaContainer = document.getElementById('media-card-container');
+      const btnText = document.getElementById('btn-text');
+      if (!url) {
+        UDL_DOWNLOADER.showToast("Please enter a YouTube video URL");
+        return;
+      }
+      btnText.innerText = "Analyzing...";
+      try {
+        const info = await UDL_DOWNLOADER.analyzeUrl(url);
+        if (info) {
+          UDL_DOWNLOADER.renderMediaCard(info, mediaContainer);
+          mediaContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+      } catch (err) {
+        UDL_DOWNLOADER.showToast(err.message || "Failed to analyze YouTube link.");
+      } finally {
+        btnText.innerText = "Analyze";
+      }
+    }
+
+    UDL_DOWNLOADER.startPolling((tasks) => {
+      UDL_DOWNLOADER.renderTasks(tasks, document.getElementById('tasks-container'));
+    });
+  </script>
+</body>
+</html>

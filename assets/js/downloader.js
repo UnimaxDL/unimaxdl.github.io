@@ -1,7 +1,8 @@
 /**
- * UnimaxDL Downloader Engine v1.2.0
+ * UnimaxDL Downloader Engine v1.3.0
  * Features:
- * - Smart Dual-Engine: Local/Cloud Backend + Client-Side Fallback Resolver (Zero "Failed to Fetch" errors!)
+ * - Brand Icon & Pure SVG Icons (Zero Emojis!)
+ * - Smart Dual-Engine: Local/Cloud Backend + Client-Side Fallback Resolver
  * - Direct oEmbed/NoEmbed metadata extraction for YouTube, TikTok, Instagram, Twitter, Vimeo
  * - Direct download helpers & fallback options when standalone
  * - Interactive settings modal with live ping diagnostics
@@ -23,6 +24,21 @@ const UDL_DOWNLOADER = (() => {
   let pollInterval = null;
   let isAnalyzing = false;
   let isServerConnected = false;
+
+  // ── SVG Icon Registry ──
+  const ICONS = {
+    settings: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>`,
+    download: `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>`,
+    video: `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>`,
+    audio: `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>`,
+    desktop: `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>`,
+    mobile: `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>`,
+    web: `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m3.84 6.16A8.995 8.995 0 013 12m3.84-6.16A8.995 8.995 0 013 12m14.32 0a8.995 8.995 0 01-3.84 6.16m3.84-6.16A8.995 8.995 0 0017.16 5.84M12 3a9 9 0 00-3.84 15.16M12 3a9 9 0 013.84 15.16"/></svg>`,
+    sparkle: `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>`,
+    close: `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>`,
+    user: `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>`,
+    arrowRight: `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>`
+  };
 
   function getBackendUrl() {
     return backendUrl;
@@ -89,14 +105,16 @@ const UDL_DOWNLOADER = (() => {
         
         <div class="flex items-center justify-between border-b border-white/[0.08] pb-4">
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-xl text-amber-400">⚙️</div>
+            <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+              ${ICONS.settings}
+            </div>
             <div>
               <h3 class="text-lg font-bold text-white">Backend Connection</h3>
               <p class="text-xs text-gray-400">Connect to your local PC or private cloud server</p>
             </div>
           </div>
           <button onclick="UDL_DOWNLOADER.closeSettingsModal()" class="p-2 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            ${ICONS.close}
           </button>
         </div>
 
@@ -124,7 +142,7 @@ const UDL_DOWNLOADER = (() => {
           </div>
 
           <div class="p-4 rounded-2xl bg-amber-500/5 border border-amber-500/15 text-xs text-gray-300 space-y-2">
-            <span class="font-bold text-amber-400 block">💡 Why connect a local PC server?</span>
+            <span class="font-bold text-amber-400 block">Why connect a local PC server?</span>
             <ul class="space-y-1 text-gray-400 list-disc list-inside">
               <li>Direct 4K UHD 60fps video downloads</li>
               <li>Lossless MP3 320kbps audio extraction</li>
@@ -163,13 +181,13 @@ const UDL_DOWNLOADER = (() => {
       clearTimeout(timeoutId);
 
       if (res.ok) {
-        btn.innerText = "✓ Connected!";
+        btn.innerText = "Connected";
         btn.className = "px-4 py-2.5 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-bold";
       } else {
         throw new Error();
       }
     } catch {
-      btn.innerText = "✗ Unreachable";
+      btn.innerText = "Unreachable";
       btn.className = "px-4 py-2.5 rounded-xl bg-red-500/20 text-red-400 border border-red-500/30 text-xs font-bold";
     }
 
@@ -185,14 +203,14 @@ const UDL_DOWNLOADER = (() => {
       setBackendUrl(input.value);
     }
     closeSettingsModal();
-    showToast("Server settings saved!");
+    showToast("Server settings saved");
   }
 
   // ── Toast Notification ──
   function showToast(msg) {
     const toast = document.createElement('div');
     toast.className = "fixed bottom-6 right-6 z-[10000] px-4 py-3 rounded-2xl bg-[#14141d]/95 border border-amber-500/30 text-xs font-bold text-amber-300 shadow-2xl flex items-center gap-2.5 animate-in fade-in slide-in-from-bottom-4 duration-200";
-    toast.innerHTML = `<span>⚡</span> <span>${msg}</span>`;
+    toast.innerHTML = `<span class="text-amber-400">${ICONS.sparkle}</span> <span>${msg}</span>`;
     document.body.appendChild(toast);
     setTimeout(() => {
       toast.classList.add('animate-out', 'fade-out', 'duration-200');
@@ -207,7 +225,6 @@ const UDL_DOWNLOADER = (() => {
     isAnalyzing = true;
 
     try {
-      // Step 1: If backend server is configured, try it first
       if (backendUrl) {
         try {
           const controller = new AbortController();
@@ -233,7 +250,6 @@ const UDL_DOWNLOADER = (() => {
         }
       }
 
-      // Step 2: Smart Client-Side Extractor Fallback (Zero Server Needed!)
       const clientMedia = await resolveClientMedia(url);
       currentMedia = clientMedia;
       return clientMedia;
@@ -250,7 +266,6 @@ const UDL_DOWNLOADER = (() => {
     const isInstagram = /instagram\.com/i.test(url);
     const isTwitter = /(?:twitter\.com|x\.com)/i.test(url);
 
-    // Extract YouTube Video ID
     let ytId = null;
     if (isYouTube) {
       const match = url.match(/(?:youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*)/);
@@ -262,7 +277,6 @@ const UDL_DOWNLOADER = (() => {
     let thumbnail = "";
     let duration = "03:45";
 
-    // Try NoEmbed universal extractor
     try {
       const r = await fetch(`https://noembed.com/embed?url=${encodeURIComponent(url)}`);
       if (r.ok) {
@@ -273,13 +287,11 @@ const UDL_DOWNLOADER = (() => {
       }
     } catch {}
 
-    // YouTube high-res fallback
     if (isYouTube && ytId) {
       if (!thumbnail) thumbnail = `https://i.ytimg.com/vi/${ytId}/maxresdefault.jpg`;
       if (title === "Online Media Video") title = "YouTube Video";
     }
 
-    // Default thumbnails for platforms if missing
     if (!thumbnail) {
       if (isTikTok) thumbnail = "https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?w=600&auto=format&fit=crop&q=80";
       else if (isInstagram) thumbnail = "https://images.unsplash.com/photo-1611262588024-d12430b98920?w=600&auto=format&fit=crop&q=80";
@@ -288,7 +300,6 @@ const UDL_DOWNLOADER = (() => {
 
     const extractor = isYouTube ? 'YouTube' : isTikTok ? 'TikTok' : isInstagram ? 'Instagram' : isTwitter ? 'Twitter/X' : 'Universal';
 
-    // Standard format options
     const video_formats = [
       { resolution: "4K UHD", height: 2160, ext: "mp4", filesize_formatted: "Adaptive", fps: 60, quality: "2160p" },
       { resolution: "1080p FHD", height: 1080, ext: "mp4", filesize_formatted: "Standard", fps: 60, quality: "1080p" },
@@ -323,7 +334,6 @@ const UDL_DOWNLOADER = (() => {
       UDL_ANALYTICS.trackDownload(currentMedia.extractor || 'Web', type, quality);
     }
 
-    // If local server is connected, trigger the server download task
     if (isServerConnected && backendUrl) {
       showToast(`Initiating ${quality} download on local server...`);
       try {
@@ -339,7 +349,7 @@ const UDL_DOWNLOADER = (() => {
           })
         });
         if (res.ok) {
-          showToast("Download started on your PC!");
+          showToast("Download started on your PC");
           pollTasks();
           return;
         }
@@ -348,7 +358,6 @@ const UDL_DOWNLOADER = (() => {
       }
     }
 
-    // If standalone or server unreachable, open the Download Assistant modal
     showDownloadModal(type, quality);
   }
 
@@ -363,7 +372,6 @@ const UDL_DOWNLOADER = (() => {
     }
 
     const title = currentMedia ? currentMedia.title : "Video";
-    const targetUrl = currentMedia ? currentMedia.webpage_url : "";
     const isAudio = type === 'audio';
 
     modal.classList.remove('hidden');
@@ -373,8 +381,8 @@ const UDL_DOWNLOADER = (() => {
         
         <div class="flex items-center justify-between border-b border-white/[0.08] pb-4">
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-xl text-amber-400">
-              ${isAudio ? '🎵' : '🎬'}
+            <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+              ${isAudio ? ICONS.audio : ICONS.video}
             </div>
             <div>
               <h3 class="text-base font-bold text-white">Download Ready · ${quality}</h3>
@@ -382,7 +390,7 @@ const UDL_DOWNLOADER = (() => {
             </div>
           </div>
           <button onclick="UDL_DOWNLOADER.closeDownloadModal()" class="p-2 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            ${ICONS.close}
           </button>
         </div>
 
@@ -392,7 +400,7 @@ const UDL_DOWNLOADER = (() => {
           <div class="p-4 rounded-2xl bg-amber-500/5 border border-amber-500/20 space-y-3">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2">
-                <span class="text-base">💻</span>
+                <span class="text-amber-400">${ICONS.desktop}</span>
                 <span class="text-xs font-bold text-white">Full Quality via PC App (Recommended)</span>
               </div>
               <span class="text-[9px] px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300 font-extrabold uppercase">Unlimited 4K</span>
@@ -401,8 +409,9 @@ const UDL_DOWNLOADER = (() => {
               Launch the UnimaxDL engine on your PC to download directly at multi-threaded speed with zero quality caps.
             </p>
             <div class="flex gap-2">
-              <a href="/download.html" class="flex-1 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-dark-950 font-black text-xs text-center transition shadow-md">
-                Get Desktop App
+              <a href="/download.html" class="flex-1 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-dark-950 font-black text-xs text-center transition shadow-md flex items-center justify-center gap-1.5">
+                <span>Get Desktop App</span>
+                ${ICONS.arrowRight}
               </a>
               <button onclick="UDL_DOWNLOADER.showSettingsModal(); UDL_DOWNLOADER.closeDownloadModal();" class="px-4 py-2.5 rounded-xl glass-card hover:bg-white/10 text-xs font-bold text-gray-200 transition">
                 Connect Server
@@ -414,13 +423,13 @@ const UDL_DOWNLOADER = (() => {
           <div class="p-4 rounded-2xl glass-card border border-white/5 space-y-2">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2">
-                <span class="text-base">📱</span>
+                <span class="text-emerald-400">${ICONS.mobile}</span>
                 <span class="text-xs font-bold text-white">Mobile Share via Android APK</span>
               </div>
               <span class="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold uppercase">1-Tap Save</span>
             </div>
             <p class="text-[11px] text-gray-400 leading-relaxed">
-              Share directly from the YouTube/TikTok app into UnimaxDL on Android.
+              Share directly from the YouTube or TikTok app into UnimaxDL on Android.
             </p>
             <a href="/download.html" class="block w-full py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-xs text-center transition">
               Download Android APK
@@ -431,7 +440,7 @@ const UDL_DOWNLOADER = (() => {
           <div class="p-4 rounded-2xl glass-card border border-white/5 space-y-2">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2">
-                <span class="text-base">🌐</span>
+                <span class="text-indigo-400">${ICONS.web}</span>
                 <span class="text-xs font-bold text-white">Instant Web Mirror</span>
               </div>
             </div>
@@ -491,7 +500,9 @@ const UDL_DOWNLOADER = (() => {
             </h3>
 
             <p class="text-xs text-gray-400 flex items-center gap-2">
-              <span class="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-[10px]">👤</span>
+              <span class="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-gray-400">
+                ${ICONS.user}
+              </span>
               <span class="font-semibold text-gray-300">${info.uploader}</span>
             </p>
           </div>
@@ -502,10 +513,12 @@ const UDL_DOWNLOADER = (() => {
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2 bg-[#0c0c12] p-1 rounded-2xl border border-white/5">
               <button onclick="UDL_DOWNLOADER.switchTab('video')" id="tab-btn-video" class="px-4 py-1.5 rounded-xl bg-amber-500 text-dark-950 font-black text-xs transition shadow-sm flex items-center gap-1.5">
-                <span>🎬</span> Video (MP4)
+                ${ICONS.video}
+                <span>Video (MP4)</span>
               </button>
               <button onclick="UDL_DOWNLOADER.switchTab('audio')" id="tab-btn-audio" class="px-4 py-1.5 rounded-xl text-gray-400 hover:text-white font-bold text-xs transition flex items-center gap-1.5">
-                <span>🎵</span> Audio (MP3)
+                ${ICONS.audio}
+                <span>Audio (MP3)</span>
               </button>
             </div>
             <span class="text-[11px] text-gray-500 hidden sm:inline">Select your preferred stream</span>
@@ -523,7 +536,7 @@ const UDL_DOWNLOADER = (() => {
                   <p class="text-[11px] text-gray-400 font-medium">${f.fps}fps · ${f.filesize_formatted}</p>
                 </div>
                 <div class="mt-3 pt-2 border-t border-white/5 flex items-center justify-between text-xs font-bold text-amber-400">
-                  <span>⬇️ Download</span>
+                  <span class="flex items-center gap-1">${ICONS.download} <span>Download</span></span>
                   <span class="text-[10px] text-gray-500 font-mono">${f.height >= 2160 ? 'ULTRA' : f.height >= 1080 ? 'HD' : 'SD'}</span>
                 </div>
               </button>
@@ -542,7 +555,7 @@ const UDL_DOWNLOADER = (() => {
                   <p class="text-[11px] text-gray-400 font-medium">${f.bitrate} Bitrate Audio</p>
                 </div>
                 <div class="mt-3 pt-2 border-t border-white/5 flex items-center justify-between text-xs font-bold text-amber-400">
-                  <span>🎵 Extract MP3</span>
+                  <span class="flex items-center gap-1">${ICONS.audio} <span>Extract MP3</span></span>
                   <span class="text-[10px] text-gray-500 font-mono">HI-FI</span>
                 </div>
               </button>
@@ -655,6 +668,7 @@ const UDL_DOWNLOADER = (() => {
     startPolling,
     stopPolling,
     switchTab,
-    showToast
+    showToast,
+    ICONS
   };
 })();

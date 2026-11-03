@@ -1,9 +1,9 @@
 <!-- Hero Banner -->
 <div align="center">
 
-  <img src="assets/images/unimaxdl-logo.png" alt="UnimaxDL Logo" width="120">
+  <img src="assets/images/logo.png" alt="UnimaxDL Logo" width="140" style="border-radius: 28px;">
 
-  # ⬇️ UnimaxDL
+  # UnimaxDL
 
   **Download Anything. Everywhere. For Free.**
 
