@@ -111,11 +111,14 @@ def main() -> None:
     # Auto-open browser
     open_browser_delayed("http://127.0.0.1:8000")
 
+    # Dynamic port support for cloud environments (Render, Railway, Heroku)
+    port = int(os.environ.get("PORT", 8000))
+
     # Run the ASGI server
     uvicorn.run(
         "server:app",
         host="0.0.0.0",
-        port=8000,
+        port=port,
         log_level="info",
         access_log=True,
     )
