@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+build/
+dist/
+*.egg-info/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.next/
+.nuxt/
+
+# UnimaxDL Downloads (Do not commit downloaded media!)
+server/downloads/*
+!server/downloads/.gitkeep
+
+# Android
+android/app/build/
+android/.gradle/
+android/local.properties
+*.apk
+*.aab
+
+# Desktop (Tauri / Rust)
+desktop/src-tauri/target/
+desktop/dist/
+
+# IDE & OS
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environment Secrets
+.env
+.env.local
+*.env

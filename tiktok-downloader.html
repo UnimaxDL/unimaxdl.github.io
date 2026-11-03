@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>TikTok Video Downloader Without Watermark — HD Free | UnimaxDL</title>
+  <meta name="description" content="Download TikTok videos without watermark in Full HD MP4 or extract audio to MP3. Fast, free, no app required, and 100% ad-free with UnimaxDL." />
+  <meta name="keywords" content="tiktok downloader without watermark, tiktok video saver, tiktok to mp3, download tiktok video hd, free tiktok downloader no watermark" />
+  <link rel="canonical" href="https://unimaxdl.github.io/tiktok-downloader.html" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #09090d;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(20, 184, 166, 0.12) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(244, 63, 94, 0.10) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(18, 18, 24, 0.8) 0px, #09090d 100%);
+      background-attachment: fixed;
+    }
+    .glass-card {
+      background: rgba(24, 24, 34, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+  </style>
+</head>
+<body class="text-gray-100 font-sans antialiased selection:bg-teal-500/30 selection:text-teal-300">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-[#09090d]/80 backdrop-blur-xl border-b border-white/[0.08]">
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-400 to-rose-500 flex items-center justify-center text-white font-black text-xl shadow-lg">
+          🎵
+        </div>
+        <span class="font-black text-lg text-white">Unimax<span class="text-teal-400">DL</span></span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-gray-300">
+        <a href="/" class="hover:text-teal-400 transition">Universal Tool</a>
+        <a href="/youtube-downloader.html" class="hover:text-teal-400 transition">YouTube</a>
+        <a href="/tiktok-downloader.html" class="text-teal-400 font-semibold">TikTok</a>
+        <a href="/instagram-downloader.html" class="hover:text-teal-400 transition">Instagram</a>
+        <a href="/download.html" class="hover:text-teal-400 transition">Download App</a>
+      </nav>
+
+      <button onclick="UDL_DOWNLOADER.showSettingsModal()" class="p-2 rounded-xl glass-card text-gray-400 hover:text-white transition" title="Server Settings">
+        ⚙️
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="pt-16 pb-12 px-4 text-center">
+    <div class="max-w-3xl mx-auto space-y-4">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/25 text-teal-400 text-xs font-semibold">
+        <span>✨ 100% Watermark-Free · Full HD · Audio MP3</span>
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight">
+        TikTok Video Downloader Without Watermark
+      </h1>
+      <p class="text-gray-400 text-sm sm:text-base max-w-xl mx-auto">
+        Save TikTok videos cleanly without any creator watermark, logo, or username overlay. Fast, free, and privacy-protected.
+      </p>
+    </div>
+  </section>
+
+  <!-- Downloader Widget -->
+  <section class="max-w-3xl mx-auto px-4 pb-16">
+    <div class="glass-card rounded-3xl p-6 sm:p-8 space-y-6">
+      <div class="space-y-2">
+        <label for="url-input" class="block text-xs font-bold text-gray-400 uppercase tracking-wider">Paste TikTok Video Link</label>
+        <div class="relative flex items-center">
+          <input 
+            type="url" 
+            id="url-input" 
+            placeholder="https://www.tiktok.com/@user/video/... or https://vt.tiktok.com/..." 
+            class="w-full bg-[#111117] border border-white/10 rounded-2xl py-4 pl-4 pr-32 text-sm text-white placeholder-gray-500 focus:border-teal-500/60 focus:ring-1 focus:ring-teal-500/60 transition"
+          />
+          <button 
+            id="analyze-btn" 
+            onclick="handleAnalyze()" 
+            class="absolute right-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-teal-500 to-rose-500 hover:brightness-110 text-white font-bold text-xs shadow-md transition">
+            Analyze
+          </button>
+        </div>
+      </div>
+
+      <div id="error-card" class="hidden p-4 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-300 text-xs"></div>
+      <div id="media-card-container"></div>
+      <div id="tasks-container"></div>
+    </div>
+  </section>
+
+  <!-- Content Section -->
+  <section class="max-w-4xl mx-auto px-4 pb-20 space-y-8">
+    <div class="glass-card rounded-3xl p-8 space-y-3">
+      <h2 class="text-xl font-bold text-white">Why Download TikTok with UnimaxDL?</h2>
+      <p class="text-gray-400 text-xs leading-relaxed">
+        Standard TikTok downloads stamp a bouncing watermark with the username all over the video. UnimaxDL extracts the original, unaltered master video directly from TikTok's content servers, giving you a crystal-clear, watermark-free MP4 ready for presentations, video editing, or offline archiving.
+      </p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/[0.08] bg-[#07070a] py-8 text-center text-xs text-gray-500">
+    <p>UnimaxDL · Clean TikTok Video Downloader</p>
+  </footer>
+
+  <script src="/assets/js/analytics.js"></script>
+  <script src="/assets/js/downloader.js"></script>
+  <script>
+    async function handleAnalyze() {
+      const url = document.getElementById('url-input').value.trim();
+      const errCard = document.getElementById('error-card');
+      const mediaContainer = document.getElementById('media-card-container');
+      errCard.classList.add('hidden');
+      if (!url) return;
+
+      try {
+        const info = await UDL_DOWNLOADER.analyzeUrl(url);
+        UDL_DOWNLOADER.renderMediaCard(info, mediaContainer);
+      } catch (err) {
+        errCard.classList.remove('hidden');
+        errCard.innerText = err.message || 'Error analyzing TikTok video.';
+      }
+    }
+    UDL_DOWNLOADER.startPolling((tasks) => {
+      UDL_DOWNLOADER.renderTasks(tasks, document.getElementById('tasks-container'));
+    });
+  </script>
+</body>
+</html>

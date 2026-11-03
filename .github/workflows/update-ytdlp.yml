@@ -1,0 +1,34 @@
+name: Automated yt-dlp Version Check
+
+on:
+  schedule:
+    - cron: '0 6 * * 1' # Every Monday at 06:00 UTC
+  workflow_dispatch:
+
+jobs:
+  check-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Check latest version
+        run: |
+          pip install --upgrade pip
+          pip install yt-dlp
+          LATEST=$(pip show yt-dlp | grep Version | cut -d' ' -f2)
+          echo "Latest yt-dlp: $LATEST"
+          sed -i "s/yt-dlp>=.*/yt-dlp>=${LATEST}/" server/requirements.txt
+
+      - name: Create Pull Request if updated
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore(deps): update yt-dlp to latest version"
+          title: "⬆️ Automated yt-dlp update"
+          body: "Bumps yt-dlp dependency in server/requirements.txt to maintain compatibility with streaming websites."
+          branch: "chore/update-ytdlp"

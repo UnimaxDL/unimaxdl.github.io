@@ -1,0 +1,23 @@
+# ===========================================================================
+# UnimaxDL Server — Docker Compose
+# ===========================================================================
+# Usage:
+#   docker compose up -d          # start in background
+#   docker compose logs -f        # tail logs
+#   docker compose down           # stop and remove containers
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: unimaxdl-server
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./downloads:/app/downloads
+    environment:
+      - UNIMAXDL_ANALYTICS=false
+      # - SUPABASE_URL=https://YOUR_PROJECT.supabase.co
+      # - SUPABASE_KEY=YOUR_ANON_KEY
+    restart: unless-stopped

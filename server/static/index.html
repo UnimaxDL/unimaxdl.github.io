@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>UnimaxDL — Free Universal Video Downloader | YouTube, TikTok, Instagram</title>
+  <meta name="description" content="Download videos from YouTube, TikTok, Instagram, Twitter/X, Facebook and 1000+ sites in 4K, 1080p or convert to MP3. 100% free, open-source, no ads, no registration." />
+  <meta name="keywords" content="universal video downloader, youtube downloader, tiktok downloader no watermark, instagram reels saver, video to mp3, open source downloader, unimaxdl" />
+  <link rel="canonical" href="https://unimaxdl.github.io/" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://unimaxdl.github.io/" />
+  <meta property="og:title" content="UnimaxDL — Free Universal Video Downloader | 1000+ Sites" />
+  <meta property="og:description" content="Download any video in 4K or extract audio in MP3. 100% free, open-source, zero ads, zero tracking." />
+  <meta property="og:image" content="https://unimaxdl.github.io/assets/images/og-banner.png" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://unimaxdl.github.io/" />
+  <meta property="twitter:title" content="UnimaxDL — Universal Video Downloader" />
+  <meta property="twitter:description" content="Download any video in 4K or convert to MP3. 1000+ sites, zero ads, open-source." />
+  <meta property="twitter:image" content="https://unimaxdl.github.io/assets/images/og-banner.png" />
+
+  <!-- Schema.org SoftwareApplication JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "UnimaxDL",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Web, Windows, macOS, Linux, Android",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "ratingCount": "2450"
+    },
+    "description": "Open-source universal media downloader supporting 1000+ websites with 4K video downloads and MP3 conversion."
+  }
+  </script>
+
+  <!-- Tailwind CSS & Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            amber: {
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+            },
+            dark: {
+              950: '#09090d',
+              900: '#121218',
+              850: '#181822',
+              800: '#222230',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #09090d;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(245, 158, 11, 0.12) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.10) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(18, 18, 24, 0.8) 0px, #09090d 100%);
+      background-attachment: fixed;
+    }
+    .glass-card {
+      background: rgba(24, 24, 34, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-card:hover {
+      border-color: rgba(245, 158, 11, 0.35);
+    }
+    .shimmer-text {
+      background: linear-gradient(90deg, #f59e0b 0%, #fde68a 50%, #f59e0b 100%);
+      background-size: 200% auto;
+      color: transparent;
+      -webkit-background-clip: text;
+      animation: shine 4s linear infinite;
+    }
+    @keyframes shine {
+      to { background-position: 200% center; }
+    }
+  </style>
+</head>
+<body class="text-gray-100 font-sans antialiased selection:bg-amber-500/30 selection:text-amber-300">
+
+  <!-- Top Navigation -->
+  <header class="sticky top-0 z-50 bg-[#09090d]/80 backdrop-blur-xl border-b border-white/[0.08]">
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/20 text-dark-950 font-black text-xl group-hover:scale-105 transition-transform">
+          ⬇️
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="font-black text-lg tracking-tight text-white">Unimax<span class="text-amber-400">DL</span></span>
+          <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-amber-400/10 text-amber-400 border border-amber-400/20 uppercase tracking-wider">v1.0</span>
+        </div>
+      </a>
+
+      <!-- Nav Links -->
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-gray-300">
+        <a href="#tool" class="hover:text-amber-400 transition">Online Downloader</a>
+        <a href="/download.html" class="hover:text-amber-400 transition">Download App</a>
+        <a href="/youtube-downloader.html" class="hover:text-amber-400 transition">YouTube</a>
+        <a href="/tiktok-downloader.html" class="hover:text-amber-400 transition">TikTok</a>
+        <a href="/instagram-downloader.html" class="hover:text-amber-400 transition">Instagram</a>
+        <a href="#features" class="hover:text-amber-400 transition">Features</a>
+        <a href="#faq" class="hover:text-amber-400 transition">FAQ</a>
+      </nav>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-3">
+        <button onclick="UDL_DOWNLOADER.showSettingsModal()" class="p-2 rounded-xl glass-card hover:bg-white/10 text-gray-400 hover:text-white transition" title="Server Settings" id="settings-btn">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        </button>
+        <a href="https://github.com/UnimaxDL/unimaxdl.github.io" target="_blank" rel="noopener" class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl glass-card hover:bg-white/10 text-xs font-semibold text-gray-200 transition">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span class="hidden sm:inline">Star on GitHub</span>
+          <span class="bg-amber-400/20 text-amber-300 text-[10px] px-1.5 py-0.5 rounded-full font-bold">⭐ Free</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative pt-16 pb-20 px-4 text-center overflow-hidden">
+    <!-- Glowing background orb -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[350px] bg-gradient-to-b from-amber-500/15 via-amber-500/5 to-transparent blur-3xl pointer-events-none -z-10"></div>
+
+    <div class="max-w-4xl mx-auto space-y-6">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/25 text-amber-400 text-xs font-semibold">
+        <span>✨ Universal · Ad-Free · Open-Source</span>
+      </div>
+
+      <h1 class="text-4xl sm:text-6xl font-black tracking-tight leading-tight">
+        Download Anything.<br/>
+        <span class="shimmer-text">Everywhere. For Free.</span>
+      </h1>
+
+      <p class="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+        The open-source universal media downloader. Fetch videos and music from <strong class="text-gray-200">1000+ websites</strong> in 4K UHD or MP3. Zero advertisements, zero daemons, zero tracking.
+      </p>
+
+      <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+        <a href="#tool" class="px-6 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-dark-950 font-extrabold text-sm shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 transition">
+          🚀 Try Online Downloader
+        </a>
+        <a href="/download.html" class="px-6 py-3 rounded-xl glass-card hover:bg-white/10 text-gray-200 font-bold text-sm transition">
+          📱 Get Desktop & Android App
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Online Downloader Tool Section -->
+  <section id="tool" class="max-w-3xl mx-auto px-4 pb-20">
+    <div class="glass-card rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+      
+      <!-- Input Box -->
+      <div class="space-y-2">
+        <label for="url-input" class="block text-xs font-bold text-gray-400 uppercase tracking-wider">Paste Any Video or Audio Link</label>
+        <div class="relative flex items-center">
+          <input 
+            type="url" 
+            id="url-input" 
+            placeholder="https://www.youtube.com/watch?v=... or TikTok, Instagram, Twitter link" 
+            class="w-full bg-[#111117] border border-white/10 rounded-2xl py-4 pl-4 pr-32 text-sm text-white placeholder-gray-500 focus:border-amber-500/60 focus:ring-1 focus:ring-amber-500/60 transition"
+          />
+          <button 
+            id="analyze-btn" 
+            onclick="handleAnalyze()" 
+            class="absolute right-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-dark-950 font-bold text-xs shadow-md transition flex items-center gap-1.5">
+            <span id="btn-text">Analyze</span>
+            <span id="btn-spinner" class="hidden animate-spin">🔄</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Platform Sample Tags -->
+      <div class="flex flex-wrap items-center gap-2 pt-1 text-xs text-gray-400">
+        <span class="text-gray-500">Quick tests:</span>
+        <button onclick="setSample('https://www.youtube.com/watch?v=dQw4w9WgXcQ')" class="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 text-gray-300 transition">YouTube</button>
+        <button onclick="setSample('https://www.tiktok.com/@tiktok/video/7123456789')" class="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 text-gray-300 transition">TikTok</button>
+        <button onclick="setSample('https://www.instagram.com/reel/C3abc123/')" class="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 text-gray-300 transition">Instagram</button>
+      </div>
+
+      <!-- Error Card (Hidden by default) -->
+      <div id="error-card" class="hidden p-4 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-300 text-xs flex items-start gap-3">
+        <span class="text-lg">⚠️</span>
+        <div class="flex-1" id="error-message">Error analyzing URL.</div>
+      </div>
+
+      <!-- Media Result Container -->
+      <div id="media-card-container"></div>
+
+      <!-- Active Tasks Container -->
+      <div id="tasks-container"></div>
+
+    </div>
+  </section>
+
+  <!-- Supported Platforms -->
+  <section class="max-w-5xl mx-auto px-4 py-12 border-t border-white/[0.06]">
+    <div class="text-center space-y-2 mb-10">
+      <h2 class="text-2xl sm:text-3xl font-black text-white">Supported Platforms</h2>
+      <p class="text-gray-400 text-sm">Download effortlessly from over 1,000+ streaming sites and social networks.</p>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-3">
+      <a href="/youtube-downloader.html" class="glass-card p-4 rounded-2xl text-center hover:-translate-y-1 transition group">
+        <span class="text-3xl block mb-2 group-hover:scale-110 transition-transform">▶️</span>
+        <span class="font-bold text-xs text-white group-hover:text-amber-400">YouTube</span>
+        <span class="text-[10px] text-gray-500 block">4K & Shorts</span>
+      </a>
+      <a href="/tiktok-downloader.html" class="glass-card p-4 rounded-2xl text-center hover:-translate-y-1 transition group">
+        <span class="text-3xl block mb-2 group-hover:scale-110 transition-transform">🎵</span>
+        <span class="font-bold text-xs text-white group-hover:text-amber-400">TikTok</span>
+        <span class="text-[10px] text-gray-500 block">No Watermark</span>
+      </a>
+      <a href="/instagram-downloader.html" class="glass-card p-4 rounded-2xl text-center hover:-translate-y-1 transition group">
+        <span class="text-3xl block mb-2 group-hover:scale-110 transition-transform">📸</span>
+        <span class="font-bold text-xs text-white group-hover:text-amber-400">Instagram</span>
+        <span class="text-[10px] text-gray-500 block">Reels & Stories</span>
+      </a>
+      <div class="glass-card p-4 rounded-2xl text-center hover:-translate-y-1 transition group">
+        <span class="text-3xl block mb-2 group-hover:scale-110 transition-transform">🐦</span>
+        <span class="font-bold text-xs text-white group-hover:text-amber-400">Twitter / X</span>
+        <span class="text-[10px] text-gray-500 block">HD Clips</span>
+      </div>
+      <div class="glass-card p-4 rounded-2xl text-center hover:-translate-y-1 transition group">
+        <span class="text-3xl block mb-2 group-hover:scale-110 transition-transform">📘</span>
+        <span class="font-bold text-xs text-white group-hover:text-amber-400">Facebook</span>
+        <span class="text-[10px] text-gray-500 block">Videos & Reels</span>
+      </div>
+      <div class="glass-card p-4 rounded-2xl text-center hover:-translate-y-1 transition group">
+        <span class="text-3xl block mb-2 group-hover:scale-110 transition-transform">🤖</span>
+        <span class="font-bold text-xs text-white group-hover:text-amber-400">Reddit</span>
+        <span class="text-[10px] text-gray-500 block">With Audio</span>
+      </div>
+    </div>
+    
+    <div class="mt-4 text-center">
+      <span class="text-xs text-gray-400 font-mono">SoundCloud · Vimeo · Twitch · Dailymotion · Pinterest · Bilibili · Bandcamp + 990 more</span>
+    </div>
+  </section>
+
+  <!-- Features Grid -->
+  <section id="features" class="max-w-5xl mx-auto px-4 py-16">
+    <div class="text-center space-y-2 mb-12">
+      <h2 class="text-2xl sm:text-3xl font-black text-white">Why UnimaxDL?</h2>
+      <p class="text-gray-400 text-sm">Engineered without compromises. Everything you wanted in a media downloader.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div class="glass-card p-6 rounded-3xl space-y-3">
+        <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-2xl text-amber-400">
+          🎯
+        </div>
+        <h3 class="font-bold text-base text-white">4K UHD & Lossless Audio</h3>
+        <p class="text-gray-400 text-xs leading-relaxed">Download in original source resolution from 144p up to 4K / 8K, or extract audio in MP3 up to 320kbps and pristine M4A format.</p>
+      </div>
+
+      <div class="glass-card p-6 rounded-3xl space-y-3">
+        <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-2xl text-emerald-400">
+          🛡️
+        </div>
+        <h3 class="font-bold text-base text-white">100% Ad-Free & Clean</h3>
+        <p class="text-gray-400 text-xs leading-relaxed">No deceptive download buttons, pop-under tabs, cryptominers, or malware. A pure utility designed to respect your device and privacy.</p>
+      </div>
+
+      <div class="glass-card p-6 rounded-3xl space-y-3">
+        <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-2xl text-indigo-400">
+          ⚡
+        </div>
+        <h3 class="font-bold text-base text-white">Universal Engine</h3>
+        <p class="text-gray-400 text-xs leading-relaxed">Powered by the battle-tested yt-dlp core, receiving constant updates to support evolving website algorithms and DRM changes.</p>
+      </div>
+
+      <div class="glass-card p-6 rounded-3xl space-y-3">
+        <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-2xl text-amber-400">
+          📱
+        </div>
+        <h3 class="font-bold text-base text-white">Cross-Platform Sync</h3>
+        <p class="text-gray-400 text-xs leading-relaxed">Available on the Web, Windows, macOS, Linux, and Android. Share a video link from your phone directly into the UnimaxDL app.</p>
+      </div>
+
+      <div class="glass-card p-6 rounded-3xl space-y-3">
+        <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-2xl text-emerald-400">
+          🔒
+        </div>
+        <h3 class="font-bold text-base text-white">Self-Host Ready</h3>
+        <p class="text-gray-400 text-xs leading-relaxed">Run the lightweight Python or Docker backend on your own home server or PC. Keep all media on your private local network.</p>
+      </div>
+
+      <div class="glass-card p-6 rounded-3xl space-y-3">
+        <div class="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-2xl text-indigo-400">
+          ⭐
+        </div>
+        <h3 class="font-bold text-base text-white">100% Open Source</h3>
+        <p class="text-gray-400 text-xs leading-relaxed">Published under the MIT License on GitHub. Fully transparent, auditable by security researchers, and maintained by the community.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="max-w-4xl mx-auto px-4 py-16 border-t border-white/[0.06]">
+    <div class="text-center space-y-2 mb-12">
+      <h2 class="text-2xl sm:text-3xl font-black text-white">How It Works in 3 Steps</h2>
+      <p class="text-gray-400 text-sm">Download your favorite content in seconds.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+      <div class="space-y-3">
+        <div class="w-14 h-14 rounded-2xl bg-amber-500/20 border border-amber-500/30 text-amber-400 font-black text-xl flex items-center justify-center mx-auto">1</div>
+        <h3 class="font-bold text-white text-base">Paste Link</h3>
+        <p class="text-gray-400 text-xs">Copy any video or audio URL from your browser or social app and paste it into UnimaxDL.</p>
+      </div>
+
+      <div class="space-y-3">
+        <div class="w-14 h-14 rounded-2xl bg-amber-500/20 border border-amber-500/30 text-amber-400 font-black text-xl flex items-center justify-center mx-auto">2</div>
+        <h3 class="font-bold text-white text-base">Choose Quality</h3>
+        <p class="text-gray-400 text-xs">Select your preferred video resolution (4K, 1080p, 720p) or high-quality audio bitrate (MP3 320k).</p>
+      </div>
+
+      <div class="space-y-3">
+        <div class="w-14 h-14 rounded-2xl bg-amber-500/20 border border-amber-500/30 text-amber-400 font-black text-xl flex items-center justify-center mx-auto">3</div>
+        <h3 class="font-bold text-white text-base">Download & Enjoy</h3>
+        <p class="text-gray-400 text-xs">Watch real-time download progress and save the media file directly to your device storage.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="max-w-3xl mx-auto px-4 py-16 border-t border-white/[0.06]">
+    <div class="text-center space-y-2 mb-10">
+      <h2 class="text-2xl sm:text-3xl font-black text-white">Frequently Asked Questions</h2>
+      <p class="text-gray-400 text-sm">Everything you need to know about UnimaxDL.</p>
+    </div>
+
+    <div class="space-y-4">
+      <details class="glass-card rounded-2xl p-5 group [&_summary::-webkit-details-marker]:hidden cursor-pointer">
+        <summary class="flex items-center justify-between font-bold text-sm text-white">
+          <span>Is UnimaxDL completely free to use?</span>
+          <span class="text-amber-400 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="text-gray-400 text-xs mt-3 leading-relaxed">
+          Yes, 100% free! UnimaxDL is open-source software licensed under the MIT License. There are no subscriptions, paywalls, or hidden fees.
+        </p>
+      </details>
+
+      <details class="glass-card rounded-2xl p-5 group [&_summary::-webkit-details-marker]:hidden cursor-pointer">
+        <summary class="flex items-center justify-between font-bold text-sm text-white">
+          <span>Does it support 4K and 60FPS video downloads?</span>
+          <span class="text-amber-400 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="text-gray-400 text-xs mt-3 leading-relaxed">
+          Yes. Whenever the source platform provides 1440p, 4K UHD, or 8K streams, UnimaxDL automatically detects them and merges the best available video with high-definition audio into a clean MP4 file.
+        </p>
+      </details>
+
+      <details class="glass-card rounded-2xl p-5 group [&_summary::-webkit-details-marker]:hidden cursor-pointer">
+        <summary class="flex items-center justify-between font-bold text-sm text-white">
+          <span>Can I download TikTok videos without watermark?</span>
+          <span class="text-amber-400 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="text-gray-400 text-xs mt-3 leading-relaxed">
+          Yes. UnimaxDL extracts the original, pristine high-definition video directly from TikTok's CDN without any overlay watermark or branding.
+        </p>
+      </details>
+
+      <details class="glass-card rounded-2xl p-5 group [&_summary::-webkit-details-marker]:hidden cursor-pointer">
+        <summary class="flex items-center justify-between font-bold text-sm text-white">
+          <span>How do I connect the web app to my local PC server?</span>
+          <span class="text-amber-400 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="text-gray-400 text-xs mt-3 leading-relaxed">
+          Simply tap the ⚙️ gear icon in the top header. Select "Local PC Server", enter <code class="text-amber-300">http://127.0.0.1:8000</code> (or your LAN IP), and save. Your downloads will process instantly on your PC!
+        </p>
+      </details>
+
+      <details class="glass-card rounded-2xl p-5 group [&_summary::-webkit-details-marker]:hidden cursor-pointer">
+        <summary class="flex items-center justify-between font-bold text-sm text-white">
+          <span>Is downloading videos legal?</span>
+          <span class="text-amber-400 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="text-gray-400 text-xs mt-3 leading-relaxed">
+          Downloading content for personal offline archiving, fair use, or creative commons materials is legal in most jurisdictions. Users must respect copyright laws and the terms of service of each respective platform.
+        </p>
+      </details>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/[0.08] bg-[#07070a] py-12 px-4 text-xs text-gray-400">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-amber-500 flex items-center justify-center text-dark-950 font-black">⬇️</div>
+        <div>
+          <span class="font-bold text-white text-sm">UnimaxDL</span>
+          <p class="text-[11px] text-gray-500">Universal Media Downloader · Open Source</p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-6 text-gray-400">
+        <a href="/" class="hover:text-white transition">Home</a>
+        <a href="/download.html" class="hover:text-white transition">Desktop & Android</a>
+        <a href="/youtube-downloader.html" class="hover:text-white transition">YouTube</a>
+        <a href="/tiktok-downloader.html" class="hover:text-white transition">TikTok</a>
+        <a href="/instagram-downloader.html" class="hover:text-white transition">Instagram</a>
+        <a href="https://github.com/UnimaxDL/unimaxdl.github.io" target="_blank" rel="noopener" class="hover:text-white transition">GitHub Repo</a>
+      </div>
+
+      <div class="text-center md:text-right text-[11px] text-gray-500">
+        <span>Built with ❤️ by Atomic Dhruba</span><br/>
+        <span>Licensed under MIT · Copyright © 2026</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="/assets/js/analytics.js"></script>
+  <script src="/assets/js/downloader.js"></script>
+  <script>
+    function setSample(url) {
+      document.getElementById('url-input').value = url;
+      handleAnalyze();
+    }
+
+    async function handleAnalyze() {
+      const url = document.getElementById('url-input').value.trim();
+      const errCard = document.getElementById('error-card');
+      const errMsg = document.getElementById('error-message');
+      const mediaContainer = document.getElementById('media-card-container');
+      const btnText = document.getElementById('btn-text');
+      const spinner = document.getElementById('btn-spinner');
+
+      errCard.classList.add('hidden');
+
+      if (!url) {
+        errCard.classList.remove('hidden');
+        errMsg.innerText = "Please paste a valid video URL first.";
+        return;
+      }
+
+      btnText.innerText = "Analyzing...";
+      spinner.classList.remove('hidden');
+
+      try {
+        const info = await UDL_DOWNLOADER.analyzeUrl(url);
+        UDL_DOWNLOADER.renderMediaCard(info, mediaContainer);
+        mediaContainer.scrollIntoView({ behavior: 'smooth' });
+      } catch (err) {
+        errCard.classList.remove('hidden');
+        errMsg.innerHTML = `${err.message || 'Could not analyze URL'}.<br/><span class="text-[10px] text-gray-400 mt-1 inline-block">Make sure your server is running (tap ⚙️ to configure).</span>`;
+      } finally {
+        btnText.innerText = "Analyze";
+        spinner.classList.add('hidden');
+      }
+    }
+
+    // Start background task polling
+    UDL_DOWNLOADER.startPolling((tasks) => {
+      UDL_DOWNLOADER.renderTasks(tasks, document.getElementById('tasks-container'));
+    });
+  </script>
+</body>
+</html>
