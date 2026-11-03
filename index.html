@@ -14,24 +14,78 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
 
-  <!-- Open Graph -->
+  <!-- Robots & Search Engine Directives -->
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+  <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://unimaxdl.github.io/" />
-  <meta property="og:title" content="UnimaxDL — Free Universal Media Downloader" />
-  <meta property="og:description" content="Download any video in 4K or convert to MP3. 1000+ sites, zero ads, zero tracking." />
-  <meta property="og:image" content="https://unimaxdl.github.io/assets/images/logo-192.png" />
+  <meta property="og:title" content="UnimaxDL — Free Universal Video Downloader | 4K & MP3" />
+  <meta property="og:description" content="Download videos from YouTube, TikTok, Instagram, Twitter/X in 4K, 1080p, and 320kbps MP3. 100% free, fast, no ads, zero limits." />
+  <meta property="og:image" content="https://unimaxdl.github.io/assets/images/icon2.png" />
+  <meta property="og:site_name" content="UnimaxDL" />
 
-  <!-- Schema.org SoftwareApplication JSON-LD -->
+  <!-- Twitter / X Cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://unimaxdl.github.io/" />
+  <meta name="twitter:title" content="UnimaxDL — Free Universal Video Downloader" />
+  <meta name="twitter:description" content="Download YouTube, TikTok, and Instagram videos in HD with zero ads." />
+  <meta name="twitter:image" content="https://unimaxdl.github.io/assets/images/icon2.png" />
+
+  <!-- Schema.org SoftwareApplication & FAQPage JSON-LD -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "UnimaxDL",
-    "applicationCategory": "MultimediaApplication",
-    "operatingSystem": "Web, Windows, macOS, Linux, Android",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-    "description": "Open-source universal media downloader supporting 1000+ websites with 4K video downloads and MP3 conversion."
-  }
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "UnimaxDL",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Web, Windows, macOS, Linux, Android",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": "Universal media downloader supporting 1000+ websites with 4K video downloads and MP3 conversion."
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "UnimaxDL",
+      "url": "https://unimaxdl.github.io/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://unimaxdl.github.io/?url={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is UnimaxDL free to use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, UnimaxDL is 100% free with no subscription, no pop-up advertisements, and no registration required."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which platforms can I download from?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "UnimaxDL supports YouTube, TikTok (without watermark), Instagram Reels and Posts, Twitter/X, Facebook, Vimeo, and over 1,000 public video websites."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I convert video to MP3 music?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, UnimaxDL allows extracting audio in studio 320kbps MP3 or original lossless M4A formats."
+          }
+        }
+      ]
+    }
+  ]
   </script>
 
   <!-- Tailwind CSS & Google Fonts -->
@@ -344,6 +398,9 @@
         <a href="/youtube-downloader.html" class="hover:text-white transition">YouTube</a>
         <a href="/tiktok-downloader.html" class="hover:text-white transition">TikTok</a>
         <a href="/instagram-downloader.html" class="hover:text-white transition">Instagram</a>
+        <a href="/terms.html" class="hover:text-cyan-400 transition">Terms</a>
+        <a href="/privacy.html" class="hover:text-cyan-400 transition">Privacy</a>
+        <a href="/dmca.html" class="hover:text-amber-400 transition">DMCA</a>
         <a href="https://github.com/UnimaxDL/unimaxdl.github.io" target="_blank" rel="noopener" class="hover:text-white transition">GitHub</a>
         <button onclick="UDL_DOWNLOADER.showSettingsModal()" class="hover:text-cyan-400 transition text-[11px] text-gray-500">Self-Host / PC Engine</button>
       </div>
