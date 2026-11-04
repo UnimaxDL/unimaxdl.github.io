@@ -335,8 +335,27 @@ const UDL_DOWNLOADER = (() => {
       }
     }
 
-    if (isYouTube && ytId && !thumbnail) {
-      thumbnail = `https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`;
+    // YouTube direct stream resolution (direct 360p & audio stream via public mirror)
+    if (isYouTube && ytId) {
+      if (!thumbnail) thumbnail = `https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`;
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 2000);
+        const yRes = await fetch(`https://yt.chocolatemoo53.com/api/v1/videos/${ytId}`, { signal: controller.signal });
+        clearTimeout(timeoutId);
+        if (yRes.ok) {
+          const yData = await yRes.json();
+          if (yData.title && (!title || title === "YouTube Video")) title = yData.title;
+          if (yData.author && (!uploader || uploader === "YouTube Creator")) uploader = yData.author;
+          if (yData.lengthSeconds) duration = formatDuration(yData.lengthSeconds);
+          const formatStreams = yData.formatStreams || [];
+          if (formatStreams.length > 0 && formatStreams[0].url) {
+            directDownloadUrl = formatStreams[0].url;
+          }
+        }
+      } catch (e) {
+        // Non-blocking fallback continues
+      }
     }
     if (isInstagram && igCode) {
       directDownloadUrl = `https://www.instagram.com/p/${igCode}/media/?size=l`;
@@ -463,26 +482,18 @@ const UDL_DOWNLOADER = (() => {
     const igCode = igMatch ? igMatch[1] : null;
 
     let directStreamUrl = '';
-    let mirror1Url = '';
-    let mirror2Url = '';
     let downloadFileName = (title.replace(/[^a-zA-Z0-9_\-\s]/g, '').trim().substring(0, 36) || 'unimaxdl-media') + (isAudio ? '.mp3' : '.mp4');
 
     if (currentMedia && currentMedia.direct_download_url) {
       directStreamUrl = currentMedia.direct_download_url;
-      mirror1Url = currentMedia.direct_download_url;
     } else if (igCode) {
       directStreamUrl = `https://www.instagram.com/p/${igCode}/media/?size=l`;
-      mirror1Url = directStreamUrl;
-    } else if (ytId) {
-      // Direct stream endpoints without third-party web player redirects
-      if (isAudio) {
-        directStreamUrl = `https://cdn.api.vevioz.com/api/button/mp3/${ytId}`;
-        mirror1Url = directStreamUrl;
-      } else {
-        directStreamUrl = `https://cdn.api.vevioz.com/api/button/mp4/${ytId}`;
-        mirror1Url = directStreamUrl;
-      }
+    } else if (ytId && isAudio) {
+      // Direct high-speed M4A/MP3 audio stream via public mirror
+      directStreamUrl = `https://yt.chocolatemoo53.com/latest_version?id=${ytId}&itag=140`;
     }
+
+    const hasDirectStream = Boolean(directStreamUrl);
 
     modal.classList.remove('hidden');
     modal.innerHTML = `
@@ -525,47 +536,74 @@ const UDL_DOWNLOADER = (() => {
           </div>
         </div>
 
-        <!-- Direct Stream Status Slot (Zero Third-Party Lag) -->
-        <div id="udl-sponsor-container" class="rounded-2xl p-4 bg-[#09090e] border border-white/5 space-y-2">
+        <!-- Stream Status Slot (Zero Third-Party Lag) -->
+        <div id="udl-sponsor-container" class="rounded-2xl p-4 bg-[#09090e] border ${hasDirectStream ? 'border-white/5' : 'border-cyan-500/20'} space-y-2">
           <div class="flex items-center justify-between text-xs">
             <span class="text-gray-300 font-bold flex items-center gap-1.5">
               <span class="text-cyan-400">${ICONS.sparkle}</span>
-              <span>Direct High-Speed Stream Ready</span>
+              <span>${hasDirectStream ? 'Direct High-Speed Stream Ready' : 'HD & 4K 60FPS Stream Ready'}</span>
             </span>
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">100% Free</span>
+            <span class="text-[10px] font-mono px-2 py-0.5 rounded ${hasDirectStream ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20'} font-bold">
+              ${hasDirectStream ? '100% Free' : 'UnimaxDL Native'}
+            </span>
           </div>
           <p class="text-[11px] text-gray-400 leading-relaxed">
-            Your stream has been allocated. No registration or software required. Save directly to your device below.
+            ${hasDirectStream 
+              ? 'Your stream has been allocated. No registration or third-party players required. Direct save to device below.' 
+              : 'High-definition video (1080p / 4K) requires local FFmpeg stream merging. Download natively with zero rate limits via the free UnimaxDL App or 1-Click Local Engine.'}
           </p>
         </div>
 
         <!-- Download Action Button (Unlocks after 5 Seconds) -->
         <div class="space-y-2">
-          <button 
-            id="udl-gateway-action-btn"
-            disabled
-            onclick="UDL_DOWNLOADER.executeDownloadAction('${directStreamUrl}', '${downloadFileName}', '${quality}')"
-            class="w-full py-3.5 rounded-2xl bg-white/5 border border-white/10 text-gray-400 font-bold text-xs flex items-center justify-center gap-2 cursor-not-allowed transition-all duration-300">
-            <span id="udl-btn-spinner" class="w-3.5 h-3.5 rounded-full border-2 border-cyan-400 border-t-transparent animate-spin"></span>
-            <span id="udl-btn-text">Generating Direct Download (5s)...</span>
-          </button>
+          ${hasDirectStream ? `
+            <button 
+              id="udl-gateway-action-btn"
+              disabled
+              onclick="UDL_DOWNLOADER.executeDownloadAction('${directStreamUrl}', '${downloadFileName}', '${quality}')"
+              class="w-full py-3.5 rounded-2xl bg-white/5 border border-white/10 text-gray-400 font-bold text-xs flex items-center justify-center gap-2 cursor-not-allowed transition-all duration-300">
+              <span id="udl-btn-spinner" class="w-3.5 h-3.5 rounded-full border-2 border-cyan-400 border-t-transparent animate-spin"></span>
+              <span id="udl-btn-text">Allocating Direct Download (5s)...</span>
+            </button>
+          ` : `
+            <button 
+              id="udl-gateway-action-btn"
+              disabled
+              onclick="UDL_DOWNLOADER.triggerLocalOrApp('${type}', '${quality}')"
+              class="w-full py-3.5 rounded-2xl bg-white/5 border border-white/10 text-gray-400 font-bold text-xs flex items-center justify-center gap-2 cursor-not-allowed transition-all duration-300">
+              <span id="udl-btn-spinner" class="w-3.5 h-3.5 rounded-full border-2 border-cyan-400 border-t-transparent animate-spin"></span>
+              <span id="udl-btn-text">Preparing UnimaxDL App Download (5s)...</span>
+            </button>
+          `}
         </div>
 
         <!-- Format Quick-Switch / Direct Options -->
         <div class="pt-3 border-t border-white/[0.06] space-y-2">
           <div class="flex items-center justify-between text-[11px] text-gray-400">
-            <span>Direct Options:</span>
+            <span>Instant Options:</span>
             <span class="text-[10px] text-gray-500">100% Free &bull; Zero Redirects</span>
           </div>
           <div class="grid grid-cols-2 gap-2">
-            <button onclick="UDL_DOWNLOADER.executeDownloadAction('${directStreamUrl}', '${downloadFileName}', '${quality}')" class="py-2 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-gray-300 hover:text-white text-[11px] font-bold text-center transition flex items-center justify-center gap-1.5 cursor-pointer">
-              ${ICONS.download}
-              <span>Direct Stream</span>
-            </button>
-            <a href="/download.html" class="py-2 px-3 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/20 text-cyan-400 text-[11px] font-bold text-center transition flex items-center justify-center gap-1.5">
+            ${hasDirectStream ? `
+              <button onclick="UDL_DOWNLOADER.executeDownloadAction('${directStreamUrl}', '${downloadFileName}', '${quality}')" class="py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-gray-300 hover:text-white text-[11px] font-bold text-center transition flex items-center justify-center gap-1.5 cursor-pointer">
+                ${ICONS.download}
+                <span>Direct Stream</span>
+              </button>
+            ` : ytId ? `
+              <button onclick="UDL_DOWNLOADER.executeDownloadAction('https://yt.chocolatemoo53.com/latest_version?id=${ytId}&itag=140', '${downloadFileName.replace('.mp4', '.mp3')}', 'MP3')" class="py-2.5 px-3 rounded-xl bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/25 text-purple-300 text-[11px] font-bold text-center transition flex items-center justify-center gap-1.5 cursor-pointer">
+                ${ICONS.audio}
+                <span>Direct MP3 Audio</span>
+              </button>
+            ` : `
+              <a href="/download.html" class="py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-gray-300 text-[11px] font-bold text-center transition flex items-center justify-center gap-1.5">
+                ${ICONS.download}
+                <span>Direct Download</span>
+              </a>
+            `}
+            <button onclick="UDL_DOWNLOADER.triggerLocalOrApp('${type}', '${quality}')" class="py-2.5 px-3 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/20 text-cyan-400 text-[11px] font-bold text-center transition flex items-center justify-center gap-1.5 cursor-pointer">
               ${ICONS.desktop}
-              <span>Get 4K App</span>
-            </a>
+              <span>1-Click PC Engine</span>
+            </button>
           </div>
         </div>
 
@@ -602,7 +640,11 @@ const UDL_DOWNLOADER = (() => {
 
       if (progressBar) progressBar.style.width = `${progress}%`;
       if (badge && remainingSec > 0) badge.innerText = `Unlocking in ${remainingSec}s...`;
-      if (btnText && remainingSec > 0) btnText.innerText = `Generating Direct Download (${remainingSec}s)...`;
+      if (btnText && remainingSec > 0) {
+        btnText.innerText = hasDirectStream 
+          ? `Allocating Direct Download (${remainingSec}s)...` 
+          : `Preparing UnimaxDL App Download (${remainingSec}s)...`;
+      }
 
       if (elapsed >= duration) {
         clearInterval(gatewayTimer);
@@ -616,18 +658,41 @@ const UDL_DOWNLOADER = (() => {
 
         if (actionBtn) {
           actionBtn.disabled = false;
-          actionBtn.className = 'w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:brightness-110 text-dark-950 font-black text-xs sm:text-sm shadow-xl shadow-emerald-500/25 ring-2 ring-emerald-400/40 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer animate-pulse';
+          actionBtn.className = hasDirectStream
+            ? 'w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:brightness-110 text-dark-950 font-black text-xs sm:text-sm shadow-xl shadow-emerald-500/25 ring-2 ring-emerald-400/40 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer animate-pulse'
+            : 'w-full py-3.5 rounded-2xl bg-gradient-to-r from-cyan-500 via-teal-500 to-emerald-500 hover:brightness-110 text-dark-950 font-black text-xs sm:text-sm shadow-xl shadow-cyan-500/25 ring-2 ring-cyan-400/40 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer animate-pulse';
           if (btnSpinner) btnSpinner.classList.add('hidden');
           if (btnText) {
-            btnText.innerHTML = `${ICONS.download} <span>Save ${quality} to Device</span>`;
+            btnText.innerHTML = hasDirectStream
+              ? `${ICONS.download} <span>Save ${quality} to Device</span>`
+              : `${ICONS.download} <span>Download ${quality} via Free UnimaxDL App</span>`;
           }
         }
       }
     }, 100);
   }
 
+  async function triggerLocalOrApp(type, quality) {
+    showToast("Connecting to UnimaxDL Engine...");
+    const isConnected = await checkServerConnection();
+    if (isConnected) {
+      showToast("Local engine connected! Starting download...");
+      closeDownloadModal();
+      triggerDownload(type, quality);
+    } else {
+      showToast("HD stream requires UnimaxDL App. Opening download page...");
+      setTimeout(() => {
+        window.location.href = '/download.html';
+      }, 700);
+    }
+  }
+
   function executeDownloadAction(url, filename, quality) {
-    if (!url) return;
+    if (!url || url.includes('vevioz') || url.includes('piped') || url.includes('cobalt')) {
+      showToast("Engine stream required. Opening UnimaxDL App...");
+      window.location.href = '/download.html';
+      return;
+    }
     showToast(`Opening high-speed stream for ${quality}...`);
 
     // Create invisible anchor to trigger browser download
@@ -635,16 +700,16 @@ const UDL_DOWNLOADER = (() => {
     a.href = url;
     a.download = filename || 'unimaxdl-media';
     a.target = '_blank';
-    a.rel = 'noopener';
+    a.rel = 'noopener noreferrer';
     document.body.appendChild(a);
     a.click();
-    setTimeout(() => a.remove(), 100);
+    setTimeout(() => a.remove(), 150);
 
     if (typeof UDL_ANALYTICS !== 'undefined' && currentMedia) {
       UDL_ANALYTICS.trackDownload({
         source_site: currentMedia.extractor || 'web',
-        media_type: 'video',
-        quality: quality,
+        media_type: (quality && quality.toLowerCase().includes('mp3')) ? 'audio' : 'video',
+        quality: quality || 'HD',
         video_title: currentMedia.title || 'Untitled',
         video_url: currentMedia.webpage_url || ''
       });
@@ -891,6 +956,7 @@ const UDL_DOWNLOADER = (() => {
     showMonetizedDownloadGateway,
     closeDownloadModal,
     executeDownloadAction,
+    triggerLocalOrApp,
     testConnection,
     saveModalSettings,
     analyzeUrl,
