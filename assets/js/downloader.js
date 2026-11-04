@@ -236,6 +236,46 @@ const UDL_DOWNLOADER = (() => {
     }, 3000);
   }
 
+  // Format and proxy CDN thumbnails to bypass hotlink and referrer blocking
+  function formatThumbnailUrl(url) {
+    if (!url || typeof url !== 'string') return '';
+    if (url.startsWith('data:image')) return url;
+    if (url.includes('ytimg.com') || url.includes('youtube.com')) return url;
+    if (url.includes('wsrv.nl') || url.includes('weserv.nl')) return url;
+    if (
+      url.includes('cdninstagram') ||
+      url.includes('fbcdn.net') ||
+      url.includes('tiktokcdn') ||
+      url.includes('twimg.com') ||
+      url.includes('reddit') ||
+      url.includes('pinimg.com') ||
+      url.includes('xhamster') ||
+      url.startsWith('http://')
+    ) {
+      return `https://wsrv.nl/?url=${encodeURIComponent(url)}&output=webp&q=85`;
+    }
+    return url;
+  }
+
+  // Graceful multi-tier image error handler
+  function handleThumbError(imgEl) {
+    if (!imgEl) return;
+    const currentSrc = imgEl.src || '';
+    const originalSrc = imgEl.dataset.orig || '';
+
+    // Tier 1: Attempt wsrv.nl proxy if not tried yet
+    if (!currentSrc.includes('wsrv.nl') && originalSrc && !originalSrc.startsWith('data:image')) {
+      imgEl.src = `https://wsrv.nl/?url=${encodeURIComponent(originalSrc)}&output=webp&q=85`;
+      return;
+    }
+
+    // Tier 2: Fall back to dynamic SVG video poster
+    if (imgEl.dataset.fallback) {
+      imgEl.onerror = null;
+      imgEl.src = imgEl.dataset.fallback;
+    }
+  }
+
   // Generate dynamic branded video poster SVG for media cards
   function generateVideoPosterSvg(title, host) {
     const safeTitle = (title || 'Universal Video Stream')
@@ -378,6 +418,9 @@ const UDL_DOWNLOADER = (() => {
           if (res.ok) {
             const data = await res.json();
             const media = data.data || data;
+            if (media.thumbnail) {
+              media.thumbnail = formatThumbnailUrl(media.thumbnail);
+            }
             if (media.formats && !media.video_formats) {
               media.video_formats = media.formats;
             }
@@ -583,7 +626,7 @@ const UDL_DOWNLOADER = (() => {
     return {
       title,
       uploader,
-      thumbnail,
+      thumbnail: formatThumbnailUrl(thumbnail),
       duration,
       extractor,
       webpage_url: url,
@@ -932,17 +975,17 @@ const UDL_DOWNLOADER = (() => {
     const igCode = info.igCode || (info.webpage_url ? (info.webpage_url.match(/(?:p|reel|tv)\/([\w-]+)/) || [])[1] : null);
     const hasRealThumbnail = info.thumbnail && !info.thumbnail.startsWith('data:image/svg') && !info.thumbnail.includes('images.unsplash.com');
 
-    const mediaPreviewHtml = (isInstagramCard && igCode && !hasRealThumbnail)
-      ? `<iframe src="https://www.instagram.com/p/${igCode}/embed/" class="w-full h-full border-0 rounded-2xl bg-black" scrolling="no" allowtransparency="true"></iframe>`
-      : `<img 
-          src="${info.thumbnail}" 
-          alt="${info.title}" 
-          loading="lazy"
-          referrerpolicy="no-referrer"
-          data-fallback="${fallbackPoster}"
-          onerror="this.onerror=null; if(this.dataset.fallback) this.src=this.dataset.fallback;"
-          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
-        />`;
+    const safeThumbnail = formatThumbnailUrl(info.thumbnail);
+    const mediaPreviewHtml = `<img 
+        src="${safeThumbnail || fallbackPoster}" 
+        data-orig="${info.thumbnail || ''}"
+        alt="" 
+        loading="eager"
+        referrerpolicy="no-referrer"
+        data-fallback="${fallbackPoster}"
+        onerror="UDL_DOWNLOADER.handleThumbError(this)"
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
+      />`;
 
     container.innerHTML = `
       <div class="glass-card rounded-3xl p-6 sm:p-7 border border-white/10 space-y-6 animate-in fade-in zoom-in-95 duration-300 mt-6">
@@ -1175,6 +1218,8 @@ const UDL_DOWNLOADER = (() => {
     triggerDownload,
     renderMediaCard,
     generateVideoPosterSvg,
+    formatThumbnailUrl,
+    handleThumbError,
     fetchLiveMetadata,
     renderTasks,
     startPolling,
