@@ -1,0 +1,28 @@
+{
+  "short_name": "UnimaxDL",
+  "name": "UnimaxDL — Free Universal Media Downloader",
+  "description": "Download videos from YouTube, TikTok, Instagram, Twitter/X, and 1000+ sites in 4K, 1080p, and MP3 audio.",
+  "icons": [
+    {
+      "src": "/assets/images/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/assets/images/icon2-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/images/icon2-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#07070a",
+  "background_color": "#07070a"
+}
