@@ -17,9 +17,11 @@ yarn-error.log*
 .next/
 .nuxt/
 
-# UnimaxDL Downloads (Do not commit downloaded media!)
-server/downloads/*
-!server/downloads/.gitkeep
+# Backend Server (Separated into private repo unimaxdl-server)
+server/
+Dockerfile
+docker-compose.yml
+Start_UnimaxDL.bat
 
 # Android
 android/app/build/

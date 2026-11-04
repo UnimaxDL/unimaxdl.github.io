@@ -155,7 +155,7 @@ const UDL_DOWNLOADER = (() => {
               </button>
             </div>
             <p class="text-[11px] text-gray-500">
-              Run <code class="text-amber-400">python start.py</code> in the <code class="text-gray-400">server/</code> folder to start your local PC backend.
+              Run <code class="text-amber-400">Start_UnimaxDL.bat</code> or <code class="text-amber-400">python start.py</code> in your companion folder to start your local PC backend.
             </p>
           </div>
 

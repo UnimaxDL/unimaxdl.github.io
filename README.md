@@ -72,66 +72,16 @@ Visit **[unimaxdl.github.io](https://unimaxdl.github.io)** → Paste a URL → D
 
 That's it. No signup, no install, no BS.
 
-### 2. 💻 Desktop App
+### 2. Desktop App
 
 1. Go to [**Releases**](https://github.com/UnimaxDL/unimaxdl.github.io/releases)
 2. Download the installer for your OS (`.exe` / `.dmg` / `.AppImage`)
 3. Install and launch
-4. Paste a URL → Pick quality → Download
-
-### 3. 🖥️ Self-Hosted Server
-
-```bash
-git clone https://github.com/UnimaxDL/unimaxdl.github.io.git
-cd unimaxdl.github.io/server
-pip install -r requirements.txt
-python start.py
-```
-
-Server runs at `http://localhost:8000` — open it in your browser and start downloading.
+4. Paste a URL -> Pick quality -> Download
 
 ---
 
-## 🐳 Docker
-
-Spin up UnimaxDL in one command:
-
-```bash
-docker-compose up -d
-```
-
-Or pull directly:
-
-```bash
-docker run -d -p 8000:8000 --name unimaxdl ghcr.io/unimaxdl/server:latest
-```
-
-The server will be available at `http://localhost:8000`.
-
-<details>
-<summary><b>docker-compose.yml</b></summary>
-
-```yaml
-version: "3.8"
-services:
-  unimaxdl:
-    image: ghcr.io/unimaxdl/server:latest
-    container_name: unimaxdl
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./downloads:/app/downloads
-    restart: unless-stopped
-    environment:
-      - MAX_CONCURRENT_DOWNLOADS=3
-      - DOWNLOAD_DIR=/app/downloads
-```
-
-</details>
-
----
-
-## 📱 Android
+## Android
 
 1. Download the latest APK from [**Releases**](https://github.com/UnimaxDL/unimaxdl.github.io/releases)
 2. Enable **"Install from Unknown Sources"** in your device settings
@@ -208,12 +158,6 @@ unimaxdl.github.io/
 │   ├── css/                # Stylesheets
 │   ├── js/                 # Frontend JavaScript
 │   └── images/             # Logos, screenshots, icons
-├── server/                 # Self-hosted Python backend
-│   ├── start.py            # Entry point
-│   ├── requirements.txt    # Python dependencies
-│   ├── api/                # FastAPI route handlers
-│   ├── core/               # yt-dlp wrapper, config, utils
-│   └── downloads/          # Downloaded media storage
 ├── desktop/                # Tauri desktop app (Windows/Mac/Linux)
 │   ├── src-tauri/          # Rust backend
 │   └── src/                # Frontend (web)
