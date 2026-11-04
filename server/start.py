@@ -39,9 +39,9 @@ def get_lan_ip() -> str:
 def check_ffmpeg() -> bool:
     """Return True if ffmpeg is on PATH, print a warning otherwise."""
     if shutil.which("ffmpeg"):
-        print("  ✓ FFmpeg found")
+        print("  [OK] FFmpeg found")
         return True
-    print("  ⚠ FFmpeg NOT found — video merging and audio conversion")
+    print("  [WARN] FFmpeg NOT found -- video merging and audio conversion")
     print("    will not work.  Install from https://ffmpeg.org/download.html")
     return False
 
@@ -51,9 +51,9 @@ def check_ytdlp() -> None:
     try:
         import yt_dlp  # noqa: E402
 
-        print(f"  ✓ yt-dlp {yt_dlp.version.__version__}")
+        print(f"  [OK] yt-dlp {yt_dlp.version.__version__}")
     except Exception:
-        print("  ✗ yt-dlp not importable — downloads will fail!")
+        print("  [ERR] yt-dlp not importable -- downloads will fail!")
 
 
 def open_browser_delayed(url: str, delay: float = 1.2) -> None:
@@ -76,14 +76,14 @@ def open_browser_delayed(url: str, delay: float = 1.2) -> None:
 
 def print_banner(lan_ip: str) -> None:
     print()
-    print("  ══════════════════════════════════════════════════════")
-    print("    UnimaxDL — Universal Media Downloader Server v1.0.0")
-    print("    100% Ad-Free · Zero Daemons · Zero Telemetry")
+    print("  ======================================================")
+    print("    UnimaxDL -- Universal Media Downloader Server v1.0.0")
+    print("    100% Ad-Free * Zero Daemons * Zero Telemetry")
     print()
     print(f"    PC Browser:     http://127.0.0.1:8000")
     print(f"    Mobile Access:  http://{lan_ip}:8000")
     print(f"    API Endpoint:   http://{lan_ip}:8000/api")
-    print("  ══════════════════════════════════════════════════════")
+    print("  ======================================================")
     print()
 
 

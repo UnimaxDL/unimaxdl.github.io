@@ -66,24 +66,30 @@ const UDL_DOWNLOADER = (() => {
     return !!backendUrl;
   }
 
-  // Ping Diagnostic
+  // Ping Diagnostic (Auto-detects running local PC companion on port 8000 or 5000)
   async function checkServerConnection() {
-    if (!backendUrl) {
-      isServerConnected = false;
-      updateStatusBadge(false);
-      return false;
+    const candidates = backendUrl 
+      ? [backendUrl, 'http://127.0.0.1:8000', 'http://127.0.0.1:5000']
+      : ['http://127.0.0.1:8000', 'http://127.0.0.1:5000'];
+
+    for (const target of candidates) {
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 1200);
+        const res = await fetch(`${target}/api/ping`, { signal: controller.signal });
+        clearTimeout(timeoutId);
+        if (res.ok) {
+          backendUrl = target;
+          isServerConnected = true;
+          updateStatusBadge(true);
+          return true;
+        }
+      } catch (e) {}
     }
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 2000);
-      const res = await fetch(`${backendUrl}/api/ping`, { signal: controller.signal });
-      clearTimeout(timeoutId);
-      isServerConnected = res.ok;
-    } catch {
-      isServerConnected = false;
-    }
-    updateStatusBadge(isServerConnected);
-    return isServerConnected;
+
+    isServerConnected = false;
+    updateStatusBadge(false);
+    return false;
   }
 
   function updateStatusBadge(connected) {
@@ -372,6 +378,18 @@ const UDL_DOWNLOADER = (() => {
           if (res.ok) {
             const data = await res.json();
             const media = data.data || data;
+            if (media.formats && !media.video_formats) {
+              media.video_formats = media.formats;
+            }
+            if (!media.extractor && media.source) {
+              media.extractor = media.source;
+            }
+            if (!media.uploader && media.source) {
+              media.uploader = `${media.source} Creator`;
+            }
+            if (!media.duration && media.duration_label) {
+              media.duration = media.duration_label;
+            }
             currentMedia = media;
             return media;
           }
@@ -910,21 +928,29 @@ const UDL_DOWNLOADER = (() => {
     const isFHD = info.video_formats && info.video_formats.some(f => f.height >= 1080);
     const fallbackPoster = generateVideoPosterSvg(info.title, info.extractor || 'Universal');
 
+    const isInstagramCard = (info.extractor === 'Instagram' || (info.webpage_url && info.webpage_url.includes('instagram.com')));
+    const igCode = info.igCode || (info.webpage_url ? (info.webpage_url.match(/(?:p|reel|tv)\/([\w-]+)/) || [])[1] : null);
+    const hasRealThumbnail = info.thumbnail && !info.thumbnail.startsWith('data:image/svg') && !info.thumbnail.includes('images.unsplash.com');
+
+    const mediaPreviewHtml = (isInstagramCard && igCode && !hasRealThumbnail)
+      ? `<iframe src="https://www.instagram.com/p/${igCode}/embed/" class="w-full h-full border-0 rounded-2xl bg-black" scrolling="no" allowtransparency="true"></iframe>`
+      : `<img 
+          src="${info.thumbnail}" 
+          alt="${info.title}" 
+          loading="lazy"
+          referrerpolicy="no-referrer"
+          data-fallback="${fallbackPoster}"
+          onerror="this.onerror=null; if(this.dataset.fallback) this.src=this.dataset.fallback;"
+          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
+        />`;
+
     container.innerHTML = `
       <div class="glass-card rounded-3xl p-6 sm:p-7 border border-white/10 space-y-6 animate-in fade-in zoom-in-95 duration-300 mt-6">
         
         <!-- Top Video Info Bar -->
         <div class="flex flex-col sm:flex-row gap-5 items-start">
           <div class="relative w-full sm:w-60 aspect-video rounded-2xl overflow-hidden bg-black/60 border border-white/10 flex-shrink-0 group">
-            <img 
-              src="${info.thumbnail}" 
-              alt="${info.title}" 
-              loading="lazy"
-              referrerpolicy="no-referrer"
-              data-fallback="${fallbackPoster}"
-              onerror="this.onerror=null; if(this.dataset.fallback) this.src=this.dataset.fallback;"
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
-            />
+            ${mediaPreviewHtml}
             <div class="absolute bottom-2 right-2 px-2 py-0.5 rounded-md bg-black/80 backdrop-blur-md text-[10px] font-mono font-bold text-white">
               ${info.duration || '00:00'}
             </div>
