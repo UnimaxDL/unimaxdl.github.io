@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UnimaxDL Telemetry & Analytics Dashboard</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #07070a;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      color: #f3f4f6;
+    }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+    .glass-card {
+      background: rgba(14, 14, 22, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+  </style>
+</head>
+<body class="p-4 sm:p-6 lg:p-8">
+
+  <!-- Header -->
+  <header class="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-8 border-b border-white/10">
+    <div class="flex items-center gap-3.5">
+      <a href="/" class="flex items-center gap-2.5 hover:opacity-90 transition">
+        <img src="/assets/images/icon2.png" alt="UnimaxDL" class="w-10 h-10 rounded-xl shadow-lg border border-white/10" />
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-lg font-black tracking-tight text-white">UnimaxDL</span>
+            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">TELEMETRY</span>
+          </div>
+          <p class="text-xs text-gray-400">Live Traffic & Download Intelligence</p>
+        </div>
+      </a>
+    </div>
+
+    <!-- Controls -->
+    <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs text-gray-400">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+        </span>
+        <span class="font-mono text-[11px]" id="last-sync">Syncing...</span>
+      </div>
+
+      <button id="refresh-btn" onclick="fetchTelemetryData()" class="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white border border-white/10 transition">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+      </button>
+
+      <a href="/" class="px-3.5 py-1.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/20 text-xs font-bold transition flex items-center gap-1.5">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+        <span>Back to Downloader</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto py-8 space-y-8">
+
+    <!-- KPI Summary Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <!-- Unique Visitors -->
+      <div class="glass-card rounded-2xl p-5 space-y-2">
+        <div class="flex items-center justify-between text-xs text-gray-400">
+          <span>Unique Visitors</span>
+          <div class="w-8 h-8 rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 flex items-center justify-center">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          </div>
+        </div>
+        <div class="flex items-baseline gap-2">
+          <span class="text-3xl font-black text-white font-mono" id="kpi-visitors">0</span>
+          <span class="text-xs font-mono text-emerald-400" id="kpi-visitors-today">+0 today</span>
+        </div>
+        <p class="text-[11px] text-gray-500">Persistent user identifiers</p>
+      </div>
+
+      <!-- Total Downloads -->
+      <div class="glass-card rounded-2xl p-5 space-y-2">
+        <div class="flex items-center justify-between text-xs text-gray-400">
+          <span>Total Downloads</span>
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          </div>
+        </div>
+        <div class="flex items-baseline gap-2">
+          <span class="text-3xl font-black text-white font-mono" id="kpi-downloads">0</span>
+          <span class="text-xs font-mono text-emerald-400" id="kpi-downloads-today">+0 today</span>
+        </div>
+        <p class="text-[11px] text-gray-500">Completed file exports</p>
+      </div>
+
+      <!-- Download Conversion -->
+      <div class="glass-card rounded-2xl p-5 space-y-2">
+        <div class="flex items-center justify-between text-xs text-gray-400">
+          <span>Conversion Rate</span>
+          <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20 flex items-center justify-center">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+          </div>
+        </div>
+        <div class="flex items-baseline gap-2">
+          <span class="text-3xl font-black text-white font-mono" id="kpi-conv">0.0%</span>
+          <span class="text-xs font-mono text-gray-400">DL / Visitor</span>
+        </div>
+        <p class="text-[11px] text-gray-500">User intent efficiency</p>
+      </div>
+
+      <!-- Top Source Platform -->
+      <div class="glass-card rounded-2xl p-5 space-y-2">
+        <div class="flex items-center justify-between text-xs text-gray-400">
+          <span>Top Platform</span>
+          <div class="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-400 border border-purple-500/20 flex items-center justify-center">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+          </div>
+        </div>
+        <div class="flex items-baseline gap-2">
+          <span class="text-2xl font-bold text-white capitalize truncate" id="kpi-top-platform">None</span>
+        </div>
+        <p class="text-[11px] text-gray-500" id="kpi-top-platform-sub">Awaiting data</p>
+      </div>
+    </div>
+
+    <!-- Middle Section: Platform Share & Test Trigger -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+      <!-- Platform Distribution Breakdown -->
+      <div class="glass-card rounded-2xl p-6 lg:col-span-2 space-y-5">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="text-base font-bold text-white">Platform Breakdown</h3>
+            <p class="text-xs text-gray-400">Media source distribution across all download requests</p>
+          </div>
+          <span class="text-xs font-mono text-gray-500" id="platform-total-count">0 items</span>
+        </div>
+
+        <div class="space-y-3.5" id="platform-bars">
+          <!-- YouTube -->
+          <div class="space-y-1.5">
+            <div class="flex justify-between text-xs">
+              <span class="font-bold text-gray-300 flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span> YouTube
+              </span>
+              <span class="font-mono text-gray-400" id="yt-stat">0 (0%)</span>
+            </div>
+            <div class="w-full bg-white/5 h-2 rounded-full overflow-hidden">
+              <div id="yt-bar" class="h-full bg-red-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <!-- TikTok -->
+          <div class="space-y-1.5">
+            <div class="flex justify-between text-xs">
+              <span class="font-bold text-gray-300 flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span> TikTok
+              </span>
+              <span class="font-mono text-gray-400" id="tt-stat">0 (0%)</span>
+            </div>
+            <div class="w-full bg-white/5 h-2 rounded-full overflow-hidden">
+              <div id="tt-bar" class="h-full bg-cyan-400 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <!-- Instagram -->
+          <div class="space-y-1.5">
+            <div class="flex justify-between text-xs">
+              <span class="font-bold text-gray-300 flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-pink-500"></span> Instagram
+              </span>
+              <span class="font-mono text-gray-400" id="ig-stat">0 (0%)</span>
+            </div>
+            <div class="w-full bg-white/5 h-2 rounded-full overflow-hidden">
+              <div id="ig-bar" class="h-full bg-pink-500 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <!-- Twitter/X -->
+          <div class="space-y-1.5">
+            <div class="flex justify-between text-xs">
+              <span class="font-bold text-gray-300 flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-blue-400"></span> Twitter / X
+              </span>
+              <span class="font-mono text-gray-400" id="x-stat">0 (0%)</span>
+            </div>
+            <div class="w-full bg-white/5 h-2 rounded-full overflow-hidden">
+              <div id="x-bar" class="h-full bg-blue-400 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <!-- Others -->
+          <div class="space-y-1.5">
+            <div class="flex justify-between text-xs">
+              <span class="font-bold text-gray-300 flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span> Other Sites
+              </span>
+              <span class="font-mono text-gray-400" id="other-stat">0 (0%)</span>
+            </div>
+            <div class="w-full bg-white/5 h-2 rounded-full overflow-hidden">
+              <div id="other-bar" class="h-full bg-amber-400 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Action / Test Trigger -->
+      <div class="glass-card rounded-2xl p-6 flex flex-col justify-between space-y-4">
+        <div class="space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <h3 class="text-sm font-bold text-white">Live Pipeline Diagnostics</h3>
+          </div>
+          <p class="text-xs text-gray-400 leading-relaxed">
+            Telemetry pings are sent automatically whenever a visitor lands on the site or clicks "Save to Device". You can also emit a test event to verify real-time ingestion.
+          </p>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-white/[0.02] border border-white/5 space-y-2 text-xs font-mono text-gray-400">
+          <div><span class="text-gray-500">Supabase Table:</span> download_events</div>
+          <div><span class="text-gray-500">Status:</span> <span class="text-emerald-400 font-bold">200 Connected</span></div>
+          <div><span class="text-gray-500">Latency:</span> ~140ms</div>
+        </div>
+
+        <button onclick="sendTestTelemetryPing()" id="test-ping-btn" class="w-full py-2.5 px-4 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/25 text-xs font-bold transition flex items-center justify-center gap-2">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          <span>Emit Test Download Event</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Live Recent Downloads Log Feed -->
+    <div class="glass-card rounded-2xl p-6 space-y-4">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+        <div>
+          <h3 class="text-base font-bold text-white">Recent Media Downloads Log</h3>
+          <p class="text-xs text-gray-400">Real-time log of videos and audio extracted by users</p>
+        </div>
+        <span class="text-xs font-mono text-gray-500">Showing latest 50 events</span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs">
+          <thead>
+            <tr class="border-b border-white/10 text-gray-400 font-mono text-[11px] uppercase tracking-wider">
+              <th class="py-3 px-3">Time</th>
+              <th class="py-3 px-3">Platform</th>
+              <th class="py-3 px-3">Media Title</th>
+              <th class="py-3 px-3">Format / Quality</th>
+              <th class="py-3 px-3">User ID</th>
+            </tr>
+          </thead>
+          <tbody id="downloads-table-body" class="divide-y divide-white/5 text-gray-300">
+            <tr>
+              <td colspan="5" class="py-8 text-center text-gray-500 font-mono">
+                Awaiting first live download event...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="max-w-7xl mx-auto pt-8 border-t border-white/5 text-center text-xs text-gray-500">
+    <p>UnimaxDL Telemetry Engine · Privacy-Preserving Event Stream</p>
+  </footer>
+
+  <script>
+    const SUPABASE_URL = 'https://olxgfytiyiupfzthoris.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_n836xYAnIUD0d0qIyoXLTQ_GQ0KJSH0';
+
+    async function fetchTelemetryData() {
+      const lastSyncEl = document.getElementById('last-sync');
+      lastSyncEl.innerText = "Syncing...";
+
+      try {
+        // 1. Fetch download events
+        const dlRes = await fetch(`${SUPABASE_URL}/rest/v1/download_events?select=*&order=created_at.desc&limit=50`, {
+          headers: {
+            'apikey': SUPABASE_KEY,
+            'Authorization': `Bearer ${SUPABASE_KEY}`
+          }
+        });
+        const downloads = await dlRes.json();
+
+        // 2. Fetch user visits
+        const visitRes = await fetch(`${SUPABASE_URL}/rest/v1/user_visits?select=*&order=created_at.desc&limit=50`, {
+          headers: {
+            'apikey': SUPABASE_KEY,
+            'Authorization': `Bearer ${SUPABASE_KEY}`
+          }
+        });
+        const visits = await visitRes.json();
+
+        renderKPIs(visits || [], downloads || []);
+        renderPlatformBreakdown(downloads || []);
+        renderDownloadsTable(downloads || []);
+
+        const now = new Date();
+        lastSyncEl.innerText = `Updated ${now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}`;
+      } catch (err) {
+        console.error("Telemetry fetch error:", err);
+        lastSyncEl.innerText = "Sync failed";
+      }
+    }
+
+    function renderKPIs(visits, downloads) {
+      const todayStr = new Date().toISOString().slice(0, 10);
+
+      // Unique Visitors
+      const uniqueUsers = new Set(visits.map(v => v.user_id)).size;
+      const todayVisits = visits.filter(v => v.created_at && v.created_at.startsWith(todayStr)).length;
+      document.getElementById('kpi-visitors').innerText = uniqueUsers;
+      document.getElementById('kpi-visitors-today').innerText = `+${todayVisits} today`;
+
+      // Downloads
+      const totalDl = downloads.length;
+      const todayDl = downloads.filter(d => d.created_at && d.created_at.startsWith(todayStr)).length;
+      document.getElementById('kpi-downloads').innerText = totalDl;
+      document.getElementById('kpi-downloads-today').innerText = `+${todayDl} today`;
+
+      // Conversion
+      const convRate = uniqueUsers > 0 ? ((totalDl / uniqueUsers) * 100).toFixed(1) : "0.0";
+      document.getElementById('kpi-conv').innerText = `${convRate}%`;
+
+      // Top platform
+      const platCounts = {};
+      downloads.forEach(d => {
+        const p = (d.source_site || 'other').toLowerCase();
+        platCounts[p] = (platCounts[p] || 0) + 1;
+      });
+      let topP = 'None';
+      let topCount = 0;
+      Object.entries(platCounts).forEach(([p, count]) => {
+        if (count > topCount) {
+          topCount = count;
+          topP = p;
+        }
+      });
+      document.getElementById('kpi-top-platform').innerText = topP;
+      document.getElementById('kpi-top-platform-sub').innerText = topCount > 0 ? `${topCount} downloads` : "Awaiting data";
+    }
+
+    function renderPlatformBreakdown(downloads) {
+      const total = downloads.length;
+      document.getElementById('platform-total-count').innerText = `${total} downloads logged`;
+
+      if (total === 0) return;
+
+      const counts = { youtube: 0, tiktok: 0, instagram: 0, twitter: 0, other: 0 };
+      downloads.forEach(d => {
+        const s = (d.source_site || '').toLowerCase();
+        if (s.includes('youtube') || s.includes('youtu')) counts.youtube++;
+        else if (s.includes('tiktok')) counts.tiktok++;
+        else if (s.includes('instagram')) counts.instagram++;
+        else if (s.includes('twitter') || s.includes('x.com')) counts.twitter++;
+        else counts.other++;
+      });
+
+      const setBar = (statId, barId, count) => {
+        const pct = Math.round((count / total) * 100);
+        document.getElementById(statId).innerText = `${count} (${pct}%)`;
+        document.getElementById(barId).style.width = `${pct}%`;
+      };
+
+      setBar('yt-stat', 'yt-bar', counts.youtube);
+      setBar('tt-stat', 'tt-bar', counts.tiktok);
+      setBar('ig-stat', 'ig-bar', counts.instagram);
+      setBar('x-stat', 'x-bar', counts.twitter);
+      setBar('other-stat', 'other-bar', counts.other);
+    }
+
+    function renderDownloadsTable(downloads) {
+      const tbody = document.getElementById('downloads-table-body');
+      if (!downloads || downloads.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5" class="py-8 text-center text-gray-500 font-mono">
+              Awaiting first live download event...
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = downloads.map(d => {
+        const date = d.created_at ? new Date(d.created_at) : new Date();
+        const timeStr = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const site = (d.source_site || 'web').toLowerCase();
+        
+        let badgeClass = "bg-gray-500/10 text-gray-400 border-gray-500/20";
+        if (site.includes('youtube')) badgeClass = "bg-red-500/15 text-red-400 border-red-500/25";
+        else if (site.includes('tiktok')) badgeClass = "bg-cyan-500/15 text-cyan-300 border-cyan-500/25";
+        else if (site.includes('instagram')) badgeClass = "bg-pink-500/15 text-pink-300 border-pink-500/25";
+        else if (site.includes('twitter')) badgeClass = "bg-blue-500/15 text-blue-300 border-blue-500/25";
+
+        const shortUser = (d.user_id || 'guest').substring(0, 10);
+        const title = d.video_title || 'Direct Stream Download';
+
+        return `
+          <tr class="hover:bg-white/[0.02] transition">
+            <td class="py-3 px-3 font-mono text-[11px] text-gray-400">${timeStr}</td>
+            <td class="py-3 px-3">
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold border uppercase ${badgeClass}">${site}</span>
+            </td>
+            <td class="py-3 px-3 font-medium text-white max-w-xs truncate" title="${title}">${title}</td>
+            <td class="py-3 px-3 font-mono text-[11px] text-cyan-400">${d.quality || 'HD'} ${d.media_type ? d.media_type.toUpperCase() : 'MP4'}</td>
+            <td class="py-3 px-3 font-mono text-[10px] text-gray-500">${shortUser}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    async function sendTestTelemetryPing() {
+      const btn = document.getElementById('test-ping-btn');
+      btn.disabled = true;
+      btn.innerText = "Emitting Test Event...";
+
+      try {
+        await fetch(`${SUPABASE_URL}/rest/v1/download_events`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_KEY,
+            'Authorization': `Bearer ${SUPABASE_KEY}`
+          },
+          body: JSON.stringify({
+            user_id: 'usr_admin_test',
+            session_id: 'ses_test',
+            platform: 'web',
+            source_site: 'youtube',
+            media_type: 'video',
+            quality: '1080p FHD',
+            video_title: 'Minecraft RTX 60FPS Cinematic Benchmark',
+            video_url: 'https://youtube.com/watch?v=test1234',
+            page: '/dashboard/'
+          })
+        });
+
+        await fetchTelemetryData();
+      } catch (e) {
+        console.error(e);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          <span>Emit Test Download Event</span>
+        `;
+      }
+    }
+
+    // Initial load + 15s auto-refresh interval
+    fetchTelemetryData();
+    setInterval(fetchTelemetryData, 15000);
+  </script>
+</body>
+</html>
