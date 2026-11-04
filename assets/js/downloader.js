@@ -338,8 +338,27 @@ const UDL_DOWNLOADER = (() => {
       uploader = "Facebook Creator";
       thumbnail = "https://images.unsplash.com/photo-1544717305-2782549b5136?w=600&auto=format&fit=crop&q=80";
     } else {
-      title = "Online Media";
-      uploader = "Web Creator";
+      let host = 'Online';
+      let cleanSlug = '';
+      try {
+        const parsed = new URL(url);
+        host = parsed.hostname.replace(/^www\./, '');
+        const segments = parsed.pathname.split('/').filter(Boolean);
+        if (segments.length > 0) {
+          const rawSlug = segments[segments.length - 1] || '';
+          cleanSlug = rawSlug
+            .replace(/\.[a-zA-Z0-9]+$/, '')
+            .replace(/[-_]+/g, ' ')
+            .replace(/\b\d{4,}\b/g, '')
+            .trim();
+          if (cleanSlug.length > 3) {
+            cleanSlug = cleanSlug.split(' ').filter(Boolean).map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+          }
+        }
+      } catch (e) {}
+
+      title = cleanSlug || `${host} Video Stream`;
+      uploader = `${host} Source`;
       thumbnail = "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&auto=format&fit=crop&q=80";
     }
 
