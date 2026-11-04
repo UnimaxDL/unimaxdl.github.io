@@ -462,22 +462,26 @@ const UDL_DOWNLOADER = (() => {
     const igMatch = mediaUrl.match(/(?:instagram\.com\/(?:p|reel|tv)\/)([\w-]+)/);
     const igCode = igMatch ? igMatch[1] : null;
 
-    let directStreamUrl = 'https://cobalt.tools';
-    let mirror1Url = 'https://cobalt.tools';
-    let mirror2Url = 'https://cobalt.tools';
+    let directStreamUrl = '';
+    let mirror1Url = '';
+    let mirror2Url = '';
     let downloadFileName = (title.replace(/[^a-zA-Z0-9_\-\s]/g, '').trim().substring(0, 36) || 'unimaxdl-media') + (isAudio ? '.mp3' : '.mp4');
 
-    if (ytId) {
-      directStreamUrl = `https://piped.video/watch?v=${ytId}`;
-      mirror1Url = `https://piped.video/watch?v=${ytId}`;
-      mirror2Url = `https://inv.nadeko.net/watch?v=${ytId}`;
-    } else if (igCode) {
-      directStreamUrl = `https://www.instagram.com/p/${igCode}/media/?size=l`;
-      mirror1Url = `https://www.instagram.com/p/${igCode}/media/?size=l`;
-      mirror2Url = `https://ddinstagram.com/p/${igCode}`;
-    } else if (currentMedia && currentMedia.direct_download_url) {
+    if (currentMedia && currentMedia.direct_download_url) {
       directStreamUrl = currentMedia.direct_download_url;
       mirror1Url = currentMedia.direct_download_url;
+    } else if (igCode) {
+      directStreamUrl = `https://www.instagram.com/p/${igCode}/media/?size=l`;
+      mirror1Url = directStreamUrl;
+    } else if (ytId) {
+      // Direct stream endpoints without third-party web player redirects
+      if (isAudio) {
+        directStreamUrl = `https://cdn.api.vevioz.com/api/button/mp3/${ytId}`;
+        mirror1Url = directStreamUrl;
+      } else {
+        directStreamUrl = `https://cdn.api.vevioz.com/api/button/mp4/${ytId}`;
+        mirror1Url = directStreamUrl;
+      }
     }
 
     modal.classList.remove('hidden');
@@ -547,20 +551,20 @@ const UDL_DOWNLOADER = (() => {
           </button>
         </div>
 
-        <!-- Alternative Mirror Links -->
+        <!-- Format Quick-Switch / Direct Options -->
         <div class="pt-3 border-t border-white/[0.06] space-y-2">
           <div class="flex items-center justify-between text-[11px] text-gray-400">
-            <span>Alternative Stream Mirrors:</span>
-            <span class="text-[10px] text-gray-500">Ad-free fallback</span>
+            <span>Direct Options:</span>
+            <span class="text-[10px] text-gray-500">100% Free &bull; Zero Redirects</span>
           </div>
           <div class="grid grid-cols-2 gap-2">
-            <a href="${mirror1Url}" target="_blank" rel="noopener" class="py-2 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-gray-300 hover:text-white text-[11px] font-bold text-center transition flex items-center justify-center gap-1.5">
-              ${ICONS.web}
-              <span>Mirror 1 (Web)</span>
-            </a>
-            <a href="${mirror2Url}" target="_blank" rel="noopener" class="py-2 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-gray-300 hover:text-white text-[11px] font-bold text-center transition flex items-center justify-center gap-1.5">
-              ${ICONS.sparkle}
-              <span>Mirror 2 (Cloud)</span>
+            <button onclick="UDL_DOWNLOADER.executeDownloadAction('${directStreamUrl}', '${downloadFileName}', '${quality}')" class="py-2 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-gray-300 hover:text-white text-[11px] font-bold text-center transition flex items-center justify-center gap-1.5 cursor-pointer">
+              ${ICONS.download}
+              <span>Direct Stream</span>
+            </button>
+            <a href="/download.html" class="py-2 px-3 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/20 text-cyan-400 text-[11px] font-bold text-center transition flex items-center justify-center gap-1.5">
+              ${ICONS.desktop}
+              <span>Get 4K App</span>
             </a>
           </div>
         </div>
@@ -855,12 +859,12 @@ const UDL_DOWNLOADER = (() => {
               ` : ''}
               ${isError ? `
                 <div class="space-y-2 pt-1 border-t border-white/5">
-                  <p class="text-[11px] text-cyan-400 font-medium">
-                    Platform cloud challenge detected. Your direct stream is ready:
+                  <p class="text-[11px] text-amber-400 font-medium">
+                    Browser rate limit encountered. Download natively without restrictions:
                   </p>
-                  <a href="${(t.url || '').includes('youtu') ? `https://piped.video/watch?v=${(t.url.match(/(?:youtu\.be\/|v\/|watch\?v=|shorts\/)([^#&?]*)/) || [])[1] || ''}` : (t.url || '').includes('instagram') ? `${t.url}media/?size=l` : 'https://cobalt.tools'}" target="_blank" rel="noopener" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-amber-500 hover:brightness-110 text-dark-950 font-black text-xs text-center transition flex items-center justify-center gap-1.5 shadow-md">
-                    <svg class="w-3.5 h-3.5 fill-none stroke-current" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                    <span>Open Direct Stream</span>
+                  <a href="/download.html" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-amber-500 hover:brightness-110 text-dark-950 font-black text-xs text-center transition flex items-center justify-center gap-1.5 shadow-md">
+                    <svg class="w-3.5 h-3.5 fill-none stroke-current" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    <span>Download via Desktop / Android App</span>
                   </a>
                 </div>
               ` : ''}
