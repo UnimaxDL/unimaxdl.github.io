@@ -230,6 +230,124 @@ const UDL_DOWNLOADER = (() => {
     }, 3000);
   }
 
+  // Generate dynamic branded video poster SVG for media cards
+  function generateVideoPosterSvg(title, host) {
+    const safeTitle = (title || 'Universal Video Stream')
+      .replace(/[<>&"']/g, '')
+      .trim();
+    const safeHost = (host || 'Public Media Stream')
+      .toUpperCase()
+      .replace(/[<>&"']/g, '')
+      .trim();
+    const displayTitle = safeTitle.length > 40 ? safeTitle.substring(0, 37) + '...' : safeTitle;
+
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
+      <defs>
+        <linearGradient id="udl-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#0b0f19" />
+          <stop offset="50%" stop-color="#111827" />
+          <stop offset="100%" stop-color="#030712" />
+        </linearGradient>
+        <linearGradient id="udl-glow" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#06b6d4" />
+          <stop offset="100%" stop-color="#3b82f6" />
+        </linearGradient>
+      </defs>
+      <rect width="640" height="360" fill="url(#udl-bg)" />
+      <circle cx="320" cy="145" r="46" fill="#ffffff" fill-opacity="0.05" />
+      <circle cx="320" cy="145" r="34" fill="url(#udl-glow)" />
+      <polygon points="314,133 333,145 314,157" fill="#030712" />
+      <rect x="24" y="24" rx="6" ry="6" width="130" height="24" fill="#ffffff" fill-opacity="0.08" />
+      <text x="89" y="40" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="800" fill="#38bdf8" text-anchor="middle" letter-spacing="1">${safeHost}</text>
+      <text x="320" y="235" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="700" fill="#f8fafc" text-anchor="middle">${displayTitle}</text>
+      <text x="320" y="260" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#64748b" text-anchor="middle">High Definition Public Media Stream</text>
+    </svg>`;
+
+    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  }
+
+  // Multi-provider live metadata extractor
+  async function fetchLiveMetadata(targetUrl) {
+    const fetchers = [
+      // Provider A: Microlink
+      async () => {
+        const c = new AbortController();
+        const t = setTimeout(() => c.abort(), 2800);
+        try {
+          const res = await fetch(`https://api.microlink.io/?url=${encodeURIComponent(targetUrl)}`, { signal: c.signal });
+          clearTimeout(t);
+          if (res.ok) {
+            const json = await res.json();
+            if (json && json.data) {
+              return {
+                title: json.data.title || null,
+                author: json.data.author || null,
+                image: (json.data.image && json.data.image.url) ? json.data.image.url : null
+              };
+            }
+          }
+        } catch (e) {}
+        return null;
+      },
+      // Provider B: OpenGraph.to
+      async () => {
+        const c = new AbortController();
+        const t = setTimeout(() => c.abort(), 2800);
+        try {
+          const res = await fetch(`https://www.opengraph.to/api/v1/og?url=${encodeURIComponent(targetUrl)}`, { signal: c.signal });
+          clearTimeout(t);
+          if (res.ok) {
+            const json = await res.json();
+            if (json) {
+              const imgUrl = (json.image && typeof json.image === 'object') ? json.image.url : (typeof json.image === 'string' ? json.image : null);
+              return {
+                title: json.title || null,
+                author: json.site_name || null,
+                image: imgUrl
+              };
+            }
+          }
+        } catch (e) {}
+        return null;
+      },
+      // Provider C: NoEmbed
+      async () => {
+        const c = new AbortController();
+        const t = setTimeout(() => c.abort(), 2200);
+        try {
+          const res = await fetch(`https://noembed.com/embed?url=${encodeURIComponent(targetUrl)}`, { signal: c.signal });
+          clearTimeout(t);
+          if (res.ok) {
+            const json = await res.json();
+            if (json) {
+              return {
+                title: json.title || null,
+                author: json.author_name || null,
+                image: json.thumbnail_url || null
+              };
+            }
+          }
+        } catch (e) {}
+        return null;
+      }
+    ];
+
+    try {
+      const results = await Promise.allSettled(fetchers.map(f => f()));
+      let best = { title: null, author: null, image: null };
+      for (const r of results) {
+        if (r.status === 'fulfilled' && r.value) {
+          if (!best.title && r.value.title) best.title = r.value.title;
+          if (!best.author && r.value.author) best.author = r.value.author;
+          if (!best.image && r.value.image) best.image = r.value.image;
+        }
+      }
+      return best;
+    } catch (e) {
+      return { title: null, author: null, image: null };
+    }
+  }
+
   // Smart Multi-Platform Video Analyzer
   async function analyzeUrl(url) {
     if (!url) throw new Error("Please enter a valid video link");
@@ -237,12 +355,12 @@ const UDL_DOWNLOADER = (() => {
     isAnalyzing = true;
 
     try {
-      // If user has local PC server connected, test it
+      // If user has local PC server connected, test it with generous timeout for yt-dlp
       const isLocalhost = isServerConnected && backendUrl && (backendUrl.includes('localhost') || backendUrl.includes('127.0.0.1'));
       if (isLocalhost) {
         try {
           const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 2500);
+          const timeoutId = setTimeout(() => controller.abort(), 12000);
           const res = await fetch(`${backendUrl}/api/analyze`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -262,7 +380,7 @@ const UDL_DOWNLOADER = (() => {
         }
       }
 
-      // Fast standalone client resolver (YouTube, TikTok, Instagram, Twitter/X, etc.)
+      // Fast standalone client resolver (YouTube, TikTok, Instagram, Twitter/X, Universal, etc.)
       const clientMedia = await resolveClientMedia(url);
       currentMedia = clientMedia;
       return clientMedia;
@@ -309,7 +427,7 @@ const UDL_DOWNLOADER = (() => {
       }
     }
 
-    // Default smart titles and creators
+    // Default smart titles, creators, and dynamic SVG video posters
     const isReel = url.toLowerCase().includes('/reel/');
     let title = "";
     let uploader = "";
@@ -320,23 +438,23 @@ const UDL_DOWNLOADER = (() => {
     if (isYouTube) {
       title = ytId ? `YouTube Video #${ytId}` : "YouTube Video";
       uploader = "YouTube Creator";
-      thumbnail = ytId ? `https://i.ytimg.com/vi/${ytId}/hqdefault.jpg` : "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&auto=format&fit=crop&q=80";
+      thumbnail = ytId ? `https://i.ytimg.com/vi/${ytId}/hqdefault.jpg` : generateVideoPosterSvg(title, 'YouTube');
     } else if (isInstagram) {
       uploader = igUser ? `@${igUser}` : "Instagram Creator";
       title = igUser ? `@${igUser} • Instagram ${isReel ? 'Reel' : 'Post'}` : (igCode ? `Instagram ${isReel ? 'Reel' : 'Post'} (${igCode})` : "Instagram Media");
-      thumbnail = "https://images.unsplash.com/photo-1611262588024-d12430b98920?w=600&auto=format&fit=crop&q=80";
+      thumbnail = generateVideoPosterSvg(title, 'Instagram');
     } else if (isTikTok) {
       title = "TikTok Video";
       uploader = "TikTok Creator";
-      thumbnail = "https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?w=600&auto=format&fit=crop&q=80";
+      thumbnail = generateVideoPosterSvg(title, 'TikTok');
     } else if (isTwitter) {
       uploader = twUser ? `@${twUser}` : "X / Twitter Creator";
       title = twUser ? `@${twUser} on X` : (twId ? `Post #${twId} on X` : "Twitter / X Video");
-      thumbnail = "https://images.unsplash.com/photo-1611605698335-8b1569810432?w=600&auto=format&fit=crop&q=80";
+      thumbnail = generateVideoPosterSvg(title, 'Twitter / X');
     } else if (isFacebook) {
       title = "Facebook Video";
       uploader = "Facebook Creator";
-      thumbnail = "https://images.unsplash.com/photo-1544717305-2782549b5136?w=600&auto=format&fit=crop&q=80";
+      thumbnail = generateVideoPosterSvg(title, 'Facebook');
     } else {
       let host = 'Online';
       let cleanSlug = '';
@@ -359,7 +477,7 @@ const UDL_DOWNLOADER = (() => {
 
       title = cleanSlug || `${host} Video Stream`;
       uploader = `${host} Source`;
-      thumbnail = "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&auto=format&fit=crop&q=80";
+      thumbnail = generateVideoPosterSvg(title, host);
     }
 
     // 1. Fast oEmbed / NoEmbed lookup for YouTube
@@ -417,26 +535,16 @@ const UDL_DOWNLOADER = (() => {
       } catch (e) {}
     }
 
-    // 3. Instagram, Twitter, and Facebook live metadata via Microlink
-    if (isInstagram || isTwitter || isFacebook) {
-      try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 2500);
-        const mlRes = await fetch(`https://api.microlink.io/?url=${encodeURIComponent(url)}`, { signal: controller.signal });
-        clearTimeout(timeoutId);
-        if (mlRes.ok) {
-          const mlData = await mlRes.json();
-          if (mlData && mlData.data) {
-            if (mlData.data.title && mlData.data.title !== "Instagram" && mlData.data.title !== "X") {
-              title = mlData.data.title;
-            }
-            if (mlData.data.author) uploader = mlData.data.author;
-            if (mlData.data.image && mlData.data.image.url) {
-              thumbnail = mlData.data.image.url;
-            }
-          }
+    // 3. Live multi-provider metadata extraction (Instagram, Twitter, Adult, Universal)
+    if (!isYouTube && !isTikTok) {
+      const liveMeta = await fetchLiveMetadata(url);
+      if (liveMeta) {
+        if (liveMeta.title && !['Instagram', 'xHamster', 'X', 'Twitter', 'Facebook'].includes(liveMeta.title)) {
+          title = liveMeta.title;
         }
-      } catch (e) {}
+        if (liveMeta.author) uploader = liveMeta.author;
+        if (liveMeta.image) thumbnail = liveMeta.image;
+      }
     }
 
     const extractor = isYouTube ? 'YouTube' : isTikTok ? 'TikTok' : isInstagram ? 'Instagram' : isTwitter ? 'Twitter/X' : 'Universal';
@@ -800,6 +908,7 @@ const UDL_DOWNLOADER = (() => {
 
     const is4K = info.video_formats && info.video_formats.some(f => f.height >= 2160);
     const isFHD = info.video_formats && info.video_formats.some(f => f.height >= 1080);
+    const fallbackPoster = generateVideoPosterSvg(info.title, info.extractor || 'Universal');
 
     container.innerHTML = `
       <div class="glass-card rounded-3xl p-6 sm:p-7 border border-white/10 space-y-6 animate-in fade-in zoom-in-95 duration-300 mt-6">
@@ -811,7 +920,9 @@ const UDL_DOWNLOADER = (() => {
               src="${info.thumbnail}" 
               alt="${info.title}" 
               loading="lazy"
-              onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1611262588024-d12430b98920?w=600&auto=format&fit=crop&q=80';"
+              referrerpolicy="no-referrer"
+              data-fallback="${fallbackPoster}"
+              onerror="this.onerror=null; if(this.dataset.fallback) this.src=this.dataset.fallback;"
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
             />
             <div class="absolute bottom-2 right-2 px-2 py-0.5 rounded-md bg-black/80 backdrop-blur-md text-[10px] font-mono font-bold text-white">
@@ -1037,6 +1148,8 @@ const UDL_DOWNLOADER = (() => {
     analyzeUrl,
     triggerDownload,
     renderMediaCard,
+    generateVideoPosterSvg,
+    fetchLiveMetadata,
     renderTasks,
     startPolling,
     stopPolling,
