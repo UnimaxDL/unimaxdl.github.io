@@ -278,6 +278,7 @@ const UDL_DOWNLOADER = (() => {
     const isTikTok = /tiktok\.com/i.test(url);
     const isInstagram = /instagram\.com/i.test(url);
     const isTwitter = /(?:twitter\.com|x\.com)/i.test(url);
+    const isFacebook = /(?:facebook\.com|fb\.watch)/i.test(url);
 
     let ytId = null;
     if (isYouTube) {
@@ -286,34 +287,98 @@ const UDL_DOWNLOADER = (() => {
     }
 
     let igCode = null;
+    let igUser = null;
     if (isInstagram) {
-      const match = url.match(/(?:instagram\.com\/(?:p|reel|tv)\/)([\w-]+)/);
-      igCode = match ? match[1] : null;
+      const userMatch = url.match(/instagram\.com\/([a-zA-Z0-9._]+)\/(?:reel|p|tv)\/([a-zA-Z0-9_-]+)/i);
+      const directMatch = url.match(/(?:instagram\.com\/(?:reel|p|tv)\/)([a-zA-Z0-9_-]+)/i);
+      if (userMatch) {
+        igUser = userMatch[1];
+        igCode = userMatch[2];
+      } else if (directMatch) {
+        igCode = directMatch[1];
+      }
     }
 
-    let title = isYouTube ? "YouTube Video" : isTikTok ? "TikTok Video" : isInstagram ? "Instagram Media" : isTwitter ? "Twitter / X Video" : "Online Video";
-    let uploader = isYouTube ? "YouTube Creator" : isTikTok ? "TikTok Creator" : isInstagram ? "Instagram Creator" : "Web Creator";
-    let thumbnail = ytId ? `https://i.ytimg.com/vi/${ytId}/hqdefault.jpg` : (igCode ? `https://www.instagram.com/p/${igCode}/media/?size=l` : "");
+    let twUser = null;
+    let twId = null;
+    if (isTwitter) {
+      const match = url.match(/(?:twitter\.com|x\.com)\/([a-zA-Z0-9_]+)\/status\/(\d+)/i);
+      if (match) {
+        twUser = match[1];
+        twId = match[2];
+      }
+    }
+
+    // Default smart titles and creators
+    const isReel = url.toLowerCase().includes('/reel/');
+    let title = "";
+    let uploader = "";
+    let thumbnail = "";
     let duration = "03:45";
     let directDownloadUrl = '';
 
-    // Fast oEmbed / NoEmbed metadata lookup with 2s timeout
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 2000);
-      const r = await fetch(`https://noembed.com/embed?url=${encodeURIComponent(url)}`, { signal: controller.signal });
-      clearTimeout(timeoutId);
-      if (r.ok) {
-        const d = await r.json();
-        if (d.title) title = d.title;
-        if (d.author_name) uploader = d.author_name;
-        if (d.thumbnail_url) thumbnail = d.thumbnail_url;
-      }
-    } catch (e) {
-      // Non-blocking fallback
+    if (isYouTube) {
+      title = ytId ? `YouTube Video #${ytId}` : "YouTube Video";
+      uploader = "YouTube Creator";
+      thumbnail = ytId ? `https://i.ytimg.com/vi/${ytId}/hqdefault.jpg` : "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&auto=format&fit=crop&q=80";
+    } else if (isInstagram) {
+      uploader = igUser ? `@${igUser}` : "Instagram Creator";
+      title = igUser ? `@${igUser} • Instagram ${isReel ? 'Reel' : 'Post'}` : (igCode ? `Instagram ${isReel ? 'Reel' : 'Post'} (${igCode})` : "Instagram Media");
+      thumbnail = "https://images.unsplash.com/photo-1611262588024-d12430b98920?w=600&auto=format&fit=crop&q=80";
+    } else if (isTikTok) {
+      title = "TikTok Video";
+      uploader = "TikTok Creator";
+      thumbnail = "https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?w=600&auto=format&fit=crop&q=80";
+    } else if (isTwitter) {
+      uploader = twUser ? `@${twUser}` : "X / Twitter Creator";
+      title = twUser ? `@${twUser} on X` : (twId ? `Post #${twId} on X` : "Twitter / X Video");
+      thumbnail = "https://images.unsplash.com/photo-1611605698335-8b1569810432?w=600&auto=format&fit=crop&q=80";
+    } else if (isFacebook) {
+      title = "Facebook Video";
+      uploader = "Facebook Creator";
+      thumbnail = "https://images.unsplash.com/photo-1544717305-2782549b5136?w=600&auto=format&fit=crop&q=80";
+    } else {
+      title = "Online Media";
+      uploader = "Web Creator";
+      thumbnail = "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&auto=format&fit=crop&q=80";
     }
 
-    // TikTok direct watermark-free API resolution (TikWM)
+    // 1. Fast oEmbed / NoEmbed lookup for YouTube
+    if (isYouTube) {
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 2000);
+        const r = await fetch(`https://noembed.com/embed?url=${encodeURIComponent(url)}`, { signal: controller.signal });
+        clearTimeout(timeoutId);
+        if (r.ok) {
+          const d = await r.json();
+          if (d.title) title = d.title;
+          if (d.author_name) uploader = d.author_name;
+          if (d.thumbnail_url) thumbnail = d.thumbnail_url;
+        }
+      } catch (e) {}
+
+      if (ytId) {
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 2000);
+          const yRes = await fetch(`https://yt.chocolatemoo53.com/api/v1/videos/${ytId}`, { signal: controller.signal });
+          clearTimeout(timeoutId);
+          if (yRes.ok) {
+            const yData = await yRes.json();
+            if (yData.title && (!title || title.startsWith("YouTube Video"))) title = yData.title;
+            if (yData.author && (!uploader || uploader === "YouTube Creator")) uploader = yData.author;
+            if (yData.lengthSeconds) duration = formatDuration(yData.lengthSeconds);
+            const formatStreams = yData.formatStreams || [];
+            if (formatStreams.length > 0 && formatStreams[0].url) {
+              directDownloadUrl = formatStreams[0].url;
+            }
+          }
+        } catch (e) {}
+      }
+    }
+
+    // 2. TikTok metadata & stream resolution via TikWM
     if (isTikTok) {
       try {
         const controller = new AbortController();
@@ -330,42 +395,29 @@ const UDL_DOWNLOADER = (() => {
             if (tkData.data.duration) duration = formatDuration(tkData.data.duration);
           }
         }
-      } catch (e) {
-        // Fallback continues
-      }
+      } catch (e) {}
     }
 
-    // YouTube direct stream resolution (direct 360p & audio stream via public mirror)
-    if (isYouTube && ytId) {
-      if (!thumbnail) thumbnail = `https://i.ytimg.com/vi/${ytId}/hqdefault.jpg`;
+    // 3. Instagram, Twitter, and Facebook live metadata via Microlink
+    if (isInstagram || isTwitter || isFacebook) {
       try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 2000);
-        const yRes = await fetch(`https://yt.chocolatemoo53.com/api/v1/videos/${ytId}`, { signal: controller.signal });
+        const timeoutId = setTimeout(() => controller.abort(), 2500);
+        const mlRes = await fetch(`https://api.microlink.io/?url=${encodeURIComponent(url)}`, { signal: controller.signal });
         clearTimeout(timeoutId);
-        if (yRes.ok) {
-          const yData = await yRes.json();
-          if (yData.title && (!title || title === "YouTube Video")) title = yData.title;
-          if (yData.author && (!uploader || uploader === "YouTube Creator")) uploader = yData.author;
-          if (yData.lengthSeconds) duration = formatDuration(yData.lengthSeconds);
-          const formatStreams = yData.formatStreams || [];
-          if (formatStreams.length > 0 && formatStreams[0].url) {
-            directDownloadUrl = formatStreams[0].url;
+        if (mlRes.ok) {
+          const mlData = await mlRes.json();
+          if (mlData && mlData.data) {
+            if (mlData.data.title && mlData.data.title !== "Instagram" && mlData.data.title !== "X") {
+              title = mlData.data.title;
+            }
+            if (mlData.data.author) uploader = mlData.data.author;
+            if (mlData.data.image && mlData.data.image.url) {
+              thumbnail = mlData.data.image.url;
+            }
           }
         }
-      } catch (e) {
-        // Non-blocking fallback continues
-      }
-    }
-    if (isInstagram && igCode) {
-      directDownloadUrl = `https://www.instagram.com/p/${igCode}/media/?size=l`;
-      if (!thumbnail) thumbnail = directDownloadUrl;
-    }
-
-    if (!thumbnail) {
-      if (isTikTok) thumbnail = "https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?w=600&auto=format&fit=crop&q=80";
-      else if (isInstagram) thumbnail = "https://images.unsplash.com/photo-1611262588024-d12430b98920?w=600&auto=format&fit=crop&q=80";
-      else thumbnail = "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&auto=format&fit=crop&q=80";
+      } catch (e) {}
     }
 
     const extractor = isYouTube ? 'YouTube' : isTikTok ? 'TikTok' : isInstagram ? 'Instagram' : isTwitter ? 'Twitter/X' : 'Universal';
@@ -486,8 +538,6 @@ const UDL_DOWNLOADER = (() => {
 
     if (currentMedia && currentMedia.direct_download_url) {
       directStreamUrl = currentMedia.direct_download_url;
-    } else if (igCode) {
-      directStreamUrl = `https://www.instagram.com/p/${igCode}/media/?size=l`;
     } else if (ytId && isAudio) {
       // Direct high-speed M4A/MP3 audio stream via public mirror
       directStreamUrl = `https://yt.chocolatemoo53.com/latest_version?id=${ytId}&itag=140`;
@@ -738,7 +788,13 @@ const UDL_DOWNLOADER = (() => {
         <!-- Top Video Info Bar -->
         <div class="flex flex-col sm:flex-row gap-5 items-start">
           <div class="relative w-full sm:w-60 aspect-video rounded-2xl overflow-hidden bg-black/60 border border-white/10 flex-shrink-0 group">
-            <img src="${info.thumbnail}" alt="${info.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+            <img 
+              src="${info.thumbnail}" 
+              alt="${info.title}" 
+              loading="lazy"
+              onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1611262588024-d12430b98920?w=600&auto=format&fit=crop&q=80';"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
+            />
             <div class="absolute bottom-2 right-2 px-2 py-0.5 rounded-md bg-black/80 backdrop-blur-md text-[10px] font-mono font-bold text-white">
               ${info.duration || '00:00'}
             </div>
