@@ -656,10 +656,17 @@ const UDL_DOWNLOADER = (() => {
     return typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.includes('UnimaxDL-Android');
   }
 
-  function is4KQuality(quality) {
-    if (!quality) return false;
-    const q = String(quality).toLowerCase();
-    return q.includes('2160') || q.includes('4320') || q.includes('4k') || q.includes('8k');
+  function isHighQuality(f) {
+    if (!f) return false;
+    if (typeof f === 'string') {
+      const q = f.toLowerCase();
+      return q.includes('2160') || q.includes('4320') || q.includes('1440') || q.includes('4k') || q.includes('8k') || q.includes('2k');
+    }
+    if (f.requires_app) return true;
+    const q = String(f.quality || f.resolution || '').toLowerCase();
+    const h = parseInt(f.height, 10) || 0;
+    const fps = parseInt(f.fps, 10) || 30;
+    return h > 1080 || (h === 1080 && fps > 60) || q.includes('2160') || q.includes('4320') || q.includes('1440') || q.includes('4k') || q.includes('8k') || q.includes('2k');
   }
 
   function show4KPromptModal(type, quality) {
@@ -670,11 +677,16 @@ const UDL_DOWNLOADER = (() => {
       modal.className = 'fixed inset-0 z-[9999] flex items-center justify-center p-4';
       document.body.appendChild(modal);
     }
+
+    const targetUrl = currentMedia ? (currentMedia.original_url || currentMedia.webpage_url || currentMedia.url || '') : '';
+    const deepLink = 'unimaxdl://download?url=' + encodeURIComponent(targetUrl);
+
     modal.classList.remove('hidden');
     modal.innerHTML = `
       <div class="fixed inset-0 bg-black/85 backdrop-blur-md" onclick="UDL_DOWNLOADER.close4KModal()"></div>
-      <div class="relative w-full max-w-lg bg-[#121218] border border-amber-500/30 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 animate-in fade-in zoom-in-95 duration-200">
+      <div class="relative w-full max-w-lg bg-[#121218] border border-amber-500/30 rounded-3xl p-6 sm:p-7 shadow-2xl space-y-5 animate-in fade-in zoom-in-95 duration-200">
         
+        <!-- Header -->
         <div class="flex items-center justify-between border-b border-white/[0.08] pb-4">
           <div class="flex items-center gap-3">
             <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 font-black text-sm">
@@ -683,8 +695,9 @@ const UDL_DOWNLOADER = (() => {
             <div>
               <div class="flex items-center gap-2">
                 <span class="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-500/30">Native App Required</span>
+                <span class="text-[11px] text-gray-400 font-mono">${quality}</span>
               </div>
-              <h3 class="text-lg font-bold text-white mt-0.5">4K Ultra HD Download</h3>
+              <h3 class="text-base sm:text-lg font-bold text-white mt-0.5">Unlock 4K Ultra HD & 60FPS</h3>
             </div>
           </div>
           <button onclick="UDL_DOWNLOADER.close4KModal()" class="p-2 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition">
@@ -692,43 +705,90 @@ const UDL_DOWNLOADER = (() => {
           </button>
         </div>
 
-        <div class="space-y-4 text-xs">
-          <p class="text-gray-300 leading-relaxed text-sm">
-            Processing uncompressed <strong>4K (2160p) & 8K</strong> media in a standard web browser exceeds mobile browser memory limits. 
-            Download the <strong>Free UnimaxDL Android App (APK)</strong> or <strong>PC App</strong> to download 4K Ultra HD videos directly to your device with local hardware acceleration.
+        <!-- Description -->
+        <div class="space-y-3 text-xs">
+          <p class="text-gray-300 leading-relaxed">
+            High-bitrate <strong>2K, 4K & 8K 60FPS HDR</strong> streams require client-side FFmpeg GPU muxing. To protect browser tabs from memory limits and cloud proxy rate limits, ultra-high-definition downloads run directly on your hardware via the free UnimaxDL Native App.
           </p>
 
-          <div class="grid grid-cols-2 gap-3 p-4 rounded-2xl bg-white/[0.03] border border-white/5">
-            <div class="space-y-1">
-              <span class="font-bold text-gray-400 block text-[11px] uppercase tracking-wider">Web Browser</span>
-              <p class="text-gray-500 text-[11px]">Limited to 1080p FHD due to browser sandbox limits</p>
+          <!-- Why our app value props -->
+          <div class="grid grid-cols-2 gap-2.5 p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 text-[11px]">
+            <div class="flex items-start gap-2">
+              <span class="text-amber-400 mt-0.5">${ICONS.sparkle}</span>
+              <div>
+                <span class="font-bold text-white block">Unlimited 4K & 8K</span>
+                <span class="text-gray-400 text-[10px]">60FPS, HDR, and uncompressed streams</span>
+              </div>
             </div>
-            <div class="space-y-1">
-              <span class="font-bold text-amber-400 block text-[11px] uppercase tracking-wider">Native Android App</span>
-              <p class="text-emerald-400 font-semibold text-[11px]">Unlimited 4K 60FPS with zero rate limits</p>
+            <div class="flex items-start gap-2">
+              <span class="text-emerald-400 mt-0.5">${ICONS.sparkle}</span>
+              <div>
+                <span class="font-bold text-white block">Direct CDN Speed</span>
+                <span class="text-gray-400 text-[10px]">Zero server queue or waiting times</span>
+              </div>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="text-cyan-400 mt-0.5">${ICONS.desktop}</span>
+              <div>
+                <span class="font-bold text-white block">Hardware Accelerated</span>
+                <span class="text-gray-400 text-[10px]">Local GPU FFmpeg stream merging</span>
+              </div>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="text-purple-400 mt-0.5">${ICONS.mobile}</span>
+              <div>
+                <span class="font-bold text-white block">100% Private</span>
+                <span class="text-gray-400 text-[10px]">Runs locally on your phone or PC</span>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="space-y-2.5 pt-1">
-          <a href="/download.html" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:brightness-110 text-dark-950 font-black text-sm text-center transition flex items-center justify-center gap-2 shadow-xl shadow-amber-500/25 ring-2 ring-amber-400/40">
-            <svg class="w-4 h-4 fill-none stroke-current" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-            <span>Download Free Android App (APK)</span>
+        <!-- Action Buttons -->
+        <div class="space-y-2 pt-1">
+          <!-- 1-Click Launch Deep Link -->
+          <a href="${deepLink}" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:brightness-110 text-dark-950 font-black text-xs sm:text-sm text-center transition flex items-center justify-center gap-2 shadow-xl shadow-amber-500/25 ring-2 ring-amber-400/40">
+            <svg class="w-4 h-4 fill-none stroke-current" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            <span>Open in UnimaxDL Native App</span>
           </a>
 
-          <div class="flex items-center gap-2">
-            <a href="/download.html" class="flex-1 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-300 text-center transition flex items-center justify-center gap-1.5">
-              <svg class="w-3.5 h-3.5 fill-none stroke-current" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-              <span>Get PC App</span>
+          <!-- App Install Row -->
+          <div class="grid grid-cols-2 gap-2">
+            <a href="/download.html" class="py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200 text-center transition flex items-center justify-center gap-1.5">
+              ${ICONS.mobile}
+              <span>Android APK</span>
             </a>
+            <a href="/download.html" class="py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200 text-center transition flex items-center justify-center gap-1.5">
+              ${ICONS.desktop}
+              <span>Windows App</span>
+            </a>
+          </div>
 
-            <button onclick="UDL_DOWNLOADER.fallbackTo1080p()" class="flex-1 py-2.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/20 text-xs font-bold text-cyan-400 transition text-center">
-              Download 1080p Instead
+          <!-- Deep Link Copy & Browser Fallback -->
+          <div class="flex items-center gap-2 pt-1">
+            <button onclick="UDL_DOWNLOADER.copyDeepLink('${deepLink}')" class="flex-1 py-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/5 text-[11px] font-bold text-gray-300 transition text-center flex items-center justify-center gap-1">
+              <svg class="w-3.5 h-3.5 fill-none stroke-current" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+              <span>Copy App Link</span>
+            </button>
+            <button onclick="UDL_DOWNLOADER.fallbackTo1080p()" class="flex-1 py-2 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/20 text-[11px] font-bold text-cyan-400 transition text-center">
+              Download 1080p in Browser
             </button>
           </div>
         </div>
       </div>
     `;
+  }
+
+  function copyDeepLink(link) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(link).then(() => {
+        showToast("Deep link copied! Paste into UnimaxDL App.");
+      }).catch(() => {
+        showToast(`App Link: ${link}`);
+      });
+    } else {
+      showToast(`App Link: ${link}`);
+    }
   }
 
   function close4KModal() {
@@ -745,8 +805,8 @@ const UDL_DOWNLOADER = (() => {
   async function triggerDownload(type, quality) {
     if (!currentMedia) return;
 
-    // Intercept 4K / 8K requests on web browser and prompt native APK
-    if (type === 'video' && is4KQuality(quality) && !isNativeApp()) {
+    // Intercept 2K / 4K / 8K requests on web browser and prompt native APK
+    if (type === 'video' && isHighQuality(quality) && !isNativeApp()) {
       show4KPromptModal(type, quality);
       return;
     }
@@ -1190,21 +1250,29 @@ const UDL_DOWNLOADER = (() => {
 
           <!-- Video Format Grid -->
           <div id="format-section-video" class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            ${(info.video_formats || []).map(f => `
-              <button onclick="UDL_DOWNLOADER.triggerDownload('video', '${f.quality}')" class="glass-card hover:border-cyan-500/50 hover:bg-cyan-500/10 p-3.5 rounded-2xl text-left transition group relative flex flex-col justify-between">
-                <div>
-                  <div class="flex items-center justify-between mb-1">
-                    <span class="font-black text-sm text-white group-hover:text-cyan-400 transition">${f.resolution}</span>
-                    <span class="text-[9px] font-bold px-1.5 py-0.5 rounded uppercase font-mono ${f.height >= 2160 ? 'bg-amber-400/20 text-amber-300' : 'bg-white/10 text-gray-400'}">${f.ext}</span>
+            ${(info.video_formats || []).map(f => {
+              const isHQ = isHighQuality(f);
+              const badgeLabel = isHQ ? (f.badge || '4K/UHD • Native App') : (f.badge || 'Instant Web');
+              const badgeStyle = isHQ ? 'bg-amber-400/20 text-amber-300 border-amber-500/30' : 'bg-emerald-400/15 text-emerald-300 border-emerald-500/25';
+              return `
+                <button onclick="UDL_DOWNLOADER.triggerDownload('video', '${f.quality}')" class="glass-card ${isHQ ? 'hover:border-amber-500/50 hover:bg-amber-500/10' : 'hover:border-cyan-500/50 hover:bg-cyan-500/10'} p-3.5 rounded-2xl text-left transition group relative flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-center justify-between mb-1.5 gap-1">
+                      <span class="font-black text-sm text-white ${isHQ ? 'group-hover:text-amber-400' : 'group-hover:text-cyan-400'} transition">${f.resolution || f.quality}</span>
+                      <span class="text-[9px] font-bold px-1.5 py-0.5 rounded uppercase font-mono ${f.height >= 2160 ? 'bg-amber-400/20 text-amber-300' : 'bg-white/10 text-gray-400'}">${f.ext}</span>
+                    </div>
+                    <div class="mb-2">
+                      <span class="text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded border ${badgeStyle}">${badgeLabel}</span>
+                    </div>
+                    <p class="text-[11px] text-gray-400 font-medium">${f.fps ? f.fps + 'fps &bull; ' : ''}${f.filesize_label || f.filesize_formatted || 'High Definition'}</p>
                   </div>
-                  <p class="text-[11px] text-gray-400 font-medium">${f.fps}fps &bull; ${f.filesize_formatted}</p>
-                </div>
-                <div class="mt-3 pt-2 border-t border-white/5 flex items-center justify-between text-xs font-bold text-cyan-400">
-                  <span class="flex items-center gap-1">${ICONS.download} <span>Download</span></span>
-                  <span class="text-[10px] text-gray-500 font-mono">${f.height >= 2160 ? 'ULTRA' : f.height >= 1080 ? 'HD' : 'SD'}</span>
-                </div>
-              </button>
-            `).join('')}
+                  <div class="mt-3 pt-2 border-t border-white/5 flex items-center justify-between text-xs font-bold ${isHQ ? 'text-amber-400' : 'text-cyan-400'}">
+                    <span class="flex items-center gap-1">${ICONS.download} <span>${isHQ ? 'Unlock 4K' : 'Download'}</span></span>
+                    <span class="text-[10px] text-gray-500 font-mono">${isHQ ? 'NATIVE' : f.height >= 1080 ? 'HD' : 'SD'}</span>
+                  </div>
+                </button>
+              `;
+            }).join('')}
           </div>
 
           <!-- Audio Format Grid (Hidden by default) -->
@@ -1456,10 +1524,28 @@ const UDL_DOWNLOADER = (() => {
     show4KPromptModal,
     close4KModal,
     fallbackTo1080p,
+    copyDeepLink,
     ICONS
   };
 })();
 
 if (typeof window !== 'undefined') {
   window.UDL_DOWNLOADER = UDL_DOWNLOADER;
+
+  // Lightweight Client-Side Keep-Alive & Wakeup Trigger (Render cold-start optimizer)
+  window.addEventListener('focus', () => {
+    UDL_DOWNLOADER.checkServerConnection();
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const inputs = document.querySelectorAll('input[type="url"], input[type="text"]');
+    inputs.forEach(input => {
+      input.addEventListener('focus', () => {
+        UDL_DOWNLOADER.checkServerConnection();
+      }, { once: true });
+      input.addEventListener('input', () => {
+        UDL_DOWNLOADER.checkServerConnection();
+      }, { once: true });
+    });
+  });
 }

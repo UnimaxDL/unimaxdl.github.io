@@ -127,6 +127,29 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        // Deep Link Handling: unimaxdl://download?url=... or unimaxdl://open?url=...
+        if (Intent.ACTION_VIEW.equals(action) && intent.getData() != null) {
+            Uri data = intent.getData();
+            if ("unimaxdl".equalsIgnoreCase(data.getScheme())) {
+                String targetUrl = data.getQueryParameter("url");
+                if (targetUrl == null || targetUrl.trim().isEmpty()) {
+                    targetUrl = data.getSchemeSpecificPart();
+                    if (targetUrl != null && targetUrl.startsWith("//")) {
+                        targetUrl = targetUrl.substring(2);
+                    }
+                }
+                if (targetUrl != null && !targetUrl.trim().isEmpty()) {
+                    String cleanUrl = extractUrl(targetUrl);
+                    try {
+                        String target = DEFAULT_URL + "?url=" + URLEncoder.encode(cleanUrl, StandardCharsets.UTF_8.toString());
+                        webView.loadUrl(target);
+                        Toast.makeText(this, "Opening in UnimaxDL 4K App...", Toast.LENGTH_SHORT).show();
+                        return;
+                    } catch (Exception ignored) {}
+                }
+            }
+        }
+
         webView.loadUrl(DEFAULT_URL);
     }
 
