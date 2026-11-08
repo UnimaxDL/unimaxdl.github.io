@@ -12,9 +12,9 @@
 const UDL_DOWNLOADER = (() => {
   const STORAGE_KEY = 'udl_backend_url';
 
-  // Production backend identifier (Render or custom)
+  // Production backend identifier (Render cloud companion)
   const PRODUCTION_API = 'https://unimaxdl-server.onrender.com';
-  let defaultBackend = '';
+  let defaultBackend = PRODUCTION_API;
   if (typeof window !== 'undefined') {
     if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
       defaultBackend = window.location.origin;
@@ -22,16 +22,12 @@ const UDL_DOWNLOADER = (() => {
   }
 
   let backendUrl = localStorage.getItem(STORAGE_KEY) || defaultBackend;
-  // If stored value is the cloud backend or old placeholder, clear it to avoid cold-start network lag
-  if (backendUrl && (backendUrl.includes('onrender.com') || backendUrl.includes('unimaxdl.com'))) {
-    backendUrl = '';
-    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
-  }
   let currentMedia = null;
   let pollInterval = null;
   let isAnalyzing = false;
   let isServerConnected = false;
   let gatewayTimer = null;
+  const autoDownloadedTasks = new Set();
 
   // Pure SVG Vector Icon Registry (Strictly Zero Emojis)
   const ICONS = {
@@ -762,12 +758,15 @@ const UDL_DOWNLOADER = (() => {
       });
     }
 
-    // If server backend is connected (local PC companion or Render cloud), use server engine
-    const hasBackend = isServerConnected && backendUrl;
-    if (hasBackend) {
-      showToast(`Starting ${quality} download via UnimaxDL server...`);
+    // Route to server engine (Render cloud or local companion)
+    const targetBackend = backendUrl || PRODUCTION_API;
+    if (targetBackend) {
+      showToast(`Starting ${quality} download via UnimaxDL engine...`);
       try {
-        const res = await fetch(`${backendUrl}/api/download`, {
+        const controller = new AbortController();
+        const timeoutMs = targetBackend.includes('onrender.com') ? 10000 : 3000;
+        const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+        const res = await fetch(`${targetBackend}/api/download`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -776,10 +775,15 @@ const UDL_DOWNLOADER = (() => {
             quality,
             title: currentMedia.title,
             thumbnail: currentMedia.thumbnail
-          })
+          }),
+          signal: controller.signal
         });
+        clearTimeout(timeoutId);
         if (res.ok) {
-          showToast("Local PC download started");
+          backendUrl = targetBackend;
+          isServerConnected = true;
+          updateStatusBadge(true, targetBackend);
+          showToast("Download initialized on server! Tracking progress...");
           const tasksContainer = document.getElementById('tasks-container');
           if (tasksContainer) {
             tasksContainer.classList.remove('hidden');
@@ -791,11 +795,11 @@ const UDL_DOWNLOADER = (() => {
           return;
         }
       } catch (e) {
-        console.warn("Local PC server failed, falling back to monetized web gateway:", e);
+        console.warn("Server backend download creation failed, falling back to direct stream modal:", e);
       }
     }
 
-    // Default for all web visitors: On-Site 5-Second Monetized Gateway
+    // Fallback if cloud server is completely offline: On-Site 5-Second Gateway
     showMonetizedDownloadGateway(type, quality);
   }
 
@@ -1016,16 +1020,40 @@ const UDL_DOWNLOADER = (() => {
   async function triggerLocalOrApp(type, quality) {
     showToast("Connecting to UnimaxDL Engine...");
     const isConnected = await checkServerConnection();
-    if (isConnected) {
-      showToast("Local engine connected! Starting download...");
+    if (isConnected && backendUrl) {
+      showToast("Engine connected! Starting download...");
       closeDownloadModal();
-      triggerDownload(type, quality);
-    } else {
-      showToast("HD stream requires UnimaxDL App. Opening download page...");
-      setTimeout(() => {
-        window.location.href = '/download.html';
-      }, 700);
+      try {
+        const res = await fetch(`${backendUrl}/api/download`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            url: currentMedia.webpage_url || currentMedia.url,
+            type,
+            quality,
+            title: currentMedia.title,
+            thumbnail: currentMedia.thumbnail
+          })
+        });
+        if (res.ok) {
+          const tasksContainer = document.getElementById('tasks-container');
+          if (tasksContainer) {
+            tasksContainer.classList.remove('hidden');
+            tasksContainer.scrollIntoView({ behavior: 'smooth' });
+          }
+          startPolling((tasks) => {
+            renderTasks(tasks, document.getElementById('tasks-container'));
+          });
+          return;
+        }
+      } catch (e) {
+        console.error("Direct server call failed:", e);
+      }
     }
+    showToast("Opening native UnimaxDL App download page...");
+    setTimeout(() => {
+      window.location.href = '/download.html';
+    }, 600);
   }
 
   function executeDownloadAction(url, filename, quality) {
@@ -1204,14 +1232,14 @@ const UDL_DOWNLOADER = (() => {
 
   let emptyPollCount = 0;
 
-  // Polling Active Server Tasks (Only active if local server is connected)
+  // Polling Active Server Tasks (Supports Render cloud or local PC companion)
   async function pollTasks() {
-    const isLocalhost = isServerConnected && backendUrl && (backendUrl.includes('localhost') || backendUrl.includes('127.0.0.1'));
-    if (!isLocalhost) return [];
+    if (!backendUrl) return [];
 
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 1200);
+      const timeoutMs = backendUrl.includes('onrender.com') ? 4000 : 1500;
+      const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
       const res = await fetch(`${backendUrl}/api/tasks`, { signal: controller.signal });
       clearTimeout(timeoutId);
       if (!res.ok) return [];
@@ -1219,27 +1247,30 @@ const UDL_DOWNLOADER = (() => {
       const tasks = data.tasks || [];
       if (tasks.length === 0) {
         emptyPollCount++;
-        if (emptyPollCount >= 3) stopPolling();
+        if (emptyPollCount >= 10) stopPolling();
       } else {
         emptyPollCount = 0;
       }
       return tasks;
     } catch {
-      stopPolling();
       return [];
     }
   }
 
   function startPolling(callback) {
     stopPolling();
-    const isLocalhost = isServerConnected && backendUrl && (backendUrl.includes('localhost') || backendUrl.includes('127.0.0.1'));
-    if (!isLocalhost) return;
+    if (!backendUrl) return;
 
     emptyPollCount = 0;
+    // Initial fetch immediately
+    pollTasks().then(tasks => {
+      if (callback && tasks.length > 0) callback(tasks);
+    });
+
     pollInterval = setInterval(async () => {
       const tasks = await pollTasks();
       if (callback && tasks.length > 0) callback(tasks);
-    }, 2000);
+    }, 1500);
   }
 
   function stopPolling() {
@@ -1267,6 +1298,22 @@ const UDL_DOWNLOADER = (() => {
           const isStarting = t.status === 'starting';
           const isProcessing = t.status === 'processing';
           const downloadUrl = `${backendUrl}/api/download-file/${t.id}`;
+
+          // Auto-trigger browser download once when completed
+          if (isDone && !autoDownloadedTasks.has(t.id)) {
+            autoDownloadedTasks.add(t.id);
+            try {
+              const a = document.createElement('a');
+              a.href = downloadUrl;
+              a.download = t.filename || 'download.mp4';
+              document.body.appendChild(a);
+              a.click();
+              setTimeout(() => a.remove(), 300);
+              showToast(`Download finished: ${t.filename || 'media'}. Saving to device!`);
+            } catch (e) {
+              console.warn("Auto-download trigger failed:", e);
+            }
+          }
 
           let statusBadgeClass = 'bg-cyan-500/20 text-cyan-300 animate-pulse';
           let statusText = t.status;
