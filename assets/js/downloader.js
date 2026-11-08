@@ -28,6 +28,7 @@ const UDL_DOWNLOADER = (() => {
   let isServerConnected = false;
   let gatewayTimer = null;
   const autoDownloadedTasks = new Set();
+  const userInitiatedTasks = new Set();
 
   // Pure SVG Vector Icon Registry (Strictly Zero Emojis)
   const ICONS = {
@@ -437,6 +438,9 @@ const UDL_DOWNLOADER = (() => {
             if (!media.duration && media.duration_label) {
               media.duration = media.duration_label;
             }
+            media.url = media.url || media.original_url || url;
+            media.webpage_url = media.webpage_url || media.original_url || url;
+            media.original_url = media.original_url || url;
             currentMedia = media;
             return media;
           }
@@ -747,13 +751,19 @@ const UDL_DOWNLOADER = (() => {
       return;
     }
 
+    const targetUrl = currentMedia.original_url || currentMedia.webpage_url || currentMedia.url || '';
+    if (!targetUrl) {
+      showToast("Please enter a valid video link");
+      return;
+    }
+
     if (typeof UDL_ANALYTICS !== 'undefined') {
       UDL_ANALYTICS.trackDownload({
         source_site: currentMedia.extractor || 'web',
         media_type: type,
         quality: quality,
         video_title: currentMedia.title || 'Untitled Video',
-        video_url: currentMedia.webpage_url || currentMedia.url || '',
+        video_url: targetUrl,
         duration_sec: currentMedia.duration || null
       });
     }
@@ -764,22 +774,26 @@ const UDL_DOWNLOADER = (() => {
       showToast(`Starting ${quality} download via UnimaxDL engine...`);
       try {
         const controller = new AbortController();
-        const timeoutMs = targetBackend.includes('onrender.com') ? 10000 : 3000;
+        const timeoutMs = targetBackend.includes('onrender.com') ? 12000 : 4000;
         const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
         const res = await fetch(`${targetBackend}/api/download`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            url: currentMedia.webpage_url || currentMedia.url,
+            url: targetUrl,
             type,
             quality,
-            title: currentMedia.title,
-            thumbnail: currentMedia.thumbnail
+            title: currentMedia.title || '',
+            thumbnail: currentMedia.thumbnail || ''
           }),
           signal: controller.signal
         });
         clearTimeout(timeoutId);
         if (res.ok) {
+          const data = await res.json().catch(() => ({}));
+          if (data && data.task_id) {
+            userInitiatedTasks.add(data.task_id);
+          }
           backendUrl = targetBackend;
           isServerConnected = true;
           updateStatusBadge(true, targetBackend);
@@ -1018,6 +1032,11 @@ const UDL_DOWNLOADER = (() => {
   }
 
   async function triggerLocalOrApp(type, quality) {
+    const targetUrl = currentMedia ? (currentMedia.original_url || currentMedia.webpage_url || currentMedia.url || '') : '';
+    if (!targetUrl) {
+      showToast("Please enter a valid video link");
+      return;
+    }
     showToast("Connecting to UnimaxDL Engine...");
     const isConnected = await checkServerConnection();
     if (isConnected && backendUrl) {
@@ -1028,14 +1047,18 @@ const UDL_DOWNLOADER = (() => {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            url: currentMedia.webpage_url || currentMedia.url,
+            url: targetUrl,
             type,
             quality,
-            title: currentMedia.title,
-            thumbnail: currentMedia.thumbnail
+            title: currentMedia.title || '',
+            thumbnail: currentMedia.thumbnail || ''
           })
         });
         if (res.ok) {
+          const data = await res.json().catch(() => ({}));
+          if (data && data.task_id) {
+            userInitiatedTasks.add(data.task_id);
+          }
           const tasksContainer = document.getElementById('tasks-container');
           if (tasksContainer) {
             tasksContainer.classList.remove('hidden');
@@ -1050,16 +1073,13 @@ const UDL_DOWNLOADER = (() => {
         console.error("Direct server call failed:", e);
       }
     }
-    showToast("Opening native UnimaxDL App download page...");
-    setTimeout(() => {
-      window.location.href = '/download.html';
-    }, 600);
+    showToast("Engine stream required. Connect PC Companion or get UnimaxDL App.");
   }
 
   function executeDownloadAction(url, filename, quality) {
     if (!url || url.includes('vevioz') || url.includes('piped') || url.includes('cobalt')) {
-      showToast("Engine stream required. Opening UnimaxDL App...");
-      window.location.href = '/download.html';
+      showToast("Engine stream required. Starting download via server engine...");
+      triggerDownload('video', quality || '720p');
       return;
     }
     showToast(`Opening high-speed stream for ${quality}...`);
@@ -1235,6 +1255,7 @@ const UDL_DOWNLOADER = (() => {
   // Polling Active Server Tasks (Supports Render cloud or local PC companion)
   async function pollTasks() {
     if (!backendUrl) return [];
+    if (backendUrl.includes('onrender.com') && userInitiatedTasks.size === 0) return [];
 
     try {
       const controller = new AbortController();
@@ -1282,6 +1303,19 @@ const UDL_DOWNLOADER = (() => {
 
   function renderTasks(tasks, container) {
     if (!container || !tasks || tasks.length === 0) return;
+
+    // Cloud session isolation: on Render cloud, ONLY show tasks initiated by this visitor
+    const isCloud = backendUrl && backendUrl.includes('onrender.com');
+    const visibleTasks = isCloud
+      ? tasks.filter(t => userInitiatedTasks.has(t.id))
+      : tasks;
+
+    if (visibleTasks.length === 0) {
+      container.innerHTML = '';
+      container.classList.add('hidden');
+      return;
+    }
+
     container.innerHTML = `
       <div class="space-y-3 mt-6">
         <div class="flex items-center justify-between">
@@ -1289,9 +1323,9 @@ const UDL_DOWNLOADER = (() => {
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
             Active Downloads & Processing Queue
           </h4>
-          <span class="text-[11px] text-gray-500 font-mono">${tasks.length} task${tasks.length > 1 ? 's' : ''}</span>
+          <span class="text-[11px] text-gray-500 font-mono">${visibleTasks.length} task${visibleTasks.length > 1 ? 's' : ''}</span>
         </div>
-        ${tasks.map(t => {
+        ${visibleTasks.map(t => {
           const isDone = t.status === 'completed';
           const isError = t.status === 'error';
           const isQueued = t.status === 'queued';
@@ -1299,8 +1333,8 @@ const UDL_DOWNLOADER = (() => {
           const isProcessing = t.status === 'processing';
           const downloadUrl = `${backendUrl}/api/download-file/${t.id}`;
 
-          // Auto-trigger browser download once when completed
-          if (isDone && !autoDownloadedTasks.has(t.id)) {
+          // Auto-trigger browser download once when completed ONLY for this user's task
+          if (isDone && userInitiatedTasks.has(t.id) && !autoDownloadedTasks.has(t.id)) {
             autoDownloadedTasks.add(t.id);
             try {
               const a = document.createElement('a');

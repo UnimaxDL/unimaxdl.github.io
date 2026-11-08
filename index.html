@@ -440,7 +440,7 @@
 
   <!-- Scripts -->
   <script src="/assets/js/analytics.js?v=3.1"></script>
-  <script src="/assets/js/downloader.js?v=4.1"></script>
+  <script src="/assets/js/downloader.js?v=4.2"></script>
   <script>
     const urlInput = document.getElementById('url-input');
     const clearBtn = document.getElementById('clear-btn');
@@ -513,11 +513,6 @@
         spinner.classList.add('hidden');
       }
     }
-
-    // Start background polling for active tasks if connected
-    UDL_DOWNLOADER.startPolling((tasks) => {
-      UDL_DOWNLOADER.renderTasks(tasks, document.getElementById('tasks-container'));
-    });
   </script>
 
   <!-- Monetag MultiTag Official Script (Deferred to zero-impact background execution) -->

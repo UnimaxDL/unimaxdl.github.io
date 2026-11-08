@@ -382,7 +382,7 @@
   </footer>
 
   <script src="/assets/js/analytics.js?v=3.1"></script>
-  <script src="/assets/js/downloader.js?v=4.1"></script>
+  <script src="/assets/js/downloader.js?v=4.2"></script>
   <script>
     async function pasteClipboard() {
       try {
@@ -415,10 +415,6 @@
         btnText.innerText = "Analyze";
       }
     }
-
-    UDL_DOWNLOADER.startPolling((tasks) => {
-      UDL_DOWNLOADER.renderTasks(tasks, document.getElementById('tasks-container'));
-    });
   </script>
   <!-- Monetag MultiTag Official Script (Deferred to zero-impact background execution) -->
   <script>
