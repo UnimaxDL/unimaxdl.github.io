@@ -1293,6 +1293,20 @@ const UDL_DOWNLOADER = (() => {
               </button>
             `).join('')}
           </div>
+
+          <!-- Native App Conversion Callout -->
+          <div class="mt-4 p-4 rounded-2xl bg-gradient-to-r from-amber-500/10 via-cyan-500/10 to-transparent border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+            <div class="space-y-0.5 text-center sm:text-left">
+              <span class="font-extrabold text-white flex items-center gap-1.5 justify-center sm:justify-start">
+                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                Want 4K Downloads & Faster Speeds?
+              </span>
+              <p class="text-gray-400 text-[11px]">Download our free Android APK or Desktop app for background queues and full 4K UHD support.</p>
+            </div>
+            <a href="/download.html" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/10 transition whitespace-nowrap">
+              Get Free App
+            </a>
+          </div>
         </div>
 
       </div>

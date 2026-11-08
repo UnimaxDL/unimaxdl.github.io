@@ -1,235 +1,119 @@
 <!-- Hero Banner -->
 <div align="center">
 
-  <img src="assets/images/icon2.png" alt="UnimaxDL Logo" width="140">
+  <img src="assets/images/icon2.png" alt="UnimaxDL Logo" width="120">
 
   # UnimaxDL
 
   **Download Anything. Everywhere. For Free.**
 
-  The open-source universal media downloader — 1000+ sites, zero ads, zero tracking.
+  The universal open-source media engine — 1000+ sites, 4K UHD, 320kbps MP3, zero intrusive popups.
 
   [![GitHub Stars](https://img.shields.io/github/stars/UnimaxDL/unimaxdl.github.io?style=for-the-badge&logo=github&color=f59e0b)](https://github.com/UnimaxDL/unimaxdl.github.io/stargazers)
   [![License](https://img.shields.io/github/license/UnimaxDL/unimaxdl.github.io?style=for-the-badge&color=10b981)](LICENSE)
-  [![Downloads](https://img.shields.io/github/downloads/UnimaxDL/unimaxdl.github.io/total?style=for-the-badge&color=6366f1)](https://github.com/UnimaxDL/unimaxdl.github.io/releases)
   [![Platform](https://img.shields.io/badge/Platform-Web%20%7C%20Windows%20%7C%20Mac%20%7C%20Linux%20%7C%20Android-blue?style=for-the-badge)](https://unimaxdl.github.io)
-
-  <br/>
-
-  <img src="assets/images/hero-screenshot.png" alt="UnimaxDL Screenshot" width="800">
+  [![Status](https://img.shields.io/badge/Status-Online%20Production-success?style=for-the-badge)](https://unimaxdl.github.io)
 
   <br/><br/>
 
-  <a href="https://unimaxdl.github.io"><b>🌐 Try Online</b></a> · 
-  <a href="https://unimaxdl.github.io/download.html"><b>📥 Download App</b></a> · 
-  <a href="#-quick-start"><b>🚀 Quick Start</b></a> · 
-  <a href="https://discord.gg/unimaxdl"><b>💬 Discord</b></a>
+  <a href="https://unimaxdl.github.io"><b>[Launch Web App]</b></a> &bull; 
+  <a href="https://unimaxdl.github.io/download.html"><b>[Download Android APK & Desktop]</b></a> &bull; 
+  <a href="#quick-start"><b>[Quick Start]</b></a> &bull; 
+  <a href="#supported-platforms"><b>[Supported Sites]</b></a>
 
 </div>
 
 ---
 
-## ✨ Features
+## Key Highlights
 
 <table>
   <tr>
-    <td align="center" width="20%">🌍<br/><b>1000+ Sites</b><br/><sub>YouTube, TikTok, Instagram, Twitter/X, Reddit, and more</sub></td>
-    <td align="center" width="20%">📺<br/><b>4K / 8K</b><br/><sub>Download at the highest available resolution</sub></td>
-    <td align="center" width="20%">🎵<br/><b>MP3 Converter</b><br/><sub>Extract audio at 320/192/128 kbps</sub></td>
-    <td align="center" width="20%">🚫<br/><b>Zero Ads</b><br/><sub>No ads, no popups, no dark patterns — ever</sub></td>
-    <td align="center" width="20%">🔓<br/><b>Open Source</b><br/><sub>MIT licensed, fully auditable code</sub></td>
+    <td align="center" width="20%"><b>1000+ Platforms</b><br/><sub>YouTube, TikTok, Instagram, Reddit, SoundCloud, Twitch, and more</sub></td>
+    <td align="center" width="20%"><b>Up to 4K / UHD</b><br/><sub>Download full 2160p 60fps and 1080p high bitrate</sub></td>
+    <td align="center" width="20%"><b>Studio MP3 Audio</b><br/><sub>Extract audio in 320kbps / 256kbps lossless M4A</sub></td>
+    <td align="center" width="20%"><b>Clean Interface</b><br/><sub>No deceptive download links, no malware popups</sub></td>
+    <td align="center" width="20%"><b>Open Architecture</b><br/><sub>Transparent, privacy-first web frontend & client tools</sub></td>
   </tr>
   <tr>
-    <td align="center">💻<br/><b>Cross Platform</b><br/><sub>Web, Windows, Mac, Linux, Android</sub></td>
-    <td align="center">🔒<br/><b>Private</b><br/><sub>No tracking, no cookies, no data collection</sub></td>
-    <td align="center">📦<br/><b>Batch Download</b><br/><sub>Download playlists and channels in bulk</sub></td>
-    <td align="center">📋<br/><b>Clipboard Watcher</b><br/><sub>Auto-detect copied URLs and start downloads</sub></td>
-    <td align="center">📲<br/><b>Share Intent</b><br/><sub>Share from any Android app to download instantly</sub></td>
+    <td align="center"><b>Multi-Platform</b><br/><sub>Web, Windows, macOS, Linux, Android</sub></td>
+    <td align="center"><b>Audio Muxing</b><br/><sub>Auto-merges separated video/audio streams on Reddit & DASH</sub></td>
+    <td align="center"><b>Batch Capability</b><br/><sub>Download playlists and channels via desktop engine</sub></td>
+    <td align="center"><b>Deep Link Handler</b><br/><sub>One-click deep link launch into native companion (unimaxdl://)</sub></td>
+    <td align="center"><b>Android Share Intent</b><br/><sub>Share link directly from YouTube or TikTok app to download</sub></td>
   </tr>
 </table>
 
 ---
 
-## 🖼️ Screenshots
+## Live Web Services & Platform Tools
 
-<div align="center">
-  <table>
-    <tr>
-      <td align="center"><img src="assets/images/screenshot-web.png" alt="Web UI" width="280"><br/><b>Web Interface</b></td>
-      <td align="center"><img src="assets/images/screenshot-desktop.png" alt="Desktop App" width="280"><br/><b>Desktop App</b></td>
-      <td align="center"><img src="assets/images/screenshot-android.png" alt="Android App" width="280"><br/><b>Android App</b></td>
-    </tr>
-  </table>
-</div>
+UnimaxDL provides dedicated high-speed downloader tools for top streaming platforms:
 
----
-
-## 🚀 Quick Start
-
-### 1. 🌐 Web (Instant — No Install)
-
-Visit **[unimaxdl.github.io](https://unimaxdl.github.io)** → Paste a URL → Download.
-
-That's it. No signup, no install, no BS.
-
-### 2. Desktop App
-
-1. Go to [**Releases**](https://github.com/UnimaxDL/unimaxdl.github.io/releases)
-2. Download the installer for your OS (`.exe` / `.dmg` / `.AppImage`)
-3. Install and launch
-4. Paste a URL -> Pick quality -> Download
+* **[Universal Web Downloader](https://unimaxdl.github.io/)** &mdash; Download from 1000+ video sites online.
+* **[YouTube 4K Downloader](https://unimaxdl.github.io/youtube-downloader.html)** &mdash; Full 4K, 1080p, Shorts, and MP3 320k converter.
+* **[TikTok Downloader](https://unimaxdl.github.io/tiktok-downloader.html)** &mdash; Save TikTok videos without watermark in HD.
+* **[Instagram Downloader](https://unimaxdl.github.io/instagram-downloader.html)** &mdash; Download Reels, Stories, IGTV, and carousel posts.
+* **[Reddit Video Downloader](https://unimaxdl.github.io/reddit-downloader.html)** &mdash; Auto-mux audio and video streams into MP4 with sound.
+* **[SoundCloud Downloader](https://unimaxdl.github.io/soundcloud-downloader.html)** &mdash; Extract high-fidelity 320kbps MP3 tracks with album artwork.
+* **[Twitch Clip Downloader](https://unimaxdl.github.io/twitch-downloader.html)** &mdash; Download Twitch clips and stream highlights in 1080p 60FPS.
+* **[Twitter / X Downloader](https://unimaxdl.github.io/twitter-downloader.html)** &mdash; Save Twitter/X video clips in original resolution.
+* **[Facebook Video Downloader](https://unimaxdl.github.io/facebook-downloader.html)** &mdash; Download public Facebook reels and videos in HD.
+* **[Pinterest Downloader](https://unimaxdl.github.io/pinterest-downloader.html)** &mdash; Save Pinterest video pins and idea pins.
 
 ---
 
-## Android
+## Quick Start
 
-1. Download the latest APK from [**Releases**](https://github.com/UnimaxDL/unimaxdl.github.io/releases)
-2. Enable **"Install from Unknown Sources"** in your device settings
-3. Install the APK
-4. Open any app (YouTube, TikTok, Instagram…) → Hit **Share** → Select **UnimaxDL**
+### 1. Web App (Instant — No Installation Required)
+Open **[unimaxdl.github.io](https://unimaxdl.github.io)** in any browser &rarr; Paste URL &rarr; Click **Analyze** &rarr; Download.
 
-The video downloads directly to your device. No root required.
+### 2. Android App (APK)
+1. Visit the **[UnimaxDL Download Portal](https://unimaxdl.github.io/download.html)** on your Android device.
+2. Download `UnimaxDL.apk` and tap to install.
+3. In any media app (YouTube, Reddit, TikTok), tap **Share** &rarr; Select **UnimaxDL** for instant background downloading.
 
----
-
-## 🌐 Supported Sites
-
-UnimaxDL supports **1000+ websites** via [yt-dlp](https://github.com/yt-dlp/yt-dlp). Here are the most popular:
-
-| Platform | Video | Audio | Playlists | Stories/Reels |
-|:---------|:-----:|:-----:|:---------:|:-------------:|
-| 🔴 YouTube | ✅ | ✅ | ✅ | — |
-| 🎵 TikTok | ✅ | ✅ | — | ✅ |
-| 📸 Instagram | ✅ | ✅ | — | ✅ |
-| 📘 Facebook | ✅ | ✅ | — | ✅ |
-| 🐦 Twitter / X | ✅ | ✅ | — | — |
-| 🟠 Reddit | ✅ | ✅ | — | — |
-| 🎬 Vimeo | ✅ | ✅ | ✅ | — |
-| 🎧 SoundCloud | — | ✅ | ✅ | — |
-| 📹 Dailymotion | ✅ | ✅ | ✅ | — |
-| 🟣 Twitch | ✅ | ✅ | — | — |
-| 📌 Pinterest | ✅ | — | — | — |
-| 📺 Bilibili | ✅ | ✅ | ✅ | — |
-
-> **…and 1000+ more** — if yt-dlp supports it, UnimaxDL supports it.
+### 3. Desktop Application (Windows / macOS / Linux)
+1. Download the executable or AppImage from **[Download Portal](https://unimaxdl.github.io/download.html)**.
+2. Launch the application to process unlimited batch queues and 4K streams locally on your PC.
 
 ---
 
-## 🔧 API Reference
+## Supported Platforms
 
-UnimaxDL exposes a REST API for programmatic access:
+UnimaxDL supports **over 1,000 websites** powered by the open-source media extraction standard:
 
-| Method | Endpoint | Description |
-|:-------|:---------|:------------|
-| `GET` | `/api/ping` | Health check — returns `{ "status": "ok" }` |
-| `POST` | `/api/analyze` | Analyze a URL → returns available formats, resolutions, metadata |
-| `POST` | `/api/download` | Start a download task with specified format and quality |
-| `GET` | `/api/tasks` | List all active and completed download tasks |
-| `GET` | `/api/tasks/:id` | Get status of a specific download task |
-| `GET` | `/api/library` | Browse downloaded media library |
-| `DELETE` | `/api/library/:id` | Remove a file from the library |
-
-**Quick example:**
-
-```bash
-# Analyze a video
-curl -X POST http://localhost:8000/api/analyze \
-  -H "Content-Type: application/json" \
-  -d '{"url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"}'
-
-# Download as MP4 (best quality)
-curl -X POST http://localhost:8000/api/download \
-  -H "Content-Type: application/json" \
-  -d '{"url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ", "format": "mp4", "quality": "best"}'
-```
-
-> 📖 Full API docs: [`docs/api-reference.md`](docs/api-reference.md)
+| Platform | Video | Audio | Playlists | Shorts / Reels |
+|:---------|:-----:|:-----:|:---------:|:--------------:|
+| YouTube | Yes (4K/1080p) | Yes (MP3 320k) | Yes | Yes |
+| TikTok | Yes (No Watermark) | Yes | No | Yes |
+| Instagram | Yes (1080p) | Yes | No | Yes |
+| Reddit | Yes (Sound Included) | Yes | No | Yes |
+| SoundCloud | No | Yes (320k MP3) | Yes | No |
+| Twitch | Yes (1080p 60fps) | Yes | Yes (VODs) | Yes (Clips) |
+| Twitter / X | Yes | Yes | No | No |
+| Facebook | Yes | Yes | No | Yes |
+| Pinterest | Yes | No | No | Yes |
+| Vimeo | Yes | Yes | Yes | No |
+| Dailymotion | Yes | Yes | Yes | No |
+| Bilibili | Yes | Yes | Yes | No |
 
 ---
 
-## 🏗️ Project Structure
+## Privacy & Security Policy
 
-```
-unimaxdl.github.io/
-├── index.html              # Main web app (GitHub Pages)
-├── download.html           # Download page for native apps
-├── blog/                   # Blog posts
-├── assets/
-│   ├── css/                # Stylesheets
-│   ├── js/                 # Frontend JavaScript
-│   └── images/             # Logos, screenshots, icons
-├── desktop/                # Tauri desktop app (Windows/Mac/Linux)
-│   ├── src-tauri/          # Rust backend
-│   └── src/                # Frontend (web)
-├── android/                # Android app
-│   └── app/                # Android Studio project
-├── docs/                   # Documentation
-│   ├── setup-guide.md
-│   ├── api-reference.md
-│   ├── privacy-policy.md
-│   └── terms-of-service.md
-├── .github/
-│   ├── workflows/          # CI/CD workflows
-│   ├── ISSUE_TEMPLATE/     # Bug & feature templates
-│   └── FUNDING.yml
-├── docker-compose.yml
-├── CONTRIBUTING.md
-├── CHANGELOG.md
-├── CODE_OF_CONDUCT.md
-├── LICENSE                 # MIT
-└── README.md               # ← You are here
-```
+* **Zero Logging:** We do not track, log, or record video URLs or user identity.
+* **No Cookies or Sessions:** The web interface operates statelessly.
+* **Open Client Code:** All frontend scripts and client tools are open-source and auditable.
 
 ---
 
-## 🤝 Contributing
+## License
 
-Contributions are what make open-source great. Whether it's fixing a typo, adding a feature, or reporting a bug — **every contribution matters**.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-> 📖 Read the full [**Contributing Guide**](CONTRIBUTING.md) before getting started.
-
----
-
-## ⭐ Star History
-
-<div align="center">
-
-[![Star History Chart](https://api.star-history.com/svg?repos=UnimaxDL/unimaxdl.github.io&type=Date)](https://star-history.com/#UnimaxDL/unimaxdl.github.io&Date)
-
-</div>
-
-**If UnimaxDL saves you time, give it a ⭐ — it helps more people discover it.**
-
----
-
-## 📜 License
-
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
-
-You're free to use, modify, and distribute UnimaxDL. Attribution is appreciated but not required.
-
----
-
-## 👤 Author
-
-<div align="center">
-
-**Built with ❤️ by [Atomic Dhruba](https://github.com/AtomicDhruba)**
-
-[![GitHub](https://img.shields.io/badge/GitHub-AtomicDhruba-181717?style=for-the-badge&logo=github)](https://github.com/AtomicDhruba)
-[![Website](https://img.shields.io/badge/Website-unimaxdl.github.io-4f46e5?style=for-the-badge&logo=googlechrome&logoColor=white)](https://unimaxdl.github.io)
-[![Discord](https://img.shields.io/badge/Discord-Join%20Us-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/unimaxdl)
-
-</div>
+This project is licensed under the **MIT License** &mdash; see the [LICENSE](LICENSE) file for details.
 
 ---
 
 <div align="center">
-  <sub>UnimaxDL is not affiliated with YouTube, TikTok, Instagram, or any other platform. Use responsibly and respect copyright laws.</sub>
+  <sub>UnimaxDL is not affiliated with YouTube, TikTok, Instagram, Reddit, SoundCloud, Twitch, or any other platform. All product names, logos, and brands are property of their respective owners.</sub>
 </div>

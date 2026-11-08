@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>Reddit Video Downloader with Audio — Save Reddit Videos Free | UnimaxDL</title>
+  <meta name="description" content="Download Reddit videos with audio in 1080p HD, 720p, or convert to MP3. Fast, free, ad-free online Reddit to MP4 downloader supporting sound, GIFs, and galleries." />
+  <meta name="keywords" content="reddit video downloader with audio, download reddit video sound, reddit to mp4, save reddit video, reddit video saver, reddit audio downloader, unimaxdl" />
+  <link rel="canonical" href="https://unimaxdl.github.io/reddit-downloader.html" />
+
+  <!-- Favicon & Touch Icons -->
+  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#07070a" />
+
+  <!-- Robots & Directives -->
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://unimaxdl.github.io/reddit-downloader.html" />
+  <meta property="og:title" content="Reddit Video Downloader with Audio — Save Reddit Videos Free | UnimaxDL" />
+  <meta property="og:description" content="Download Reddit videos with sound in full 1080p HD or extract MP3 audio. 100% free, fast, and ad-free." />
+  <meta property="og:image" content="https://unimaxdl.github.io/assets/images/icon2.png" />
+  <meta property="og:site_name" content="UnimaxDL" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://unimaxdl.github.io/reddit-downloader.html" />
+  <meta name="twitter:title" content="Reddit Video Downloader with Audio — UnimaxDL" />
+  <meta name="twitter:description" content="Save Reddit videos with sound in 1080p HD MP4 or extract audio directly." />
+  <meta name="twitter:image" content="https://unimaxdl.github.io/assets/images/icon2.png" />
+
+  <!-- Schema.org WebApplication, HowTo & FAQPage -->
+  <script type="application/ld+json">
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "UnimaxDL Reddit Video Downloader with Audio",
+      "url": "https://unimaxdl.github.io/reddit-downloader.html",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Web, Windows, macOS, Linux, Android, iOS",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": "Free online tool to download Reddit videos with audio in 1080p HD, 720p, and extract MP3 music."
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "How to Download Reddit Videos with Audio Using UnimaxDL",
+      "description": "Step-by-step tutorial on saving Reddit videos with merged sound in Full HD MP4.",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "Copy Reddit Post Link",
+          "text": "Click Share on any Reddit post containing a video and copy the link."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Paste in UnimaxDL",
+          "text": "Paste the Reddit URL into the search box and click Analyze."
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Download MP4 with Sound",
+          "text": "Select your desired resolution (1080p, 720p) and click Download. The video and audio are automatically merged."
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Does this downloader save Reddit videos with sound?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Reddit natively stores video and audio streams separately. UnimaxDL automatically muxes the audio and video into a single MP4 file so your download includes sound."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I convert Reddit videos to MP3 audio?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, paste the Reddit link, click Analyze, and choose MP3 from the Audio tab to extract audio directly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is there any software installation needed?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No, the online downloader runs directly in your web browser on mobile and desktop without installing anything."
+          }
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://unimaxdl.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Reddit Video Downloader",
+          "item": "https://unimaxdl.github.io/reddit-downloader.html"
+        }
+      ]
+    }
+  ]
+  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #07070a;
+      min-height: 100vh;
+      position: relative;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(255, 69, 0, 0.12) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(245, 158, 11, 0.10) 0px, transparent 50%),
+        radial-gradient(at 50% 50%, rgba(15, 15, 21, 0.9) 0px, #07070a 100%);
+      pointer-events: none;
+      z-index: -1;
+      transform: translateZ(0);
+      will-change: transform;
+    }
+    .glass-card {
+      background: rgba(22, 22, 32, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5);
+      transform: translateZ(0);
+    }
+    .glass-card:hover {
+      border-color: rgba(255, 69, 0, 0.4);
+    }
+  </style>
+</head>
+<body class="text-gray-100 font-sans antialiased selection:bg-orange-500/30 selection:text-orange-300">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-[#07070a]/80 backdrop-blur-xl border-b border-white/[0.08]">
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3 group">
+        <img src="/assets/images/icon2.png" alt="UnimaxDL" class="w-10 h-10 object-contain drop-shadow-[0_0_12px_rgba(255,69,0,0.35)] group-hover:scale-105 transition-transform" />
+        <div class="flex items-center gap-2">
+          <span class="font-black text-lg tracking-tight text-white">Unimax<span class="text-orange-400">DL</span></span>
+          <span class="text-[9px] font-extrabold px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-400 border border-orange-500/20">REDDIT</span>
+        </div>
+      </a>
+
+      <div class="flex items-center gap-4">
+        <nav class="hidden md:flex items-center gap-6 text-sm font-semibold text-gray-300">
+          <a href="/" class="hover:text-cyan-400 transition">All Tools</a>
+          <a href="/youtube-downloader.html" class="hover:text-red-400 transition">YouTube</a>
+          <a href="/tiktok-downloader.html" class="hover:text-teal-400 transition">TikTok</a>
+          <a href="/instagram-downloader.html" class="hover:text-fuchsia-400 transition">Instagram</a>
+          <a href="/twitter-downloader.html" class="hover:text-sky-400 transition">Twitter / X</a>
+          <a href="/reddit-downloader.html" class="text-orange-400 transition font-bold">Reddit</a>
+          <a href="/download.html" class="hover:text-cyan-400 transition">Get App</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="pt-14 pb-10 px-4 text-center">
+    <div class="max-w-3xl mx-auto space-y-4">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-500/10 border border-orange-500/25 text-orange-400 text-xs font-bold shadow-sm">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
+        <span>Full Audio Included · 1080p HD · No Watermarks · 100% Free</span>
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
+        Reddit Video Downloader with Sound
+      </h1>
+      <p class="text-gray-400 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
+        Save any Reddit video with crystal-clear audio directly into MP4. No separate video/audio files, no watermark, and zero ads.
+      </p>
+    </div>
+  </section>
+
+  <!-- Downloader Widget -->
+  <section class="max-w-3xl mx-auto px-4 pb-16">
+    <div class="glass-card rounded-3xl p-6 sm:p-8 space-y-5">
+      <div class="space-y-2">
+        <div class="flex items-center justify-between text-xs">
+          <label for="url-input" class="font-bold text-gray-300 uppercase tracking-wider">Paste Reddit Post Link</label>
+          <button onclick="pasteClipboard()" class="text-orange-400 hover:text-orange-300 font-bold flex items-center gap-1.5 text-[11px] transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+            <span>Paste</span>
+          </button>
+        </div>
+        <div class="relative flex items-center rounded-2xl border border-white/10 bg-[#0c0c12]">
+          <span class="pl-4 text-orange-500 flex items-center">
+            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.688-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.197-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          </span>
+          <input 
+            type="url" 
+            id="url-input" 
+            placeholder="https://www.reddit.com/r/.../comments/... or https://v.redd.it/..." 
+            class="w-full bg-transparent py-4 pl-3 pr-28 text-sm text-white placeholder-gray-500 focus:outline-none"
+          />
+          <button 
+            id="analyze-btn" 
+            onclick="handleAnalyze()" 
+            class="mr-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-orange-500 to-red-500 hover:brightness-110 text-white font-black text-xs shadow-md transition flex-shrink-0 flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            <span id="btn-text">Analyze</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Results Container -->
+      <div id="media-card-container"></div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="max-w-4xl mx-auto px-4 pb-20 space-y-12">
+    <div class="text-center space-y-2">
+      <h2 class="text-2xl sm:text-3xl font-black text-white">How to Download Reddit Videos with Audio</h2>
+      <p class="text-gray-400 text-xs sm:text-sm">Save full audio-synchronized MP4 files in 3 straightforward steps</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="glass-card p-6 rounded-2xl border border-white/5 space-y-3">
+        <div class="w-8 h-8 rounded-xl bg-orange-500/10 border border-orange-500/20 text-orange-400 font-black text-sm flex items-center justify-center">1</div>
+        <h3 class="font-bold text-white text-base">Copy Reddit Link</h3>
+        <p class="text-gray-400 text-xs leading-relaxed">
+          Open the Reddit app or website, tap Share under the post, and copy the post URL.
+        </p>
+      </div>
+
+      <div class="glass-card p-6 rounded-2xl border border-white/5 space-y-3">
+        <div class="w-8 h-8 rounded-xl bg-orange-500/10 border border-orange-500/20 text-orange-400 font-black text-sm flex items-center justify-center">2</div>
+        <h3 class="font-bold text-white text-base">Analyze URL</h3>
+        <p class="text-gray-400 text-xs leading-relaxed">
+          Paste the link above and click Analyze. UnimaxDL automatically detects and pairs the video with the sound track.
+        </p>
+      </div>
+
+      <div class="glass-card p-6 rounded-2xl border border-white/5 space-y-3">
+        <div class="w-8 h-8 rounded-xl bg-orange-500/10 border border-orange-500/20 text-orange-400 font-black text-sm flex items-center justify-center">3</div>
+        <h3 class="font-bold text-white text-base">Save MP4 Video</h3>
+        <p class="text-gray-400 text-xs leading-relaxed">
+          Choose 1080p or 720p and click Download. The completed file will be saved directly to your device.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Grid -->
+  <section class="max-w-4xl mx-auto px-4 pb-20 space-y-12">
+    <div class="text-center space-y-2">
+      <h2 class="text-2xl sm:text-3xl font-black text-white">Why Use UnimaxDL for Reddit Videos?</h2>
+      <p class="text-gray-400 text-xs sm:text-sm">Built specifically to solve the Reddit audio extraction problem</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+      <div class="glass-card p-6 rounded-2xl border border-white/5 space-y-2">
+        <h3 class="font-bold text-white text-sm">Automatic Audio Muxing</h3>
+        <p class="text-gray-400 text-xs leading-relaxed">
+          Reddit stores audio and video in separate files. UnimaxDL combines them into a single seamless MP4 with zero out-of-sync lag.
+        </p>
+      </div>
+      <div class="glass-card p-6 rounded-2xl border border-white/5 space-y-2">
+        <h3 class="font-bold text-white text-sm">Highest Resolution Available</h3>
+        <p class="text-gray-400 text-xs leading-relaxed">
+          Download original Full HD 1080p, 720p, or 480p depending on what the original poster uploaded.
+        </p>
+      </div>
+      <div class="glass-card p-6 rounded-2xl border border-white/5 space-y-2">
+        <h3 class="font-bold text-white text-sm">100% Ad-Free Clean UI</h3>
+        <p class="text-gray-400 text-xs leading-relaxed">
+          No intrusive malware popups, no misleading fake download buttons, and no registration required.
+        </p>
+      </div>
+      <div class="glass-card p-6 rounded-2xl border border-white/5 space-y-2">
+        <h3 class="font-bold text-white text-sm">Mobile & Desktop Friendly</h3>
+        <p class="text-gray-400 text-xs leading-relaxed">
+          Works seamlessly on iPhone (Safari), Android (Chrome), Windows, macOS, and Linux browsers.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Native App Promo Banner -->
+  <section class="max-w-4xl mx-auto px-4 pb-20">
+    <div class="glass-card p-8 rounded-3xl border border-orange-500/20 bg-gradient-to-r from-orange-950/20 via-zinc-900 to-black flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-2 text-center md:text-left">
+        <div class="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-orange-500/10 text-orange-400 text-[10px] font-black uppercase tracking-wider">
+          Native Performance
+        </div>
+        <h3 class="text-xl sm:text-2xl font-black text-white">Need 4K & Batch Downloads?</h3>
+        <p class="text-gray-400 text-xs sm:text-sm max-w-lg">
+          Download the free UnimaxDL Native App for Android and Windows PC. Download unlimited videos locally at full gigabit internet speeds.
+        </p>
+      </div>
+      <a href="/download.html" class="px-6 py-3 rounded-2xl bg-gradient-to-r from-orange-500 to-red-500 hover:brightness-110 text-white font-black text-xs shadow-lg transition flex-shrink-0">
+        Download Native App
+      </a>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="max-w-4xl mx-auto px-4 pb-20 space-y-6">
+    <div class="text-center space-y-2">
+      <h2 class="text-2xl sm:text-3xl font-black text-white">Frequently Asked Questions</h2>
+      <p class="text-gray-400 text-xs sm:text-sm">Everything you need to know about downloading Reddit videos</p>
+    </div>
+
+    <div class="space-y-3">
+      <details class="glass-card p-5 rounded-2xl border border-white/5 text-xs sm:text-sm group cursor-pointer">
+        <summary class="font-bold text-white flex items-center justify-between list-none">
+          <span>Why do other Reddit downloaders save videos without sound?</span>
+          <span class="text-orange-400 text-lg group-open:rotate-45 transition-transform duration-200">+</span>
+        </summary>
+        <p class="text-gray-400 mt-3 leading-relaxed">
+          Reddit stores videos using dynamic adaptive streaming (DASH), which hosts the audio and video tracks separately. Most online downloaders only fetch the video stream. UnimaxDL downloads both streams and dynamically merges them using FFmpeg on the fly.
+        </p>
+      </details>
+
+      <details class="glass-card p-5 rounded-2xl border border-white/5 text-xs sm:text-sm group cursor-pointer">
+        <summary class="font-bold text-white flex items-center justify-between list-none">
+          <span>Can I download Reddit GIFs and save them as MP4?</span>
+          <span class="text-orange-400 text-lg group-open:rotate-45 transition-transform duration-200">+</span>
+        </summary>
+        <p class="text-gray-400 mt-3 leading-relaxed">
+          Yes, any animated GIF hosted on Reddit or Imgur can be analyzed and saved as a high-quality, lightweight MP4 file.
+        </p>
+      </details>
+
+      <details class="glass-card p-5 rounded-2xl border border-white/5 text-xs sm:text-sm group cursor-pointer">
+        <summary class="font-bold text-white flex items-center justify-between list-none">
+          <span>Where are the downloaded Reddit videos saved on my phone?</span>
+          <span class="text-orange-400 text-lg group-open:rotate-45 transition-transform duration-200">+</span>
+        </summary>
+        <p class="text-gray-400 mt-3 leading-relaxed">
+          On Android and PC, files are saved directly in your default Downloads folder. On iPhone/iPad, they appear in your Safari Downloads manager, where you can tap "Save Video" to send them to the Photos gallery.
+        </p>
+      </details>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/[0.08] bg-[#050508] py-12 text-center text-xs text-gray-500 space-y-4">
+    <div class="flex flex-wrap items-center justify-center gap-6 text-gray-400 font-semibold max-w-4xl mx-auto px-4">
+      <a href="/" class="hover:text-white transition">Universal Downloader</a>
+      <a href="/youtube-downloader.html" class="hover:text-white transition">YouTube 4K</a>
+      <a href="/tiktok-downloader.html" class="hover:text-white transition">TikTok No Watermark</a>
+      <a href="/instagram-downloader.html" class="hover:text-white transition">Instagram Reels</a>
+      <a href="/twitter-downloader.html" class="hover:text-white transition">Twitter / X Video</a>
+      <a href="/reddit-downloader.html" class="text-orange-400 transition">Reddit with Audio</a>
+      <a href="/facebook-downloader.html" class="hover:text-white transition">Facebook HD</a>
+      <a href="/pinterest-downloader.html" class="hover:text-white transition">Pinterest Video</a>
+      <a href="/download.html" class="hover:text-white transition">Desktop & Mobile App</a>
+    </div>
+    <div class="flex items-center justify-center gap-4 text-gray-600 text-[11px] pt-2">
+      <a href="/privacy.html" class="hover:text-gray-400 transition">Privacy Policy</a>
+      <span>&bull;</span>
+      <a href="/terms.html" class="hover:text-gray-400 transition">Terms of Service</a>
+      <span>&bull;</span>
+      <a href="/dmca.html" class="hover:text-gray-400 transition">DMCA Compliance</a>
+    </div>
+    <p class="text-gray-600 text-[11px]">UnimaxDL &bull; Universal Media Engine &bull; Free, Open-Source & Privacy-First</p>
+  </footer>
+
+  <script src="/assets/js/analytics.js?v=3.1"></script>
+  <script src="/assets/js/downloader.js?v=4.4"></script>
+  <script>
+    async function pasteClipboard() {
+      try {
+        const text = await navigator.clipboard.readText();
+        if (text) {
+          document.getElementById('url-input').value = text;
+          handleAnalyze();
+        }
+      } catch {}
+    }
+
+    async function handleAnalyze() {
+      const url = document.getElementById('url-input').value.trim();
+      const mediaContainer = document.getElementById('media-card-container');
+      const btnText = document.getElementById('btn-text');
+      if (!url) {
+        UDL_DOWNLOADER.showToast("Please enter a Reddit URL");
+        return;
+      }
+      btnText.innerText = "Analyzing...";
+      try {
+        const info = await UDL_DOWNLOADER.analyzeUrl(url);
+        if (info) {
+          UDL_DOWNLOADER.renderMediaCard(info, mediaContainer);
+          mediaContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+      } catch (err) {
+        UDL_DOWNLOADER.showToast(err.message || "Failed to analyze Reddit link.");
+      } finally {
+        btnText.innerText = "Analyze";
+      }
+    }
+  </script>
+  <!-- Monetag MultiTag Official Script (Deferred to zero-impact background execution) -->
+  <script>
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        var s = document.createElement('script');
+        s.src = "https://quge5.com/88/tag.min.js";
+        s.dataset.zone = "305301";
+        s.async = true;
+        s.dataset.cfasync = "false";
+        document.body.appendChild(s);
+      }, 500);
+    });
+  </script>
+</body>
+</html>
