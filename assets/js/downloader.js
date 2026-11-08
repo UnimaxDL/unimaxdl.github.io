@@ -13,7 +13,7 @@ const UDL_DOWNLOADER = (() => {
   const STORAGE_KEY = 'udl_backend_url';
 
   // Production backend identifier (Render or custom)
-  const PRODUCTION_API = 'https://unimaxdl-api.onrender.com';
+  const PRODUCTION_API = 'https://unimaxdl-server.onrender.com';
   let defaultBackend = '';
   if (typeof window !== 'undefined') {
     if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
@@ -66,42 +66,50 @@ const UDL_DOWNLOADER = (() => {
     return !!backendUrl;
   }
 
-  // Ping Diagnostic (Auto-detects running local PC companion on port 8000 or 5000)
+  // Ping Diagnostic (Auto-detects running local PC companion on port 8000 or Render cloud backend)
   async function checkServerConnection() {
-    const candidates = backendUrl 
-      ? [backendUrl, 'http://127.0.0.1:8000', 'http://127.0.0.1:5000']
-      : ['http://127.0.0.1:8000', 'http://127.0.0.1:5000'];
+    const candidates = [];
+    if (backendUrl) candidates.push(backendUrl);
+    candidates.push('http://127.0.0.1:8000', 'http://127.0.0.1:5000');
+    if (PRODUCTION_API && !candidates.includes(PRODUCTION_API)) {
+      candidates.push(PRODUCTION_API);
+    }
 
     for (const target of candidates) {
       try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 1200);
+        const timeoutMs = target.includes('onrender.com') ? 3500 : 1200;
+        const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
         const res = await fetch(`${target}/api/ping`, { signal: controller.signal });
         clearTimeout(timeoutId);
         if (res.ok) {
           backendUrl = target;
           isServerConnected = true;
-          updateStatusBadge(true);
+          updateStatusBadge(true, target);
           return true;
         }
       } catch (e) {}
     }
 
     isServerConnected = false;
-    updateStatusBadge(false);
+    updateStatusBadge(false, '');
     return false;
   }
 
-  function updateStatusBadge(connected) {
+  function updateStatusBadge(connected, targetUrl) {
     const el = document.getElementById('udl-server-status');
     if (!el) return;
     if (connected) {
-      el.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-xs font-semibold';
-      el.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> <span>Local PC: Connected</span>';
+      const isCloud = targetUrl && targetUrl.includes('onrender.com');
+      const label = isCloud ? 'Render Cloud: Connected' : 'Local PC: Connected';
+      el.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-xs font-semibold cursor-pointer hover:bg-emerald-500/20 transition';
+      el.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> <span>${label}</span>`;
+      el.title = `Connected to ${targetUrl}. Tap to view or configure backend`;
+      el.onclick = showSettingsModal;
     } else {
       el.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-400 text-xs font-semibold cursor-pointer hover:bg-cyan-500/20 transition';
       el.innerHTML = '<span class="w-2 h-2 rounded-full bg-cyan-400"></span> <span>Smart Web Mode (Zero Bills)</span>';
-      el.title = "Running 100% in browser. Tap to connect local PC for 4K batch downloads";
+      el.title = "Running 100% in browser. Tap to connect local PC or Render backend";
       el.onclick = showSettingsModal;
     }
   }
@@ -401,9 +409,9 @@ const UDL_DOWNLOADER = (() => {
     isAnalyzing = true;
 
     try {
-      // If user has local PC server connected, test it with generous timeout for yt-dlp
-      const isLocalhost = isServerConnected && backendUrl && (backendUrl.includes('localhost') || backendUrl.includes('127.0.0.1'));
-      if (isLocalhost) {
+      // If user has local companion or Render cloud backend connected, route through server yt-dlp
+      const hasBackend = isServerConnected && backendUrl;
+      if (hasBackend) {
         try {
           const controller = new AbortController();
           const timeoutId = setTimeout(() => controller.abort(), 12000);
@@ -659,10 +667,10 @@ const UDL_DOWNLOADER = (() => {
       });
     }
 
-    // If local PC backend is explicitly connected by the user on localhost, use local ffmpeg
-    const isLocalhost = isServerConnected && backendUrl && (backendUrl.includes('localhost') || backendUrl.includes('127.0.0.1'));
-    if (isLocalhost) {
-      showToast(`Starting ${quality} download on local UnimaxDL engine...`);
+    // If server backend is connected (local PC companion or Render cloud), use server engine
+    const hasBackend = isServerConnected && backendUrl;
+    if (hasBackend) {
+      showToast(`Starting ${quality} download via UnimaxDL server...`);
       try {
         const res = await fetch(`${backendUrl}/api/download`, {
           method: 'POST',
