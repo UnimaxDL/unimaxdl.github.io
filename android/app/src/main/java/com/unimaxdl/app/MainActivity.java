@@ -48,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
         settings.setDatabaseEnabled(true);
         settings.setMediaPlaybackRequiresUserGesture(false);
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        settings.setJavaScriptCanOpenWindowsAutomatically(true);
+        settings.setSupportMultipleWindows(true);
+        settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         settings.setUserAgentString(settings.getUserAgentString() + " UnimaxDL-Android/1.0");
 
         webView.setWebViewClient(new WebViewClient() {
@@ -56,14 +59,26 @@ public class MainActivity extends AppCompatActivity {
                 if (url.startsWith("https://unimaxdl.github.io") || url.startsWith("http://localhost")) {
                     return false;
                 }
-                // External links open in system browser
+                // External links (including Monetag ads) open in system browser
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 startActivity(intent);
                 return true;
             }
         });
 
-        webView.setWebChromeClient(new WebChromeClient());
+        webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public boolean onCreateWindow(WebView view, boolean isDialog, boolean isUserGesture, android.os.Message resultMsg) {
+                WebView.HitTestResult result = view.getHitTestResult();
+                String data = result.getExtra();
+                if (data != null) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(data));
+                    startActivity(intent);
+                    return true;
+                }
+                return super.onCreateWindow(view, isDialog, isUserGesture, resultMsg);
+            }
+        });
 
         // Native Android DownloadManager integration
         webView.setDownloadListener((url, userAgent, contentDisposition, mimetype, contentLength) -> {

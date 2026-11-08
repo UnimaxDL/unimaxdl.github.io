@@ -652,9 +652,104 @@ const UDL_DOWNLOADER = (() => {
     return `${m < 10 ? '0' : ''}${m}:${rem < 10 ? '0' : ''}${rem}`;
   }
 
+  function isNativeApp() {
+    return typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.includes('UnimaxDL-Android');
+  }
+
+  function is4KQuality(quality) {
+    if (!quality) return false;
+    const q = String(quality).toLowerCase();
+    return q.includes('2160') || q.includes('4320') || q.includes('4k') || q.includes('8k');
+  }
+
+  function show4KPromptModal(type, quality) {
+    let modal = document.getElementById('udl-4k-modal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'udl-4k-modal';
+      modal.className = 'fixed inset-0 z-[9999] flex items-center justify-center p-4';
+      document.body.appendChild(modal);
+    }
+    modal.classList.remove('hidden');
+    modal.innerHTML = `
+      <div class="fixed inset-0 bg-black/85 backdrop-blur-md" onclick="UDL_DOWNLOADER.close4KModal()"></div>
+      <div class="relative w-full max-w-lg bg-[#121218] border border-amber-500/30 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 animate-in fade-in zoom-in-95 duration-200">
+        
+        <div class="flex items-center justify-between border-b border-white/[0.08] pb-4">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 font-black text-sm">
+              4K
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-500/30">Native App Required</span>
+              </div>
+              <h3 class="text-lg font-bold text-white mt-0.5">4K Ultra HD Download</h3>
+            </div>
+          </div>
+          <button onclick="UDL_DOWNLOADER.close4KModal()" class="p-2 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition">
+            ${ICONS.close}
+          </button>
+        </div>
+
+        <div class="space-y-4 text-xs">
+          <p class="text-gray-300 leading-relaxed text-sm">
+            Processing uncompressed <strong>4K (2160p) & 8K</strong> media in a standard web browser exceeds mobile browser memory limits. 
+            Download the <strong>Free UnimaxDL Android App (APK)</strong> or <strong>PC App</strong> to download 4K Ultra HD videos directly to your device with local hardware acceleration.
+          </p>
+
+          <div class="grid grid-cols-2 gap-3 p-4 rounded-2xl bg-white/[0.03] border border-white/5">
+            <div class="space-y-1">
+              <span class="font-bold text-gray-400 block text-[11px] uppercase tracking-wider">Web Browser</span>
+              <p class="text-gray-500 text-[11px]">Limited to 1080p FHD due to browser sandbox limits</p>
+            </div>
+            <div class="space-y-1">
+              <span class="font-bold text-amber-400 block text-[11px] uppercase tracking-wider">Native Android App</span>
+              <p class="text-emerald-400 font-semibold text-[11px]">Unlimited 4K 60FPS with zero rate limits</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-2.5 pt-1">
+          <a href="/download.html" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:brightness-110 text-dark-950 font-black text-sm text-center transition flex items-center justify-center gap-2 shadow-xl shadow-amber-500/25 ring-2 ring-amber-400/40">
+            <svg class="w-4 h-4 fill-none stroke-current" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+            <span>Download Free Android App (APK)</span>
+          </a>
+
+          <div class="flex items-center gap-2">
+            <a href="/download.html" class="flex-1 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-300 text-center transition flex items-center justify-center gap-1.5">
+              <svg class="w-3.5 h-3.5 fill-none stroke-current" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              <span>Get PC App</span>
+            </a>
+
+            <button onclick="UDL_DOWNLOADER.fallbackTo1080p()" class="flex-1 py-2.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/20 text-xs font-bold text-cyan-400 transition text-center">
+              Download 1080p Instead
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function close4KModal() {
+    const modal = document.getElementById('udl-4k-modal');
+    if (modal) modal.classList.add('hidden');
+  }
+
+  function fallbackTo1080p() {
+    close4KModal();
+    triggerDownload('video', '1080p');
+  }
+
   // Trigger Download Action (Routes to On-Site Monetized Gateway)
   async function triggerDownload(type, quality) {
     if (!currentMedia) return;
+
+    // Intercept 4K / 8K requests on web browser and prompt native APK
+    if (type === 'video' && is4KQuality(quality) && !isNativeApp()) {
+      show4KPromptModal(type, quality);
+      return;
+    }
 
     if (typeof UDL_ANALYTICS !== 'undefined') {
       UDL_ANALYTICS.trackDownload({
@@ -1158,37 +1253,80 @@ const UDL_DOWNLOADER = (() => {
     if (!container || !tasks || tasks.length === 0) return;
     container.innerHTML = `
       <div class="space-y-3 mt-6">
-        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-          Active Downloads
-        </h4>
+        <div class="flex items-center justify-between">
+          <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+            Active Downloads & Processing Queue
+          </h4>
+          <span class="text-[11px] text-gray-500 font-mono">${tasks.length} task${tasks.length > 1 ? 's' : ''}</span>
+        </div>
         ${tasks.map(t => {
           const isDone = t.status === 'completed';
           const isError = t.status === 'error';
+          const isQueued = t.status === 'queued';
+          const isStarting = t.status === 'starting';
+          const isProcessing = t.status === 'processing';
           const downloadUrl = `${backendUrl}/api/download-file/${t.id}`;
+
+          let statusBadgeClass = 'bg-cyan-500/20 text-cyan-300 animate-pulse';
+          let statusText = t.status;
+          if (isDone) {
+            statusBadgeClass = 'bg-emerald-500/20 text-emerald-300';
+            statusText = 'Completed';
+          } else if (isError) {
+            statusBadgeClass = 'bg-amber-500/20 text-amber-300';
+            statusText = 'Failed';
+          } else if (isQueued) {
+            statusBadgeClass = 'bg-amber-500/20 text-amber-300 border border-amber-500/30';
+            statusText = `In Queue (#${t.queue_position || 1})`;
+          } else if (isStarting) {
+            statusBadgeClass = 'bg-blue-500/20 text-blue-300 animate-pulse';
+            statusText = 'Starting...';
+          } else if (isProcessing) {
+            statusBadgeClass = 'bg-purple-500/20 text-purple-300 animate-pulse';
+            statusText = 'Muxing Streams...';
+          }
+
           return `
             <div class="glass-card p-4 rounded-2xl border border-white/10 space-y-2.5">
-              <div class="flex items-center justify-between text-xs">
+              <div class="flex items-center justify-between text-xs gap-3">
                 <span class="font-bold text-white truncate max-w-xs">${t.title || 'Video Download'}</span>
-                <span class="px-2 py-0.5 rounded-full font-mono text-[10px] font-bold ${isDone ? 'bg-emerald-500/20 text-emerald-300' : isError ? 'bg-amber-500/20 text-amber-300' : 'bg-cyan-500/20 text-cyan-300 animate-pulse'} uppercase">${t.status}</span>
+                <span class="px-2.5 py-0.5 rounded-full font-mono text-[10px] font-bold ${statusBadgeClass} uppercase whitespace-nowrap">${statusText}</span>
               </div>
-              <div class="w-full bg-[#0c0c12] h-2 rounded-full overflow-hidden p-0.5 border border-white/5">
-                <div class="h-full rounded-full ${isDone ? 'bg-emerald-400' : 'bg-cyan-400'} transition-all duration-300" style="width: ${t.progress || t.percent || 0}%"></div>
+
+              <!-- Progress / Queue Bar -->
+              <div class="w-full bg-[#0c0c12] h-2.5 rounded-full overflow-hidden p-0.5 border border-white/5">
+                ${isQueued ? `
+                  <div class="h-full rounded-full bg-gradient-to-r from-amber-500/40 via-amber-400 to-amber-500/40 animate-pulse w-full"></div>
+                ` : `
+                  <div class="h-full rounded-full ${isDone ? 'bg-emerald-400' : 'bg-cyan-400'} transition-all duration-300" style="width: ${t.progress || t.percent || 0}%"></div>
+                `}
               </div>
-              <div class="flex items-center justify-between text-[11px] text-gray-500 font-mono">
-                <span>${t.downloaded || '0 MB'} of ${t.total || '0 MB'}</span>
-                <span class="text-gray-300 font-bold">${t.progress || t.percent || 0}% &bull; ${t.speed || ''}</span>
-              </div>
+
+              <!-- Status Detail Labels -->
+              ${isQueued ? `
+                <div class="flex items-center justify-between text-[11px] text-amber-300/80 font-mono">
+                  <span>Server Busy (${t.active_downloads || 3}/${t.max_workers || 3} active slots)</span>
+                  <span class="font-bold">Position #${t.queue_position || 1} &bull; Starting automatically</span>
+                </div>
+              ` : `
+                <div class="flex items-center justify-between text-[11px] text-gray-500 font-mono">
+                  <span>${t.downloaded || '0 MB'} of ${t.total || '0 MB'}</span>
+                  <span class="text-gray-300 font-bold">${t.progress || t.percent || 0}% &bull; ${t.speed || ''}</span>
+                </div>
+              `}
+
               ${isDone ? `
                 <a href="${downloadUrl}" download class="mt-2 w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:brightness-110 text-dark-950 font-black text-xs text-center transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20">
                   <svg class="w-4 h-4 fill-none stroke-current" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                   <span>Save File to Device</span>
                 </a>
               ` : ''}
+
               ${isError ? `
                 <div class="space-y-2 pt-1 border-t border-white/5">
                   <p class="text-[11px] text-amber-400 font-medium">
-                    Browser rate limit encountered. Download natively without restrictions:
+                    Stream error or browser rate limit encountered. Download natively without restrictions:
                   </p>
                   <a href="/download.html" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-amber-500 hover:brightness-110 text-dark-950 font-black text-xs text-center transition flex items-center justify-center gap-1.5 shadow-md">
                     <svg class="w-3.5 h-3.5 fill-none stroke-current" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
@@ -1234,6 +1372,9 @@ const UDL_DOWNLOADER = (() => {
     stopPolling,
     switchTab,
     showToast,
+    show4KPromptModal,
+    close4KModal,
+    fallbackTo1080p,
     ICONS
   };
 })();
