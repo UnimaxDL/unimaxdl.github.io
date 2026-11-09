@@ -679,7 +679,7 @@ const UDL_DOWNLOADER = (() => {
     }
 
     const targetUrl = currentMedia ? (currentMedia.original_url || currentMedia.webpage_url || currentMedia.url || '') : '';
-    const deepLink = 'unimaxdl://download?url=' + encodeURIComponent(targetUrl);
+    const deepLink = 'unimaxdl://resolve?url=' + encodeURIComponent(targetUrl);
 
     modal.classList.remove('hidden');
     modal.innerHTML = `
