@@ -1,9 +1,10 @@
 // assets/js/releases.js
 (async function initReleaseManifest() {
   const PUBLIC_RELEASE_REPO = 'UnimaxDL/unimaxdl.github.io';
+  const CURRENT_TAG = 'v1.0.0';
 
   try {
-    const res = await fetch(`https://api.github.com/repos/${PUBLIC_RELEASE_REPO}/releases/latest`);
+    const res = await fetch(`https://api.github.com/repos/${PUBLIC_RELEASE_REPO}/releases/tags/${CURRENT_TAG}`);
     if (!res.ok) return;
 
     const data = await res.json();

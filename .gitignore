@@ -28,6 +28,7 @@ android/app/build/
 android/.gradle/
 android/local.properties
 *.apk
+!downloads/*.apk
 *.aab
 
 # Desktop (Tauri / Rust)
