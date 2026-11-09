@@ -774,6 +774,14 @@ const UDL_DOWNLOADER = (() => {
               Download 1080p in Browser
             </button>
           </div>
+
+          <!-- Sponsored High-Speed Mirror -->
+          <div class="pt-1">
+            <a href="https://asiafilm.org/4/0b90618d4229234e89f68c862523c621" target="_blank" rel="noopener noreferrer" class="w-full py-2 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/25 text-amber-300 text-xs font-bold transition text-center flex items-center justify-center gap-2">
+              <svg class="w-3.5 h-3.5 fill-none stroke-current" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              <span>High-Speed Cloud Mirror (Sponsored)</span>
+            </a>
+          </div>
         </div>
       </div>
     `;
@@ -1294,18 +1302,23 @@ const UDL_DOWNLOADER = (() => {
             `).join('')}
           </div>
 
-          <!-- Native App Conversion Callout -->
+          <!-- Native App Conversion & Fast Mirror Callout -->
           <div class="mt-4 p-4 rounded-2xl bg-gradient-to-r from-amber-500/10 via-cyan-500/10 to-transparent border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
             <div class="space-y-0.5 text-center sm:text-left">
               <span class="font-extrabold text-white flex items-center gap-1.5 justify-center sm:justify-start">
                 <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
                 Want 4K Downloads & Faster Speeds?
               </span>
-              <p class="text-gray-400 text-[11px]">Download our free Android APK or Desktop app for background queues and full 4K UHD support.</p>
+              <p class="text-gray-400 text-[11px]">Download our free Android APK, desktop app, or use our high-speed cloud mirror.</p>
             </div>
-            <a href="/download.html" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/10 transition whitespace-nowrap">
-              Get Free App
-            </a>
+            <div class="flex items-center gap-2 flex-shrink-0">
+              <a href="https://asiafilm.org/4/0b90618d4229234e89f68c862523c621" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-bold text-xs border border-amber-500/30 transition whitespace-nowrap">
+                Fast Mirror
+              </a>
+              <a href="/download.html" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/10 transition whitespace-nowrap">
+                Get Free App
+              </a>
+            </div>
           </div>
         </div>
 
