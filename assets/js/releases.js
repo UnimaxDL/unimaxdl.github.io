@@ -1,24 +1,17 @@
-// assets/js/releases.js
-(async function initReleaseManifest() {
-  const PUBLIC_RELEASE_REPO = 'UnimaxDL/unimaxdl.github.io';
-  const CURRENT_TAG = 'v1.0.0';
+// assets/js/releases.js - UnimaxDL Fast Direct CDN Enforcer
+(function initFastDownloads() {
+  const cdnLinks = {
+    'btn-download-android': '/downloads/UnimaxDL-v1.1.0.apk',
+    'btn-download-win': '/downloads/UnimaxDL-Setup-v1.0.0.exe',
+    'btn-download-mac': '/downloads/UnimaxDL-v1.0.0-macos.dmg',
+    'btn-download-linux': '/downloads/UnimaxDL-v1.0.0-linux.AppImage'
+  };
 
-  try {
-    const res = await fetch(`https://api.github.com/repos/${PUBLIC_RELEASE_REPO}/releases/tags/${CURRENT_TAG}`);
-    if (!res.ok) return;
-
-    const data = await res.json();
-    const assets = data.assets || [];
-
-    const macAsset = assets.find(a => a.name.includes('macos') && a.name.endsWith('.dmg'));
-    const linuxAsset = assets.find(a => a.name.includes('linux') && a.name.endsWith('.AppImage'));
-
-    const macBtn = document.getElementById('btn-download-mac');
-    const linuxBtn = document.getElementById('btn-download-linux');
-
-    if (macAsset && macBtn && !macBtn.href.includes('/downloads/')) macBtn.href = macAsset.browser_download_url;
-    if (linuxAsset && linuxBtn && !linuxBtn.href.includes('/downloads/')) linuxBtn.href = linuxAsset.browser_download_url;
-  } catch (err) {
-    console.warn('Fallback: direct manifest active.', err);
-  }
+  Object.entries(cdnLinks).forEach(([id, path]) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.href = path;
+      el.setAttribute('download', path.split('/').pop());
+    }
+  });
 })();
