@@ -80,6 +80,13 @@ echo [*] Checking FFmpeg audio/video muxer...
 where ffmpeg.exe >nul 2>&1
 if !errorlevel! equ 0 (
     echo [OK] FFmpeg is already installed and detected in system PATH.
+) else if exist "!USER_BIN_DIR!\ffmpeg.exe" (
+    echo [OK] FFmpeg detected in user storage: !USER_BIN_DIR!\ffmpeg.exe
+) else if exist "!SCRIPT_DIR!bin\win-x64\ffmpeg.exe" (
+    echo [*] Copying bundled FFmpeg binaries to user storage...
+    copy /y "!SCRIPT_DIR!bin\win-x64\ffmpeg.exe" "!USER_BIN_DIR!\ffmpeg.exe" >nul
+    copy /y "!SCRIPT_DIR!bin\win-x64\ffprobe.exe" "!USER_BIN_DIR!\ffprobe.exe" >nul
+    echo [OK] FFmpeg copied to: !USER_BIN_DIR!\ffmpeg.exe
 ) else (
     echo [INFO] FFmpeg not found in system PATH.
     echo [*] Checking Windows Package Manager (winget)...

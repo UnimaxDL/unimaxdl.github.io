@@ -839,11 +839,15 @@ const UDL_DOWNLOADER = (() => {
     // Route to server engine (Render cloud or local companion)
     const targetBackend = backendUrl || PRODUCTION_API;
     if (targetBackend) {
-      showToast(`Starting ${quality} download via UnimaxDL engine...`);
+      showToast(`Starting ${quality} download via UnimaxDL cloud engine...`);
       try {
         const controller = new AbortController();
-        const timeoutMs = targetBackend.includes('onrender.com') ? 12000 : 4000;
+        const timeoutMs = targetBackend.includes('onrender.com') ? 45000 : 8000;
         const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+        const wakeToastTimer = setTimeout(() => {
+          showToast("Waking up Cloud Engine (video + audio FFmpeg muxer)...");
+        }, 3500);
+
         const res = await fetch(`${targetBackend}/api/download`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -857,6 +861,8 @@ const UDL_DOWNLOADER = (() => {
           signal: controller.signal
         });
         clearTimeout(timeoutId);
+        clearTimeout(wakeToastTimer);
+
         if (res.ok) {
           const data = await res.json().catch(() => ({}));
           if (data && data.task_id) {
@@ -865,7 +871,7 @@ const UDL_DOWNLOADER = (() => {
           backendUrl = targetBackend;
           isServerConnected = true;
           updateStatusBadge(true, targetBackend);
-          showToast("Download initialized on server! Tracking progress...");
+          showToast("Download initialized with synchronized audio! Tracking progress...");
           const tasksContainer = document.getElementById('tasks-container');
           if (tasksContainer) {
             tasksContainer.classList.remove('hidden');
@@ -913,11 +919,16 @@ const UDL_DOWNLOADER = (() => {
     let directStreamUrl = '';
     let downloadFileName = (title.replace(/[^a-zA-Z0-9_\-\s]/g, '').trim().substring(0, 36) || 'unimaxdl-media') + (isAudio ? '.mp3' : '.mp4');
 
-    if (currentMedia && currentMedia.direct_download_url) {
+    if (ytId) {
+      if (isAudio) {
+        // Direct high-speed M4A/MP3 audio stream via public mirror
+        directStreamUrl = `https://yt.chocolatemoo53.com/latest_version?id=${ytId}&itag=140`;
+      } else if (quality === '720p' || quality === '480p' || quality === '360p') {
+        // itag 22 is pre-muxed 720p HD with synchronized video + audio
+        directStreamUrl = `https://yt.chocolatemoo53.com/latest_version?id=${ytId}&itag=22`;
+      }
+    } else if (currentMedia && currentMedia.direct_download_url) {
       directStreamUrl = currentMedia.direct_download_url;
-    } else if (ytId && isAudio) {
-      // Direct high-speed M4A/MP3 audio stream via public mirror
-      directStreamUrl = `https://yt.chocolatemoo53.com/latest_version?id=${ytId}&itag=140`;
     }
 
     const hasDirectStream = Boolean(directStreamUrl);
