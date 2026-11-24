@@ -1,107 +1,339 @@
 /* ==========================================================================
-   UnimaxDL Design System & Core Utilities v2.0
+   UnimaxDL Bespoke Design System & Studio Instrument Console v3.0
+   Precision Multimedia Workstation | Cyber-Industrial Aesthetic
    Strictly Zero Emojis | Hardware-Accelerated Responsive Stylesheet
    ========================================================================== */
 
-/* Modern CSS Reset & Root Variables */
+/* Modern CSS Reset & Studio Tokens */
 :root {
-  --bg-primary: #07070a;
-  --bg-surface-1: #0e0e15;
-  --bg-surface-2: #161622;
-  --bg-surface-3: #1f1f2e;
-  --accent-cyan: #22d3ee;
-  --accent-cyan-dark: #06b6d4;
-  --accent-amber: #fbbf24;
-  --accent-amber-dark: #d97706;
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-hover: rgba(34, 211, 238, 0.4);
+  --deck-bg: #090a0f;
+  --deck-surface-base: #10131b;
+  --deck-surface-inset: #0b0d13;
+  --deck-surface-raised: #161a25;
+  --deck-surface-active: #1c2230;
+
+  --signal-green: #10e775;
+  --signal-green-glow: rgba(16, 231, 117, 0.25);
+  --signal-orange: #ff6b00;
+  --signal-orange-glow: rgba(255, 107, 0, 0.25);
+  --signal-cyan: #00d8f6;
+  --signal-cyan-glow: rgba(0, 216, 246, 0.25);
+  --signal-purple: #a855f7;
+
+  --border-hairline: rgba(255, 255, 255, 0.08);
+  --border-hardware: rgba(255, 255, 255, 0.15);
+  --border-focus: rgba(0, 216, 246, 0.6);
+
+  --font-display: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-/* Hardware-accelerated background layer: eliminates scroll repaints */
+/* Master Instrument Body Layer */
 body {
-  background-color: var(--bg-primary);
+  background-color: var(--deck-bg);
   min-height: 100vh;
   position: relative;
-  color: #f3f4f6;
-  font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #f1f3f9;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Precision Architectural Micro-Texture (Replacing AI gradient blur soup) */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   background-image: 
-    radial-gradient(at 0% 0%, rgba(34, 211, 238, 0.08) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(245, 158, 11, 0.08) 0px, transparent 50%),
-    radial-gradient(at 50% 50%, rgba(15, 15, 21, 0.95) 0px, #07070a 100%);
+    radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
   pointer-events: none;
   z-index: -1;
-  transform: translateZ(0);
-  will-change: transform;
+  opacity: 0.7;
 }
 
-/* Glassmorphism Cards */
-.glass-card {
-  background: rgba(22, 22, 34, 0.82);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--border-subtle);
-  box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.55);
-  transform: translateZ(0);
-  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+/* Typography Classes */
+.font-display {
+  font-family: var(--font-display);
 }
 
-.glass-card:hover {
-  border-color: var(--border-hover);
+.font-mono-code {
+  font-family: var(--font-mono);
 }
 
-/* Shimmer Animated Headline */
-.shimmer-text {
-  background: linear-gradient(90deg, #22d3ee 0%, #fde68a 50%, #f59e0b 100%);
-  background-size: 200% auto;
-  color: transparent;
-  -webkit-background-clip: text;
-  background-clip: text;
-  animation: shine 4s linear infinite;
+/* Studio Deck Panels */
+.deck-panel {
+  background: var(--deck-surface-base);
+  border: 1px solid var(--border-hairline);
+  box-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.4),
+    0 12px 28px -8px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes shine {
-  to { background-position: 200% center; }
+.deck-panel:hover {
+  border-color: var(--border-hardware);
 }
 
-/* Glow Search Input Container */
-.glow-search {
-  transition: all 0.25s ease;
+.deck-panel-inset {
+  background: var(--deck-surface-inset);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6);
 }
 
-.glow-search:focus-within {
-  box-shadow: 0 0 25px -4px rgba(34, 211, 238, 0.35);
-  border-color: rgba(34, 211, 238, 0.6);
+.deck-panel-raised {
+  background: var(--deck-surface-raised);
+  border: 1px solid var(--border-hardware);
+  box-shadow: 
+    0 8px 24px -4px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
-/* Mobile Slide-Out Drawer Hardware Animation */
-#mobile-drawer {
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform;
+/* Corner Bracket Accents (Industrial CAD/Studio look) */
+.bracket-corners {
+  position: relative;
 }
 
-#mobile-overlay {
-  transition: opacity 0.25s ease;
+.bracket-corners::before,
+.bracket-corners::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  pointer-events: none;
+  border-color: var(--signal-cyan);
+  opacity: 0.6;
 }
 
-/* Accordion FAQ Styling */
+.bracket-corners::before {
+  top: -1px;
+  left: -1px;
+  border-top: 2px solid var(--signal-cyan);
+  border-left: 2px solid var(--signal-cyan);
+}
+
+.bracket-corners::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 2px solid var(--signal-cyan);
+  border-right: 2px solid var(--signal-cyan);
+}
+
+/* Status Lamp Indicators */
+.status-lamp {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  flex-shrink: 0;
+}
+
+.status-lamp-green {
+  background: var(--signal-green);
+  box-shadow: 0 0 8px var(--signal-green-glow);
+}
+
+.status-lamp-orange {
+  background: var(--signal-orange);
+  box-shadow: 0 0 8px var(--signal-orange-glow);
+}
+
+.status-lamp-cyan {
+  background: var(--signal-cyan);
+  box-shadow: 0 0 8px var(--signal-cyan-glow);
+}
+
+/* Studio Precision Telemetry Strip */
+.telemetry-strip {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #7d8597;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Mechanical Cartridge Quick-Try Button */
+.cartridge-btn {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.375rem 0.625rem;
+  border-radius: 6px;
+  background: #131722;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #c4cbd9;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.cartridge-btn:hover {
+  background: #1b2030;
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.cartridge-btn:active {
+  transform: translateY(0);
+}
+
+/* Tactile Console Action Buttons */
+.tactile-btn-primary {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  background: var(--signal-orange);
+  color: #090a0f;
+  border: 1px solid #ff8833;
+  box-shadow: 0 4px 14px var(--signal-orange-glow), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transition: all 0.15s ease;
+}
+
+.tactile-btn-primary:hover {
+  background: #ff7a1a;
+  box-shadow: 0 6px 20px rgba(255, 107, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+.tactile-btn-primary:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px var(--signal-orange-glow);
+}
+
+.tactile-btn-cyan {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  background: var(--signal-cyan);
+  color: #090a0f;
+  border: 1px solid #4de5ff;
+  box-shadow: 0 4px 14px var(--signal-cyan-glow), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transition: all 0.15s ease;
+}
+
+.tactile-btn-cyan:hover {
+  background: #24dfff;
+  box-shadow: 0 6px 20px rgba(0, 216, 246, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+.tactile-btn-secondary {
+  font-family: var(--font-display);
+  font-weight: 600;
+  background: #181d2a;
+  color: #e2e8f0;
+  border: 1px solid var(--border-hardware);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: all 0.15s ease;
+}
+
+.tactile-btn-secondary:hover {
+  background: #202738;
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+/* Master Deck Input Focus System */
+.deck-input-container {
+  background: var(--deck-surface-inset);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.7);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.deck-input-container:focus-within {
+  border-color: var(--signal-cyan);
+  box-shadow: 
+    inset 0 2px 5px rgba(0, 0, 0, 0.7),
+    0 0 0 2px rgba(0, 216, 246, 0.2);
+}
+
+/* Format Matrix Selection Tiles */
+.format-tile {
+  background: #111520;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 0.875rem;
+  position: relative;
+  transition: all 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.format-tile:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+  background: #161b29;
+  transform: translateY(-1px);
+}
+
+.format-tile-muxed {
+  border-left: 3px solid var(--signal-green);
+}
+
+.format-tile-master {
+  border-left: 3px solid var(--signal-orange);
+}
+
+.format-tile-audio {
+  border-left: 3px solid var(--signal-purple);
+}
+
+/* Technical Telemetry Badge */
+.tech-badge {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+}
+
+.tech-badge-green {
+  background: rgba(16, 231, 117, 0.12);
+  color: var(--signal-green);
+  border: 1px solid rgba(16, 231, 117, 0.28);
+}
+
+.tech-badge-orange {
+  background: rgba(255, 107, 0, 0.12);
+  color: var(--signal-orange);
+  border: 1px solid rgba(255, 107, 0, 0.28);
+}
+
+.tech-badge-cyan {
+  background: rgba(0, 216, 246, 0.12);
+  color: var(--signal-cyan);
+  border: 1px solid rgba(0, 216, 246, 0.28);
+}
+
+.tech-badge-muted {
+  background: rgba(255, 255, 255, 0.05);
+  color: #9ca3af;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Accordion FAQ in Industrial Style */
 details.faq-item {
-  border: 1px solid var(--border-subtle);
-  border-radius: 1rem;
-  background: rgba(22, 22, 34, 0.6);
-  transition: all 0.25s ease;
+  border: 1px solid var(--border-hairline);
+  border-radius: 8px;
+  background: var(--deck-surface-base);
+  transition: all 0.2s ease;
 }
 
 details.faq-item[open] {
-  border-color: rgba(34, 211, 238, 0.35);
-  background: rgba(22, 22, 34, 0.85);
+  border-color: var(--border-hardware);
+  background: #131722;
 }
 
 summary.faq-summary {
@@ -112,9 +344,10 @@ summary.faq-summary {
   align-items: center;
   justify-content: space-between;
   padding: 1rem 1.25rem;
+  font-family: var(--font-display);
   font-weight: 700;
   font-size: 0.9375rem;
-  color: #fff;
+  color: #ffffff;
 }
 
 summary.faq-summary::-webkit-details-marker {
@@ -125,30 +358,36 @@ details.faq-item .faq-content {
   padding: 0 1.25rem 1.25rem 1.25rem;
   font-size: 0.875rem;
   line-height: 1.625;
-  color: #9ca3af;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  color: #a3aab8;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
   margin-top: 0.25rem;
   padding-top: 0.75rem;
 }
 
-/* Sponsored Label Micro-Badge */
-.sponsored-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  font-size: 0.625rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 0.125rem 0.5rem;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #9ca3af;
+/* Mobile Slide-Out Drawer */
+#mobile-drawer {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+#mobile-overlay {
+  transition: opacity 0.2s ease;
+}
+
+/* Backward compatibility aliases */
+.glass-card {
+  background: var(--deck-surface-base);
+  border: 1px solid var(--border-hairline);
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.6);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.glass-card:hover {
+  border-color: var(--border-hardware);
 }
 
 /* Print Stylesheet */
 @media print {
   body::before { display: none; }
-  header, footer, #mobile-drawer, #mobile-overlay, .sponsored-badge { display: none; }
+  header, footer, #mobile-drawer, #mobile-overlay, .telemetry-strip { display: none; }
 }
