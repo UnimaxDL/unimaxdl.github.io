@@ -1,6 +1,5 @@
 /**
- * UniMaxDL — Architectural Layout & Header/Footer
- * 1200px Hairline Frame & Studio Navigation
+ * UniMaxDL — Architectural Frame, Broadcast Header, Responsive Drawer & Footer
  */
 
 .frame-container {
@@ -23,102 +22,293 @@
   }
 }
 
-/* Header Bar */
-.deck-header {
+.frame-main {
+  flex: 1 1 auto;
+  width: 100%;
+  padding: 0 1.125rem 3.5rem;
+}
+
+@media (min-width: 768px) {
+  .frame-main {
+    padding: 0 2rem 4.5rem;
+  }
+}
+
+/* ==========================================================================
+   Utility Broadcast Header Bar
+   ========================================================================== */
+.studio-header {
   height: var(--header-height);
   border-bottom: 1px solid var(--border-hairline);
   background-color: var(--bg-surface);
   position: sticky;
   top: 0;
-  z-index: 50;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 1.25rem;
+  z-index: 40;
+  width: 100%;
   transition: background-color var(--transition-fast), border-color var(--transition-fast);
 }
 
-.deck-brand {
+.studio-header-inner {
+  height: 100%;
   display: flex;
   align-items: center;
-  gap: 0.625rem;
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 1.125rem;
-  letter-spacing: -0.02em;
-  color: var(--text-primary);
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0 1rem;
 }
 
-.deck-brand svg {
-  color: var(--accent-signal);
+@media (min-width: 768px) {
+  .studio-header-inner {
+    padding: 0 2rem;
+    gap: 1.25rem;
+  }
+}
+
+.brand-unit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.0625rem;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  text-decoration: none;
   flex-shrink: 0;
 }
 
-.deck-brand-badge {
+.brand-mark,
+.brand-mark-svg {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  display: block;
+}
+
+.brand-wordmark {
+  white-space: nowrap;
+}
+
+.brand-accent {
+  color: var(--brand-accent);
+}
+
+.badge-subtle {
   font-family: var(--font-mono);
   font-size: 0.625rem;
-  font-weight: 600;
-  padding: 0.125rem 0.375rem;
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
   background-color: var(--bg-subtle);
   border: 1px solid var(--border-hairline);
   color: var(--text-muted);
-  border-radius: var(--radius-panel);
+  border-radius: var(--radius-sharp);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
-/* Header Links */
-.deck-nav-links {
-  display: flex;
+@media (max-width: 480px) {
+  .badge-subtle {
+    display: none;
+  }
+}
+
+/* Desktop Navigation */
+.nav-links {
+  display: none;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.125rem;
   font-family: var(--font-mono);
-  font-size: 0.8125rem;
-  font-weight: 500;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
-.deck-nav-link {
+@media (min-width: 1024px) {
+  .nav-links {
+    display: flex;
+  }
+}
+
+.nav-links > a {
   color: var(--text-secondary);
-  transition: color var(--transition-fast);
-  padding: 0.25rem 0;
+  padding: 0.375rem 0;
   position: relative;
+  transition: color var(--transition-fast);
+  white-space: nowrap;
 }
 
-.deck-nav-link:hover, .deck-nav-link.active {
+.nav-links > a:hover,
+.nav-links > a.active {
   color: var(--text-primary);
 }
 
-.deck-nav-link.active::after {
+.nav-links > a.active {
+  color: var(--brand-accent);
+}
+
+.nav-links > a.active::after {
   content: "";
   position: absolute;
   bottom: -4px;
   left: 0;
   right: 0;
   height: 2px;
-  background-color: var(--accent-signal);
+  background-color: var(--brand-accent);
 }
 
-/* Dropdown Menu */
-.dropdown-menu {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
-  background-color: var(--bg-surface);
+/* Header Actions */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.header-status-pill {
+  display: none !important;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 0.25rem 0.55rem;
+  background-color: var(--bg-subtle);
   border: 1px solid var(--border-hairline);
-  border-radius: var(--radius-panel);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
-  min-width: 220px;
-  padding: 0.375rem 0;
-  z-index: 100;
-  transition: opacity 150ms ease, transform 150ms ease;
+  border-radius: var(--radius-sharp);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color var(--transition-fast);
+}
+
+.header-status-pill:hover {
+  border-color: var(--line-strong);
+  color: var(--text-primary);
+}
+
+@media (min-width: 640px) {
+  .header-status-pill {
+    display: inline-flex !important;
+  }
+}
+
+.desktop-only {
+  display: none !important;
+}
+
+@media (min-width: 640px) {
+  .desktop-only {
+    display: inline-flex !important;
+  }
+}
+
+/* Keep third-party notification banners from blocking the top navigation bar or modals */
+iframe[id^="container-"] {
+  top: auto !important;
+  bottom: 16px !important;
+  right: 16px !important;
+  z-index: 30 !important;
+}
+
+.mobile-only {
+  display: inline-flex;
+}
+
+@media (min-width: 1024px) {
+  .mobile-only {
+    display: none !important;
+  }
+}
+
+/* Mechanical Theme Rocker Toggle */
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  height: 30px;
+  padding: 0 0.55rem;
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-sharp);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+  white-space: nowrap;
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--brand-accent);
+}
+
+.theme-toggle-switch {
+  width: 22px;
+  height: 12px;
+  border-radius: 2px;
+  background-color: var(--bg-canvas);
+  border: 1px solid var(--line-strong);
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.theme-toggle-switch::after {
+  content: "";
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 8px;
+  height: 8px;
+  background-color: var(--brand-accent);
+  border-radius: 1px;
+  transition: transform var(--transition-fast);
+}
+
+[data-theme="light"] .theme-toggle-switch::after {
+  transform: translateX(10px);
+}
+
+/* Dropdown Panel */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-panel {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  width: 210px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sharp);
+  box-shadow: var(--shadow-tactile);
+  padding: 0.375rem;
+  display: none;
+  flex-direction: column;
+  gap: 0.125rem;
+  z-index: 120;
+}
+
+.dropdown-panel.is-open {
+  display: flex;
 }
 
 .dropdown-item {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.5rem 1rem;
+  gap: 0.55rem;
+  padding: 0.45rem 0.6rem;
   font-family: var(--font-mono);
   font-size: 0.75rem;
+  font-weight: 600;
   color: var(--text-secondary);
+  border-radius: var(--radius-sharp);
   transition: background-color var(--transition-fast), color var(--transition-fast);
 }
 
@@ -127,67 +317,67 @@
   color: var(--text-primary);
 }
 
-/* Header Actions */
-.deck-header-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
+.dropdown-divider {
+  border-top: 1px solid var(--border-hairline);
+  margin: 0.25rem 0;
 }
 
-.theme-toggle-btn {
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--bg-subtle);
-  border: 1px solid var(--border-hairline);
-  border-radius: var(--radius-control);
-  color: var(--text-primary);
-  cursor: pointer;
-  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+/* ==========================================================================
+   Mobile Slide-Out Navigation Drawer & Overlay (Click-Safe)
+   ========================================================================== */
+.mobile-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(7, 7, 10, 0.76);
+  z-index: 998;
+  display: none;
 }
 
-.theme-toggle-btn:hover {
-  border-color: var(--border-strong);
+.mobile-drawer-overlay.is-open {
+  display: block;
 }
 
-/* Mobile Drawer */
-#mobile-drawer {
+.mobile-drawer {
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
-  width: 280px;
+  width: 290px;
   max-width: 85vw;
   background-color: var(--bg-surface);
-  border-right: 1px solid var(--border-hairline);
-  z-index: 100;
+  border-right: 1px solid var(--line-strong);
+  z-index: 999;
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
-  transform: translateX(-100%);
-  transition: transform 250ms var(--ease-snap);
+  overflow-y: auto;
+  transform: translateX(-105%);
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform 220ms var(--ease-snap), visibility 220ms;
 }
 
-#mobile-drawer:not(.-translate-x-full) {
+.mobile-drawer.is-open {
   transform: translateX(0);
+  visibility: visible;
+  pointer-events: auto;
 }
 
-#mobile-overlay {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 99;
-  transition: opacity 250ms ease;
-}
-
-/* Footer */
+/* ==========================================================================
+   Footer
+   ========================================================================== */
 .deck-footer {
   border-top: 1px solid var(--border-hairline);
-  background-color: var(--bg-subtle);
-  padding: 3rem 1.5rem 2rem;
+  background-color: var(--bg-surface);
+  padding: 2.75rem 1.25rem 2rem;
   margin-top: auto;
   font-size: 0.8125rem;
+}
+
+@media (min-width: 768px) {
+  .deck-footer {
+    padding: 3rem 2rem 2rem;
+  }
 }
 
 .deck-footer-top {
@@ -210,13 +400,13 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  max-width: 320px;
+  max-width: 340px;
 }
 
 .deck-footer-nav {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.25rem 2rem;
+  gap: 0.875rem 1.5rem;
   font-family: var(--font-mono);
   font-size: 0.75rem;
 }
@@ -227,14 +417,14 @@
 }
 
 .deck-footer-nav a:hover {
-  color: var(--text-primary);
+  color: var(--brand-accent);
 }
 
 .deck-footer-bottom {
-  padding-top: 1.5rem;
+  padding-top: 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.5rem;
   font-family: var(--font-mono);
   font-size: 0.6875rem;
   color: var(--text-muted);

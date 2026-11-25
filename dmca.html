@@ -1,41 +1,36 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>DMCA &amp; Copyright Policy — UniMaxDL</title>
-  <meta name="description" content="Digital Millennium Copyright Act (DMCA) policy, copyright compliance guidelines, and takedown notice procedure for UniMaxDL." />
-  <link rel="canonical" href="https://unimaxdl.github.io/dmca.html" />
-
-  <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://unimaxdl.github.io/dmca.html" />
-  <meta property="og:title" content="DMCA Notice &amp; Copyright Policy — UniMaxDL" />
-  <meta property="og:description" content="DMCA guidelines and copyright compliance for UniMaxDL." />
-  <meta property="og:image" content="https://unimaxdl.github.io/assets/images/icon2.png" />
-
+  <meta name="description" content="Digital Millennium Copyright Act (DMCA) policy, copyright compliance guidelines, and takedown notice procedure for UniMaxDL."/>
+  <link rel="canonical" href="https://unimaxdl.github.io/dmca.html"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://unimaxdl.github.io/dmca.html"/>
+  <meta property="og:title" content="DMCA &amp; Copyright Policy — UniMaxDL"/>
+  <meta property="og:description" content="Digital Millennium Copyright Act (DMCA) policy, copyright compliance guidelines, and takedown notice procedure for UniMaxDL."/>
+  <meta property="og:image" content="https://unimaxdl.github.io/assets/images/icon2.png"/>
   <script>
-    (function() {
-      try {
-        var t = localStorage.getItem('udl-theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', t);
-      } catch (e) {}
-    })();
-  </script>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet" />
-
-  <link rel="stylesheet" href="/assets/css/style.css?v=4.0" />
-
-  <meta name="application-name" content="UniMaxDL" />
-  <link rel="icon" type="image/svg+xml" href="/assets/images/unimaxdl-mark.svg" />
-  <link rel="icon" type="image/png" sizes="48x48" href="/assets/images/icon-48.png" />
-  <link rel="icon" type="image/png" sizes="96x96" href="/assets/images/icon-96.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="/assets/images/icon2-192.png" />
-  <link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico" />
-  <link rel="shortcut icon" href="/favicon.ico" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+  (function() {
+    try {
+      var t = localStorage.getItem('udl-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="/assets/css/style.css?v=4.2" rel="stylesheet"/>
+  <meta content="UnimaxDL" name="application-name"/>
+  <meta content="UnimaxDL" name="apple-mobile-web-app-title"/>
+  <link href="/assets/images/icon-48.png" rel="icon" sizes="48x48" type="image/png"/>
+  <link href="/assets/images/icon-96.png" rel="icon" sizes="96x96" type="image/png"/>
+  <link href="/assets/images/icon2-192.png" rel="icon" sizes="192x192" type="image/png"/>
+  <link href="/assets/images/favicon.ico" rel="icon" type="image/x-icon"/>
+  <link href="/favicon.ico" rel="shortcut icon"/>
+  <link href="/assets/images/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 </head>
 <body>
 
@@ -43,12 +38,15 @@
   <header class="studio-header">
     <div class="studio-header-inner">
       <a href="/" class="brand-unit" aria-label="UniMaxDL Home">
-        <img src="/assets/images/unimaxdl-mark.svg" alt="UniMaxDL Mark" class="brand-mark" width="28" height="28" />
+        <picture style="display:flex; align-items:center; flex-shrink:0;">
+          <source srcset="/assets/images/icon-96.webp" type="image/webp"/>
+          <img alt="UnimaxDL Icon" class="brand-mark" src="/assets/images/icon-48.png" width="30" height="30" style="width:30px; height:30px; object-fit:contain; display:block;"/>
+        </picture>
         <span class="brand-wordmark">UNIMAX<span class="brand-accent">DL</span></span>
-        <span class="badge-subtle">DECK // v4.0</span>
+        <span class="badge-subtle">v4.1</span>
       </a>
 
-      <nav class="nav-links">
+      <nav class="nav-links" aria-label="Primary Navigation">
         <a href="/">Web Deck</a>
         <a href="/download.html">Desktop App</a>
         <a href="/youtube-downloader.html">YouTube</a>
@@ -56,72 +54,87 @@
         <a href="/instagram-downloader.html">Instagram</a>
         <a href="/reddit-downloader.html">Reddit</a>
         <a href="/soundcloud-downloader.html">SoundCloud</a>
-        <div class="dropdown" style="position:relative; display:inline-block;">
-          <button class="cartridge-btn" id="platforms-dropdown-btn" onclick="togglePlatformsDropdown(event)" style="font-size:0.75rem; padding:0.25rem 0.5rem;">
-            <span>PLATFORMS v</span>
+        <div class="dropdown">
+          <button class="cartridge-btn" id="platforms-dropdown-btn" aria-expanded="false" onclick="togglePlatformsDropdown(event)" type="button">
+            <span>MORE v</span>
           </button>
-          <div id="platforms-dropdown" class="deck-panel hidden" style="position:absolute; right:0; top:calc(100% + 8px); width:200px; padding:0.5rem; display:none; flex-direction:column; gap:0.25rem; z-index:100; box-shadow:var(--shadow-tactile);">
-            <a href="/twitter-downloader.html" class="nav-link" style="display:flex; align-items:center; gap:0.5rem; padding:0.375rem 0.5rem; font-size:0.75rem;">
-              <span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#1da1f2;"></span> Twitter / X
+          <div id="platforms-dropdown" class="dropdown-panel hidden" role="menu">
+            <a href="/twitter-downloader.html" class="dropdown-item">
+              <span class="status-dot" style="background-color:#1da1f2;"></span>
+              <span>Twitter / X</span>
             </a>
-            <a href="/facebook-downloader.html" class="nav-link" style="display:flex; align-items:center; gap:0.5rem; padding:0.375rem 0.5rem; font-size:0.75rem;">
-              <span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#1877f2;"></span> Facebook
+            <a href="/facebook-downloader.html" class="dropdown-item">
+              <span class="status-dot" style="background-color:#1877f2;"></span>
+              <span>Facebook</span>
             </a>
-            <a href="/pinterest-downloader.html" class="nav-link" style="display:flex; align-items:center; gap:0.5rem; padding:0.375rem 0.5rem; font-size:0.75rem;">
-              <span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#e60023;"></span> Pinterest
+            <a href="/pinterest-downloader.html" class="dropdown-item">
+              <span class="status-dot" style="background-color:#e60023;"></span>
+              <span>Pinterest</span>
             </a>
-            <a href="/twitch-downloader.html" class="nav-link" style="display:flex; align-items:center; gap:0.5rem; padding:0.375rem 0.5rem; font-size:0.75rem;">
-              <span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#9146ff;"></span> Twitch
+            <a href="/twitch-downloader.html" class="dropdown-item">
+              <span class="status-dot" style="background-color:#9146ff;"></span>
+              <span>Twitch</span>
             </a>
-            <div style="border-top:1px solid var(--border-hairline); margin:0.25rem 0;"></div>
-            <a href="/#tool" class="nav-link" style="display:flex; align-items:center; gap:0.5rem; padding:0.375rem 0.5rem; font-size:0.75rem; color:var(--brand-accent);">
-              <span>+</span> 1000+ Sources
+            <div class="dropdown-divider"></div>
+            <a href="/#tool" class="dropdown-item" style="color:var(--brand-accent);">
+              <span>+</span>
+              <span>1000+ Sources</span>
             </a>
           </div>
         </div>
       </nav>
 
       <div class="header-actions">
-        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Theme Mode" onclick="toggleTheme()">
+        <button id="udl-server-status" class="header-status-pill" type="button" onclick="if(window.UDL_DOWNLOADER) UDL_DOWNLOADER.showSettingsModal()" title="Configure Extraction Engine">
+          <span class="status-dot"></span>
+          <span>ENGINE ONLINE</span>
+        </button>
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Color Theme" onclick="toggleTheme()" type="button">
           <span class="theme-toggle-label">DARK</span>
           <span class="theme-toggle-switch"></span>
         </button>
-        <a href="https://github.com/UnimaxDL/unimaxdl.github.io" target="_blank" rel="noopener" class="cartridge-btn" style="padding:0.35rem 0.6rem; font-size:0.75rem; text-decoration:none;">
+        <a href="https://github.com/UnimaxDL/unimaxdl.github.io" target="_blank" rel="noopener" class="cartridge-btn desktop-only" style="text-decoration:none;">
           GITHUB
         </a>
-        <button id="mobile-menu-btn" class="cartridge-btn mobile-only" aria-label="Toggle Navigation" onclick="toggleMobileMenu()">
+        <button id="mobile-menu-btn" class="cartridge-btn mobile-only" aria-label="Toggle Menu" aria-expanded="false" onclick="toggleMobileMenu()" type="button">
           MENU
         </button>
       </div>
     </div>
   </header>
 
-  <div id="mobile-overlay" class="mobile-drawer-overlay hidden" onclick="toggleMobileMenu(false)"></div>
-  <aside id="mobile-drawer" class="mobile-drawer">
-    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.5rem; padding-bottom:0.75rem; border-bottom:1px solid var(--border-hairline);">
+  <div id="mobile-overlay" class="mobile-drawer-overlay" onclick="toggleMobileMenu(false)"></div>
+  <aside id="mobile-drawer" class="mobile-drawer" aria-label="Mobile Navigation">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.25rem; padding-bottom:0.75rem; border-bottom:1px solid var(--border-hairline);">
       <div style="display:flex; align-items:center; gap:0.5rem;">
-        <img src="/assets/images/unimaxdl-mark.svg" alt="UniMaxDL" width="22" height="22" />
-        <span style="font-family:var(--font-display); font-weight:800; font-size:1rem;">UNIMAX<span style="color:var(--brand-accent);">DL</span></span>
+        <picture style="display:flex; align-items:center; flex-shrink:0;">
+          <source srcset="/assets/images/icon-96.webp" type="image/webp"/>
+          <img alt="UnimaxDL Icon" class="brand-mark" src="/assets/images/icon-48.png" width="30" height="30" style="width:30px; height:30px; object-fit:contain; display:block;"/>
+        </picture>
+        <span style="font-family:var(--font-display); font-weight:800; font-size:1rem;">UNIMAX<span class="brand-accent">DL</span></span>
       </div>
-      <button class="cartridge-btn" onclick="toggleMobileMenu(false)">X</button>
+      <button class="cartridge-btn" onclick="toggleMobileMenu(false)" type="button">CLOSE</button>
     </div>
-    <div style="display:flex; flex-direction:column; gap:0.5rem;">
-      <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); text-transform:uppercase;">EXTRACTORS</span>
-      <a href="/download.html" class="cartridge-btn" style="justify-content:flex-start; text-decoration:none;">Companion Apps</a>
-      <a href="/youtube-downloader.html" class="cartridge-btn" style="justify-content:flex-start; text-decoration:none;">YouTube 4K</a>
-      <a href="/tiktok-downloader.html" class="cartridge-btn" style="justify-content:flex-start; text-decoration:none;">TikTok Clean</a>
-      <a href="/instagram-downloader.html" class="cartridge-btn" style="justify-content:flex-start; text-decoration:none;">Instagram Reels</a>
-      <a href="/reddit-downloader.html" class="cartridge-btn" style="justify-content:flex-start; text-decoration:none;">Reddit Audio+Video</a>
-      <a href="/soundcloud-downloader.html" class="cartridge-btn" style="justify-content:flex-start; text-decoration:none;">SoundCloud 320k</a>
-      <a href="/twitch-downloader.html" class="cartridge-btn" style="justify-content:flex-start; text-decoration:none;">Twitch Clips</a>
-      <a href="/twitter-downloader.html" class="cartridge-btn" style="justify-content:flex-start; text-decoration:none;">Twitter / X Clips</a>
-      <a href="/facebook-downloader.html" class="cartridge-btn" style="justify-content:flex-start; text-decoration:none;">Facebook Video</a>
-      <a href="/pinterest-downloader.html" class="cartridge-btn" style="justify-content:flex-start; text-decoration:none;">Pinterest Pins</a>
-      <div style="border-top:1px solid var(--border-hairline); margin:0.5rem 0;"></div>
-      <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); text-transform:uppercase;">SPECIFICATIONS</span>
-      <a href="/terms.html" class="cartridge-btn" style="justify-content:flex-start; text-decoration:none;">Terms of Service</a>
-      <a href="/privacy.html" class="cartridge-btn" style="justify-content:flex-start; text-decoration:none;">Privacy Policy</a>
-      <a href="/dmca.html" class="cartridge-btn" style="justify-content:flex-start; text-decoration:none;">DMCA / Takedown</a>
+    <div style="display:flex; flex-direction:column; gap:0.45rem;">
+      <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); text-transform:uppercase;">APPLICATIONS</span>
+      <a href="/" class="cartridge-btn" style="justify-content:flex-start;">Web Deck Console</a>
+      <a href="/download.html" class="cartridge-btn" style="justify-content:flex-start;">Desktop &amp; Android Apps</a>
+      <div class="dropdown-divider" style="margin:0.4rem 0;"></div>
+      <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); text-transform:uppercase;">CHANNELS</span>
+      <a href="/youtube-downloader.html" class="cartridge-btn" style="justify-content:flex-start;">CH-01 // YouTube 4K</a>
+      <a href="/instagram-downloader.html" class="cartridge-btn" style="justify-content:flex-start;">CH-02 // Instagram Reels</a>
+      <a href="/tiktok-downloader.html" class="cartridge-btn" style="justify-content:flex-start;">CH-03 // TikTok Clean</a>
+      <a href="/twitter-downloader.html" class="cartridge-btn" style="justify-content:flex-start;">CH-04 // Twitter / X</a>
+      <a href="/reddit-downloader.html" class="cartridge-btn" style="justify-content:flex-start;">CH-05 // Reddit Muxed</a>
+      <a href="/facebook-downloader.html" class="cartridge-btn" style="justify-content:flex-start;">CH-06 // Facebook Video</a>
+      <a href="/pinterest-downloader.html" class="cartridge-btn" style="justify-content:flex-start;">CH-07 // Pinterest Pins</a>
+      <a href="/soundcloud-downloader.html" class="cartridge-btn" style="justify-content:flex-start;">CH-08 // SoundCloud 320k</a>
+      <a href="/twitch-downloader.html" class="cartridge-btn" style="justify-content:flex-start;">CH-09 // Twitch Clips</a>
+      <div class="dropdown-divider" style="margin:0.4rem 0;"></div>
+      <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); text-transform:uppercase;">DOCUMENTATION</span>
+      <a href="/terms.html" class="cartridge-btn" style="justify-content:flex-start;">Terms of Service</a>
+      <a href="/privacy.html" class="cartridge-btn" style="justify-content:flex-start;">Privacy Policy</a>
+      <a href="/dmca.html" class="cartridge-btn" style="justify-content:flex-start;">DMCA &amp; Takedown</a>
     </div>
   </aside>
 
@@ -131,7 +144,7 @@
         <div class="legal-toc-title">INDEX OF PROVISIONS</div>
         <ul class="legal-toc-list">
           <li><a href="#section-1" class="legal-toc-link">01 // Non-Hosting Conduit</a></li>
-          <li><a href="#section-2" class="legal-toc-link">02 // URL Filtering Mechanism</a></li>
+          <li><a href="#section-2" class="legal-toc-link">02 // URL Blacklist Procedure</a></li>
           <li><a href="#section-3" class="legal-toc-link">03 // Notice Requirements</a></li>
           <li><a href="#section-4" class="legal-toc-link">04 // Designated DMCA Agent</a></li>
           <li><a href="#section-5" class="legal-toc-link">05 // Counter-Notification</a></li>
@@ -142,67 +155,40 @@
       <article class="legal-content">
         <div>
           <span class="badge-subtle">[ SPEC // 03 — COPYRIGHT COMPLIANCE ]</span>
-          <h1 style="font-size: 2.25rem; font-weight: 800; margin: 0.5rem 0 0.25rem 0; letter-spacing: -0.03em;">DMCA &amp; Copyright Policy</h1>
-          <p style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">TITLE 17 U.S.C. SECTION 512 NOTICE PROCEDURE // STATUS: ACTIVE</p>
+          <h1 style="font-size:clamp(1.875rem, 3.5vw, 2.5rem); margin:0.5rem 0 0.25rem;">DMCA &amp; Copyright Policy</h1>
+          <p style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);" class="tabular">DOCUMENT REVISION: 2026.11 // STATUS: ACTIVE</p>
         </div>
 
         <section id="section-1">
-          <h2>1. Statement of Non-Hosting & Passive Neutral Conduit</h2>
-          <p>
-            UniMaxDL adheres rigorously to Title 17, United States Code, Section 512 (the Digital Millennium Copyright Act, "DMCA").
-          </p>
-          <div style="background-color: var(--brand-surface-alt); border-left: 3px solid var(--brand-accent); padding: 1rem 1.25rem; border-radius: var(--radius-sharp);">
-            <strong style="color: var(--text-primary); display: block; margin-bottom: 0.25rem;">NEUTRAL CONDUIT CLARIFICATION:</strong>
-            UniMaxDL does NOT store, upload, broadcast, or maintain multimedia content or copyrighted intellectual property on its infrastructure. Our systems function exclusively as a technological routing conduit executing real-time extraction requests initiated on-demand by third-party end users.
+          <h2>1. Statement of Non-Hosting Neutral Conduit</h2>
+          <div style="background:var(--brand-surface-alt); border-left:3px solid var(--brand-accent); padding:1rem 1.25rem; border-radius:var(--radius-sharp);">
+            <strong style="color:var(--text-primary); display:block; margin-bottom:0.25rem;">17 U.S.C. SECTION 512 COMPLIANCE:</strong>
+            UniMaxDL does NOT store, upload, broadcast, or index copyrighted files on any server infrastructure.
           </div>
         </section>
-
         <section id="section-2">
           <h2>2. Technological URL Blacklist Procedure</h2>
-          <p>
-            We respect the rights of creators and copyright holders worldwide. If you are a copyright owner or authorized representative and determine that your intellectual property is being indexed without permission via our extraction interface, you may submit a formal takedown request.
-          </p>
-          <p>
-            Upon receipt of a valid, actionable DMCA notice, our engineering team immediately adds the specific content identifiers or domain endpoints to our global resolution blacklist, permanently preventing further parsing through our public gateways.
-          </p>
+          <p>Upon verified DMCA notification, specific content URLs are immediately blacklisted from our gateway resolution engine.</p>
         </section>
-
         <section id="section-3">
-          <h2>3. Requirements for an Actionable Notice</h2>
-          <p>Pursuant to 17 U.S.C. § 512(c)(3), an actionable takedown notice must contain:</p>
-          <ol style="margin-left: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; list-style-type: decimal;">
-            <li>Identification of the copyrighted work claimed to have been infringed;</li>
-            <li>Exact, verified URL(s) of the content to be placed on the technological blacklist;</li>
-            <li>Legitimate contact details of the complainant (full legal name, physical address, phone number, and official corporate email);</li>
-            <li>A statement affirming a good-faith belief that the disputed use is not authorized by the copyright owner, agent, or the law;</li>
-            <li>A statement under penalty of perjury that the information supplied is accurate and that the sender is authorized to act on behalf of the owner;</li>
-            <li>An electronic or physical signature of the authorized copyright holder or legal counsel.</li>
-          </ol>
+          <h2>3. Notice Requirements</h2>
+          <p>Submit identification of the copyrighted work, exact target URL(s), complainant contact details, good-faith statement, and authorized signature.</p>
         </section>
-
         <section id="section-4">
-          <h2>4. Designated DMCA Agent Contact</h2>
-          <p>Direct all takedown correspondence to our designated copyright officer:</p>
-          <div style="background-color: var(--brand-surface-alt); border: 1px solid var(--border-hairline); border-radius: var(--radius-sharp); padding: 1rem; font-family: var(--font-mono); font-size: 0.8125rem; line-height: 1.8;">
-            <div style="font-weight:700; color:var(--text-primary);">UNIMAXDL COPYRIGHT COMPLIANCE DESK</div>
-            <div>PRIMARY INTAKE: <a href="mailto:dmca@unimaxdl.org" style="color:var(--brand-accent);">dmca@unimaxdl.org</a></div>
-            <div>LEGAL CONTACT: <a href="mailto:atomicdhrubaofficial@gmail.com" style="color:var(--brand-accent);">atomicdhrubaofficial@gmail.com</a></div>
-            <div>SECURITY ISSUE TRACKER: <a href="https://github.com/UnimaxDL/unimaxdl.github.io/issues" target="_blank" rel="noopener" style="color:var(--text-primary);">github.com/UnimaxDL/unimaxdl.github.io/issues</a></div>
+          <h2>4. Designated DMCA Agent</h2>
+          <div style="background:var(--brand-surface-alt); border:1px solid var(--border-hairline); padding:1rem; font-family:var(--font-mono); font-size:0.8125rem; line-height:1.8;">
+            <div>DMCA DESK: <a href="mailto:dmca@unimaxdl.org" style="color:var(--brand-accent);">dmca@unimaxdl.org</a></div>
+            <div>LEGAL: <a href="mailto:atomicdhrubaofficial@gmail.com" style="color:var(--brand-accent);">atomicdhrubaofficial@gmail.com</a></div>
+            <div>ISSUES: <a href="https://github.com/UnimaxDL/unimaxdl.github.io/issues" target="_blank" rel="noopener" style="color:var(--text-primary);">github.com/UnimaxDL/unimaxdl.github.io/issues</a></div>
           </div>
         </section>
-
         <section id="section-5">
           <h2>5. Counter-Notification Procedure</h2>
-          <p>
-            If you believe your content or submitted URL was mistakenly blacklisted as a result of misidentification, you may submit a formal counter-notification containing statutory details under 17 U.S.C. § 512(g)(3).
-          </p>
+          <p>Counter-notices may be submitted under 17 U.S.C. Section 512(g)(3).</p>
         </section>
-
         <section id="section-6">
           <h2>6. Repeat Infringer Policy</h2>
-          <p>
-            In accordance with DMCA provisions, UniMaxDL maintains a policy of terminating or blacklisting IP ranges or origin endpoints that repeatedly and systematically attempt to process infringing or unauthorized materials.
-          </p>
+          <p>Endpoints or sources repeatedly linked to verified infringement notices are restricted.</p>
         </section>
       </article>
     </div>
@@ -211,16 +197,19 @@
   <footer class="deck-footer">
     <div class="deck-footer-top">
       <div class="deck-footer-brand">
-        <div style="display:flex; align-items:center; gap:0.5rem; font-family:var(--font-display); font-weight:800; font-size:1.125rem;">
-          <img src="/assets/images/unimaxdl-mark.svg" alt="UnimaxDL" width="24" height="24" />
-          <span>UNIMAXDL</span>
+        <div style="display:flex; align-items:center; gap:0.55rem; font-family:var(--font-display); font-weight:800; font-size:1.0625rem;">
+          <picture style="display:flex; align-items:center; flex-shrink:0;">
+          <source srcset="/assets/images/icon-96.webp" type="image/webp"/>
+          <img alt="UnimaxDL Icon" class="brand-mark" src="/assets/images/icon-48.png" width="30" height="30" style="width:30px; height:30px; object-fit:contain; display:block;"/>
+        </picture>
+          <span>UNIMAX<span class="brand-accent">DL</span></span>
         </div>
-        <p style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">
-          PRECISION BROADCAST STUDIO MEDIA EXTRACTOR // MIT LICENSED
+        <p style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted); line-height:1.5;">
+          PRECISION BROADCAST STUDIO MEDIA EXTRACTOR // MIT LICENSED OPEN SOURCE
         </p>
       </div>
 
-      <nav class="deck-footer-nav">
+      <nav class="deck-footer-nav" aria-label="Footer Navigation">
         <a href="/">Home</a>
         <a href="/download.html">Apps</a>
         <a href="/youtube-downloader.html">YouTube</a>
@@ -241,12 +230,13 @@
 
     <div class="deck-footer-bottom">
       <span>ENGINEERED BY ATOMIC DHRUBA</span>
-      <span>STATUS: ALL SIGNAL PIPELINES NOMINAL</span>
+      <span class="tabular">STATUS: ALL SIGNAL PIPELINES NOMINAL</span>
     </div>
   </footer>
 </div>
 
-<script src="/assets/js/nav.js?v=4.0"></script>
+<script src="/assets/js/nav.js?v=4.1"></script>
+<!-- Monetag MultiTag Official Script (Deferred) -->
 <script>
   window.addEventListener('load', function() {
     setTimeout(function() {
@@ -259,6 +249,7 @@
     }, 500);
   });
 </script>
+<!-- Adsterra Social Bar Official Script -->
 <script data-cfasync="false" src="https://bellnewyork.org/14/9ee0588abd51114c8dc6784b6ea788c8"></script>
 </body>
 </html>

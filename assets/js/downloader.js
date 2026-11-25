@@ -30,23 +30,23 @@ const UDL_DOWNLOADER = (() => {
   const autoDownloadedTasks = new Set();
   const userInitiatedTasks = new Set();
 
-  // Pure SVG Vector Icon Registry (Strictly Zero Emojis)
+  // Pure SVG Vector Icon Registry (Explicit Dimensions, Zero Tailwind Required)
   const ICONS = {
-    settings: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>`,
-    download: `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>`,
-    video: `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>`,
-    audio: `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>`,
-    desktop: `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>`,
-    mobile: `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>`,
-    web: `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m3.84 6.16A8.995 8.995 0 013 12m3.84-6.16A8.995 8.995 0 013 12m14.32 0a8.995 8.995 0 01-3.84 6.16m3.84-6.16A8.995 8.995 0 0017.16 5.84M12 3a9 9 0 00-3.84 15.16M12 3a9 9 0 013.84 15.16"/></svg>`,
-    sparkle: `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>`,
-    close: `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>`,
-    user: `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>`,
-    arrowRight: `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>`,
-    shield: `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>`,
-    timer: `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
-    check: `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>`,
-    external: `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>`
+    settings: `<svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>`,
+    download: `<svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>`,
+    video: `<svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>`,
+    audio: `<svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>`,
+    desktop: `<svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>`,
+    mobile: `<svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>`,
+    web: `<svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m3.84 6.16A8.995 8.995 0 013 12m3.84-6.16A8.995 8.995 0 013 12m14.32 0a8.995 8.995 0 01-3.84 6.16m3.84-6.16A8.995 8.995 0 0017.16 5.84M12 3a9 9 0 00-3.84 15.16M12 3a9 9 0 013.84 15.16"/></svg>`,
+    sparkle: `<svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>`,
+    close: `<svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>`,
+    user: `<svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>`,
+    arrowRight: `<svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>`,
+    shield: `<svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>`,
+    timer: `<svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
+    check: `<svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>`,
+    external: `<svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>`
   };
 
   function getBackendUrl() {
@@ -98,15 +98,19 @@ const UDL_DOWNLOADER = (() => {
     if (!el) return;
     if (connected) {
       const isCloud = targetUrl && targetUrl.includes('onrender.com');
-      const label = isCloud ? 'Render Cloud: Connected' : 'Local PC: Connected';
-      el.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-xs font-semibold cursor-pointer hover:bg-emerald-500/20 transition';
-      el.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> <span>${label}</span>`;
-      el.title = `Connected to ${targetUrl}. Tap to view or configure backend`;
+      const label = isCloud ? 'CLOUD CONNECTED' : 'LOCAL PC ACTIVE';
+      el.className = 'header-status-pill';
+      el.style.borderColor = 'var(--status-ready)';
+      el.style.color = 'var(--status-ready)';
+      el.innerHTML = `<span class="status-dot ready"></span><span>${label}</span>`;
+      el.title = `Connected to ${targetUrl}. Tap to configure backend`;
       el.onclick = showSettingsModal;
     } else {
-      el.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-400 text-xs font-semibold cursor-pointer hover:bg-cyan-500/20 transition';
-      el.innerHTML = '<span class="w-2 h-2 rounded-full bg-cyan-400"></span> <span>Smart Web Mode (Zero Bills)</span>';
-      el.title = "Running 100% in browser. Tap to connect local PC or Render backend";
+      el.className = 'header-status-pill';
+      el.style.borderColor = 'var(--brand-accent)';
+      el.style.color = 'var(--brand-accent)';
+      el.innerHTML = `<span class="status-dot"></span><span>WEB ENGINE // CONFIG</span>`;
+      el.title = "Running client resolver. Tap to connect local PC or cloud engine";
       el.onclick = showSettingsModal;
     }
   }
@@ -117,68 +121,59 @@ const UDL_DOWNLOADER = (() => {
     if (!modal) {
       modal = document.createElement('div');
       modal.id = 'udl-settings-modal';
-      modal.className = 'fixed inset-0 z-[9999] flex items-center justify-center p-4';
+      modal.className = 'studio-modal-wrap';
       document.body.appendChild(modal);
     }
 
     modal.classList.remove('hidden');
     modal.innerHTML = `
-      <div class="fixed inset-0 bg-black/80 backdrop-blur-md" onclick="UDL_DOWNLOADER.closeSettingsModal()"></div>
-      <div class="relative w-full max-w-lg bg-[#121218] border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 animate-in fade-in zoom-in-95 duration-200">
-        
-        <div class="flex items-center justify-between border-b border-white/[0.08] pb-4">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+      <div class="studio-modal-backdrop" onclick="UDL_DOWNLOADER.closeSettingsModal()"></div>
+      <div class="studio-modal-panel frame-marked">
+        <div class="studio-modal-header">
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <div style="width:36px; height:36px; background:var(--brand-surface-alt); border:1px solid var(--brand-amber); color:var(--brand-amber); display:flex; align-items:center; justify-content:center; border-radius:var(--radius-sharp);">
               ${ICONS.settings}
             </div>
             <div>
-              <h3 class="text-lg font-bold text-white">Local PC Companion</h3>
-              <p class="text-xs text-gray-400">Connect your local computer for unlimited 4K 60fps downloads</p>
+              <div style="font-family:var(--font-mono); font-size:0.625rem; color:var(--brand-amber); font-weight:700;">LOCAL HARDWARE LINK</div>
+              <h3 style="font-size:1.0625rem; font-weight:700; color:var(--text-primary); margin:0;">Local PC Companion</h3>
             </div>
           </div>
-          <button onclick="UDL_DOWNLOADER.closeSettingsModal()" class="p-2 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition">
+          <button onclick="UDL_DOWNLOADER.closeSettingsModal()" class="studio-modal-close" aria-label="Close">
             ${ICONS.close}
           </button>
         </div>
 
-        <div class="space-y-4">
-          <div class="space-y-1.5">
-            <label class="text-xs font-semibold text-gray-300">Local Server Address</label>
-            <div class="flex gap-2">
-              <input 
-                type="text" 
-                id="udl-modal-url-input" 
-                value="${backendUrl || 'http://127.0.0.1:8000'}" 
-                placeholder="http://127.0.0.1:8000" 
-                class="flex-1 bg-[#09090d] border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white font-mono placeholder-gray-600 focus:border-amber-500 focus:outline-none"
+        <div style="display:flex; flex-direction:column; gap:1rem;">
+          <div>
+            <label style="display:block; font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); margin-bottom:0.4rem;">BACKEND ENDPOINT URL</label>
+            <div style="display:flex; gap:0.5rem;">
+              <input
+                type="text"
+                id="udl-modal-url-input"
+                value="${backendUrl || 'http://127.0.0.1:8000'}"
+                placeholder="http://127.0.0.1:8000"
+                style="flex:1; background:var(--bg-canvas); border:1px solid var(--line-strong); border-radius:var(--radius-sharp); padding:0.6rem 0.75rem; font-family:var(--font-mono); font-size:0.75rem; color:var(--text-primary); outline:none;"
               />
-              <button 
-                onclick="UDL_DOWNLOADER.testConnection()" 
-                id="udl-ping-btn" 
-                class="px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200 transition">
-                Test Ping
+              <button onclick="UDL_DOWNLOADER.testConnection()" id="udl-ping-btn" class="btn-secondary">
+                PING
               </button>
             </div>
-            <p class="text-[11px] text-gray-500">
-              Run <code class="text-amber-400">Start_UnimaxDL.bat</code> or <code class="text-amber-400">python start.py</code> in your companion folder to start your local PC backend.
+            <p style="font-size:0.75rem; color:var(--text-muted); margin-top:0.5rem;">
+              Run <code style="color:var(--brand-amber);">Start_UnimaxDL.bat</code> or <code style="color:var(--brand-amber);">python start.py</code> locally for unlimited 4K muxing.
             </p>
           </div>
 
-          <div class="p-4 rounded-2xl bg-cyan-500/5 border border-cyan-500/15 text-xs text-gray-300 space-y-2">
-            <span class="font-bold text-cyan-400 block">Why run the Local PC Companion?</span>
-            <ul class="space-y-1 text-gray-400 list-disc list-inside">
-              <li>Lossless 4K UHD 60fps merging with local ffmpeg</li>
-              <li>Lossless MP3 320kbps audio encoding</li>
-              <li>Bypasses all browser CORS and file size limits</li>
-            </ul>
+          <div style="padding:0.875rem 1rem; background:var(--brand-surface-alt); border-left:3px solid var(--brand-accent); border-radius:var(--radius-sharp); font-size:0.75rem; color:var(--text-secondary);">
+            <strong style="color:var(--brand-accent); display:block; margin-bottom:0.25rem;">LOCAL COMPANION ADVANTAGES:</strong>
+            Lossless 4K UHD 60FPS FFmpeg merging, 320kbps MP3 extraction, and zero browser CORS or size caps.
           </div>
         </div>
 
-        <div class="flex items-center justify-end gap-3 pt-2">
-          <button onclick="UDL_DOWNLOADER.closeSettingsModal()" class="px-5 py-2.5 rounded-xl text-xs font-bold text-gray-400 hover:text-white transition">Cancel</button>
-          <button onclick="UDL_DOWNLOADER.saveModalSettings()" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-dark-950 font-black text-xs shadow-lg transition">Save Settings</button>
+        <div style="display:flex; align-items:center; justify-content:flex-end; gap:0.75rem; border-top:1px solid var(--border-hairline); padding-top:1rem;">
+          <button onclick="UDL_DOWNLOADER.closeSettingsModal()" class="btn-secondary">CANCEL</button>
+          <button onclick="UDL_DOWNLOADER.saveModalSettings()" class="btn-signal">SAVE CONFIG</button>
         </div>
-
       </div>
     `;
   }
@@ -193,9 +188,7 @@ const UDL_DOWNLOADER = (() => {
     const input = document.getElementById('udl-modal-url-input');
     if (!btn || !input) return;
 
-    btn.innerText = "Pinging...";
-    btn.className = "px-4 py-2.5 rounded-xl bg-amber-500/20 text-amber-300 text-xs font-bold transition";
-
+    btn.innerText = "PINGING...";
     const target = input.value.trim().replace(/\/+$/, '');
     try {
       const controller = new AbortController();
@@ -204,19 +197,22 @@ const UDL_DOWNLOADER = (() => {
       clearTimeout(timeoutId);
 
       if (res.ok) {
-        btn.innerText = "Connected";
-        btn.className = "px-4 py-2.5 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-bold";
+        btn.innerText = "ONLINE";
+        btn.style.borderColor = "var(--status-ready)";
+        btn.style.color = "var(--status-ready)";
       } else {
         throw new Error();
       }
     } catch {
-      btn.innerText = "Unreachable";
-      btn.className = "px-4 py-2.5 rounded-xl bg-red-500/20 text-red-400 border border-red-500/30 text-xs font-bold";
+      btn.innerText = "OFFLINE";
+      btn.style.borderColor = "var(--status-error)";
+      btn.style.color = "var(--status-error)";
     }
 
     setTimeout(() => {
-      btn.innerText = "Test Ping";
-      btn.className = "px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200 transition";
+      btn.innerText = "PING";
+      btn.style.borderColor = "";
+      btn.style.color = "";
     }, 2500);
   }
 
@@ -226,18 +222,22 @@ const UDL_DOWNLOADER = (() => {
       setBackendUrl(input.value);
     }
     closeSettingsModal();
-    showToast("Connection settings saved");
+    showToast("Connection configuration updated.");
   }
 
   // Toast Notification
   function showToast(msg) {
+    const existing = document.querySelectorAll('.studio-toast');
+    existing.forEach(t => t.remove());
+
     const toast = document.createElement('div');
-    toast.className = "fixed bottom-6 right-6 z-[10000] px-4 py-3 rounded-2xl bg-[#14141d]/95 border border-cyan-500/30 text-xs font-bold text-cyan-300 shadow-2xl flex items-center gap-2.5 animate-in fade-in slide-in-from-bottom-4 duration-200";
-    toast.innerHTML = `<span class="text-cyan-400">${ICONS.sparkle}</span> <span>${msg}</span>`;
+    toast.className = "studio-toast";
+    toast.innerHTML = `<span>${ICONS.sparkle}</span><span>${msg}</span>`;
     document.body.appendChild(toast);
     setTimeout(() => {
-      toast.classList.add('animate-out', 'fade-out', 'duration-200');
-      setTimeout(() => toast.remove(), 200);
+      toast.style.opacity = '0';
+      toast.style.transition = 'opacity 200ms ease';
+      setTimeout(() => toast.remove(), 220);
     }, 3000);
   }
 
@@ -674,7 +674,7 @@ const UDL_DOWNLOADER = (() => {
     if (!modal) {
       modal = document.createElement('div');
       modal.id = 'udl-4k-modal';
-      modal.className = 'fixed inset-0 z-[9999] flex items-center justify-center p-4';
+      modal.className = 'studio-modal-wrap';
       document.body.appendChild(modal);
     }
 
@@ -683,105 +683,67 @@ const UDL_DOWNLOADER = (() => {
 
     modal.classList.remove('hidden');
     modal.innerHTML = `
-      <div class="fixed inset-0 bg-black/85 backdrop-blur-md" onclick="UDL_DOWNLOADER.close4KModal()"></div>
-      <div class="relative w-full max-w-lg bg-[#121218] border border-amber-500/30 rounded-3xl p-6 sm:p-7 shadow-2xl space-y-5 animate-in fade-in zoom-in-95 duration-200">
-        
-        <!-- Header -->
-        <div class="flex items-center justify-between border-b border-white/[0.08] pb-4">
-          <div class="flex items-center gap-3">
-            <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 font-black text-sm">
+      <div class="studio-modal-backdrop" onclick="UDL_DOWNLOADER.close4KModal()"></div>
+      <div class="studio-modal-panel frame-marked" style="border-color:var(--brand-amber);">
+        <div class="studio-modal-header">
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <div style="width:42px; height:42px; background:var(--brand-surface-alt); border:1px solid var(--brand-amber); color:var(--brand-amber); display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-weight:800; font-size:0.875rem; border-radius:var(--radius-sharp);">
               4K
             </div>
             <div>
-              <div class="flex items-center gap-2">
-                <span class="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-500/30">Native App Required</span>
-                <span class="text-[11px] text-gray-400 font-mono">${quality}</span>
+              <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.2rem;">
+                <span class="tech-badge tech-badge-amber">NATIVE APP REQUIRED</span>
+                <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted);">${quality}</span>
               </div>
-              <h3 class="text-base sm:text-lg font-bold text-white mt-0.5">Unlock 4K Ultra HD & 60FPS</h3>
+              <h3 style="font-size:1.0625rem; font-weight:700; color:var(--text-primary); margin:0;">Unlock 4K UHD &amp; 60FPS</h3>
             </div>
           </div>
-          <button onclick="UDL_DOWNLOADER.close4KModal()" class="p-2 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition">
+          <button onclick="UDL_DOWNLOADER.close4KModal()" class="studio-modal-close" aria-label="Close">
             ${ICONS.close}
           </button>
         </div>
 
-        <!-- Description -->
-        <div class="space-y-3 text-xs">
-          <p class="text-gray-300 leading-relaxed">
-            High-bitrate <strong>2K, 4K & 8K 60FPS HDR</strong> streams require client-side FFmpeg GPU muxing. To protect browser tabs from memory limits and cloud proxy rate limits, ultra-high-definition downloads run directly on your hardware via the free UnimaxDL Native App.
-          </p>
+        <p style="font-size:0.8125rem; color:var(--text-secondary); line-height:1.6;">
+          High-bitrate <strong>2K, 4K &amp; 8K 60FPS HDR</strong> streams require client-side FFmpeg GPU muxing. Ultra-high-definition downloads run directly on your device hardware via the free UnimaxDL Native App.
+        </p>
 
-          <!-- Why our app value props -->
-          <div class="grid grid-cols-2 gap-2.5 p-3.5 rounded-2xl bg-white/[0.03] border border-white/5 text-[11px]">
-            <div class="flex items-start gap-2">
-              <span class="text-amber-400 mt-0.5">${ICONS.sparkle}</span>
-              <div>
-                <span class="font-bold text-white block">Unlimited 4K & 8K</span>
-                <span class="text-gray-400 text-[10px]">60FPS, HDR, and uncompressed streams</span>
-              </div>
-            </div>
-            <div class="flex items-start gap-2">
-              <span class="text-emerald-400 mt-0.5">${ICONS.sparkle}</span>
-              <div>
-                <span class="font-bold text-white block">Direct CDN Speed</span>
-                <span class="text-gray-400 text-[10px]">Zero server queue or waiting times</span>
-              </div>
-            </div>
-            <div class="flex items-start gap-2">
-              <span class="text-cyan-400 mt-0.5">${ICONS.desktop}</span>
-              <div>
-                <span class="font-bold text-white block">Hardware Accelerated</span>
-                <span class="text-gray-400 text-[10px]">Local GPU FFmpeg stream merging</span>
-              </div>
-            </div>
-            <div class="flex items-start gap-2">
-              <span class="text-purple-400 mt-0.5">${ICONS.mobile}</span>
-              <div>
-                <span class="font-bold text-white block">100% Private</span>
-                <span class="text-gray-400 text-[10px]">Runs locally on your phone or PC</span>
-              </div>
-            </div>
-          </div>
+        <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:0.625rem; padding:0.875rem; background:var(--brand-surface-alt); border:1px solid var(--border-hairline); border-radius:var(--radius-sharp); font-size:0.75rem;">
+          <div><strong style="color:var(--brand-amber); display:block;">Unlimited 4K / 8K</strong><span style="color:var(--text-muted); font-size:0.6875rem;">HDR &amp; 60FPS lossless streams</span></div>
+          <div><strong style="color:var(--status-ready); display:block;">Direct CDN Speed</strong><span style="color:var(--text-muted); font-size:0.6875rem;">Zero cloud queue wait time</span></div>
+          <div><strong style="color:var(--brand-accent); display:block;">GPU Accelerated</strong><span style="color:var(--text-muted); font-size:0.6875rem;">Local FFmpeg stream merging</span></div>
+          <div><strong style="color:var(--text-primary); display:block;">100% Private</strong><span style="color:var(--text-muted); font-size:0.6875rem;">Processes directly on hardware</span></div>
         </div>
 
-        <!-- Action Buttons -->
-        <div class="space-y-2 pt-1">
-          <!-- 1-Click Launch Deep Link -->
-          <a href="${deepLink}" class="w-full py-3.5 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:brightness-110 text-dark-950 font-black text-xs sm:text-sm text-center transition flex items-center justify-center gap-2 shadow-xl shadow-amber-500/25 ring-2 ring-amber-400/40">
-            <svg class="w-4 h-4 fill-none stroke-current" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-            <span>Open in UnimaxDL Native App</span>
+        <div style="display:flex; flex-direction:column; gap:0.625rem;">
+          <a href="${deepLink}" class="btn-signal" style="width:100%; background:var(--brand-amber); color:#07070a;">
+            ${ICONS.sparkle}
+            <span>OPEN IN UNIMAXDL NATIVE APP</span>
           </a>
 
-          <!-- App Install Row -->
-          <div class="grid grid-cols-2 gap-2">
-            <a href="/download.html" class="py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200 text-center transition flex items-center justify-center gap-1.5">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;">
+            <a href="/download.html" class="btn-secondary" style="width:100%;">
               ${ICONS.mobile}
-              <span>Android APK</span>
+              <span>ANDROID APK</span>
             </a>
-            <a href="/download.html" class="py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200 text-center transition flex items-center justify-center gap-1.5">
+            <a href="/download.html" class="btn-secondary" style="width:100%;">
               ${ICONS.desktop}
-              <span>Windows App</span>
+              <span>DESKTOP APP</span>
             </a>
           </div>
 
-          <!-- Deep Link Copy & Browser Fallback -->
-          <div class="flex items-center gap-2 pt-1">
-            <button onclick="UDL_DOWNLOADER.copyDeepLink('${deepLink}')" class="flex-1 py-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/5 text-[11px] font-bold text-gray-300 transition text-center flex items-center justify-center gap-1">
-              <svg class="w-3.5 h-3.5 fill-none stroke-current" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-              <span>Copy App Link</span>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;">
+            <button onclick="UDL_DOWNLOADER.copyDeepLink('${deepLink}')" class="cartridge-btn" style="width:100%; padding:0.5rem;">
+              <span>COPY APP LINK</span>
             </button>
-            <button onclick="UDL_DOWNLOADER.fallbackTo1080p()" class="flex-1 py-2 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/20 text-[11px] font-bold text-cyan-400 transition text-center">
-              Download 1080p in Browser
+            <button onclick="UDL_DOWNLOADER.fallbackTo1080p()" class="cartridge-btn" style="width:100%; padding:0.5rem; border-color:var(--brand-accent); color:var(--brand-accent);">
+              <span>GET 1080P IN BROWSER</span>
             </button>
           </div>
 
-          <!-- Sponsored High-Speed Mirror -->
-          <div class="pt-1">
-            <a href="https://asiafilm.org/4/0b90618d4229234e89f68c862523c621" target="_blank" rel="noopener noreferrer" class="w-full py-2 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/25 text-amber-300 text-xs font-bold transition text-center flex items-center justify-center gap-2">
-              <svg class="w-3.5 h-3.5 fill-none stroke-current" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-              <span>High-Speed Cloud Mirror (Sponsored)</span>
-            </a>
-          </div>
+          <a href="https://asiafilm.org/4/0b90618d4229234e89f68c862523c621" target="_blank" rel="noopener noreferrer" class="cartridge-btn" style="width:100%; padding:0.55rem; border-color:var(--brand-amber); color:var(--brand-amber);">
+            ${ICONS.sparkle}
+            <span>HIGH-SPEED CLOUD MIRROR (SPONSORED)</span>
+          </a>
         </div>
       </div>
     `;
@@ -902,7 +864,7 @@ const UDL_DOWNLOADER = (() => {
     if (!modal) {
       modal = document.createElement('div');
       modal.id = 'udl-download-helper-modal';
-      modal.className = 'fixed inset-0 z-[10000] flex items-center justify-center p-4';
+      modal.className = 'studio-modal-wrap';
       document.body.appendChild(modal);
     }
 
@@ -910,21 +872,16 @@ const UDL_DOWNLOADER = (() => {
     const mediaUrl = currentMedia ? (currentMedia.webpage_url || currentMedia.url || '') : '';
     const isAudio = type === 'audio';
 
-    // Platform Stream Resolvers
     const ytMatch = mediaUrl.match(/(?:youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|shorts\/)([^#&?]*)/);
     const ytId = (ytMatch && ytMatch[1].length === 11) ? ytMatch[1] : null;
-    const igMatch = mediaUrl.match(/(?:instagram\.com\/(?:p|reel|tv)\/)([\w-]+)/);
-    const igCode = igMatch ? igMatch[1] : null;
 
     let directStreamUrl = '';
     let downloadFileName = (title.replace(/[^a-zA-Z0-9_\-\s]/g, '').trim().substring(0, 36) || 'unimaxdl-media') + (isAudio ? '.mp3' : '.mp4');
 
     if (ytId) {
       if (isAudio) {
-        // Direct high-speed M4A/MP3 audio stream via public mirror
         directStreamUrl = `https://yt.chocolatemoo53.com/latest_version?id=${ytId}&itag=140`;
       } else if (quality === '720p' || quality === '480p' || quality === '360p') {
-        // itag 22 is pre-muxed 720p HD with synchronized video + audio
         directStreamUrl = `https://yt.chocolatemoo53.com/latest_version?id=${ytId}&itag=22`;
       }
     } else if (currentMedia && currentMedia.direct_download_url) {
@@ -935,134 +892,100 @@ const UDL_DOWNLOADER = (() => {
 
     modal.classList.remove('hidden');
     modal.innerHTML = `
-      <div class="fixed inset-0 bg-black/85 backdrop-blur-md" onclick="UDL_DOWNLOADER.closeDownloadModal()"></div>
-      <div class="relative w-full max-w-lg bg-[#0e0e16] border border-white/10 rounded-3xl p-6 sm:p-7 shadow-2xl space-y-5 animate-in fade-in zoom-in-95 duration-200">
-        
-        <!-- Header -->
-        <div class="flex items-center justify-between border-b border-white/[0.08] pb-4">
-          <div class="flex items-center gap-3 min-w-0">
-            <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 flex-shrink-0">
+      <div class="studio-modal-backdrop" onclick="UDL_DOWNLOADER.closeDownloadModal()"></div>
+      <div class="studio-modal-panel frame-marked">
+        <div class="studio-modal-header">
+          <div style="display:flex; align-items:center; gap:0.75rem; min-width:0;">
+            <div style="width:36px; height:36px; background:var(--brand-surface-alt); border:1px solid var(--brand-accent); color:var(--brand-accent); display:flex; align-items:center; justify-content:center; border-radius:var(--radius-sharp); flex-shrink:0;">
               ${isAudio ? ICONS.audio : ICONS.video}
             </div>
-            <div class="min-w-0">
-              <div class="flex items-center gap-2">
-                <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">${quality}</span>
-                <span class="text-xs text-gray-400 font-mono">${isAudio ? 'Audio Stream' : 'Video Stream'}</span>
+            <div style="min-width:0;">
+              <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.2rem;">
+                <span class="tech-badge tech-badge-cyan">${quality}</span>
+                <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted);">${isAudio ? 'AUDIO STREAM' : 'VIDEO STREAM'}</span>
               </div>
-              <h3 class="text-sm font-bold text-white truncate max-w-xs sm:max-w-sm mt-0.5">${title}</h3>
+              <h3 style="font-size:0.9375rem; font-weight:700; color:var(--text-primary); margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${title}</h3>
             </div>
           </div>
-          <button onclick="UDL_DOWNLOADER.closeDownloadModal()" class="p-2 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition flex-shrink-0">
+          <button onclick="UDL_DOWNLOADER.closeDownloadModal()" class="studio-modal-close" aria-label="Close">
             ${ICONS.close}
           </button>
         </div>
 
-        <!-- 5-Second Countdown Status Bar -->
-        <div class="p-4 rounded-2xl bg-[#09090e] border border-white/5 space-y-2.5">
-          <div class="flex items-center justify-between text-xs">
-            <span class="text-gray-300 font-bold flex items-center gap-1.5">
-              <span class="text-cyan-400">${ICONS.timer}</span>
-              <span>Preparing High-Speed Stream</span>
+        <div style="padding:0.875rem 1rem; background:var(--brand-surface-alt); border:1px solid var(--border-hairline); border-radius:var(--radius-sharp); display:flex; flex-direction:column; gap:0.625rem;">
+          <div style="display:flex; align-items:center; justify-content:space-between; font-family:var(--font-mono); font-size:0.75rem;">
+            <span style="color:var(--text-primary); font-weight:700; display:flex; align-items:center; gap:0.35rem;">
+              <span style="color:var(--brand-accent);">${ICONS.timer}</span>
+              <span>PREPARING STREAM</span>
             </span>
-            <span id="udl-gateway-badge" class="px-2.5 py-0.5 rounded-full font-mono text-[11px] font-bold bg-cyan-500/15 text-cyan-300 border border-cyan-500/25">
-              Unlocking in 5s...
-            </span>
+            <span id="udl-gateway-badge" class="tech-badge tech-badge-cyan">UNLOCKING IN 5S...</span>
           </div>
-          <!-- Progress bar -->
-          <div class="w-full bg-white/5 h-2 rounded-full overflow-hidden p-0.5 border border-white/5">
-            <div id="udl-gateway-progress" class="h-full rounded-full bg-gradient-to-r from-cyan-400 via-amber-400 to-emerald-400 transition-all duration-100" style="width: 0%"></div>
+          <div class="studio-progress-track">
+            <div id="udl-gateway-progress" class="studio-progress-fill" style="width:0%;"></div>
           </div>
         </div>
 
-        <!-- Stream Status Slot (Zero Third-Party Lag) -->
-        <div id="udl-sponsor-container" class="rounded-2xl p-4 bg-[#09090e] border ${hasDirectStream ? 'border-white/5' : 'border-cyan-500/20'} space-y-2">
-          <div class="flex items-center justify-between text-xs">
-            <span class="text-gray-300 font-bold flex items-center gap-1.5">
-              <span class="text-cyan-400">${ICONS.sparkle}</span>
-              <span>${hasDirectStream ? 'Direct High-Speed Stream Ready' : 'HD & 4K 60FPS Stream Ready'}</span>
-            </span>
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded ${hasDirectStream ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20'} font-bold">
-              ${hasDirectStream ? '100% Free' : 'UnimaxDL Native'}
-            </span>
+        <div id="udl-sponsor-container" style="padding:0.875rem 1rem; background:var(--brand-surface-alt); border-left:3px solid ${hasDirectStream ? 'var(--status-ready)' : 'var(--brand-accent)'}; border-radius:var(--radius-sharp); font-size:0.75rem;">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.35rem; font-family:var(--font-mono);">
+            <strong style="color:var(--text-primary);">${hasDirectStream ? 'DIRECT STREAM ALLOCATED' : 'HD LOCAL MUXING REQUIRED'}</strong>
+            <span class="tech-badge ${hasDirectStream ? 'tech-badge-green' : 'tech-badge-cyan'}">${hasDirectStream ? 'READY' : 'NATIVE APP'}</span>
           </div>
-          <p class="text-[11px] text-gray-400 leading-relaxed">
-            ${hasDirectStream 
-              ? 'Your stream has been allocated. No registration or third-party players required. Direct save to device below.' 
-              : 'High-definition video (1080p / 4K) requires local FFmpeg stream merging. Download natively with zero rate limits via the free UnimaxDL App or 1-Click Local Engine.'}
+          <p style="font-size:0.75rem; color:var(--text-secondary); line-height:1.5; margin:0;">
+            ${hasDirectStream
+              ? 'Your stream is ready for direct transfer with zero intermediate storage.'
+              : 'High-definition muxed streams can be processed cleanly without timeouts via the free UnimaxDL App or Local PC Companion.'}
           </p>
         </div>
 
-        <!-- Download Action Button (Unlocks after 5 Seconds) -->
-        <div class="space-y-2">
+        <div>
           ${hasDirectStream ? `
-            <button 
+            <button
               id="udl-gateway-action-btn"
               disabled
               onclick="UDL_DOWNLOADER.executeDownloadAction('${directStreamUrl}', '${downloadFileName}', '${quality}')"
-              class="w-full py-3.5 rounded-2xl bg-white/5 border border-white/10 text-gray-400 font-bold text-xs flex items-center justify-center gap-2 cursor-not-allowed transition-all duration-300">
-              <span id="udl-btn-spinner" class="w-3.5 h-3.5 rounded-full border-2 border-cyan-400 border-t-transparent animate-spin"></span>
-              <span id="udl-btn-text">Allocating Direct Download (5s)...</span>
+              class="btn-secondary"
+              style="width:100%; opacity:0.65; cursor:not-allowed; padding:0.875rem;">
+              <span id="udl-btn-spinner" style="display:inline-flex; align-items:center;">${ICONS.timer}</span>
+              <span id="udl-btn-text">ALLOCATING DIRECT STREAM (5S)...</span>
             </button>
           ` : `
-            <button 
+            <button
               id="udl-gateway-action-btn"
               disabled
               onclick="UDL_DOWNLOADER.triggerLocalOrApp('${type}', '${quality}')"
-              class="w-full py-3.5 rounded-2xl bg-white/5 border border-white/10 text-gray-400 font-bold text-xs flex items-center justify-center gap-2 cursor-not-allowed transition-all duration-300">
-              <span id="udl-btn-spinner" class="w-3.5 h-3.5 rounded-full border-2 border-cyan-400 border-t-transparent animate-spin"></span>
-              <span id="udl-btn-text">Preparing UnimaxDL App Download (5s)...</span>
+              class="btn-secondary"
+              style="width:100%; opacity:0.65; cursor:not-allowed; padding:0.875rem;">
+              <span id="udl-btn-spinner" style="display:inline-flex; align-items:center;">${ICONS.timer}</span>
+              <span id="udl-btn-text">PREPARING CLIENT ENGINE (5S)...</span>
             </button>
           `}
         </div>
 
-        <!-- Format Quick-Switch / Direct Options -->
-        <div class="pt-3 border-t border-white/[0.06] space-y-2">
-          <div class="flex items-center justify-between text-[11px] text-gray-400">
-            <span>Instant Options:</span>
-            <span class="text-[10px] text-gray-500">100% Free &bull; Zero Redirects</span>
-          </div>
-          <div class="grid grid-cols-2 gap-2">
-            ${hasDirectStream ? `
-              <button onclick="UDL_DOWNLOADER.executeDownloadAction('${directStreamUrl}', '${downloadFileName}', '${quality}')" class="py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-gray-300 hover:text-white text-[11px] font-bold text-center transition flex items-center justify-center gap-1.5 cursor-pointer">
-                ${ICONS.download}
-                <span>Direct Stream</span>
-              </button>
-            ` : ytId ? `
-              <button onclick="UDL_DOWNLOADER.executeDownloadAction('https://yt.chocolatemoo53.com/latest_version?id=${ytId}&itag=140', '${downloadFileName.replace('.mp4', '.mp3')}', 'MP3')" class="py-2.5 px-3 rounded-xl bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/25 text-purple-300 text-[11px] font-bold text-center transition flex items-center justify-center gap-1.5 cursor-pointer">
-                ${ICONS.audio}
-                <span>Direct MP3 Audio</span>
-              </button>
-            ` : `
-              <a href="/download.html" class="py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-gray-300 text-[11px] font-bold text-center transition flex items-center justify-center gap-1.5">
-                ${ICONS.download}
-                <span>Direct Download</span>
-              </a>
-            `}
-            <button onclick="UDL_DOWNLOADER.triggerLocalOrApp('${type}', '${quality}')" class="py-2.5 px-3 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/20 text-cyan-400 text-[11px] font-bold text-center transition flex items-center justify-center gap-1.5 cursor-pointer">
-              ${ICONS.desktop}
-              <span>1-Click PC Engine</span>
+        <div style="border-top:1px solid var(--border-hairline); padding-top:0.875rem; display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;">
+          ${hasDirectStream ? `
+            <button onclick="UDL_DOWNLOADER.executeDownloadAction('${directStreamUrl}', '${downloadFileName}', '${quality}')" class="cartridge-btn" style="padding:0.5rem; width:100%;">
+              ${ICONS.download}
+              <span>DIRECT STREAM</span>
             </button>
-          </div>
+          ` : ytId ? `
+            <button onclick="UDL_DOWNLOADER.executeDownloadAction('https://yt.chocolatemoo53.com/latest_version?id=${ytId}&itag=140', '${downloadFileName.replace('.mp4', '.mp3')}', 'MP3')" class="cartridge-btn" style="padding:0.5rem; width:100%;">
+              ${ICONS.audio}
+              <span>DIRECT MP3 AUDIO</span>
+            </button>
+          ` : `
+            <a href="/download.html" class="cartridge-btn" style="padding:0.5rem; width:100%;">
+              ${ICONS.download}
+              <span>NATIVE APPS</span>
+            </a>
+          `}
+          <button onclick="UDL_DOWNLOADER.triggerLocalOrApp('${type}', '${quality}')" class="cartridge-btn" style="padding:0.5rem; width:100%; border-color:var(--brand-accent); color:var(--brand-accent);">
+            ${ICONS.desktop}
+            <span>LOCAL PC ENGINE</span>
+          </button>
         </div>
-
-        <!-- Native App Banner Promo -->
-        <div class="p-3.5 rounded-2xl bg-white/[0.02] border border-white/5 flex items-center justify-between gap-3">
-          <div class="space-y-0.5">
-            <span class="text-xs font-bold text-white flex items-center gap-1.5">
-              <span class="text-amber-400">${ICONS.desktop}</span>
-              <span>UnimaxDL Native Apps</span>
-            </span>
-            <p class="text-[10px] text-gray-400">Need 4K 60FPS or batch downloads? Windows, Mac & Android.</p>
-          </div>
-          <a href="/download.html" class="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-[11px] font-bold transition flex-shrink-0">
-            Get App
-          </a>
-        </div>
-
       </div>
     `;
 
-    // Start 5-second countdown timer
     const startTime = Date.now();
     const duration = 5000;
     const progressBar = document.getElementById('udl-gateway-progress');
@@ -1077,33 +1000,37 @@ const UDL_DOWNLOADER = (() => {
       const remainingSec = Math.max(0, Math.ceil((duration - elapsed) / 1000));
 
       if (progressBar) progressBar.style.width = `${progress}%`;
-      if (badge && remainingSec > 0) badge.innerText = `Unlocking in ${remainingSec}s...`;
+      if (badge && remainingSec > 0) badge.innerText = `UNLOCKING IN ${remainingSec}S...`;
       if (btnText && remainingSec > 0) {
-        btnText.innerText = hasDirectStream 
-          ? `Allocating Direct Download (${remainingSec}s)...` 
-          : `Preparing UnimaxDL App Download (${remainingSec}s)...`;
+        btnText.innerText = hasDirectStream
+          ? `ALLOCATING DIRECT STREAM (${remainingSec}S)...`
+          : `PREPARING CLIENT ENGINE (${remainingSec}S)...`;
       }
 
       if (elapsed >= duration) {
         clearInterval(gatewayTimer);
         gatewayTimer = null;
 
-        if (progressBar) progressBar.style.width = '100%';
+        if (progressBar) {
+          progressBar.style.width = '100%';
+          progressBar.classList.add('is-done');
+        }
         if (badge) {
-          badge.className = 'px-2.5 py-0.5 rounded-full font-mono text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
-          badge.innerText = 'Download Ready!';
+          badge.className = 'tech-badge tech-badge-green';
+          badge.innerText = 'READY FOR SAVE';
         }
 
         if (actionBtn) {
           actionBtn.disabled = false;
-          actionBtn.className = hasDirectStream
-            ? 'w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:brightness-110 text-dark-950 font-black text-xs sm:text-sm shadow-xl shadow-emerald-500/25 ring-2 ring-emerald-400/40 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer animate-pulse'
-            : 'w-full py-3.5 rounded-2xl bg-gradient-to-r from-cyan-500 via-teal-500 to-emerald-500 hover:brightness-110 text-dark-950 font-black text-xs sm:text-sm shadow-xl shadow-cyan-500/25 ring-2 ring-cyan-400/40 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer animate-pulse';
+          actionBtn.className = 'btn-signal';
+          actionBtn.style.width = '100%';
+          actionBtn.style.opacity = '1';
+          actionBtn.style.cursor = 'pointer';
           if (btnSpinner) btnSpinner.classList.add('hidden');
           if (btnText) {
             btnText.innerHTML = hasDirectStream
-              ? `${ICONS.download} <span>Save ${quality} to Device</span>`
-              : `${ICONS.download} <span>Download ${quality} via Free UnimaxDL App</span>`;
+              ? `${ICONS.download} <span>SAVE ${quality.toUpperCase()} TO DEVICE</span>`
+              : `${ICONS.download} <span>EXECUTE VIA ENGINE / APP</span>`;
           }
         }
       }
@@ -1193,7 +1120,7 @@ const UDL_DOWNLOADER = (() => {
     if (modal) modal.classList.add('hidden');
   }
 
-  // Render Media Card in UI (Cyber-Industrial Studio Console Results Bay)
+  // Render Media Card in UI (Tactile Studio Output Rack)
   function renderMediaCard(info, container) {
     if (!info || !container) return;
 
@@ -1202,141 +1129,130 @@ const UDL_DOWNLOADER = (() => {
     const fallbackPoster = generateVideoPosterSvg(info.title, info.extractor || 'Universal');
 
     const safeThumbnail = formatThumbnailUrl(info.thumbnail);
-    const mediaPreviewHtml = `<img 
-        src="${safeThumbnail || fallbackPoster}" 
+    const mediaPreviewHtml = `<img
+        src="${safeThumbnail || fallbackPoster}"
         data-orig="${info.thumbnail || ''}"
-        alt="" 
+        alt=""
         loading="eager"
         referrerpolicy="no-referrer"
         data-fallback="${fallbackPoster}"
         onerror="UDL_DOWNLOADER.handleThumbError(this)"
-        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
       />`;
 
     container.innerHTML = `
-      <div class="deck-panel bracket-corners rounded-xl p-6 sm:p-7 border border-white/10 space-y-6 animate-in fade-in duration-200 mt-6">
-        
-        <!-- Diagnostic Monitor & Stream Info -->
-        <div class="flex flex-col sm:flex-row gap-5 items-start">
-          <div class="relative w-full sm:w-64 aspect-video rounded-lg overflow-hidden bg-black/80 border border-white/15 flex-shrink-0 group shadow-inner">
-            ${mediaPreviewHtml}
-            <div class="absolute bottom-2 right-2 px-2 py-0.5 rounded bg-black/90 font-mono text-[10px] font-bold text-white border border-white/10">
-              ${info.duration || '00:00'}
-            </div>
-            ${is4K ? '<span class="absolute top-2 left-2 px-2 py-0.5 rounded font-mono font-bold text-[10px] bg-[#ff6b00] text-black shadow-md tracking-wider">4K UHD MASTER</span>' : isFHD ? '<span class="absolute top-2 left-2 px-2 py-0.5 rounded font-mono font-bold text-[10px] bg-[#10e775] text-black shadow-md tracking-wider">1080P FHD STREAM</span>' : ''}
+      <div class="studio-result-card frame-marked">
+        <div class="deck-strip">
+          <div style="display:flex; align-items:center; gap:0.5rem;">
+            <span class="status-dot ready"></span>
+            <span style="color:var(--text-primary); font-weight:700;">STREAM MANIFEST RESOLVED</span>
           </div>
-
-          <div class="space-y-2.5 flex-1 min-w-0">
-            <div class="flex items-center gap-2">
-              <span class="tech-badge tech-badge-cyan">
-                ${info.extractor || 'UNIVERSAL'}
-              </span>
-              <span class="font-mono text-[11px] text-[#10e775] font-bold">[AUDIO + VIDEO MUXED]</span>
-            </div>
-            
-            <h3 class="text-white font-display font-bold text-base sm:text-lg leading-snug line-clamp-2">
-              ${info.title}
-            </h3>
-
-            <div class="flex flex-wrap items-center gap-3 font-mono text-xs text-gray-400">
-              <span class="flex items-center gap-1.5 text-gray-300">
-                <span class="w-4 h-4 rounded bg-white/10 flex items-center justify-center text-gray-400">
-                  ${ICONS.user}
-                </span>
-                <span>${info.uploader}</span>
-              </span>
-              <span class="text-white/20">|</span>
-              <span class="text-[#7d8597]">CODEC: H.264/AAC</span>
-            </div>
-          </div>
+          <span class="tabular" style="color:var(--text-muted); font-size:0.6875rem;">${(info.extractor || 'UNIVERSAL').toUpperCase()} // MUX READY</span>
         </div>
 
-        <!-- Modular Format Inspector Rack -->
-        <div class="border-t border-white/[0.08] pt-5 space-y-4">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2 bg-[#0b0d13] p-1 rounded-lg border border-white/10">
-              <button onclick="UDL_DOWNLOADER.switchTab('video')" id="tab-btn-video" class="px-4 py-1.5 rounded-md tactile-btn-primary font-bold text-xs transition flex items-center gap-1.5">
+        <div class="studio-result-body">
+          <div class="studio-media-row">
+            <div class="studio-thumb-box">
+              ${mediaPreviewHtml}
+              <div class="studio-thumb-duration">${info.duration || '00:00'}</div>
+              ${is4K ? '<span class="studio-thumb-badge is-4k">4K UHD MASTER</span>' : isFHD ? '<span class="studio-thumb-badge">1080P FHD STREAM</span>' : ''}
+            </div>
+
+            <div class="studio-media-meta">
+              <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">
+                <span class="tech-badge tech-badge-cyan">${info.extractor || 'UNIVERSAL'}</span>
+                <span class="tech-badge tech-badge-green">AUDIO + VIDEO MUXED</span>
+              </div>
+              <h3 class="studio-media-title">${info.title}</h3>
+              <div class="studio-meta-line">
+                <span style="display:inline-flex; align-items:center; gap:0.35rem;">${ICONS.user} <span>${info.uploader}</span></span>
+                <span>|</span>
+                <span>CODEC: H.264 / AAC</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="studio-format-toolbar">
+            <div class="studio-format-tabs">
+              <button onclick="UDL_DOWNLOADER.switchTab('video')" id="tab-btn-video" class="mode-tab active">
                 ${ICONS.video}
                 <span>VIDEO (MP4)</span>
               </button>
-              <button onclick="UDL_DOWNLOADER.switchTab('audio')" id="tab-btn-audio" class="px-4 py-1.5 rounded-md tactile-btn-secondary text-gray-300 hover:text-white font-bold text-xs transition flex items-center gap-1.5">
+              <button onclick="UDL_DOWNLOADER.switchTab('audio')" id="tab-btn-audio" class="mode-tab">
                 ${ICONS.audio}
                 <span>AUDIO (MP3)</span>
               </button>
             </div>
-            <div class="font-mono text-[11px] text-gray-500 hidden sm:flex items-center gap-1.5">
-              <span class="status-lamp status-lamp-green"></span>
+            <div style="display:inline-flex; align-items:center; gap:0.4rem; font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted);">
+              <span class="status-dot ready"></span>
               <span>DIRECT HARDWARE STREAM</span>
             </div>
           </div>
 
           <!-- Video Format Matrix -->
-          <div id="format-section-video" class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div id="format-section-video" class="studio-format-grid">
             ${(info.video_formats || []).map(f => {
               const isHQ = isHighQuality(f);
-              const badgeLabel = isHQ ? (f.badge || '4K/UHD // NATIVE') : (f.badge || 'MUXED // DIRECT');
-              const badgeClass = isHQ ? 'tech-badge-orange' : 'tech-badge-green';
-              const tileClass = isHQ ? 'format-tile-master' : 'format-tile-muxed';
+              const badgeLabel = isHQ ? (f.badge || '4K // NATIVE APP') : (f.badge || 'MUXED // DIRECT');
+              const badgeClass = isHQ ? 'tech-badge-amber' : 'tech-badge-green';
               return `
-                <button onclick="UDL_DOWNLOADER.triggerDownload('video', '${f.quality}')" class="format-tile ${tileClass} text-left transition group relative flex flex-col justify-between">
+                <button onclick="UDL_DOWNLOADER.triggerDownload('video', '${f.quality}')" class="studio-format-tile ${isHQ ? 'is-master' : ''}">
                   <div>
-                    <div class="flex items-center justify-between mb-1.5 gap-1">
-                      <span class="font-display font-bold text-sm text-white group-hover:text-[#00d8f6] transition">${f.resolution || f.quality}</span>
-                      <span class="tech-badge tech-badge-muted">${f.ext}</span>
+                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.4rem; gap:0.25rem;">
+                      <span style="font-family:var(--font-display); font-weight:700; font-size:0.9375rem; color:var(--text-primary);">${f.resolution || f.quality}</span>
+                      <span class="tech-badge">${f.ext}</span>
                     </div>
-                    <div class="mb-2">
+                    <div style="margin-bottom:0.45rem;">
                       <span class="tech-badge ${badgeClass}">${badgeLabel}</span>
                     </div>
-                    <p class="font-mono text-[11px] text-gray-400">${f.fps ? f.fps + 'fps // ' : ''}${f.filesize_label || f.filesize_formatted || 'Stream Mux'}</p>
+                    <div style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted);" class="tabular">${f.fps ? f.fps + 'fps // ' : ''}${f.filesize_label || f.filesize_formatted || 'Stream Mux'}</div>
                   </div>
-                  <div class="mt-3 pt-2 border-t border-white/[0.08] flex items-center justify-between font-mono text-xs font-bold ${isHQ ? 'text-[#ff6b00]' : 'text-[#00d8f6]'}">
-                    <span class="flex items-center gap-1">${ICONS.download} <span>${isHQ ? 'DOWNLOAD 4K' : 'DOWNLOAD'}</span></span>
-                    <span class="text-[9px] text-gray-500">${isHQ ? 'PRO' : f.height >= 1080 ? 'FHD' : 'SD'}</span>
+                  <div style="padding-top:0.5rem; border-top:1px solid var(--border-hairline); display:flex; align-items:center; justify-content:space-between; font-family:var(--font-mono); font-size:0.75rem; font-weight:700; color:${isHQ ? 'var(--brand-amber)' : 'var(--brand-accent)'};">
+                    <span style="display:inline-flex; align-items:center; gap:0.3rem;">${ICONS.download} <span>${isHQ ? 'GET 4K' : 'DOWNLOAD'}</span></span>
+                    <span style="font-size:0.625rem; color:var(--text-muted);">${isHQ ? 'PRO' : f.height >= 1080 ? 'FHD' : 'SD'}</span>
                   </div>
                 </button>
               `;
             }).join('')}
           </div>
 
-          <!-- Audio Format Matrix (Hidden by default) -->
-          <div id="format-section-audio" class="hidden grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <!-- Audio Format Matrix -->
+          <div id="format-section-audio" class="studio-format-grid cols-3 hidden">
             ${(info.audio_formats || []).map(f => `
-              <button onclick="UDL_DOWNLOADER.triggerDownload('audio', '${f.quality}')" class="format-tile format-tile-audio text-left transition group relative flex flex-col justify-between">
+              <button onclick="UDL_DOWNLOADER.triggerDownload('audio', '${f.quality}')" class="studio-format-tile">
                 <div>
-                  <div class="flex items-center justify-between mb-1">
-                    <span class="font-display font-bold text-sm text-white group-hover:text-[#a855f7] transition">${f.label}</span>
-                    <span class="tech-badge bg-purple-500/20 text-purple-300 border border-purple-500/30">${f.ext}</span>
+                  <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.4rem;">
+                    <span style="font-family:var(--font-display); font-weight:700; font-size:0.9375rem; color:var(--text-primary);">${f.label}</span>
+                    <span class="tech-badge tech-badge-cyan">${f.ext}</span>
                   </div>
-                  <p class="font-mono text-[11px] text-gray-400">${f.bitrate} Studio Master</p>
+                  <div style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted);" class="tabular">${f.bitrate} Studio Master</div>
                 </div>
-                <div class="mt-3 pt-2 border-t border-white/[0.08] flex items-center justify-between font-mono text-xs font-bold text-[#a855f7]">
-                  <span class="flex items-center gap-1">${ICONS.audio} <span>EXTRACT MP3</span></span>
-                  <span class="text-[10px] text-gray-500">HI-FI</span>
+                <div style="padding-top:0.5rem; border-top:1px solid var(--border-hairline); display:flex; align-items:center; justify-content:space-between; font-family:var(--font-mono); font-size:0.75rem; font-weight:700; color:var(--brand-accent);">
+                  <span style="display:inline-flex; align-items:center; gap:0.3rem;">${ICONS.audio} <span>EXTRACT ${f.ext.toUpperCase()}</span></span>
+                  <span style="font-size:0.625rem; color:var(--text-muted);">HI-FI</span>
                 </div>
               </button>
             `).join('')}
           </div>
 
-          <!-- Native App High-Power Companion Deck Callout -->
-          <div class="mt-4 p-4 rounded-lg bg-[#0b0d13] border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-            <div class="space-y-0.5 text-center sm:text-left">
-              <span class="font-display font-bold text-white flex items-center gap-2 justify-center sm:justify-start">
-                <span class="status-lamp status-lamp-orange"></span>
-                <span>NEED MAXIMUM 4K 60FPS BANDWIDTH &amp; PLAYLIST QUEUING?</span>
-              </span>
-              <p class="font-sans text-gray-400 text-[11px]">Download our standalone Android APK or Desktop Engine for unrestricted local hardware merging.</p>
+          <!-- Companion App Bar -->
+          <div class="studio-companion-bar">
+            <div>
+              <div style="display:flex; align-items:center; gap:0.45rem; font-family:var(--font-mono); font-size:0.75rem; font-weight:700; color:var(--text-primary);">
+                <span class="status-dot warn"></span>
+                <span>NEED 4K 60FPS OR BATCH PLAYLISTS?</span>
+              </div>
+              <p style="font-size:0.75rem; color:var(--text-muted); margin:0.15rem 0 0;">Run extraction natively via UnimaxDL Android APK or Desktop Client.</p>
             </div>
-            <div class="flex items-center gap-2 flex-shrink-0">
-              <a href="https://asiafilm.org/4/0b90618d4229234e89f68c862523c621" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-md font-mono text-xs font-bold bg-[#ff6b00]/15 hover:bg-[#ff6b00]/25 text-[#ff8833] border border-[#ff6b00]/30 transition whitespace-nowrap">
+            <div style="display:flex; align-items:center; gap:0.5rem; flex-shrink:0;">
+              <a href="https://asiafilm.org/4/0b90618d4229234e89f68c862523c621" target="_blank" rel="noopener noreferrer" class="cartridge-btn" style="border-color:var(--brand-amber); color:var(--brand-amber);">
                 FAST MIRROR
               </a>
-              <a href="/download.html" class="px-4 py-2 rounded-md font-mono text-xs font-bold bg-white/10 hover:bg-white/20 text-white border border-white/15 transition whitespace-nowrap">
-                NATIVE APPS
+              <a href="/download.html" class="btn-secondary" style="padding:0.4rem 0.75rem;">
+                NATIVE APPS &rarr;
               </a>
             </div>
           </div>
         </div>
-
       </div>
     `;
   }
@@ -1350,19 +1266,18 @@ const UDL_DOWNLOADER = (() => {
     if (tab === 'video') {
       if (videoSection) videoSection.classList.remove('hidden');
       if (audioSection) audioSection.classList.add('hidden');
-      if (videoBtn) videoBtn.className = "px-4 py-1.5 rounded-md tactile-btn-primary font-bold text-xs transition flex items-center gap-1.5";
-      if (audioBtn) audioBtn.className = "px-4 py-1.5 rounded-md tactile-btn-secondary text-gray-300 hover:text-white font-bold text-xs transition flex items-center gap-1.5";
+      if (videoBtn) videoBtn.classList.add('active');
+      if (audioBtn) audioBtn.classList.remove('active');
     } else {
       if (videoSection) videoSection.classList.add('hidden');
       if (audioSection) audioSection.classList.remove('hidden');
-      if (audioBtn) audioBtn.className = "px-4 py-1.5 rounded-md tactile-btn-primary font-bold text-xs transition flex items-center gap-1.5";
-      if (videoBtn) videoBtn.className = "px-4 py-1.5 rounded-md tactile-btn-secondary text-gray-300 hover:text-white font-bold text-xs transition flex items-center gap-1.5";
+      if (audioBtn) audioBtn.classList.add('active');
+      if (videoBtn) videoBtn.classList.remove('active');
     }
   }
 
   let emptyPollCount = 0;
 
-  // Polling Active Server Tasks (Supports Render cloud or local PC companion)
   async function pollTasks() {
     if (!backendUrl) return [];
     if (backendUrl.includes('onrender.com') && userInitiatedTasks.size === 0) return [];
@@ -1393,7 +1308,6 @@ const UDL_DOWNLOADER = (() => {
     if (!backendUrl) return;
 
     emptyPollCount = 0;
-    // Initial fetch immediately
     pollTasks().then(tasks => {
       if (callback && tasks.length > 0) callback(tasks);
     });
@@ -1414,7 +1328,6 @@ const UDL_DOWNLOADER = (() => {
   function renderTasks(tasks, container) {
     if (!container || !tasks || tasks.length === 0) return;
 
-    // Cloud session isolation: on Render cloud, ONLY show tasks initiated by this visitor
     const isCloud = backendUrl && backendUrl.includes('onrender.com');
     const visibleTasks = isCloud
       ? tasks.filter(t => userInitiatedTasks.has(t.id))
@@ -1426,14 +1339,15 @@ const UDL_DOWNLOADER = (() => {
       return;
     }
 
+    container.classList.remove('hidden');
     container.innerHTML = `
-      <div class="space-y-3 mt-6">
-        <div class="flex items-center justify-between">
-          <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-            Active Downloads & Processing Queue
-          </h4>
-          <span class="text-[11px] text-gray-500 font-mono">${visibleTasks.length} task${visibleTasks.length > 1 ? 's' : ''}</span>
+      <div style="display:flex; flex-direction:column; gap:0.75rem; margin-top:1.5rem;">
+        <div style="display:flex; align-items:center; justify-content:space-between; font-family:var(--font-mono); font-size:0.75rem;">
+          <span style="font-weight:700; color:var(--text-secondary); display:flex; align-items:center; gap:0.45rem;">
+            <span class="status-dot ready animate-pulse"></span>
+            <span>ACTIVE PROCESSING QUEUE</span>
+          </span>
+          <span style="color:var(--text-muted);" class="tabular">${visibleTasks.length} TASK${visibleTasks.length > 1 ? 'S' : ''}</span>
         </div>
         ${visibleTasks.map(t => {
           const isDone = t.status === 'completed';
@@ -1443,7 +1357,6 @@ const UDL_DOWNLOADER = (() => {
           const isProcessing = t.status === 'processing';
           const downloadUrl = `${backendUrl}/api/download-file/${t.id}`;
 
-          // Auto-trigger browser download once when completed ONLY for this user's task
           if (isDone && userInitiatedTasks.has(t.id) && !autoDownloadedTasks.has(t.id)) {
             autoDownloadedTasks.add(t.id);
             try {
@@ -1459,69 +1372,67 @@ const UDL_DOWNLOADER = (() => {
             }
           }
 
-          let statusBadgeClass = 'tech-badge-cyan animate-pulse';
+          let statusBadgeClass = 'tech-badge-cyan';
           let statusText = t.status;
           if (isDone) {
             statusBadgeClass = 'tech-badge-green';
             statusText = 'COMPLETED';
           } else if (isError) {
-            statusBadgeClass = 'tech-badge-orange';
+            statusBadgeClass = 'tech-badge-amber';
             statusText = 'FAILED';
           } else if (isQueued) {
-            statusBadgeClass = 'tech-badge-orange';
+            statusBadgeClass = 'tech-badge-amber';
             statusText = `QUEUED (#${t.queue_position || 1})`;
           } else if (isStarting) {
-            statusBadgeClass = 'tech-badge-cyan animate-pulse';
+            statusBadgeClass = 'tech-badge-cyan';
             statusText = 'INITIALIZING';
           } else if (isProcessing) {
-            statusBadgeClass = 'tech-badge-cyan animate-pulse';
+            statusBadgeClass = 'tech-badge-cyan';
             statusText = 'MUXING STREAMS';
           }
 
           return `
-            <div class="deck-panel bracket-corners p-4 rounded-lg border border-white/10 space-y-2.5">
-              <div class="flex items-center justify-between text-xs gap-3">
-                <span class="font-display font-bold text-white truncate max-w-xs">${t.title || 'Video Stream Extraction'}</span>
-                <span class="tech-badge ${statusBadgeClass} whitespace-nowrap">${statusText}</span>
+            <div class="deck-panel frame-marked" style="padding:1rem 1.25rem; display:flex; flex-direction:column; gap:0.625rem;">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:0.75rem;">
+                <span style="font-family:var(--font-display); font-weight:700; font-size:0.875rem; color:var(--text-primary); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${t.title || 'Video Stream Extraction'}</span>
+                <span class="tech-badge ${statusBadgeClass}">${statusText}</span>
               </div>
 
-              <!-- Segmented Hardware Progress Meter -->
-              <div class="w-full bg-[#0b0d13] h-2 rounded overflow-hidden p-0.5 border border-white/10">
+              <div class="studio-progress-track">
                 ${isQueued ? `
-                  <div class="h-full rounded bg-[#ff6b00]/50 animate-pulse w-full"></div>
+                  <div class="studio-progress-fill animate-pulse" style="width:100%; background:var(--brand-amber); opacity:0.65;"></div>
                 ` : `
-                  <div class="h-full rounded ${isDone ? 'bg-[#10e775]' : 'bg-[#00d8f6]'} transition-all duration-300" style="width: ${t.progress || t.percent || 0}%"></div>
+                  <div class="studio-progress-fill ${isDone ? 'is-done' : ''}" style="width:${t.progress || t.percent || 0}%;"></div>
                 `}
               </div>
 
-              <!-- Status Telemetry Readout -->
               ${isQueued ? `
-                <div class="flex items-center justify-between text-[11px] text-amber-300/80 font-mono">
-                  <span>SYSTEM LOAD: ${t.active_downloads || 3}/${t.max_workers || 3} ACTIVE CHANNELS</span>
-                  <span class="font-bold">QUEUE POSITION #${t.queue_position || 1}</span>
+                <div style="display:flex; align-items:center; justify-content:space-between; font-family:var(--font-mono); font-size:0.6875rem; color:var(--brand-amber);" class="tabular">
+                  <span>SYSTEM LOAD: ${t.active_downloads || 3}/${t.max_workers || 3} CHANNELS</span>
+                  <span>QUEUE #${t.queue_position || 1}</span>
                 </div>
               ` : `
-                <div class="flex items-center justify-between text-[11px] text-gray-400 font-mono">
+                <div style="display:flex; align-items:center; justify-content:space-between; font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted);" class="tabular">
                   <span>${t.downloaded || '0 MB'} // ${t.total || '0 MB'}</span>
-                  <span class="text-white font-bold">${t.progress || t.percent || 0}% &bull; ${t.speed || ''}</span>
+                  <span style="color:var(--text-primary); font-weight:700;">${t.progress || t.percent || 0}% ${t.speed ? '&bull; ' + t.speed : ''}</span>
                 </div>
               `}
 
               ${isDone ? `
-                <a href="${downloadUrl}" download class="mt-2 w-full py-2.5 rounded-md tactile-btn-primary font-bold text-xs text-center transition flex items-center justify-center gap-2">
-                  <svg class="w-4 h-4 fill-none stroke-current" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                <a href="${downloadUrl}" download class="btn-signal" style="width:100%; padding:0.6rem;">
+                  ${ICONS.download}
                   <span>SAVE MEDIA TO DEVICE</span>
                 </a>
               ` : ''}
 
               ${isError ? `
-                <div class="space-y-2 pt-1 border-t border-white/10">
-                  <p class="font-mono text-[11px] text-[#ff6b00]">
-                    [ERR] BROWSER RESTRICTION DETECTED. EXECUTE LOCALLY VIA NATIVE APP:
+                <div style="border-top:1px solid var(--border-hairline); padding-top:0.625rem; display:flex; flex-direction:column; gap:0.5rem;">
+                  <p style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--brand-amber); margin:0;">
+                    [ERR] BROWSER RESTRICTION DETECTED. EXECUTE VIA NATIVE CLIENT:
                   </p>
-                  <a href="/download.html" class="w-full py-2.5 rounded-md tactile-btn-cyan font-bold text-xs text-center transition flex items-center justify-center gap-1.5">
-                    <svg class="w-3.5 h-3.5 fill-none stroke-current" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                    <span>LAUNCH DESKTOP / ANDROID APP</span>
+                  <a href="/download.html" class="btn-signal" style="width:100%; padding:0.6rem;">
+                    ${ICONS.download}
+                    <span>GET DESKTOP / ANDROID APP</span>
                   </a>
                 </div>
               ` : ''}
