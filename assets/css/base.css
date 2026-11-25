@@ -18,7 +18,7 @@ html {
 body {
   background-color: var(--bg-canvas);
   color: var(--text-primary);
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   line-height: 1.6;
   min-height: 100vh;
   position: relative;
@@ -33,16 +33,16 @@ body::before {
   inset: 0;
   background-size: 24px 24px;
   background-image: 
-    linear-gradient(to right, rgba(0, 0, 0, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.035) 1px, transparent 1px);
+    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
   pointer-events: none;
   z-index: 0;
 }
 
-[data-theme="dark"] body::before {
+[data-theme="light"] body::before {
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(to right, rgba(0, 0, 0, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.035) 1px, transparent 1px);
 }
 
 /* Typography Hierarchy */
@@ -57,7 +57,7 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
   font-size: clamp(2.25rem, 4.5vw, 3.75rem);
   letter-spacing: -0.035em;
-  line-height: 1.05;
+  line-height: 1.02;
 }
 
 h2 {
@@ -85,6 +85,11 @@ code, pre, .font-mono {
   font-family: var(--font-mono);
 }
 
+/* Tabular Numerals for Telemetry and Stats */
+.tabular, [data-tabular], .stat-number, .stat-value, .format-table td, .telemetry-val, .badge-mono {
+  font-variant-numeric: tabular-nums;
+}
+
 /* Accessible Focus Outlines */
 :focus-visible {
   outline: 2px solid var(--accent-signal);
@@ -97,12 +102,18 @@ code, pre, .font-mono {
   color: var(--accent-signal-fg);
 }
 
-/* Reduced Motion Respect */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-canvas);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: var(--radius-sharp);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-accent);
 }

@@ -1,27 +1,23 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>404 — Signal Not Found | UniMaxDL</title>
+  <title>404 — Signal Lost | UniMaxDL</title>
   <meta name="robots" content="noindex, nofollow" />
 
   <script>
     (function() {
       try {
-        var saved = localStorage.getItem('udl-theme');
-        if (saved === 'dark' || saved === 'light') {
-          document.documentElement.setAttribute('data-theme', saved);
-        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-          document.documentElement.setAttribute('data-theme', 'dark');
-        }
+        var t = localStorage.getItem('udl-theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', t);
       } catch (e) {}
     })();
   </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="/assets/css/style.css?v=4.0" />
 
@@ -46,37 +42,40 @@
       </a>
 
       <nav class="nav-links">
-        <a href="/download.html">Apps</a>
+        <a href="/">Web Deck</a>
+        <a href="/download.html">Desktop App</a>
         <a href="/youtube-downloader.html">YouTube</a>
         <a href="/tiktok-downloader.html">TikTok</a>
         <a href="/instagram-downloader.html">Instagram</a>
         <a href="/reddit-downloader.html">Reddit</a>
         <a href="/soundcloud-downloader.html">SoundCloud</a>
-        <a href="/twitch-downloader.html">Twitch</a>
         <div class="dropdown" style="position:relative; display:inline-block;">
           <button class="cartridge-btn" id="platforms-dropdown-btn" onclick="togglePlatformsDropdown(event)" style="font-size:0.75rem; padding:0.25rem 0.5rem;">
-            <span>MORE v</span>
+            <span>PLATFORMS v</span>
           </button>
           <div id="platforms-dropdown" class="deck-panel hidden" style="position:absolute; right:0; top:calc(100% + 8px); width:200px; padding:0.5rem; display:none; flex-direction:column; gap:0.25rem; z-index:100; box-shadow:var(--shadow-tactile);">
             <a href="/twitter-downloader.html" class="nav-link" style="display:flex; align-items:center; gap:0.5rem; padding:0.375rem 0.5rem; font-size:0.75rem;">
-              <span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:var(--text-primary); vertical-align:middle;"></span> Twitter / X
+              <span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#1da1f2;"></span> Twitter / X
             </a>
             <a href="/facebook-downloader.html" class="nav-link" style="display:flex; align-items:center; gap:0.5rem; padding:0.375rem 0.5rem; font-size:0.75rem;">
-              <span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#1877F2; vertical-align:middle;"></span> Facebook
+              <span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#1877f2;"></span> Facebook
             </a>
             <a href="/pinterest-downloader.html" class="nav-link" style="display:flex; align-items:center; gap:0.5rem; padding:0.375rem 0.5rem; font-size:0.75rem;">
-              <span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#E60023; vertical-align:middle;"></span> Pinterest
+              <span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#e60023;"></span> Pinterest
+            </a>
+            <a href="/twitch-downloader.html" class="nav-link" style="display:flex; align-items:center; gap:0.5rem; padding:0.375rem 0.5rem; font-size:0.75rem;">
+              <span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#9146ff;"></span> Twitch
             </a>
             <div style="border-top:1px solid var(--border-hairline); margin:0.25rem 0;"></div>
-            <a href="/#tool" class="nav-link" style="display:flex; align-items:center; gap:0.5rem; padding:0.375rem 0.5rem; font-size:0.75rem; color:var(--accent-signal);">
-              <span><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:currentColor; vertical-align:middle;"></span></span> 1000+ Sources
+            <a href="/#tool" class="nav-link" style="display:flex; align-items:center; gap:0.5rem; padding:0.375rem 0.5rem; font-size:0.75rem; color:var(--brand-accent);">
+              <span>+</span> 1000+ Sources
             </a>
           </div>
         </div>
       </nav>
 
       <div class="header-actions">
-        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Studio Rack Dark Mode" onclick="toggleTheme()">
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Theme Mode" onclick="toggleTheme()">
           <span class="theme-toggle-label">DARK</span>
           <span class="theme-toggle-switch"></span>
         </button>
@@ -95,7 +94,7 @@
     <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.5rem; padding-bottom:0.75rem; border-bottom:1px solid var(--border-hairline);">
       <div style="display:flex; align-items:center; gap:0.5rem;">
         <img src="/assets/images/unimaxdl-mark.svg" alt="UniMaxDL" width="22" height="22" />
-        <span style="font-family:var(--font-display); font-weight:800; font-size:1rem;">UNIMAX<span style="color:var(--accent-signal);">DL</span></span>
+        <span style="font-family:var(--font-display); font-weight:800; font-size:1rem;">UNIMAX<span style="color:var(--brand-accent);">DL</span></span>
       </div>
       <button class="cartridge-btn" onclick="toggleMobileMenu(false)">X</button>
     </div>
@@ -120,7 +119,7 @@
   </aside>
 
   <main class="frame-main" style="padding: 4rem 1.5rem; min-height: 55vh; display: flex; align-items: center; justify-content: center;">
-    <div class="deck-panel" style="max-width: 580px; width: 100%; text-align: left; overflow: hidden;">
+    <div class="deck-panel frame-marked" style="max-width: 580px; width: 100%; text-align: left; overflow: hidden;">
       <div class="smpte-bar">
         <span class="smpte-grey"></span>
         <span class="smpte-yellow"></span>
@@ -132,33 +131,33 @@
       </div>
       <div class="deck-strip">
         <div style="display:flex; align-items:center; gap:0.5rem;">
-          <span class="status-pip error"></span>
-          <span>SYSTEM FAULT // ROUTE NOT FOUND</span>
+          <span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#ef4444;"></span>
+          <span>SYSTEM FAULT // NO CARRIER</span>
         </div>
         <span>ERR_404</span>
       </div>
       <div style="padding: 2rem 1.75rem; display: flex; flex-direction: column; gap: 1.5rem;">
         <div>
-          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent-signal); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">DIAGNOSTIC READOUT</span>
-          <h1 style="font-family: var(--font-display); font-size: 2.25rem; font-weight: 800; letter-spacing: -0.03em; margin: 0.25rem 0 0.5rem 0;">404 — Signal Lost</h1>
+          <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--brand-accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;">DIAGNOSTIC READOUT</span>
+          <h1 style="font-family: var(--font-display); font-size: 2.25rem; font-weight: 800; letter-spacing: -0.03em; margin: 0.25rem 0 0.5rem 0;">ERR_404 // STREAM_NOT_FOUND</h1>
           <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.6;">
             The requested media extraction route, target manifest, or destination resource does not exist or has been relocated to another hardware frequency.
           </p>
         </div>
 
-        <div style="background-color: var(--bg-canvas); border: 1px solid var(--border-hairline); border-radius: var(--radius-panel); padding: 1rem; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-secondary); line-height: 1.8;">
-          <div>STATUS: <span style="color: var(--accent-signal);">404_NOT_FOUND</span></div>
+        <div style="background-color: var(--brand-surface-alt); border: 1px solid var(--border-hairline); border-radius: var(--radius-sharp); padding: 1rem; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-secondary); line-height: 1.8;">
+          <div>STATUS: <span style="color: var(--brand-accent);">404_NOT_FOUND</span></div>
           <div>SUBNET: CORE_INGESTION_ROUTER</div>
           <div>DISPOSITION: CLIENT_REQUEST_UNMATCHED</div>
-          <div>RESOLUTION: RETURN_TO_ROOT_DECK</div>
+          <div>RESOLUTION: RETURN_TO_MEDIA_INTAKE_DECK</div>
         </div>
 
         <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
           <a href="/" class="btn-signal" style="text-decoration: none;">
-            <span>RETURN TO CONSOLE &rarr;</span>
+            <span>RETURN TO WEB DECK &rarr;</span>
           </a>
           <a href="/download.html" class="btn-secondary" style="text-decoration: none;">
-            <span>VIEW COMPANION APPS</span>
+            <span>VIEW DESKTOP APP</span>
           </a>
         </div>
       </div>

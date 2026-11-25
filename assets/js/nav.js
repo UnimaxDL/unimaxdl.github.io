@@ -103,4 +103,31 @@
       }
     }
   });
+
+  // Global Keyboard Navigation: / focuses URL input, Ctrl+V captures link
+  document.addEventListener('keydown', function (e) {
+    const active = document.activeElement;
+    const isInput = active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable);
+
+    if (!isInput && e.key === '/') {
+      const urlInput = document.getElementById('url-input');
+      if (urlInput) {
+        e.preventDefault();
+        urlInput.focus();
+        urlInput.select();
+      }
+    }
+  });
+
+  // Highlight Active Platform Channel Tab
+  document.addEventListener('DOMContentLoaded', function () {
+    const path = window.location.pathname.replace(/\/$/, '') || '/index.html';
+    const channelTabs = document.querySelectorAll('.channel-tab');
+    channelTabs.forEach(tab => {
+      const href = tab.getAttribute('href');
+      if (href && (path === href || path.endsWith(href))) {
+        tab.classList.add('active');
+      }
+    });
+  });
 })();

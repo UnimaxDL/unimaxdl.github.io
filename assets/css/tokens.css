@@ -1,81 +1,115 @@
 /**
- * UniMaxDL — SIGNAL DECK Design Tokens
- * Archival Paper (Light) + Studio Rack (Dark)
+ * UniMaxDL — Unique Design Identity Design Tokens
+ * 100% Preservation of Original Palette (#07070a, #0e0e15, #161622, #22d3ee, #fbbf24)
+ * Strict 85 / 10 / 5 Color Discipline | Tactile Studio Utility
  */
 
 :root {
-  /* Typography */
-  --font-display: 'Archivo', system-ui, -apple-system, sans-serif;
-  --font-sans: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
-  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
+  /* === STEP 1: EXACT ORIGINAL COLOR PALETTE === */
+  --brand-bg:            #07070a;
+  --brand-surface:       #0e0e15;
+  --brand-surface-alt:   #161622;
+  --brand-ink:           #f3f4f6;
+  --brand-ink-muted:     #9ca3af;
+  --brand-accent:        #22d3ee;
+  --brand-accent-ink:    #07070a;
+  --brand-amber:         #fbbf24;
+  --brand-amber-dark:    #d97706;
 
-  /* Light Theme — Archival Paper (Default) */
-  --bg-canvas: #F4F1EA;
-  --bg-surface: #FFFFFF;
-  --bg-subtle: #EAE5DB;
-  --bg-inset: #ECE7DD;
-  --border-hairline: #D4CFC3;
-  --border-strong: #1A1917;
+  /* === STEP 2: DERIVED STRUCTURAL TOKENS === */
+  --line-subtle:         rgba(243, 244, 246, 0.12);
+  --line-strong:         rgba(243, 244, 246, 0.28);
+  --line-accent:         var(--brand-accent);
+  --accent-tint:         rgba(34, 211, 238, 0.10);
 
-  --text-primary: #141413;
-  --text-secondary: #57534A;
-  --text-muted: #847F74;
+  /* === STEP 3: SEMANTIC SURFACES & COMPATIBILITY ALIASES === */
+  --bg-canvas:           var(--brand-bg);
+  --bg-surface:          var(--brand-surface);
+  --bg-subtle:           var(--brand-surface-alt);
+  --bg-inset:            #0a0a0f;
+  --border-hairline:     var(--line-subtle);
+  --border-strong:       var(--line-strong);
 
-  --accent-signal: #E03A1E;
-  --accent-signal-hover: #BF2D14;
-  --accent-signal-fg: #FFFFFF;
-  --platform-accent: var(--accent-signal);
+  --text-primary:        var(--brand-ink);
+  --text-secondary:      var(--brand-ink-muted);
+  --text-muted:          #6b7280;
 
-  --status-ready: #127A43;
-  --status-warn: #B45309;
-  --status-error: #C81E1E;
-  --status-info: #0284C7;
+  --accent-signal:       var(--brand-accent);
+  --accent-signal-hover: #06b6d4;
+  --accent-signal-fg:    var(--brand-accent-ink);
+  --platform-accent:     var(--brand-accent);
 
-  /* Geometry & Tactile Shadows */
-  --radius-panel: 2px;
-  --radius-control: 4px;
-  --shadow-tactile: 3px 3px 0px var(--border-strong);
-  --shadow-tactile-active: 1px 1px 0px var(--border-strong);
-  --ease-snap: cubic-bezier(0.2, 0, 0, 1);
-  --transition-fast: 120ms var(--ease-snap);
+  --status-ready:        #22c55e;
+  --status-warn:         var(--brand-amber);
+  --status-error:        #ef4444;
+  --status-info:         var(--brand-accent);
 
-  /* Layout */
-  --container-max: 1200px;
-  --header-height: 64px;
+  /* === STEP 4: HARDWARE GEOMETRY & SPACING === */
+  --radius-none:         0px;
+  --radius-sharp:        2px;   /* Signature sharp radius */
+  --radius-badge:        4px;   /* Subtle bevel for technical tags */
+  --radius-panel:        var(--radius-sharp);
+  --radius-control:      var(--radius-sharp);
+  --border-width:        1px;
+  --shadow-tactile:      3px 3px 0px var(--line-strong);
+  --shadow-accent:       3px 3px 0px var(--brand-accent);
+  --shadow-tactile-active: 1px 1px 0px var(--line-strong);
+
+  /* === STEP 5: TYPOGRAPHY === */
+  --font-display:        'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --font-sans:           'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-body:           var(--font-sans);
+  --font-mono:           'JetBrains Mono', 'IBM Plex Mono', monospace;
+
+  /* === STEP 6: MECHANICAL MOTION === */
+  --ease-snap:           cubic-bezier(0.2, 0, 0, 1);
+  --dur-fast:            120ms;
+  --dur-base:            200ms;
+  --transition-fast:     var(--dur-fast) var(--ease-snap);
+
+  --container-max:       1200px;
+  --header-height:       64px;
 }
 
-[data-theme="dark"] {
-  /* Dark Theme — Studio Rack */
-  --bg-canvas: #111110;
-  --bg-surface: #191917;
-  --bg-subtle: #22221F;
-  --bg-inset: #141412;
-  --border-hairline: #2E2D29;
-  --border-strong: #E8E4DA;
+/* Light Theme Mode (Optional User Toggle) */
+[data-theme="light"] {
+  --brand-bg:            #f8f9fa;
+  --brand-surface:       #ffffff;
+  --brand-surface-alt:   #f1f3f5;
+  --brand-ink:           #07070a;
+  --brand-ink-muted:     #495057;
+  --brand-accent:        #0891b2;
+  --brand-accent-ink:    #ffffff;
+  --brand-amber:         #d97706;
 
-  --text-primary: #F3F0E8;
-  --text-secondary: #A39F95;
-  --text-muted: #6E6B63;
+  --line-subtle:         rgba(7, 7, 10, 0.12);
+  --line-strong:         rgba(7, 7, 10, 0.28);
+  --line-accent:         var(--brand-accent);
+  --accent-tint:         rgba(8, 145, 178, 0.10);
 
-  --accent-signal: #FF4D2E;
-  --accent-signal-hover: #FF694F;
-  --accent-signal-fg: #111110;
-  --platform-accent: var(--accent-signal);
+  --bg-canvas:           var(--brand-bg);
+  --bg-surface:          var(--brand-surface);
+  --bg-subtle:           var(--brand-surface-alt);
+  --bg-inset:            #e9ecef;
+  --border-hairline:     var(--line-subtle);
+  --border-strong:       var(--line-strong);
 
-  --status-ready: #22C55E;
-  --status-warn: #F59E0B;
-  --status-error: #EF4444;
-  --status-info: #38BDF8;
+  --text-primary:        var(--brand-ink);
+  --text-secondary:      var(--brand-ink-muted);
+  --text-muted:          #868e96;
+
+  --accent-signal:       var(--brand-accent);
+  --accent-signal-hover: #0e7490;
+  --accent-signal-fg:    var(--brand-accent-ink);
 }
 
-/* Surgical Platform Accents */
-[data-platform="youtube"]    { --platform-accent: #D9261C; }
-[data-platform="instagram"]  { --platform-accent: #C92A76; }
-[data-platform="tiktok"]     { --platform-accent: #0F9D9A; }
-[data-platform="twitter"]    { --platform-accent: #141413; }
-[data-theme="dark"][data-platform="twitter"] { --platform-accent: #F3F0E8; }
-[data-platform="reddit"]     { --platform-accent: #E04416; }
-[data-platform="pinterest"]  { --platform-accent: #BD1E2D; }
-[data-platform="facebook"]   { --platform-accent: #1B5FD6; }
-[data-platform="soundcloud"] { --platform-accent: #EA580C; }
-[data-platform="twitch"]     { --platform-accent: #6D28D9; }
+/* Dedicated Channel Specific Accents */
+[data-platform="youtube"]    { --platform-accent: #ff0000; }
+[data-platform="instagram"]  { --platform-accent: #e1306c; }
+[data-platform="tiktok"]     { --platform-accent: #25f4ee; }
+[data-platform="twitter"]    { --platform-accent: #1da1f2; }
+[data-platform="reddit"]     { --platform-accent: #ff4500; }
+[data-platform="pinterest"]  { --platform-accent: #e60023; }
+[data-platform="facebook"]   { --platform-accent: #1877f2; }
+[data-platform="soundcloud"] { --platform-accent: #ff5500; }
+[data-platform="twitch"]     { --platform-accent: #9146ff; }

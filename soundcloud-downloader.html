@@ -1,472 +1,369 @@
 <!DOCTYPE html>
-<html class="scroll-smooth" data-theme="light" data-platform="soundcloud" lang="en">
+<html class="scroll-smooth" data-theme="dark" data-platform="soundcloud" lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport"/>
-<title>SoundCloud Downloader — Convert SoundCloud to MP3 320kbps Free | UnimaxDL</title>
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport"/>
-<title>SoundCloud Downloader — Convert SoundCloud to MP3 320kbps Free | UnimaxDL</title>
-<meta content="Download SoundCloud songs, tracks, and playlists to MP3 320kbps or lossless M4A. Fast, free, and ad-free online SoundCloud to MP3 downloader with UnimaxDL." name="description"/>
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport"/>
-<title>SoundCloud Downloader — Convert SoundCloud to MP3 320kbps Free | UnimaxDL</title>
-<meta content="Download SoundCloud songs, tracks, and playlists to MP3 320kbps or lossless M4A. Fast, free, and ad-free online SoundCloud to MP3 downloader with UnimaxDL." name="description"/>
-<meta content="soundcloud downloader, soundcloud to mp3 320kbps, download soundcloud songs, soundcloud music downloader, soundcloud track saver, unimaxdl" name="keywords"/>
-<link href="https://unimaxdl.github.io/soundcloud-downloader.html" rel="canonical"/>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport"/>
+  <title>SoundCloud Downloader — Download SoundCloud to 320kbps MP3 | UniMaxDL</title>
+  <meta content="Download SoundCloud tracks and music to 320kbps MP3 free. Fast online SoundCloud downloader with high audio quality and album artwork retention." name="description"/>
+  <link href="https://unimaxdl.github.io/soundcloud-downloader.html" rel="canonical"/>
 
-<!-- Prevent Flash of Unstyled Content (FOUC) -->
-<script>
-  (function() {
-    const t = localStorage.getItem('udl-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    document.documentElement.setAttribute('data-theme', t);
-  })();
-</script>
+  <!-- Prevent Flash of Unstyled Content (FOUC) -->
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('udl-theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
 
-<link href="/manifest.json" rel="manifest"/>
-<meta content="#F4F1EA" name="theme-color"/>
-<meta content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" name="robots"/>
+  <link href="/manifest.json" rel="manifest"/>
+  <meta content="#07070a" name="theme-color"/>
+  <meta content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" name="robots"/>
 
-<!-- Open Graph -->
-<meta content="website" property="og:type"/>
-<meta content="https://unimaxdl.github.io/soundcloud-downloader.html" property="og:url"/>
-<meta content="SoundCloud Downloader — Convert SoundCloud to MP3 320kbps Free | UnimaxDL" property="og:title"/>
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport"/>
-<title>SoundCloud Downloader — Convert SoundCloud to MP3 320kbps Free | UnimaxDL</title>
-<meta content="Download SoundCloud songs, tracks, and playlists to MP3 320kbps or lossless M4A. Fast, free, and ad-free online SoundCloud to MP3 downloader with UnimaxDL." property="og:description"/>
-<meta content="https://unimaxdl.github.io/assets/images/icon2.png" property="og:image"/>
-<meta content="UnimaxDL" property="og:site_name"/>
+  <!-- Open Graph -->
+  <meta content="website" property="og:type"/>
+  <meta content="https://unimaxdl.github.io/soundcloud-downloader.html" property="og:url"/>
+  <meta content="SoundCloud Downloader — Download SoundCloud to 320kbps MP3" property="og:title"/>
+  <meta content="Download SoundCloud tracks and music to 320kbps MP3 free. Fast online SoundCloud downloader with high audio quality and album artwork retention." property="og:description"/>
+  <meta content="https://unimaxdl.github.io/assets/images/icon2.png" property="og:image"/>
+  <meta content="UnimaxDL" property="og:site_name"/>
 
-<!-- Twitter Card -->
-<meta content="summary_large_image" name="twitter:card"/>
-<meta content="https://unimaxdl.github.io/soundcloud-downloader.html" name="twitter:url"/>
-<meta content="SoundCloud Downloader — Convert SoundCloud to MP3 320kbps Free | UnimaxDL" name="twitter:title"/>
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport"/>
-<title>SoundCloud Downloader — Convert SoundCloud to MP3 320kbps Free | UnimaxDL</title>
-<meta content="Download SoundCloud songs, tracks, and playlists to MP3 320kbps or lossless M4A. Fast, free, and ad-free online SoundCloud to MP3 downloader with UnimaxDL." name="twitter:description"/>
-<meta content="https://unimaxdl.github.io/assets/images/icon2.png" name="twitter:image"/>
+  <!-- Twitter Card -->
+  <meta content="summary_large_image" name="twitter:card"/>
+  <meta content="https://unimaxdl.github.io/soundcloud-downloader.html" name="twitter:url"/>
+  <meta content="SoundCloud Downloader — Download SoundCloud to 320kbps MP3" name="twitter:title"/>
+  <meta content="Download SoundCloud tracks and music to 320kbps MP3 free. Fast online SoundCloud downloader with high audio quality and album artwork retention." name="twitter:description"/>
+  <meta content="https://unimaxdl.github.io/assets/images/icon2.png" name="twitter:image"/>
 
-<!-- Typography -->
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <!-- Typography: Space Grotesk, Plus Jakarta Sans, JetBrains Mono -->
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet"/>
 
-<!-- SIGNAL DECK Stylesheet -->
-<link href="/assets/css/style.css?v=4.0" rel="stylesheet"/>
+  <!-- Modular Stylesheet -->
+  <link href="/assets/css/style.css?v=4.0" rel="stylesheet"/>
 
-<!-- Favicons -->
-<meta content="UnimaxDL" name="application-name"/>
-<link href="/assets/images/unimaxdl-mark.svg" rel="icon" type="image/svg+xml"/>
-<link href="/assets/images/icon-48.png" rel="icon" sizes="48x48" type="image/png"/>
-<link href="/assets/images/icon-96.png" rel="icon" sizes="96x96" type="image/png"/>
-<link href="/assets/images/icon2-192.png" rel="icon" sizes="192x192" type="image/png"/>
-<link href="/assets/images/favicon.ico" rel="icon" type="image/x-icon"/>
-<link href="/favicon.ico" rel="shortcut icon"/>
-<link href="/assets/images/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+  <!-- Favicons -->
+  <meta content="UnimaxDL" name="application-name"/>
+  <link href="/assets/images/unimaxdl-mark.svg" rel="icon" type="image/svg+xml"/>
+  <link href="/assets/images/icon-48.png" rel="icon" sizes="48x48" type="image/png"/>
+  <link href="/assets/images/icon-96.png" rel="icon" sizes="96x96" type="image/png"/>
+  <link href="/assets/images/icon2-192.png" rel="icon" sizes="192x192" type="image/png"/>
+  <link href="/assets/images/favicon.ico" rel="icon" type="image/x-icon"/>
+  <link href="/favicon.ico" rel="shortcut icon"/>
+  <link href="/assets/images/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 
-<script type="application/ld+json">[
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "UnimaxDL SoundCloud to MP3 Downloader",
+    "@type": "WebApplication",
+    "name": "SoundCloud Downloader — UnimaxDL",
+    "url": "https://unimaxdl.github.io/soundcloud-downloader.html",
+    "description": "Download SoundCloud tracks and music to 320kbps MP3 free. Fast online SoundCloud downloader with high audio quality and album artwork retention.",
     "applicationCategory": "MultimediaApplication",
-    "operatingSystem": "Web, Windows, macOS, Linux, Android, iOS",
+    "operatingSystem": "All",
     "offers": {
       "@type": "Offer",
       "price": "0",
       "priceCurrency": "USD"
-    },
-    "description": "Convert SoundCloud tracks and playlists to 320kbps MP3 music with preserved ID3 tags and album cover art.",
-    "url": "https://unimaxdl.github.io/soundcloud-downloader.html"
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    "name": "How to Convert SoundCloud Tracks to 320kbps MP3",
-    "description": "Step-by-step guide to download and convert media using UnimaxDL SoundCloud to MP3 Downloader.",
-    "step": [
-      {
-        "@type": "HowToStep",
-        "position": 1,
-        "name": "Copy SoundCloud Track URL",
-        "text": "Navigate to the song on SoundCloud, click Share, and copy the track link."
-      },
-      {
-        "@type": "HowToStep",
-        "position": 2,
-        "name": "Paste into UnimaxDL",
-        "text": "Paste the URL into UnimaxDL and click Analyze."
-      },
-      {
-        "@type": "HowToStep",
-        "position": 3,
-        "name": "Select 320kbps Quality",
-        "text": "Choose 320kbps studio MP3 or lossless M4A format with embedded artwork."
-      },
-      {
-        "@type": "HowToStep",
-        "position": 4,
-        "name": "Save MP3 Music",
-        "text": "Click Download to save the track directly to your music library."
-      }
-    ]
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://unimaxdl.github.io"
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "SoundCloud to MP3 Downloader",
-        "item": "https://unimaxdl.github.io/soundcloud-downloader.html"
-      }
-    ]
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "Are downloaded SoundCloud songs compatible with iPhone and Android?\n+",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Are downloaded SoundCloud songs compatible with iPhone and Android?\n+"
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Can I download SoundCloud Go+ premium tracks?\n+",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Can I download SoundCloud Go+ premium tracks?\n+"
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Is SoundCloud to MP3 conversion legal?\n+",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Is SoundCloud to MP3 conversion legal?\n+"
-        }
-      }
-    ]
+    }
   }
-]</script>
+  </script>
 </head>
 <body>
 
 <div class="frame-container">
 
-  <!-- Studio Header Navigation Bar -->
-  <header class="deck-header">
-    <div style="display:flex; align-items:center; gap:1.5rem;">
-      <a class="deck-brand" href="/">
-        <img alt="UnimaxDL Logomark" height="28" src="/assets/images/unimaxdl-mark.svg" width="28"/>
-        <span>UNIMAXDL</span>
-        <span class="deck-brand-badge" style="color:var(--platform-accent);">SOUNDCLOUD</span>
+  <!-- Header -->
+  <header class="studio-header">
+    <div class="studio-header-inner">
+      <a href="/" class="brand-unit" aria-label="UniMaxDL Home">
+        <img src="/assets/images/unimaxdl-mark.svg" alt="UniMaxDL Mark" class="brand-mark" width="28" height="28" />
+        <span class="brand-wordmark">UNIMAX<span class="brand-accent">DL</span></span>
+        <span class="badge-subtle">DECK // v4.0</span>
       </a>
 
-      <!-- Desktop Nav Links -->
-      <nav class="deck-nav-links" style="display:none;" id="desktop-nav">
-        <a class="deck-nav-link" href="/">Web Tool</a>
-        
-        <div style="position:relative;">
-          <button id="platforms-dropdown-btn" class="deck-nav-link active" style="background:none; border:none; cursor:pointer; font-family:var(--font-mono); font-size:0.8125rem; display:flex; align-items:center; gap:0.25rem;" onclick="togglePlatformsDropdown(event)">
-            <span>Platforms</span>
-            <svg style="width:12px; height:12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+      <nav class="nav-links">
+        <a href="/">Web Deck</a>
+        <a href="/download.html">Desktop App</a>
+        <a href="/youtube-downloader.html" class="">YouTube</a>
+        <a href="/tiktok-downloader.html" class="">TikTok</a>
+        <a href="/instagram-downloader.html" class="">Instagram</a>
+        <a href="/reddit-downloader.html" class="">Reddit</a>
+        <a href="/soundcloud-downloader.html" class="active">SoundCloud</a>
+        <div class="dropdown" style="position:relative; display:inline-block;">
+          <button class="cartridge-btn" id="platforms-dropdown-btn" onclick="togglePlatformsDropdown(event)" style="font-size:0.75rem; padding:0.25rem 0.5rem;">
+            <span>PLATFORMS v</span>
           </button>
-          <div id="platforms-dropdown" class="dropdown-menu hidden opacity-0 scale-95">
-            <a class="dropdown-item" href="/youtube-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#D9261C; vertical-align:middle;"></span> YouTube (4K & Audio)</a>
-            <a class="dropdown-item" href="/tiktok-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#0F9D9A; vertical-align:middle;"></span> TikTok (Clean MP4)</a>
-            <a class="dropdown-item" href="/instagram-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#C92A76; vertical-align:middle;"></span> Instagram (Reels & Posts)</a>
-            <a class="dropdown-item" href="/twitter-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:var(--text-primary); vertical-align:middle;"></span> Twitter / X (Video & GIF)</a>
-            <a class="dropdown-item" href="/reddit-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#E04416; vertical-align:middle;"></span> Reddit (Auto-Muxed)</a>
-            <a class="dropdown-item" href="/soundcloud-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#EA580C; vertical-align:middle;"></span> SoundCloud (320k Audio)</a>
-            <a class="dropdown-item" href="/twitch-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#6D28D9; vertical-align:middle;"></span> Twitch (Clips & VODs)</a>
-            <a class="dropdown-item" href="/facebook-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#1B5FD6; vertical-align:middle;"></span> Facebook (Watch & Reels)</a>
-            <a class="dropdown-item" href="/pinterest-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#BD1E2D; vertical-align:middle;"></span> Pinterest (Video Pins)</a>
+          <div id="platforms-dropdown" class="deck-panel hidden" style="position:absolute; right:0; top:calc(100% + 8px); width:200px; padding:0.5rem; display:none; flex-direction:column; gap:0.25rem; z-index:100; box-shadow:var(--shadow-tactile);">
+            <a href="/twitter-downloader.html" class="nav-link" style="display:flex; align-items:center; gap:0.5rem; padding:0.375rem 0.5rem; font-size:0.75rem;">
+              <span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#1da1f2;"></span> Twitter / X
+            </a>
+            <a href="/facebook-downloader.html" class="nav-link" style="display:flex; align-items:center; gap:0.5rem; padding:0.375rem 0.5rem; font-size:0.75rem;">
+              <span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#1877f2;"></span> Facebook
+            </a>
+            <a href="/pinterest-downloader.html" class="nav-link" style="display:flex; align-items:center; gap:0.5rem; padding:0.375rem 0.5rem; font-size:0.75rem;">
+              <span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#e60023;"></span> Pinterest
+            </a>
+            <a href="/twitch-downloader.html" class="nav-link" style="display:flex; align-items:center; gap:0.5rem; padding:0.375rem 0.5rem; font-size:0.75rem;">
+              <span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#9146ff;"></span> Twitch
+            </a>
+            <div style="border-top:1px solid var(--border-hairline); margin:0.25rem 0;"></div>
+            <a href="/#tool" class="nav-link" style="display:flex; align-items:center; gap:0.5rem; padding:0.375rem 0.5rem; font-size:0.75rem; color:var(--brand-accent);">
+              <span>+</span> 1000+ Sources
+            </a>
           </div>
         </div>
-
-        <a class="deck-nav-link" href="/download.html">Native Apps</a>
-        <a class="deck-nav-link" href="/terms.html">Docs</a>
       </nav>
-    </div>
 
-    <!-- Header Actions -->
-    <div class="deck-header-actions">
-      <button aria-label="Toggle dark/light mode" class="theme-toggle-btn" onclick="toggleTheme()" type="button">
-        <svg class="icon-moon" style="width:18px; height:18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-        <svg class="icon-sun hidden" style="width:18px; height:18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-      </button>
-
-      <a aria-label="GitHub Repository" class="theme-toggle-btn" href="https://github.com/UnimaxDL/unimaxdl.github.io" rel="noopener" target="_blank">
-        <svg style="width:18px; height:18px;" fill="currentColor" viewBox="0 0 24 24"><path clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" fill-rule="evenodd"></path></svg>
-      </a>
-
-      <button aria-label="Toggle mobile menu" class="theme-toggle-btn" id="mobile-menu-btn" onclick="toggleMobileMenu()" type="button">
-        <svg style="width:18px; height:18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-      </button>
+      <div class="header-actions">
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Theme Mode" onclick="toggleTheme()">
+          <span class="theme-toggle-label">DARK</span>
+          <span class="theme-toggle-switch"></span>
+        </button>
+        <a href="https://github.com/UnimaxDL/unimaxdl.github.io" target="_blank" rel="noopener" class="cartridge-btn" style="padding:0.35rem 0.6rem; font-size:0.75rem; text-decoration:none;">
+          GITHUB
+        </a>
+        <button id="mobile-menu-btn" class="cartridge-btn mobile-only" aria-label="Toggle Navigation" onclick="toggleMobileMenu()">
+          MENU
+        </button>
+      </div>
     </div>
   </header>
 
-  <!-- Mobile Drawer Overlay & Drawer -->
-  <div class="hidden opacity-0" id="mobile-overlay" onclick="toggleMobileMenu(false)"></div>
-  <aside class="-translate-x-full" id="mobile-drawer">
-    <div style="padding:1.25rem; border-bottom:1px solid var(--border-hairline); display:flex; align-items:center; justify-content:space-between;">
-      <div style="display:flex; align-items:center; gap:0.5rem; font-family:var(--font-display); font-weight:800; font-size:1rem;">
-        <img alt="" height="24" src="/assets/images/unimaxdl-mark.svg" width="24"/>
-        <span>UNIMAXDL</span>
-      </div>
-      <button class="theme-toggle-btn" onclick="toggleMobileMenu(false)" style="width:30px; height:30px;" type="button">
-        <svg style="width:16px; height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-      </button>
+  <!-- Horizontal Channel Switcher Bar (Plan 2 Signature Feature) -->
+  <nav class="channel-switcher">
+    <div class="channel-switcher-inner">
+      <span class="channel-label">CHANNELS:</span>
+      <a href="/youtube-downloader.html" class="channel-tab ">01 YT</a>
+      <a href="/instagram-downloader.html" class="channel-tab ">02 IG</a>
+      <a href="/tiktok-downloader.html" class="channel-tab ">03 TT</a>
+      <a href="/twitter-downloader.html" class="channel-tab ">04 X</a>
+      <a href="/reddit-downloader.html" class="channel-tab ">05 RD</a>
+      <a href="/facebook-downloader.html" class="channel-tab ">06 FB</a>
+      <a href="/pinterest-downloader.html" class="channel-tab ">07 PIN</a>
+      <a href="/soundcloud-downloader.html" class="channel-tab active">08 SC</a>
+      <a href="/twitch-downloader.html" class="channel-tab ">09 TW</a>
     </div>
-    <div style="padding:1rem 1.25rem; display:flex; flex-direction:column; gap:0.75rem; font-family:var(--font-mono); font-size:0.875rem;">
-      <a class="deck-nav-link" href="/" onclick="toggleMobileMenu(false)">[01] Web Tool</a>
-      <a class="deck-nav-link" href="/download.html" onclick="toggleMobileMenu(false)">[02] Native Apps</a>
-      <div style="font-size:0.6875rem; color:var(--text-muted); text-transform:uppercase; margin-top:0.75rem; padding-bottom:0.25rem; border-bottom:1px solid var(--border-hairline);">Supported Platforms</div>
-      <a class="deck-nav-link" href="/youtube-downloader.html" onclick="toggleMobileMenu(false)">YouTube 4K & Audio</a>
-      <a class="deck-nav-link" href="/tiktok-downloader.html" onclick="toggleMobileMenu(false)">TikTok Clean MP4</a>
-      <a class="deck-nav-link" href="/instagram-downloader.html" onclick="toggleMobileMenu(false)">Instagram Reels</a>
-      <a class="deck-nav-link" href="/twitter-downloader.html" onclick="toggleMobileMenu(false)">Twitter / X Video</a>
-      <a class="deck-nav-link" href="/reddit-downloader.html" onclick="toggleMobileMenu(false)">Reddit Video+Audio</a>
-      <a class="deck-nav-link" href="/soundcloud-downloader.html" onclick="toggleMobileMenu(false)">SoundCloud 320k</a>
-      <a class="deck-nav-link" href="/twitch-downloader.html" onclick="toggleMobileMenu(false)">Twitch Clips & VODs</a>
-      <a class="deck-nav-link" href="/facebook-downloader.html" onclick="toggleMobileMenu(false)">Facebook Watch</a>
-      <a class="deck-nav-link" href="/pinterest-downloader.html" onclick="toggleMobileMenu(false)">Pinterest Pins</a>
+  </nav>
+
+  <div id="mobile-overlay" class="mobile-drawer-overlay hidden" onclick="toggleMobileMenu(false)"></div>
+  <aside id="mobile-drawer" class="mobile-drawer">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.5rem; padding-bottom:0.75rem; border-bottom:1px solid var(--border-hairline);">
+      <div style="display:flex; align-items:center; gap:0.5rem;">
+        <img src="/assets/images/unimaxdl-mark.svg" alt="UniMaxDL" width="22" height="22" />
+        <span style="font-family:var(--font-display); font-weight:800; font-size:1rem;">UNIMAX<span style="color:var(--brand-accent);">DL</span></span>
+      </div>
+      <button class="cartridge-btn" onclick="toggleMobileMenu(false)">X</button>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:0.5rem;">
+      <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); text-transform:uppercase;">EXTRACTORS</span>
+      <a href="/download.html" class="cartridge-btn" style="justify-content:flex-start; text-decoration:none;">Companion Apps</a>
+      <a href="/youtube-downloader.html" class="cartridge-btn" style="justify-content:flex-start; text-decoration:none;">YouTube 4K</a>
+      <a href="/tiktok-downloader.html" class="cartridge-btn" style="justify-content:flex-start; text-decoration:none;">TikTok Clean</a>
+      <a href="/instagram-downloader.html" class="cartridge-btn" style="justify-content:flex-start; text-decoration:none;">Instagram Reels</a>
+      <a href="/reddit-downloader.html" class="cartridge-btn" style="justify-content:flex-start; text-decoration:none;">Reddit Audio+Video</a>
+      <a href="/soundcloud-downloader.html" class="cartridge-btn" style="justify-content:flex-start; text-decoration:none;">SoundCloud 320k</a>
+      <a href="/twitch-downloader.html" class="cartridge-btn" style="justify-content:flex-start; text-decoration:none;">Twitch Clips</a>
+      <a href="/twitter-downloader.html" class="cartridge-btn" style="justify-content:flex-start; text-decoration:none;">Twitter / X Clips</a>
+      <a href="/facebook-downloader.html" class="cartridge-btn" style="justify-content:flex-start; text-decoration:none;">Facebook Video</a>
+      <a href="/pinterest-downloader.html" class="cartridge-btn" style="justify-content:flex-start; text-decoration:none;">Pinterest Pins</a>
+      <div style="border-top:1px solid var(--border-hairline); margin:0.5rem 0;"></div>
+      <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); text-transform:uppercase;">SPECIFICATIONS</span>
+      <a href="/terms.html" class="cartridge-btn" style="justify-content:flex-start; text-decoration:none;">Terms of Service</a>
+      <a href="/privacy.html" class="cartridge-btn" style="justify-content:flex-start; text-decoration:none;">Privacy Policy</a>
+      <a href="/dmca.html" class="cartridge-btn" style="justify-content:flex-start; text-decoration:none;">DMCA / Takedown</a>
     </div>
   </aside>
 
-  <style>
-    @media (min-width: 768px) {
-      #desktop-nav { display: flex !important; }
-      #mobile-menu-btn { display: none !important; }
-    }
-  </style>
+  <!-- Main Content Frame -->
+  <main class="frame-main">
 
-  <!-- Workstation Content -->
-  <main style="flex:1; padding:2rem 1.25rem 4rem;">
-
-    <!-- Platform Hero Section -->
-    <section style="margin-bottom:2rem;">
-      <div style="display:flex; flex-direction:column; gap:1.5rem;" id="hero-split">
-        <div style="flex:1;">
-          <div style="display:inline-flex; align-items:center; gap:0.5rem; font-family:var(--font-mono); font-size:0.6875rem; font-weight:700; color:var(--platform-accent); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.75rem;">
-            <span>[ 01 / SOUNDCLOUD INGESTION INTERFACE ]</span>
-          </div>
-          <div style="display:flex; gap:0.75rem; align-items:flex-start;">
-            <div style="width:4px; height:2.5rem; background-color:var(--platform-accent); border-radius:2px; flex-shrink:0; margin-top:0.25rem;"></div>
-            <div>
-              <h1 style="margin-bottom:0.75rem;">Convert SoundCloud Tracks to 320kbps MP3 Online</h1>
-              <p style="max-width:58ch; font-size:1rem; line-height:1.6; color:var(--text-secondary);">
-                Extract full tracks, DJ sets, and podcasts from SoundCloud at studio 320kbps quality with complete ID3 tags, artwork, and metadata.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Telemetry Box -->
-        <div class="telemetry-box" style="min-width:280px; align-self:flex-start;">
-          <div class="telemetry-row">
-            <span class="telemetry-label">Interface</span>
-            <span class="telemetry-val" style="color:var(--platform-accent);">SOUNDCLOUD GATEWAY</span>
-          </div>
-          <div class="telemetry-row">
-            <span class="telemetry-label">Status</span>
-            <span class="telemetry-val" style="color:var(--status-ready);">ONLINE · PASS</span>
-          </div>
-          <div class="telemetry-row">
-            <span class="telemetry-label">Rate Limit</span>
-            <span class="telemetry-val">UNLIMITED</span>
-          </div>
-          <div class="telemetry-row">
-            <span class="telemetry-label">Subsystem</span>
-            <span class="telemetry-val">Direct CDN Line Speed</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <style>
-      @media (min-width: 900px) {
-        #hero-split {
-          flex-direction: row !important;
-          align-items: flex-start !important;
-          justify-content: space-between !important;
-        }
-      }
-    </style>
-
-    <!-- Extraction Deck -->
-    <section class="deck-panel bracket-corners" style="margin-bottom:3rem;">
-      <div class="deck-strip">
-        <div style="display:flex; align-items:center; gap:0.625rem;">
-          <span class="status-led status-led-ready"></span>
-          <span id="deck-status" style="font-weight:700; letter-spacing:0.04em;">DECK READY</span>
-          <span style="color:var(--text-muted); font-size:0.6875rem;" class="hidden sm:inline">// SOUNDCLOUD INGESTION ACTIVE</span>
-        </div>
+    <!-- Section 01: Channel Hero & Media Intake Deck -->
+    <section id="tool" style="padding-top:2.5rem; margin-bottom:3.5rem;">
+      <!-- Top Meta Strip -->
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.5rem; font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.06em; border-bottom:1px solid var(--border-hairline); padding-bottom:0.5rem;">
         <div style="display:flex; align-items:center; gap:0.5rem;">
-          <span style="font-size:0.6875rem; color:var(--text-muted); text-transform:uppercase;">MODE:</span>
-          <span style="font-weight:700; color:var(--platform-accent); font-size:0.6875rem;">AUTO (MAX BITRATE)</span>
+          <span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:var(--platform-accent);"></span>
+          <span style="color:var(--platform-accent); font-weight:700;">CH-08 // SOUNDCLOUD</span>
         </div>
+        <span class="tabular">STREAMS: 320KBPS MP3 / WAV / TRACKS</span>
       </div>
 
-      <div class="deck-input-bay">
-        <div class="deck-input-wrapper">
-          <svg style="width:18px; height:18px; color:var(--text-muted); flex-shrink:0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-          <input autocomplete="off" class="deck-input" id="url-input" placeholder="Paste Soundcloud link here..." type="url"/>
-          <button class="hidden" id="clear-btn" onclick="clearInput()" style="background:none; border:none; cursor:pointer; font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); padding:0.25rem;" type="button">[CLEAR]</button>
-          <button class="btn-secondary" onclick="pasteClipboard()" style="font-size:0.6875rem; padding:0.25rem 0.625rem;" type="button">PASTE</button>
-        </div>
-        <button class="btn-signal" id="btn-analyze" onclick="handleAnalyze()" type="button" style="background-color:var(--platform-accent); border-color:var(--border-strong);">
-          <svg class="hidden" id="btn-spinner" style="width:16px; height:16px; animation:spin 1s linear infinite;" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-dasharray="32" stroke-width="4"></circle></svg>
-          <span id="btn-text">FETCH STREAM →</span>
-        </button>
+      <!-- Headline -->
+      <div style="margin-bottom:2rem;">
+        <h1 style="font-size:clamp(2.25rem, 5vw, 3.5rem); line-height:1.02; letter-spacing:-0.035em; margin-bottom:0.75rem;">
+          Download SoundCloud Tracks<br/><span style="color:var(--platform-accent);">320kbps MP3 Studio Quality.</span>
+        </h1>
+        <p style="font-size:1.0625rem; color:var(--text-secondary); max-width:56ch; line-height:1.5;">
+          Convert public SoundCloud tracks, DJ sets, and podcasts into high-bitrate MP3 files with embedded cover art and metadata.
+        </p>
       </div>
 
-      <div class="deck-strip deck-strip-bottom" style="overflow-x:auto;">
-        <span style="color:var(--text-muted); font-size:0.6875rem; white-space:nowrap; text-transform:uppercase;">PRESETS:</span>
-        <div style="display:flex; align-items:center; gap:0.5rem;">
-          <button class="cartridge-btn" onclick="setSample('https://soundcloud.com/artist/sample-track')">[SC] 320k MP3</button><button class="cartridge-btn" onclick="setSample('https://soundcloud.com/artist/sample-track')">[SC] Lossless Track</button><button class="cartridge-btn" onclick="setSample('https://soundcloud.com/artist/sample-track')">[SC] DJ Live Set</button><button class="cartridge-btn" onclick="setSample('https://soundcloud.com/artist/sample-track')">[SC] Podcast Stream</button>
+      <!-- The Media Intake Deck -->
+      <div class="intake-deck frame-marked">
+        <!-- Top Control Strip -->
+        <div class="mode-selector">
+          <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); text-transform:uppercase; margin-right:0.5rem;">PRESET:</span>
+          <button class="mode-tab active" type="button" onclick="setMode(this, 'best')">[ BEST STREAM ]</button>
+          <button class="mode-tab" type="button" onclick="setMode(this, 'audio')">[ EXTRACT AUDIO ]</button>
+        </div>
+
+        <!-- Input Row -->
+        <div class="intake-deck__input-row">
+          <div style="display:flex; align-items:center; padding:0 1rem; gap:0.5rem; flex:1;">
+            <span style="font-family:var(--font-mono); font-weight:700; font-size:0.875rem; color:var(--platform-accent); white-space:nowrap;">URL &gt;</span>
+            <input aria-label="SoundCloud Video URL" autocomplete="off" class="deck-input" id="url-input" placeholder="Paste SoundCloud link (https://soundcloud.com/artist/track-name)" spellcheck="false" type="url" style="background:transparent; border:none; outline:none; font-family:var(--font-mono); font-size:0.875rem; color:var(--text-primary); width:100%; padding:0.875rem 0;" />
+            <kbd class="key-shortcut">/</kbd>
+            <button aria-label="Clear Input" class="cartridge-btn hidden" id="clear-btn" onclick="clearInput()" style="padding:0.25rem 0.5rem; font-size:0.75rem;" type="button">CLR</button>
+          </div>
+
+          <button class="cartridge-btn" onclick="pasteClipboard()" style="border:none; border-left:1px solid var(--border-hairline); border-radius:0; padding:0 1.25rem; font-size:0.75rem; font-weight:700;" type="button">
+            [ PASTE ]
+          </button>
+
+          <button class="btn-extract" id="btn-analyze" onclick="handleAnalyze()" type="button" style="background:var(--platform-accent); color:#ffffff;">
+            <span class="hidden" id="btn-spinner">
+              <svg style="width:14px; height:14px; animation:spin 1s linear infinite;" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-dasharray="32" stroke-width="4"></circle></svg>
+            </span>
+            <span id="btn-text">EXTRACT &crarr;</span>
+          </button>
+        </div>
+
+        <!-- Bottom Status Strip -->
+        <div class="deck-strip deck-strip-bottom" style="overflow-x:auto;">
+          <div style="display:flex; align-items:center; gap:0.5rem; white-space:nowrap;">
+            <span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:var(--platform-accent);"></span>
+            <span style="color:var(--text-muted); font-size:0.6875rem;">CHANNEL: CH-08 // SOUNDCLOUD // ACTIVE</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:0.5rem;">
+            <span style="color:var(--text-muted); font-size:0.6875rem; white-space:nowrap; text-transform:uppercase;">SAMPLE:</span>
+            <button class="cartridge-btn" onclick="setSample('https://soundcloud.com/artist/track-name')">[SC] Sample Track</button>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Dynamic Results Bay -->
     <div class="hidden" id="loading-skeleton" style="margin-bottom:2rem;">
-      <div class="deck-panel" style="padding:1.5rem; display:flex; flex-direction:column; gap:1rem;">
+      <div class="deck-panel frame-marked" style="padding:1.5rem; display:flex; flex-direction:column; gap:1rem;">
         <div style="display:flex; align-items:center; gap:1rem;">
-          <div style="width:180px; height:100px; background-color:var(--bg-subtle); border-radius:var(--radius-panel);"></div>
+          <div style="width:180px; height:100px; background-color:var(--brand-surface-alt); border-radius:var(--radius-sharp);"></div>
           <div style="flex:1; display:flex; flex-direction:column; gap:0.5rem;">
-            <div style="height:1.25rem; width:70%; background-color:var(--bg-subtle); border-radius:var(--radius-panel);"></div>
-            <div style="height:0.875rem; width:40%; background-color:var(--bg-subtle); border-radius:var(--radius-panel);"></div>
+            <div style="height:1.25rem; width:70%; background-color:var(--brand-surface-alt); border-radius:var(--radius-sharp);"></div>
+            <div style="height:0.875rem; width:40%; background-color:var(--brand-surface-alt); border-radius:var(--radius-sharp);"></div>
           </div>
         </div>
-        <div style="height:2rem; background-color:var(--bg-subtle); border-radius:var(--radius-panel);"></div>
+        <div style="height:2rem; background-color:var(--brand-surface-alt); border-radius:var(--radius-sharp);"></div>
       </div>
     </div>
 
-    <!-- Active Media Card Container -->
+    <!-- Active Media Card Injection Target -->
     <div id="media-card-container"></div>
+
+    <!-- Download Tasks Queue Container -->
     <div id="tasks-container" style="margin-top:2rem;"></div>
 
-    <!-- Section: Platform Specifications Grid -->
+    <!-- Section 02: Platform Engineering Specifications -->
     <section style="margin-top:4rem; margin-bottom:4rem;">
       <div style="margin-bottom:1.5rem;">
-        <div style="font-family:var(--font-mono); font-size:0.6875rem; font-weight:700; color:var(--platform-accent); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.5rem;">[ 02 / STREAM CAPABILITIES ]</div>
-        <h2 style="font-size:1.5rem; margin-bottom:0.5rem;">Soundcloud Extraction Capabilities</h2>
-        <p style="font-size:0.875rem; color:var(--text-secondary);">Technical specifications for media ingested from Soundcloud.</p>
+        <div style="font-family:var(--font-mono); font-size:0.6875rem; font-weight:700; color:var(--platform-accent); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.5rem;">[ 02 / CHANNEL PARAMETERS ]</div>
+        <h2 style="font-size:1.75rem; margin-bottom:0.5rem;">SoundCloud Extraction Capabilities</h2>
       </div>
 
-      <div class="spec-grid">
-        
-        <div class="spec-cell">
-          <span class="spec-cell-index">01 // BITRATE FIDELITY</span>
-          <h3 class="spec-cell-title">Studio 320kbps MP3</h3>
-          <p class="spec-cell-desc">Captures original high-bitrate Opus and AAC audio streams with pristine frequency response.</p>
+      <div class="spec-grid frame-marked" style="background-color:var(--brand-surface); border:1px solid var(--border-hairline);">
+        <div class="spec-cell" style="padding:1.5rem; border-right:1px solid var(--border-hairline); border-bottom:1px solid var(--border-hairline);">
+          <div style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); margin-bottom:0.5rem;">01 // VIDEO OUTPUT</div>
+          <div style="font-family:var(--font-display); font-size:1.5rem; font-weight:700; color:var(--text-primary); margin-bottom:0.25rem;">320 kbps High Bitrate</div>
+          <p style="font-size:0.8125rem; color:var(--text-secondary);">Direct audio stream extraction at highest available codec quality.</p>
         </div>
-        <div class="spec-cell">
-          <span class="spec-cell-index">02 // METADATA TAGGING</span>
-          <h3 class="spec-cell-title">Embedded ID3 Tags</h3>
-          <p class="spec-cell-desc">Preserves artist names, track titles, album artwork, and year in the downloaded MP3 file.</p>
+
+        <div class="spec-cell" style="padding:1.5rem; border-right:1px solid var(--border-hairline); border-bottom:1px solid var(--border-hairline);">
+          <div style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); margin-bottom:0.5rem;">02 // AUDIO QUALITY</div>
+          <div style="font-family:var(--font-display); font-size:1.5rem; font-weight:700; color:var(--text-primary); margin-bottom:0.25rem;">ID3 Metadata</div>
+          <p style="font-size:0.8125rem; color:var(--text-secondary);">Preserves track title, artist name, and original album artwork.</p>
         </div>
-        <div class="spec-cell">
-          <span class="spec-cell-index">03 // LONG STREAMS</span>
-          <h3 class="spec-cell-title">Multi-Hour DJ Sets</h3>
-          <p class="spec-cell-desc">Handles long-form podcasts and live sets without timeouts or memory buffer errors.</p>
+
+        <div class="spec-cell" style="padding:1.5rem; border-right:1px solid var(--border-hairline); border-bottom:1px solid var(--border-hairline);">
+          <div style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); margin-bottom:0.5rem;">03 // CONTENT SCOPE</div>
+          <div style="font-family:var(--font-display); font-size:1.5rem; font-weight:700; color:var(--text-primary); margin-bottom:0.25rem;">DJ Sets & Podcasts</div>
+          <p style="font-size:0.8125rem; color:var(--text-secondary);">Supports long-format multi-hour audio streams without timeout cutoffs.</p>
         </div>
-        <div class="spec-cell">
-          <span class="spec-cell-index">04 // SPEED</span>
-          <h3 class="spec-cell-title">Direct CDN Download</h3>
-          <p class="spec-cell-desc">Downloads audio chunks in parallel for immediate disk write at line speed.</p>
+
+        <div class="spec-cell" style="padding:1.5rem; border-bottom:1px solid var(--border-hairline);">
+          <div style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); margin-bottom:0.5rem;">04 // THROTTLE RESTRICTION</div>
+          <div style="font-family:var(--font-display); font-size:1.5rem; font-weight:700; color:var(--text-primary); margin-bottom:0.25rem;">Universal Audio</div>
+          <p style="font-size:0.8125rem; color:var(--text-secondary);">Standard MP3 container playable on any phone, car, or media player.</p>
         </div>
       </div>
     </section>
 
-    <!-- Section: Step-by-Step Sequence -->
+    <!-- Section 03: Three-Step Sequence -->
     <section style="margin-bottom:4rem;">
       <div style="margin-bottom:1.5rem;">
-        <div style="font-family:var(--font-mono); font-size:0.6875rem; font-weight:700; color:var(--platform-accent); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.5rem;">[ 03 / OPERATING INSTRUCTIONS ]</div>
-        <h2 style="font-size:1.5rem; margin-bottom:0.5rem;">How to Download from Soundcloud</h2>
-        <p style="font-size:0.875rem; color:var(--text-secondary);">Direct 3-step extraction procedure.</p>
+        <div style="font-family:var(--font-mono); font-size:0.6875rem; font-weight:700; color:var(--platform-accent); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.5rem;">[ 03 / PROTOCOL ]</div>
+        <h2 style="font-size:1.75rem; margin-bottom:0.5rem;">How to Download SoundCloud Content</h2>
       </div>
 
-      <div class="step-sequence">
-        <div class="step-card">
-          <span class="step-badge" style="color:var(--platform-accent);">STEP 01</span>
-          <h4 style="font-family:var(--font-display); font-weight:700; font-size:1rem; color:var(--text-primary);">Copy Soundcloud URL</h4>
-          <p style="font-size:0.8125rem; color:var(--text-secondary); line-height:1.5;">Open Soundcloud in your browser or app. Find the video, reel, or track you wish to save and copy its URL.</p>
+      <div class="step-sequence frame-marked" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1px; background-color:var(--border-hairline); border:1px solid var(--border-hairline);">
+        <div class="step-cell" style="background-color:var(--brand-surface); padding:1.75rem;">
+          <div style="font-family:var(--font-mono); font-size:1.5rem; font-weight:700; color:var(--platform-accent); margin-bottom:0.75rem;">01</div>
+          <h3 style="font-size:1.125rem; margin-bottom:0.5rem;">Copy SoundCloud URL</h3>
+          <p style="font-size:0.8125rem; color:var(--text-secondary); line-height:1.6;">Navigate to SoundCloud in your browser or application. Click Share and copy the post or video link.</p>
         </div>
-        <div class="step-card">
-          <span class="step-badge" style="color:var(--platform-accent);">STEP 02</span>
-          <h4 style="font-family:var(--font-display); font-weight:700; font-size:1rem; color:var(--text-primary);">Analyze Stream</h4>
-          <p style="font-size:0.8125rem; color:var(--text-secondary); line-height:1.5;">Paste into the input bay above and trigger fetch. The engine inspects formats, bitrates, and codecs.</p>
+
+        <div class="step-cell" style="background-color:var(--brand-surface); padding:1.75rem;">
+          <div style="font-family:var(--font-mono); font-size:1.5rem; font-weight:700; color:var(--platform-accent); margin-bottom:0.75rem;">02</div>
+          <h3 style="font-size:1.125rem; margin-bottom:0.5rem;">Process Through Deck</h3>
+          <p style="font-size:0.8125rem; color:var(--text-secondary); line-height:1.6;">Paste the link into the intake deck above. The SoundCloud resolver parses available resolutions and formats.</p>
         </div>
-        <div class="step-card">
-          <span class="step-badge" style="color:var(--platform-accent);">STEP 03</span>
-          <h4 style="font-family:var(--font-display); font-weight:700; font-size:1rem; color:var(--text-primary);">Download File</h4>
-          <p style="font-size:0.8125rem; color:var(--text-secondary); line-height:1.5;">Select your preferred resolution or MP3 audio track and click Download to save directly to local storage.</p>
+
+        <div class="step-cell" style="background-color:var(--brand-surface); padding:1.75rem;">
+          <div style="font-family:var(--font-mono); font-size:1.5rem; font-weight:700; color:var(--platform-accent); margin-bottom:0.75rem;">03</div>
+          <h3 style="font-size:1.125rem; margin-bottom:0.5rem;">Direct File Save</h3>
+          <p style="font-size:0.8125rem; color:var(--text-secondary); line-height:1.6;">Choose MP4 or MP3 from the format matrix and trigger an unthrottled download directly to your device.</p>
         </div>
       </div>
     </section>
 
-    <!-- Section: FAQ Accordion -->
+    <!-- Section 04: Channel FAQ -->
     <section style="margin-bottom:4rem;">
       <div style="margin-bottom:1.5rem;">
-        <div style="font-family:var(--font-mono); font-size:0.6875rem; font-weight:700; color:var(--platform-accent); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.5rem;">[ 04 / TECHNICAL ARCHIVE ]</div>
-        <h2 style="font-size:1.5rem; margin-bottom:0.5rem;">Frequently Asked Questions</h2>
+        <div style="font-family:var(--font-mono); font-size:0.6875rem; font-weight:700; color:var(--platform-accent); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.5rem;">[ 04 / CHANNEL MANUAL ]</div>
+        <h2 style="font-size:1.75rem; margin-bottom:0.5rem;">SoundCloud Downloader FAQ</h2>
       </div>
 
-      <div class="faq-accordion">
-        
-        <details class="faq-item">
-          <summary class="faq-summary">
-            <span>How do I download music from SoundCloud as MP3?</span>
+      <div class="faq-accordion frame-marked" style="display:flex; flex-direction:column; gap:1px; background-color:var(--border-hairline); border:1px solid var(--border-hairline);">
+        <details class="faq-item" style="background-color:var(--brand-surface);">
+          <summary class="faq-summary" style="padding:1.25rem; font-weight:600; cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between;">
+            <span>What audio quality does it download?</span>
             <span class="faq-icon">+</span>
           </summary>
-          <div class="faq-content">Copy any SoundCloud track URL, paste it into UnimaxDL, and click Fetch Stream to download the 320kbps MP3 file.</div>
+          <div class="faq-content" style="padding:0 1.25rem 1.25rem; font-size:0.875rem; color:var(--text-secondary); line-height:1.6;">
+            UniMaxDL extracts the highest bitrate audio available from SoundCloud (typically 320kbps or 128kbps AAC/MP3).
+          </div>
         </details>
-        <details class="faq-item">
-          <summary class="faq-summary">
-            <span>Is track artwork included in the download?</span>
+        <details class="faq-item" style="background-color:var(--brand-surface);">
+          <summary class="faq-summary" style="padding:1.25rem; font-weight:600; cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between;">
+            <span>Can I download entire SoundCloud playlists?</span>
             <span class="faq-icon">+</span>
           </summary>
-          <div class="faq-content">Yes. The original high-resolution album cover art is extracted and embedded directly into the MP3 metadata.</div>
+          <div class="faq-content" style="padding:0 1.25rem 1.25rem; font-size:0.875rem; color:var(--text-secondary); line-height:1.6;">
+            Single track extraction is fully supported online; download our desktop app for multi-track batch playlist processing.
+          </div>
         </details>
-        <details class="faq-item">
-          <summary class="faq-summary">
-            <span>Can I download full albums or playlists?</span>
+        <details class="faq-item" style="background-color:var(--brand-surface);">
+          <summary class="faq-summary" style="padding:1.25rem; font-weight:600; cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between;">
+            <span>Does it include album artwork?</span>
             <span class="faq-icon">+</span>
           </summary>
-          <div class="faq-content">Yes. For complete album batch downloads, our standalone native desktop client downloads entire artist profiles in one click.</div>
+          <div class="faq-content" style="padding:0 1.25rem 1.25rem; font-size:0.875rem; color:var(--text-secondary); line-height:1.6;">
+            Yes. Cover art and track metadata are automatically embedded into the downloaded MP3.
+          </div>
         </details>
-        <details class="faq-item">
-          <summary class="faq-summary">
-            <span>Is SoundCloud Go+ required?</span>
-            <span class="faq-icon">+</span>
-          </summary>
-          <div class="faq-content">No. UnimaxDL extracts all publicly streamable tracks with zero account or subscription requirements.</div>
-        </details>
-      </div>
-    </section>
 
-    <!-- Entity Disambiguation Block -->
-    <section class="deck-panel" style="padding:1.5rem; margin-bottom:2rem;">
-      <div style="display:flex; align-items:flex-start; gap:1rem;">
-        <div style="width:36px; height:36px; background-color:var(--bg-subtle); border:1px solid var(--border-hairline); border-radius:var(--radius-panel); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-          <svg style="width:18px; height:18px; color:var(--text-muted);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-        </div>
-        <div style="font-size:0.8125rem; line-height:1.6; color:var(--text-secondary);">
-          <strong style="color:var(--text-primary); display:block; margin-bottom:0.25rem;">Entity Notice & Scope:</strong>
-          UnimaxDL is purely a digital software application and multimedia utility. It is not affiliated with, nor does it refer to, any vaping devices, Joyetech hardware products, or corporate telecommunications management software.
-        </div>
       </div>
     </section>
 
@@ -477,7 +374,7 @@
     <div class="deck-footer-top">
       <div class="deck-footer-brand">
         <div style="display:flex; align-items:center; gap:0.5rem; font-family:var(--font-display); font-weight:800; font-size:1.125rem;">
-          <img alt="UnimaxDL" height="24" src="/assets/images/unimaxdl-mark.svg" width="24"/>
+          <img src="/assets/images/unimaxdl-mark.svg" alt="UnimaxDL" width="24" height="24" />
           <span>UNIMAXDL</span>
         </div>
         <p style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">
@@ -500,7 +397,7 @@
         <a href="/terms.html">Terms</a>
         <a href="/privacy.html">Privacy</a>
         <a href="/dmca.html">DMCA</a>
-        <a href="https://github.com/UnimaxDL/unimaxdl.github.io" rel="noopener" target="_blank">GitHub</a>
+        <a href="https://github.com/UnimaxDL/unimaxdl.github.io" target="_blank" rel="noopener">GitHub</a>
       </nav>
     </div>
 
@@ -512,14 +409,19 @@
 
 </div>
 
-<!-- Client Scripts -->
+<!-- Global Client Scripts -->
 <script src="/assets/js/analytics.js?v=3.1"></script>
-<script src="/assets/js/nav.js?v=3.0"></script>
+<script src="/assets/js/nav.js?v=4.0"></script>
 <script src="/assets/js/downloader.js?v=4.5"></script>
 
 <script>
   const urlInput = document.getElementById('url-input');
   const clearBtn = document.getElementById('clear-btn');
+
+  function setMode(btn, mode) {
+    document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+  }
 
   if (urlInput) {
     urlInput.addEventListener('input', () => {
@@ -569,33 +471,29 @@
     const skeleton = document.getElementById('loading-skeleton');
     const btnText = document.getElementById('btn-text');
     const spinner = document.getElementById('btn-spinner');
-    const deckStatus = document.getElementById('deck-status');
 
     if (!url) {
-      UDL_DOWNLOADER.showToast("Please enter a video URL first.");
+      UDL_DOWNLOADER.showToast("Please enter a valid SoundCloud link first.");
       return;
     }
 
-    if (btnText) btnText.innerText = "PROBING STREAM...";
+    if (btnText) btnText.innerText = "PROBING...";
     if (spinner) spinner.classList.remove('hidden');
     if (skeleton) skeleton.classList.remove('hidden');
-    if (deckStatus) deckStatus.innerText = "PROBING STREAM...";
     if (mediaContainer) mediaContainer.innerHTML = '';
 
     try {
       const info = await UDL_DOWNLOADER.analyzeUrl(url);
       if (skeleton) skeleton.classList.add('hidden');
-      if (deckStatus) deckStatus.innerText = "STREAM LOCKED";
       if (info && mediaContainer) {
         UDL_DOWNLOADER.renderMediaCard(info, mediaContainer);
         mediaContainer.scrollIntoView({ behavior: 'smooth' });
       }
     } catch (err) {
       if (skeleton) skeleton.classList.add('hidden');
-      if (deckStatus) deckStatus.innerText = "SIGNAL ERROR";
       UDL_DOWNLOADER.showToast(err.message || "Failed to analyze URL.");
     } finally {
-      if (btnText) btnText.innerText = "FETCH STREAM →";
+      if (btnText) btnText.innerText = "EXTRACT ↵";
       if (spinner) spinner.classList.add('hidden');
     }
   }
