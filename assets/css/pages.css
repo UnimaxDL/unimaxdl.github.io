@@ -1,0 +1,177 @@
+/**
+ * UniMaxDL — Page-Specific Layouts
+ * Download Terminal, Swiss Legal Sticky-TOC & 404 Broadcast Strip
+ */
+
+/* ==========================================================================
+   Desktop App & Release Terminal (download.html)
+   ========================================================================== */
+.os-switcher {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--border-hairline);
+  padding: 0 1rem;
+  background-color: var(--bg-subtle);
+  overflow-x: auto;
+}
+
+.os-tab-btn {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  color: var(--text-muted);
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.os-tab-btn:hover {
+  color: var(--text-primary);
+}
+
+.os-tab-btn.active {
+  color: var(--accent-signal);
+  border-bottom-color: var(--accent-signal);
+}
+
+.cli-block {
+  background-color: var(--bg-canvas);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-panel);
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+}
+
+.cli-copy-btn {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-panel);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: var(--transition-fast);
+}
+
+.cli-copy-btn:hover {
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+/* ==========================================================================
+   Swiss Editorial Legal Document Layout (privacy, terms, dmca)
+   ========================================================================== */
+.legal-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2.5rem 1.5rem;
+}
+
+@media (min-width: 900px) {
+  .legal-layout {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 3.5rem;
+    padding: 3.5rem 2rem;
+  }
+}
+
+.legal-toc {
+  width: 100%;
+}
+
+@media (min-width: 900px) {
+  .legal-toc {
+    width: 240px;
+    position: sticky;
+    top: calc(var(--header-height) + 2rem);
+    flex-shrink: 0;
+  }
+}
+
+.legal-toc-title {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-hairline);
+}
+
+.legal-toc-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+}
+
+.legal-toc-link {
+  color: var(--text-secondary);
+  transition: color var(--transition-fast);
+}
+
+.legal-toc-link:hover {
+  color: var(--accent-signal);
+}
+
+.legal-content {
+  max-width: 68ch;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.legal-content h2 {
+  font-size: 1.375rem;
+  margin-top: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-hairline);
+}
+
+.legal-content h3 {
+  font-size: 1.0625rem;
+  margin-top: 0.5rem;
+}
+
+/* ==========================================================================
+   404 Signal Lost Layout
+   ========================================================================== */
+.smpte-bar {
+  height: 6px;
+  width: 100%;
+  display: flex;
+}
+
+.smpte-bar span {
+  flex: 1;
+  height: 100%;
+}
+
+.smpte-grey   { background-color: #C0C0C0; }
+.smpte-yellow { background-color: #C0C000; }
+.smpte-cyan   { background-color: #00C0C0; }
+.smpte-green  { background-color: #00C000; }
+.smpte-magenta{ background-color: #C000C0; }
+.smpte-red    { background-color: #C00000; }
+.smpte-blue   { background-color: #0000C0; }

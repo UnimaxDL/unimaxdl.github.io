@@ -1,11 +1,11 @@
 /**
  * UnimaxDL Analytics Module (v1.3.0)
- * ─────────────────────────────────────────────────────────────
+ * -------------------------------------------------------------
  * Anonymous visitor metrics & download telemetry via Supabase.
  * - Tracks daily unique users (persistent UUID in localStorage)
  * - Tracks sessions (sessionStorage)
  * - Logs download events: video title, video URL, platform, resolution, format
- * ─────────────────────────────────────────────────────────────
+ * -------------------------------------------------------------
  */
 
 const UDL_ANALYTICS = (() => {

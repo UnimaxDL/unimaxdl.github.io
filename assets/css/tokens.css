@@ -1,0 +1,81 @@
+/**
+ * UniMaxDL — SIGNAL DECK Design Tokens
+ * Archival Paper (Light) + Studio Rack (Dark)
+ */
+
+:root {
+  /* Typography */
+  --font-display: 'Archivo', system-ui, -apple-system, sans-serif;
+  --font-sans: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
+
+  /* Light Theme — Archival Paper (Default) */
+  --bg-canvas: #F4F1EA;
+  --bg-surface: #FFFFFF;
+  --bg-subtle: #EAE5DB;
+  --bg-inset: #ECE7DD;
+  --border-hairline: #D4CFC3;
+  --border-strong: #1A1917;
+
+  --text-primary: #141413;
+  --text-secondary: #57534A;
+  --text-muted: #847F74;
+
+  --accent-signal: #E03A1E;
+  --accent-signal-hover: #BF2D14;
+  --accent-signal-fg: #FFFFFF;
+  --platform-accent: var(--accent-signal);
+
+  --status-ready: #127A43;
+  --status-warn: #B45309;
+  --status-error: #C81E1E;
+  --status-info: #0284C7;
+
+  /* Geometry & Tactile Shadows */
+  --radius-panel: 2px;
+  --radius-control: 4px;
+  --shadow-tactile: 3px 3px 0px var(--border-strong);
+  --shadow-tactile-active: 1px 1px 0px var(--border-strong);
+  --ease-snap: cubic-bezier(0.2, 0, 0, 1);
+  --transition-fast: 120ms var(--ease-snap);
+
+  /* Layout */
+  --container-max: 1200px;
+  --header-height: 64px;
+}
+
+[data-theme="dark"] {
+  /* Dark Theme — Studio Rack */
+  --bg-canvas: #111110;
+  --bg-surface: #191917;
+  --bg-subtle: #22221F;
+  --bg-inset: #141412;
+  --border-hairline: #2E2D29;
+  --border-strong: #E8E4DA;
+
+  --text-primary: #F3F0E8;
+  --text-secondary: #A39F95;
+  --text-muted: #6E6B63;
+
+  --accent-signal: #FF4D2E;
+  --accent-signal-hover: #FF694F;
+  --accent-signal-fg: #111110;
+  --platform-accent: var(--accent-signal);
+
+  --status-ready: #22C55E;
+  --status-warn: #F59E0B;
+  --status-error: #EF4444;
+  --status-info: #38BDF8;
+}
+
+/* Surgical Platform Accents */
+[data-platform="youtube"]    { --platform-accent: #D9261C; }
+[data-platform="instagram"]  { --platform-accent: #C92A76; }
+[data-platform="tiktok"]     { --platform-accent: #0F9D9A; }
+[data-platform="twitter"]    { --platform-accent: #141413; }
+[data-theme="dark"][data-platform="twitter"] { --platform-accent: #F3F0E8; }
+[data-platform="reddit"]     { --platform-accent: #E04416; }
+[data-platform="pinterest"]  { --platform-accent: #BD1E2D; }
+[data-platform="facebook"]   { --platform-accent: #1B5FD6; }
+[data-platform="soundcloud"] { --platform-accent: #EA580C; }
+[data-platform="twitch"]     { --platform-accent: #6D28D9; }

@@ -1,6 +1,5 @@
-﻿<!DOCTYPE html>
-
-<html class="dark scroll-smooth" lang="en">
+<!DOCTYPE html>
+<html class="scroll-smooth" data-theme="light" lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport"/>
@@ -8,17 +7,20 @@
 <meta content="Download YouTube, TikTok, Instagram &amp; 1000+ videos in 4K UHD or 320kbps MP3. 100% free, open-source, unlimited speed with zero ads. Try UnimaxDL online now!" name="description"/>
 <meta content="universal video downloader, youtube downloader 4k, tiktok downloader without watermark, instagram reels saver, video to mp3, unimaxdl" name="keywords"/>
 <link href="https://unimaxdl.github.io/" rel="canonical"/>
-<!-- Favicon & Touch Icons -->
 
-
-
+<!-- Prevent Flash of Unstyled Content (FOUC) -->
+<script>
+  (function() {
+    const t = localStorage.getItem('udl-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
 
 <link href="/manifest.json" rel="manifest"/>
-<meta content="#07070a" name="theme-color"/>
-<!-- Google Search Console Verification -->
+<meta content="#F4F1EA" name="theme-color"/>
 <meta content="google021fd839d14f44e1" name="google-site-verification"/>
-<!-- Robots & Search Engine Directives -->
 <meta content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" name="robots"/>
+
 <!-- Open Graph / Facebook -->
 <meta content="website" property="og:type"/>
 <meta content="https://unimaxdl.github.io/" property="og:url"/>
@@ -26,48 +28,35 @@
 <meta content="Download videos from YouTube, TikTok, Instagram, Twitter/X in 4K, 1080p, and 320kbps MP3. 100% free, fast, no ads, zero limits." property="og:description"/>
 <meta content="https://unimaxdl.github.io/assets/images/icon2.png" property="og:image"/>
 <meta content="UnimaxDL" property="og:site_name"/>
+
 <!-- Twitter / X Cards -->
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="https://unimaxdl.github.io/" name="twitter:url"/>
 <meta content="UnimaxDL — Free Universal Video Downloader" name="twitter:title"/>
 <meta content="Download YouTube, TikTok, and Instagram videos in HD with zero ads." name="twitter:description"/>
 <meta content="https://unimaxdl.github.io/assets/images/icon2.png" name="twitter:image"/>
-<!-- Schema.org SoftwareApplication & FAQPage JSON-LD -->
 
-<!-- Tailwind CSS & Google Fonts -->
-<script src="https://cdn.tailwindcss.com"></script>
+<!-- Typography: Archivo, IBM Plex Sans, IBM Plex Mono -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
-<script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            display: ['"Space Grotesk"', 'sans-serif'],
-            sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace'],
-          },
-          colors: {
-            brand: {
-              orange: '#ff6b00',
-              cyan: '#00d8f6',
-              green: '#10e775',
-              purple: '#a855f7',
-            },
-            obsidian: {
-              950: '#090a0f',
-              900: '#10131b',
-              850: '#161a25',
-              800: '#1c2230',
-            }
-          }
-        }
-      }
-    }
-  </script>
-<link href="/assets/css/style.css?v=3.0" rel="stylesheet"/><meta content="UnimaxDL" name="application-name"/><meta content="UnimaxDL" name="apple-mobile-web-app-title"/><link href="/assets/images/icon-48.png" rel="icon" sizes="48x48" type="image/png"/><link href="/assets/images/icon-96.png" rel="icon" sizes="96x96" type="image/png"/><link href="/assets/images/icon2-192.png" rel="icon" sizes="192x192" type="image/png"/><link href="/assets/images/favicon.ico" rel="icon" type="image/x-icon"/><link href="/favicon.ico" rel="shortcut icon"/><link href="/assets/images/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/><script type="application/ld+json">[
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&amp;family=IBM+Plex+Mono:wght@400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+
+<!-- SIGNAL DECK Modular Stylesheet -->
+<link href="/assets/css/style.css?v=4.0" rel="stylesheet"/>
+
+<!-- Favicons -->
+<meta content="UnimaxDL" name="application-name"/>
+<meta content="UnimaxDL" name="apple-mobile-web-app-title"/>
+<link href="/assets/images/unimaxdl-mark.svg" rel="icon" type="image/svg+xml"/>
+<link href="/assets/images/icon-48.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="/assets/images/icon-96.png" rel="icon" sizes="96x96" type="image/png"/>
+<link href="/assets/images/icon2-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="/assets/images/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/favicon.ico" rel="shortcut icon"/>
+<link href="/assets/images/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+
+<!-- Structured Schema.org JSON-LD -->
+<script type="application/ld+json">[
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -152,464 +141,494 @@
       },
       {
         "@type": "Question",
-        "name": "What is UnimaxDL and who develops it?",
+        "name": "Do I need to install any software to use UnimaxDL?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "UnimaxDL is an open-source multimedia software project developed by Atomic Dhruba. It is strictly a software utility and has no association with vaping products or telecom hardware."
+          "text": "No. The web edition runs entirely in your browser. For automated batch queues, 4K/8K local merging, and background channel downloads, a standalone desktop version is available for Windows, macOS, and Linux."
         }
       }
     ]
   }
-]</script></head>
-<body class="text-gray-100 font-sans antialiased selection:bg-cyan-500/30 selection:text-cyan-300">
-<!-- Top Navigation Bar -->
-<header class="sticky top-0 z-50 bg-[#090a0f]/90 backdrop-blur-md border-b border-white/[0.08]">
-<div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-<!-- Brand Logo -->
-<a class="flex items-center gap-3 group" href="/">
-<div class="relative">
-<picture>
-<source srcset="/assets/images/icon-96.webp" type="image/webp"/>
-<img alt="UnimaxDL Icon" class="w-9 h-9 object-contain drop-shadow-[0_0_8px_rgba(0,216,246,0.35)] group-hover:scale-105 transition-all duration-200" height="36" src="/assets/images/icon-48.png" width="36"/>
-</picture>
-<span class="absolute -top-0.5 -right-0.5 status-lamp status-lamp-green"></span>
-</div>
-<div class="flex items-center gap-2">
-<span class="font-display font-bold text-lg tracking-tight text-white">UNIMAX<span class="text-[#00d8f6]">DL</span></span>
-<span class="font-mono text-[9px] font-bold px-2 py-0.5 rounded bg-white/5 text-gray-300 border border-white/10 uppercase tracking-widest">v3.0 PRO</span>
-</div>
-</a>
-<!-- Desktop Navigation Links -->
-<div class="hidden lg:flex items-center gap-6">
-<nav class="flex items-center gap-5 font-mono text-xs font-semibold text-gray-300">
-<a class="hover:text-white transition font-bold text-[#00d8f6]" href="/download.html">[APPS]</a>
-<a class="hover:text-red-400 transition" href="/youtube-downloader.html">YouTube</a>
-<a class="hover:text-teal-400 transition" href="/tiktok-downloader.html">TikTok</a>
-<a class="hover:text-fuchsia-400 transition" href="/instagram-downloader.html">Instagram</a>
-<a class="hover:text-orange-400 transition" href="/reddit-downloader.html">Reddit</a>
-<a class="hover:text-amber-400 transition" href="/soundcloud-downloader.html">SoundCloud</a>
-<a class="hover:text-purple-400 transition" href="/twitch-downloader.html">Twitch</a>
-<!-- More Platforms Dropdown -->
-<div class="relative">
-<button class="flex items-center gap-1 hover:text-white transition focus:outline-none" id="platforms-dropdown-btn" onclick="togglePlatformsDropdown(event)">
-<span>More</span>
-<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</button>
-<div class="hidden opacity-0 scale-95 transition-all duration-150 absolute right-0 mt-3 w-52 deck-panel rounded-lg p-2 z-50 border border-white/15 shadow-2xl" id="platforms-dropdown">
-<a class="flex items-center gap-2.5 px-3 py-2 rounded hover:bg-white/5 font-mono text-xs text-gray-200 hover:text-sky-400 transition" href="/twitter-downloader.html">
-<span class="status-lamp status-lamp-cyan"></span>
-<span>Twitter / X</span>
-</a>
-<a class="flex items-center gap-2.5 px-3 py-2 rounded hover:bg-white/5 font-mono text-xs text-gray-200 hover:text-blue-400 transition" href="/facebook-downloader.html">
-<span class="status-lamp status-lamp-cyan"></span>
-<span>Facebook</span>
-</a>
-<a class="flex items-center gap-2.5 px-3 py-2 rounded hover:bg-white/5 font-mono text-xs text-gray-200 hover:text-rose-400 transition" href="/pinterest-downloader.html">
-<span class="status-lamp status-lamp-orange"></span>
-<span>Pinterest</span>
-</a>
-<div class="border-t border-white/10 my-1"></div>
-<a class="flex items-center gap-2.5 px-3 py-2 rounded hover:bg-white/5 font-mono text-xs font-bold text-[#00d8f6] transition" href="/#tool">
-<span class="status-lamp status-lamp-green"></span>
-<span>All 1000+ Platforms</span>
-</a>
-</div>
-</div>
-</nav>
-<a class="flex items-center gap-1.5 px-3 py-1.5 rounded-md tactile-btn-secondary font-mono text-xs font-bold text-gray-200 transition" href="https://github.com/UnimaxDL/unimaxdl.github.io" rel="noopener" target="_blank">
-<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"></path></svg>
-<span>GitHub</span>
-</a>
-</div>
-<!-- Mobile Actions: Apps Button + Hamburger Menu -->
-<div class="flex lg:hidden items-center gap-2">
-<a class="px-3 py-1.5 rounded-md tactile-btn-cyan font-mono text-xs font-bold transition" href="/download.html">
-          APPS
-        </a>
-<button aria-expanded="false" aria-label="Open Navigation Menu" class="p-2 rounded-md deck-panel text-gray-300 hover:text-white transition" id="mobile-menu-btn" onclick="toggleMobileMenu()">
-<svg class="w-5 h-5 fill-none stroke-current" viewbox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</button>
-</div>
-</div>
-</header>
-<div class="hidden opacity-0 fixed inset-0 bg-black/75 backdrop-blur-sm z-50 transition-opacity duration-200" id="mobile-overlay" onclick="toggleMobileMenu(false)"></div>
-<aside class="-translate-x-full fixed top-0 left-0 bottom-0 w-80 max-w-[85vw] bg-[#0b0d13] border-r border-white/15 z-50 p-5 flex flex-col justify-between overflow-y-auto shadow-2xl" id="mobile-drawer">
-<div class="space-y-6">
-<!-- Drawer Header -->
-<div class="flex items-center justify-between pb-4 border-b border-white/10">
-<a class="flex items-center gap-2.5" href="/">
-<picture>
-<source srcset="/assets/images/icon-96.webp" type="image/webp"/>
-<img alt="UnimaxDL" class="w-8 h-8 object-contain" height="32" src="/assets/images/icon-48.png" width="32"/>
-</picture>
-<span class="font-display font-bold text-base text-white tracking-tight">UNIMAX<span class="text-[#00d8f6]">DL</span></span>
-</a>
-<button aria-label="Close Navigation" class="p-1.5 rounded deck-panel text-gray-400 hover:text-white" onclick="toggleMobileMenu(false)">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</button>
-</div>
-<!-- Quick Platform Jump Links -->
-<div class="space-y-2">
-<span class="font-mono text-[10px] font-bold uppercase tracking-widest text-gray-400 px-1">// STREAM SOURCES</span>
-<div class="grid grid-cols-1 gap-1.5 font-mono text-xs">
-<a class="flex items-center justify-between px-3 py-2.5 rounded deck-panel hover:bg-white/5 text-gray-200 hover:text-red-400 transition" href="/youtube-downloader.html">
-<span class="flex items-center gap-2">
-<span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
-<span>YouTube</span>
-</span>
-<span class="text-[10px] text-gray-500">4K // SHORTS</span>
-</a>
-<a class="flex items-center justify-between px-3 py-2.5 rounded deck-panel hover:bg-white/5 text-gray-200 hover:text-teal-400 transition" href="/tiktok-downloader.html">
-<span class="flex items-center gap-2">
-<span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
-<span>TikTok</span>
-</span>
-<span class="text-[10px] text-gray-500">NO WATERMARK</span>
-</a>
-<a class="flex items-center justify-between px-3 py-2.5 rounded deck-panel hover:bg-white/5 text-gray-200 hover:text-fuchsia-400 transition" href="/instagram-downloader.html">
-<span class="flex items-center gap-2">
-<span class="w-1.5 h-1.5 rounded-full bg-fuchsia-400"></span>
-<span>Instagram</span>
-</span>
-<span class="text-[10px] text-gray-500">REELS // AUDIO</span>
-</a>
-<a class="flex items-center justify-between px-3 py-2.5 rounded deck-panel hover:bg-white/5 text-gray-200 hover:text-orange-400 transition" href="/reddit-downloader.html">
-<span class="flex items-center gap-2">
-<span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-<span>Reddit</span>
-</span>
-<span class="text-[10px] text-gray-500">WITH SOUND</span>
-</a>
-<a class="flex items-center justify-between px-3 py-2.5 rounded deck-panel hover:bg-white/5 text-gray-200 hover:text-amber-400 transition" href="/soundcloud-downloader.html">
-<span class="flex items-center gap-2">
-<span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-<span>SoundCloud</span>
-</span>
-<span class="text-[10px] text-gray-500">320KBPS MP3</span>
-</a>
-<a class="flex items-center justify-between px-3 py-2.5 rounded deck-panel hover:bg-white/5 text-gray-200 hover:text-purple-400 transition" href="/twitch-downloader.html">
-<span class="flex items-center gap-2">
-<span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
-<span>Twitch</span>
-</span>
-<span class="text-[10px] text-gray-500">60FPS CLIPS</span>
-</a>
-<a class="flex items-center justify-between px-3 py-2.5 rounded deck-panel hover:bg-white/5 text-gray-200 hover:text-sky-400 transition" href="/twitter-downloader.html">
-<span class="flex items-center gap-2">
-<span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
-<span>Twitter / X</span>
-</span>
-<span class="text-[10px] text-gray-500">HD VIDEO</span>
-</a>
-<a class="flex items-center justify-between px-3 py-2.5 rounded deck-panel hover:bg-white/5 text-gray-200 hover:text-blue-400 transition" href="/facebook-downloader.html">
-<span class="flex items-center gap-2">
-<span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
-<span>Facebook</span>
-</span>
-<span class="text-[10px] text-gray-500">REELS</span>
-</a>
-<a class="flex items-center justify-between px-3 py-2.5 rounded deck-panel hover:bg-white/5 text-gray-200 hover:text-rose-400 transition" href="/pinterest-downloader.html">
-<span class="flex items-center gap-2">
-<span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
-<span>Pinterest</span>
-</span>
-<span class="text-[10px] text-gray-500">VIDEO PINS</span>
-</a>
-</div>
-</div>
-<!-- App Download Banner Inside Drawer -->
-<div class="p-4 rounded-lg deck-panel-raised border border-white/10 space-y-2">
-<span class="font-mono text-[10px] font-bold uppercase tracking-wider text-[#00d8f6] block">// NATIVE ENGINE</span>
-<p class="font-sans text-xs text-gray-300">Desktop &amp; Android companion builds for offline playlist extraction and hardware 4K muxing.</p>
-<a class="inline-flex items-center justify-center w-full py-2 px-3 rounded tactile-btn-primary font-bold text-xs transition" href="/download.html">
-          GET NATIVE APPS
-        </a>
-</div>
-</div>
-<!-- Drawer Footer -->
-<div class="pt-6 border-t border-white/10 space-y-3 font-mono text-xs text-gray-400">
-<div class="flex items-center justify-between">
-<a class="hover:text-white transition" href="/terms.html">Terms</a>
-<a class="hover:text-white transition" href="/privacy.html">Privacy</a>
-<a class="hover:text-white transition" href="/dmca.html">DMCA</a>
-<a class="hover:text-white transition" href="https://github.com/UnimaxDL/unimaxdl.github.io" rel="noopener" target="_blank">GitHub</a>
-</div>
-<p class="text-[10px] text-gray-500 text-center">UnimaxDL // MIT Open Source</p>
-</div>
-</aside>
-<!-- Hero Section -->
-<section class="pt-14 pb-10 px-4 text-center">
-<div class="max-w-4xl mx-auto space-y-4">
-<div class="inline-flex items-center gap-2.5 px-3 py-1 rounded bg-[#10131b] border border-white/10 font-mono text-[11px] uppercase tracking-wider text-gray-300">
-<span class="status-lamp status-lamp-green"></span>
-<span>ENGINE: MK-IV // UNIVERSAL MULTIMEDIA EXTRACTOR // 1000+ SITES</span>
-</div>
-<h1 class="font-display text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.08]">
-UNIMAX <span class="text-[#00d8f6]">//</span> UNIVERSAL MEDIA WORKSTATION
-</h1>
-<p class="text-gray-400 font-sans text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
-Direct extraction instrument for high-resolution video streams and lossless audio master tracks. Multi-stream muxing, zero transcoding degradation, no watermarks, completely free and open-source.
-</p>
-</div>
-</section>
-<!-- Universal Downloader Search Container ("Instrument Master Deck") -->
-<section class="max-w-3xl mx-auto px-4 pb-16" id="tool">
-<div class="deck-panel bracket-corners rounded-xl p-6 sm:p-8 space-y-6">
-<!-- Console Telemetry Header Strip -->
-<div class="flex items-center justify-between border-b border-white/[0.08] pb-3 text-xs">
-<div class="telemetry-strip">
-<span class="status-lamp status-lamp-cyan"></span>
-<span class="font-bold text-white tracking-widest">SYSTEM ID: UDL-2026 // REV-4</span>
-</div>
-<div class="hidden sm:flex items-center gap-3 font-mono text-[11px] text-gray-400">
-<span>ENGINE: <span class="text-[#10e775] font-bold">READY</span></span>
-<span class="text-white/20">|</span>
-<span>DASH MUX: <span class="text-[#00d8f6] font-bold">ACTIVE</span></span>
-</div>
-</div>
-<!-- Smart Recessed Input Box -->
-<div class="space-y-2">
-<div class="flex items-center justify-between text-xs">
-<label class="font-mono text-[11px] font-bold text-gray-300 uppercase tracking-widest flex items-center gap-2" for="url-input">
-<span class="text-[#00d8f6]">[+]</span> TARGET MEDIA STREAM URL
-</label>
-<button class="font-mono text-[11px] font-bold text-[#00d8f6] hover:text-white flex items-center gap-1.5 transition" onclick="pasteClipboard()">
-<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span>PASTE CLIPBOARD</span>
-</button>
-</div>
-<div class="relative flex items-center deck-input-container rounded-lg transition-all">
-<span class="pl-4 text-gray-500 font-mono text-sm">&gt;</span>
-<input class="w-full bg-transparent py-4 pl-3 pr-28 text-sm text-white placeholder-gray-500 font-mono focus:outline-none" id="url-input" placeholder="Paste YouTube, TikTok, Instagram, Twitter or Facebook link..." type="url"/>
-<!-- Clear Button -->
-<button class="hidden p-2 text-gray-500 hover:text-white transition" id="clear-btn" onclick="clearInput()" title="Clear">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</button>
-<!-- Analyze Action Button -->
-<button class="mr-2 px-5 py-2.5 rounded-md tactile-btn-primary font-bold text-xs flex items-center gap-2 flex-shrink-0" id="analyze-btn" onclick="handleAnalyze()">
-<span id="btn-text">ANALYZE STREAM</span>
-<span class="hidden animate-spin" id="btn-spinner">
-<svg class="w-3.5 h-3.5" fill="none" viewbox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" fill="currentColor"></path></svg>
-</span>
-</button>
-</div>
-</div>
-<!-- Mechanical Cartridge Quick-Try Selectors -->
-<div class="flex flex-wrap items-center gap-2 pt-1 text-xs">
-<span class="font-mono text-[11px] text-gray-500 uppercase tracking-wider font-semibold">PRESETS:</span>
-<button class="cartridge-btn" onclick="setSample('https://youtu.be/E3la1jNewhE?si=QKUZiMMjjAIHWuPS')">
-<span class="text-red-400 font-bold">[YT]</span> YouTube 4K
-</button>
-<button class="cartridge-btn" onclick="setSample('https://www.instagram.com/p/DbBADMGjdkc/')">
-<span class="text-fuchsia-400 font-bold">[IG]</span> Instagram Reel
-</button>
-<button class="cartridge-btn" onclick="setSample('https://www.tiktok.com/@tiktok/video/7185078712345678910')">
-<span class="text-teal-400 font-bold">[TT]</span> TikTok Clean
-</button>
-<button class="cartridge-btn" onclick="setSample('https://soundcloud.com/user-sample/track')">
-<span class="text-amber-400 font-bold">[SC]</span> SoundCloud 320K
-</button>
-</div>
-<!-- Loading Skeleton (Hidden by default) -->
-<div class="hidden p-6 rounded-lg deck-panel-inset border border-white/5 space-y-4 animate-pulse" id="loading-skeleton">
-<div class="flex items-center gap-4">
-<div class="w-36 h-20 bg-white/5 rounded"></div>
-<div class="flex-1 space-y-2">
-<div class="h-4 bg-white/10 rounded w-3/4"></div>
-<div class="h-3 bg-white/5 rounded w-1/2"></div>
-<div class="h-3 bg-white/5 rounded w-1/4"></div>
-</div>
-</div>
-<div class="text-center font-mono text-xs font-semibold text-[#00d8f6] flex items-center justify-center gap-2">
-<svg class="w-4 h-4 animate-spin text-[#00d8f6]" fill="none" viewbox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" fill="currentColor"></path></svg>
-<span>RESOLVING MEDIA STREAMS &amp; CODECS...</span>
-</div>
-</div>
-<!-- Result Card Container -->
-<div id="media-card-container"></div>
-<!-- Active Tasks Container -->
-<div id="tasks-container"></div>
-<!-- Hardware Telemetry Specifications Bar -->
-<div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-4 border-t border-white/[0.08] font-mono text-[10px] uppercase text-gray-400">
-<div class="flex items-center gap-2 justify-center py-1 bg-black/30 rounded border border-white/5">
-<span class="status-lamp status-lamp-green"></span>
-<span>100% VIRUS FREE</span>
-</div>
-<div class="flex items-center gap-2 justify-center py-1 bg-black/30 rounded border border-white/5">
-<span class="status-lamp status-lamp-cyan"></span>
-<span>ZERO LOGS / PRIVACY</span>
-</div>
-<div class="flex items-center gap-2 justify-center py-1 bg-black/30 rounded border border-white/5">
-<span class="status-lamp status-lamp-orange"></span>
-<span>HARDWARE MUX 4K</span>
-</div>
-<div class="flex items-center gap-2 justify-center py-1 bg-black/30 rounded border border-white/5">
-<span class="status-lamp status-lamp-green"></span>
-<span>MIT LICENSE CORE</span>
-</div>
-</div></div>
-</section>
-<!-- Platform Cards Grid with Precision Hardware SVGs -->
-<section class="max-w-5xl mx-auto px-4 py-10 border-t border-white/[0.08]">
-<div class="flex items-center justify-between mb-5 pb-2.5 border-b border-white/[0.08]">
-<span class="font-mono text-xs uppercase tracking-widest text-gray-400 font-bold flex items-center gap-2">
-<span class="status-lamp status-lamp-cyan"></span>
-<span>STREAM EXTRACTION DIRECTORY</span>
-</span>
-<span class="font-mono text-[11px] text-[#00d8f6] font-semibold">1000+ COMPATIBLE PLATFORMS</span>
-</div>
-<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-3">
-<a class="deck-panel p-4 rounded-lg text-center hover:-translate-y-0.5 transition group" href="/youtube-downloader.html">
-<div class="w-10 h-10 rounded bg-[#131722] border border-white/10 flex items-center justify-center mx-auto mb-2 group-hover:scale-105 transition-transform">
-<svg class="w-5 h-5 fill-current text-red-500" viewbox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path></svg>
-</div>
-<span class="font-display font-bold text-xs text-white group-hover:text-red-400 block">YouTube</span>
-<span class="font-mono text-[10px] text-gray-500 block mt-0.5">4K UHD &bull; SHORTS</span>
-</a>
-<a class="deck-panel p-4 rounded-lg text-center hover:-translate-y-0.5 transition group" href="/tiktok-downloader.html">
-<div class="w-10 h-10 rounded bg-[#131722] border border-white/10 flex items-center justify-center mx-auto mb-2 group-hover:scale-105 transition-transform">
-<svg class="w-5 h-5 fill-current text-teal-400" viewbox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"></path></svg>
-</div>
-<span class="font-display font-bold text-xs text-white group-hover:text-teal-400 block">TikTok</span>
-<span class="font-mono text-[10px] text-gray-500 block mt-0.5">CLEAN &bull; NO WATERMARK</span>
-</a>
-<a class="deck-panel p-4 rounded-lg text-center hover:-translate-y-0.5 transition group" href="/instagram-downloader.html">
-<div class="w-10 h-10 rounded bg-[#131722] border border-white/10 flex items-center justify-center mx-auto mb-2 group-hover:scale-105 transition-transform">
-<svg class="w-5 h-5 fill-current text-fuchsia-400" viewbox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
-</div>
-<span class="font-display font-bold text-xs text-white group-hover:text-fuchsia-400 block">Instagram</span>
-<span class="font-mono text-[10px] text-gray-500 block mt-0.5">REELS &bull; STORIES</span>
-</a>
-<a class="deck-panel p-4 rounded-lg text-center hover:-translate-y-0.5 transition group" href="/reddit-downloader.html">
-<div class="w-10 h-10 rounded bg-[#131722] border border-white/10 flex items-center justify-center mx-auto mb-2 group-hover:scale-105 transition-transform">
-<svg class="w-5 h-5 fill-current text-orange-400" viewbox="0 0 24 24"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.688-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.197-2.512-.73a.326.326 0 0 0-.232-.095z"></path></svg>
-</div>
-<span class="font-display font-bold text-xs text-white group-hover:text-orange-400 block">Reddit</span>
-<span class="font-mono text-[10px] text-gray-500 block mt-0.5">AUDIO MUX MP4</span>
-</a>
-<a class="deck-panel p-4 rounded-lg text-center hover:-translate-y-0.5 transition group" href="/soundcloud-downloader.html">
-<div class="w-10 h-10 rounded bg-[#131722] border border-white/10 flex items-center justify-center mx-auto mb-2 group-hover:scale-105 transition-transform">
-<svg class="w-5 h-5 fill-current text-amber-400" viewbox="0 0 24 24"><path d="M11.56 8.87V17h8.77c1.47 0 2.67-1.2 2.67-2.67 0-1.42-1.12-2.58-2.52-2.66.02-.17.03-.34.03-.51 0-2.82-2.28-5.1-5.1-5.1-1.74 0-3.27.87-4.18 2.21l.33.6zM.9 14.54c0 1.25.9 2.29 2.1 2.44V9.69c-1.2.16-2.1 1.2-2.1 2.45v2.4zm3.03 1.05c0 .77.62 1.41 1.41 1.41h.69V8.67h-.69c-.79 0-1.41.64-1.41 1.41v5.51zm3.19.38c0 .54.45.98.98.98h1.12V8.1h-1.12c-.53 0-.98.44-.98.98v6.89z"></path></svg>
-</div>
-<span class="font-display font-bold text-xs text-white group-hover:text-amber-400 block">SoundCloud</span>
-<span class="font-mono text-[10px] text-gray-500 block mt-0.5">320KBPS HI-FI MP3</span>
-</a>
-<a class="deck-panel p-4 rounded-lg text-center hover:-translate-y-0.5 transition group" href="/twitch-downloader.html">
-<div class="w-10 h-10 rounded bg-[#131722] border border-white/10 flex items-center justify-center mx-auto mb-2 group-hover:scale-105 transition-transform">
-<svg class="w-5 h-5 fill-current text-purple-400" viewbox="0 0 24 24"><path d="M2.149 0l-1.612 4.119v16.8h5.9v3.081h3.221l3.04-3.081h4.639L23.463 15V0H2.149zm19.167 13.882l-3.577 3.58h-5.184l-3.037 3.078v-3.078H4.686V2.149h16.63v11.733zM18.093 5.9h-2.147v6.438h2.147V5.9zm-5.726 0h-2.148v6.438h2.148V5.9z"></path></svg>
-</div>
-<span class="font-display font-bold text-xs text-white group-hover:text-purple-400 block">Twitch</span>
-<span class="font-mono text-[10px] text-gray-500 block mt-0.5">1080P 60FPS CLIPS</span>
-</a>
-<a class="deck-panel p-4 rounded-lg text-center hover:-translate-y-0.5 transition group" href="/twitter-downloader.html">
-<div class="w-10 h-10 rounded bg-[#131722] border border-white/10 flex items-center justify-center mx-auto mb-2 group-hover:scale-105 transition-transform">
-<svg class="w-5 h-5 fill-current text-sky-400" viewbox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
-</div>
-<span class="font-display font-bold text-xs text-white group-hover:text-sky-400 block">Twitter / X</span>
-<span class="font-mono text-[10px] text-gray-500 block mt-0.5">HD DIRECT MP4</span>
-</a>
-<a class="deck-panel p-4 rounded-lg text-center hover:-translate-y-0.5 transition group" href="/facebook-downloader.html">
-<div class="w-10 h-10 rounded bg-[#131722] border border-white/10 flex items-center justify-center mx-auto mb-2 group-hover:scale-105 transition-transform">
-<svg class="w-5 h-5 fill-current text-blue-500" viewbox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
-</div>
-<span class="font-display font-bold text-xs text-white group-hover:text-blue-400 block">Facebook</span>
-<span class="font-mono text-[10px] text-gray-500 block mt-0.5">PUBLIC REELS</span>
-</a>
-<a class="deck-panel p-4 rounded-lg text-center hover:-translate-y-0.5 transition group" href="/pinterest-downloader.html">
-<div class="w-10 h-10 rounded bg-[#131722] border border-white/10 flex items-center justify-center mx-auto mb-2 group-hover:scale-105 transition-transform">
-<svg class="w-5 h-5 fill-current text-rose-500" viewbox="0 0 24 24"><path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345-.09.375-.291 1.199-.333 1.369-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.354-.629-2.758-1.379l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"></path></svg>
-</div>
-<span class="font-display font-bold text-xs text-white group-hover:text-rose-400 block">Pinterest</span>
-<span class="font-mono text-[10px] text-gray-500 block mt-0.5">PINS &bull; STORIES</span>
-</a>
-</div>
-</section>
-<!-- Desktop & Android Callout Banner -->
-<section class="max-w-4xl mx-auto px-4 py-12">
-<div class="deck-panel bracket-corners rounded-xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
-<div class="space-y-2 text-center sm:text-left">
-<div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded bg-white/5 border border-white/10 font-mono text-[#00d8f6] text-[10px] font-bold uppercase tracking-wider">
-<span class="status-lamp status-lamp-cyan"></span>
-<span>STANDALONE CLIENT SUITE</span>
-</div>
-<h3 class="font-display font-bold text-xl sm:text-2xl text-white">UNRESTRICTED 4K 60FPS HARDWARE STREAM ENGINE</h3>
-<p class="font-sans text-xs text-gray-400 max-w-lg leading-relaxed">
-Execute batch playlist downloads and direct GPU FFmpeg muxing without browser memory exhaustion or background tab throttling.
-</p>
-</div>
-<a class="px-6 py-3 rounded-md tactile-btn-primary font-bold text-xs whitespace-nowrap flex items-center gap-2 flex-shrink-0" href="/download.html">
-<span>GET NATIVE CLIENT</span>
-<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</a>
-</div>
-</section>
-<!-- About UnimaxDL & Entity Authority Section -->
-<section class="max-w-4xl mx-auto px-4 py-12 border-t border-white/[0.08]">
-<div class="deck-panel rounded-xl p-6 sm:p-8 space-y-4">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-lg bg-[#131722] border border-white/10 flex items-center justify-center flex-shrink-0 text-[#00d8f6]">
-<svg class="w-5 h-5 text-[#00d8f6]" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</div>
-<div>
-<h2 class="font-display font-bold text-lg text-white">About UnimaxDL Universal Media Workstation</h2>
-<p class="font-mono text-xs text-gray-400">Independent Open-Source Multimedia Software Application</p>
-</div>
-</div>
-<p class="font-sans text-xs sm:text-sm text-gray-300 leading-relaxed">
-UnimaxDL is an open-source web and desktop multimedia application engineered to extract high-resolution videos and studio-grade audio from over 1,000 public content platforms. Designed for content creators, researchers, and video archivists, UnimaxDL supports 4K 60fps video downloads, DASH stream muxing, and lossless 320kbps MP3 conversions without advertisements or registration.
-</p>
-<div class="p-3.5 rounded-lg bg-[#0b0d13] border border-white/5 font-mono text-[11px] text-gray-400 flex items-start gap-2.5">
-<span class="status-lamp status-lamp-orange mt-1"></span>
-<span>
-<strong class="text-white">Product Notice:</strong> UnimaxDL is purely a digital software application and multimedia utility. It is not affiliated with, nor does it refer to, any vaping devices, Joyetech hardware products, or corporate telecommunications management software.
-</span>
-</div>
-</div>
-</section>
-<footer class="border-t border-white/[0.08] bg-[#07080c] py-12 px-4 text-xs text-gray-400">
-<div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-<div class="flex items-center gap-3">
-<picture>
-<source srcset="/assets/images/icon-96.webp" type="image/webp"/>
-<img alt="UnimaxDL" class="w-8 h-8 object-contain drop-shadow-[0_0_8px_rgba(0,216,246,0.35)]" height="32" src="/assets/images/icon-48.png" width="32"/>
-</picture>
-<div>
-<span class="font-display font-bold text-white text-sm">UNIMAX<span class="text-[#00d8f6]">DL</span></span>
-<p class="font-mono text-[11px] text-gray-500">UNIVERSAL MEDIA WORKSTATION // MIT CORE</p>
-</div>
-</div>
-<div class="flex flex-wrap items-center justify-center gap-6 font-mono text-gray-400">
-<a class="hover:text-white transition" href="/">Home</a>
-<a class="hover:text-white transition" href="/download.html">Apps</a>
-<a class="hover:text-white transition" href="/youtube-downloader.html">YouTube</a>
-<a class="hover:text-white transition" href="/tiktok-downloader.html">TikTok</a>
-<a class="hover:text-white transition" href="/instagram-downloader.html">Instagram</a>
-<a class="hover:text-orange-400 transition" href="/reddit-downloader.html">Reddit</a>
-<a class="hover:text-amber-400 transition" href="/soundcloud-downloader.html">SoundCloud</a>
-<a class="hover:text-purple-400 transition" href="/twitch-downloader.html">Twitch</a>
-<a class="hover:text-white transition" href="/twitter-downloader.html">Twitter / X</a>
-<a class="hover:text-white transition" href="/facebook-downloader.html">Facebook</a>
-<a class="hover:text-white transition" href="/pinterest-downloader.html">Pinterest</a>
-<a class="hover:text-[#00d8f6] transition" href="/terms.html">Terms</a>
-<a class="hover:text-[#00d8f6] transition" href="/privacy.html">Privacy</a>
-<a class="hover:text-amber-400 transition" href="/dmca.html">DMCA</a>
-<a class="hover:text-white transition" href="https://github.com/UnimaxDL/unimaxdl.github.io" rel="noopener" target="_blank">GitHub</a>
-</div>
-<div class="text-center md:text-right font-mono text-[11px] text-gray-500">
-<span>ENGINEERED BY ATOMIC DHRUBA</span><br/>
-<span>LICENSED UNDER MIT OPEN SOURCE</span>
-</div>
-</div>
-</footer>
-<!-- Scripts -->
-<script src="/assets/js/analytics.js?v=3.1"></script>
-<script src="/assets/js/nav.js?v=2.0"></script><script src="/assets/js/downloader.js?v=4.5"></script>
-<script>
-    const urlInput = document.getElementById('url-input');
-    const clearBtn = document.getElementById('clear-btn');
+]</script>
+</head>
+<body>
 
+<!-- Architectural 1200px Continuous Hairline Frame -->
+<div class="frame-container">
+
+  <!-- Studio Header Navigation Bar -->
+  <header class="deck-header">
+    <div style="display:flex; align-items:center; gap:1.5rem;">
+      <a class="deck-brand" href="/">
+        <img alt="UnimaxDL Logomark" height="28" src="/assets/images/unimaxdl-mark.svg" width="28"/>
+        <span>UNIMAXDL</span>
+        <span class="deck-brand-badge">v4.0 PRO</span>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="deck-nav-links" style="display:none;" id="desktop-nav">
+        <a class="deck-nav-link active" href="/">Web Tool</a>
+        
+        <div style="position:relative;">
+          <button id="platforms-dropdown-btn" class="deck-nav-link" style="background:none; border:none; cursor:pointer; font-family:var(--font-mono); font-size:0.8125rem; display:flex; align-items:center; gap:0.25rem;" onclick="togglePlatformsDropdown(event)">
+            <span>Platforms</span>
+            <svg style="width:12px; height:12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+          </button>
+          <div id="platforms-dropdown" class="dropdown-menu hidden opacity-0 scale-95">
+            <a class="dropdown-item" href="/youtube-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#D9261C; vertical-align:middle;"></span> YouTube (4K &amp; Audio)</a>
+            <a class="dropdown-item" href="/tiktok-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#0F9D9A; vertical-align:middle;"></span> TikTok (Clean MP4)</a>
+            <a class="dropdown-item" href="/instagram-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#C92A76; vertical-align:middle;"></span> Instagram (Reels &amp; Posts)</a>
+            <a class="dropdown-item" href="/twitter-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:var(--text-primary); vertical-align:middle;"></span> Twitter / X (Video &amp; GIF)</a>
+            <a class="dropdown-item" href="/reddit-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#E04416; vertical-align:middle;"></span> Reddit (Auto-Muxed)</a>
+            <a class="dropdown-item" href="/soundcloud-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#EA580C; vertical-align:middle;"></span> SoundCloud (320k Audio)</a>
+            <a class="dropdown-item" href="/twitch-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#6D28D9; vertical-align:middle;"></span> Twitch (Clips &amp; VODs)</a>
+            <a class="dropdown-item" href="/facebook-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#1B5FD6; vertical-align:middle;"></span> Facebook (Watch &amp; Reels)</a>
+            <a class="dropdown-item" href="/pinterest-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#BD1E2D; vertical-align:middle;"></span> Pinterest (Video Pins)</a>
+          </div>
+        </div>
+
+        <a class="deck-nav-link" href="/download.html">Native Apps</a>
+        <a class="deck-nav-link" href="/terms.html">Docs</a>
+      </nav>
+    </div>
+
+    <!-- Header Actions -->
+    <div class="deck-header-actions">
+      <!-- Mechanical Theme Toggle Switch -->
+      <button aria-label="Toggle dark/light mode" class="theme-toggle-btn" onclick="toggleTheme()" type="button">
+        <!-- Moon Icon (shown in light mode) -->
+        <svg class="icon-moon" style="width:18px; height:18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+        <!-- Sun Icon (shown in dark mode) -->
+        <svg class="icon-sun hidden" style="width:18px; height:18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+      </button>
+
+      <!-- GitHub Source Link -->
+      <a aria-label="GitHub Repository" class="theme-toggle-btn" href="https://github.com/UnimaxDL/unimaxdl.github.io" rel="noopener" target="_blank">
+        <svg style="width:18px; height:18px;" fill="currentColor" viewBox="0 0 24 24"><path clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" fill-rule="evenodd"></path></svg>
+      </a>
+
+      <!-- Desktop Binary Trigger -->
+      <a class="btn-secondary" href="/download.html" style="display:none;" id="desktop-cta">
+        <span>GET DESKTOP</span>
+      </a>
+
+      <!-- Mobile Menu Trigger -->
+      <button aria-label="Toggle mobile menu" class="theme-toggle-btn" id="mobile-menu-btn" onclick="toggleMobileMenu()" type="button">
+        <svg style="width:18px; height:18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Overlay -->
+  <div class="hidden opacity-0" id="mobile-overlay" onclick="toggleMobileMenu(false)"></div>
+
+  <!-- Mobile Drawer -->
+  <aside class="-translate-x-full" id="mobile-drawer">
+    <div style="padding:1.25rem; border-bottom:1px solid var(--border-hairline); display:flex; align-items:center; justify-content:space-between;">
+      <div style="display:flex; align-items:center; gap:0.5rem; font-family:var(--font-display); font-weight:800; font-size:1rem;">
+        <img alt="" height="24" src="/assets/images/unimaxdl-mark.svg" width="24"/>
+        <span>UNIMAXDL</span>
+      </div>
+      <button class="theme-toggle-btn" onclick="toggleMobileMenu(false)" style="width:30px; height:30px;" type="button">
+        <svg style="width:16px; height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+      </button>
+    </div>
+    <div style="padding:1rem 1.25rem; display:flex; flex-direction:column; gap:0.75rem; font-family:var(--font-mono); font-size:0.875rem;">
+      <a class="deck-nav-link active" href="/" onclick="toggleMobileMenu(false)">[01] Web Tool</a>
+      <a class="deck-nav-link" href="/download.html" onclick="toggleMobileMenu(false)">[02] Native Apps</a>
+      <div style="font-size:0.6875rem; color:var(--text-muted); text-transform:uppercase; margin-top:0.75rem; padding-bottom:0.25rem; border-bottom:1px solid var(--border-hairline);">Supported Platforms</div>
+      <a class="deck-nav-link" href="/youtube-downloader.html" onclick="toggleMobileMenu(false)">YouTube 4K &amp; Audio</a>
+      <a class="deck-nav-link" href="/tiktok-downloader.html" onclick="toggleMobileMenu(false)">TikTok Clean MP4</a>
+      <a class="deck-nav-link" href="/instagram-downloader.html" onclick="toggleMobileMenu(false)">Instagram Reels</a>
+      <a class="deck-nav-link" href="/twitter-downloader.html" onclick="toggleMobileMenu(false)">Twitter / X Video</a>
+      <a class="deck-nav-link" href="/reddit-downloader.html" onclick="toggleMobileMenu(false)">Reddit Video+Audio</a>
+      <a class="deck-nav-link" href="/soundcloud-downloader.html" onclick="toggleMobileMenu(false)">SoundCloud 320k</a>
+      <a class="deck-nav-link" href="/twitch-downloader.html" onclick="toggleMobileMenu(false)">Twitch Clips &amp; VODs</a>
+      <a class="deck-nav-link" href="/facebook-downloader.html" onclick="toggleMobileMenu(false)">Facebook Watch</a>
+      <a class="deck-nav-link" href="/pinterest-downloader.html" onclick="toggleMobileMenu(false)">Pinterest Pins</a>
+      <div style="margin-top:1rem;">
+        <a class="btn-signal" href="/download.html" style="width:100%; text-align:center;">DOWNLOAD DESKTOP APP</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Responsive desktop nav styles inline helper -->
+  <style>
+    @media (min-width: 768px) {
+      #desktop-nav { display: flex !important; }
+      #desktop-cta { display: inline-flex !important; }
+      #mobile-menu-btn { display: none !important; }
+    }
+  </style>
+
+  <!-- Main Workstation Canvas -->
+  <main style="flex:1; padding:2rem 1.25rem 4rem;">
+
+    <!-- Section 01: Hero & Asymmetric Header -->
+    <section style="margin-bottom:2rem;">
+      <div style="display:flex; flex-direction:column; gap:1.5rem;" id="hero-split">
+        <div style="flex:1;">
+          <div style="display:inline-flex; align-items:center; gap:0.5rem; font-family:var(--font-mono); font-size:0.6875rem; font-weight:700; color:var(--accent-signal); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.75rem;">
+            <span>[ 01 / UNIVERSAL MEDIA EXTRACTOR ]</span>
+          </div>
+          <h1 style="margin-bottom:0.75rem;">Archive video &amp; audio without the noise.</h1>
+          <p style="max-width:58ch; font-size:1rem; line-height:1.6; color:var(--text-secondary);">
+            Direct yt-dlp pipeline. Extract 4K UHD video, studio 320kbps audio, and clean streams from 1,000+ sources with zero ads, zero accounts, and zero bandwidth caps.
+          </p>
+        </div>
+
+        <!-- System Telemetry Box -->
+        <div class="telemetry-box" style="min-width:280px; align-self:flex-start;">
+          <div class="telemetry-row">
+            <span class="telemetry-label">Engine</span>
+            <span class="telemetry-val" style="color:var(--status-ready);">yt-dlp (Auto-Updated)</span>
+          </div>
+          <div class="telemetry-row">
+            <span class="telemetry-label">Formats</span>
+            <span class="telemetry-val">MP4 / MKV / WEBM / MP3</span>
+          </div>
+          <div class="telemetry-row">
+            <span class="telemetry-label">Privacy</span>
+            <span class="telemetry-val">Zero Ads · Zero Logs</span>
+          </div>
+          <div class="telemetry-row">
+            <span class="telemetry-label">Subsystem</span>
+            <span class="telemetry-val">Direct CDN Line Speed</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <style>
+      @media (min-width: 900px) {
+        #hero-split {
+          flex-direction: row !important;
+          align-items: flex-start !important;
+          justify-content: space-between !important;
+        }
+      }
+    </style>
+
+    <!-- The Extraction Deck (Centerpiece Hardware Console) -->
+    <section class="deck-panel bracket-corners" style="margin-bottom:3rem;">
+      <!-- Top Deck Strip -->
+      <div class="deck-strip">
+        <div style="display:flex; align-items:center; gap:0.625rem;">
+          <span class="status-led status-led-ready"></span>
+          <span id="deck-status" style="font-weight:700; letter-spacing:0.04em;">DECK READY</span>
+          <span style="color:var(--text-muted); font-size:0.6875rem;" class="hidden sm:inline">// SYSTEM ID: UDL-2026-REV4</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:0.5rem;">
+          <span style="font-size:0.6875rem; color:var(--text-muted); text-transform:uppercase;">MODE:</span>
+          <span style="font-weight:700; color:var(--accent-signal); font-size:0.6875rem;">AUTO (MAX BITRATE)</span>
+        </div>
+      </div>
+
+      <!-- Recessed Input Bay -->
+      <div class="deck-input-bay">
+        <div class="deck-input-wrapper">
+          <svg style="width:18px; height:18px; color:var(--text-muted); flex-shrink:0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+          <input autocomplete="off" class="deck-input" id="url-input" placeholder="Paste YouTube, TikTok, Instagram, Twitter/X, SoundCloud link..." type="url"/>
+          <button class="hidden" id="clear-btn" onclick="clearInput()" style="background:none; border:none; cursor:pointer; font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); padding:0.25rem;" type="button">[CLEAR]</button>
+          <button class="btn-secondary" onclick="pasteClipboard()" style="font-size:0.6875rem; padding:0.25rem 0.625rem;" type="button">PASTE</button>
+        </div>
+        <button class="btn-signal" id="btn-analyze" onclick="handleAnalyze()" type="button">
+          <svg class="hidden" id="btn-spinner" style="width:16px; height:16px; animation:spin 1s linear infinite;" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-dasharray="32" stroke-width="4"></circle></svg>
+          <span id="btn-text">FETCH STREAM →</span>
+        </button>
+      </div>
+
+      <!-- Bottom Deck Strip: Cartridge Presets -->
+      <div class="deck-strip deck-strip-bottom" style="overflow-x:auto;">
+        <span style="color:var(--text-muted); font-size:0.6875rem; white-space:nowrap; text-transform:uppercase;">PRESETS:</span>
+        <div style="display:flex; align-items:center; gap:0.5rem;">
+          <button class="cartridge-btn" onclick="setSample('https://www.youtube.com/watch?v=dQw4w9WgXcQ')">[YT] YouTube 4K</button>
+          <button class="cartridge-btn" onclick="setSample('https://www.instagram.com/reel/C-xyz123/')">[IG] Instagram Reel</button>
+          <button class="cartridge-btn" onclick="setSample('https://www.tiktok.com/@sample/video/123456789')">[TT] TikTok Clean</button>
+          <button class="cartridge-btn" onclick="setSample('https://soundcloud.com/artist/track-name')">[SC] SoundCloud 320k</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dynamic Results Bay -->
+    <div class="hidden" id="loading-skeleton" style="margin-bottom:2rem;">
+      <div class="deck-panel" style="padding:1.5rem; display:flex; flex-direction:column; gap:1rem;">
+        <div style="display:flex; align-items:center; gap:1rem;">
+          <div style="width:180px; height:100px; background-color:var(--bg-subtle); border-radius:var(--radius-panel);"></div>
+          <div style="flex:1; display:flex; flex-direction:column; gap:0.5rem;">
+            <div style="height:1.25rem; width:70%; background-color:var(--bg-subtle); border-radius:var(--radius-panel);"></div>
+            <div style="height:0.875rem; width:40%; background-color:var(--bg-subtle); border-radius:var(--radius-panel);"></div>
+          </div>
+        </div>
+        <div style="height:2rem; background-color:var(--bg-subtle); border-radius:var(--radius-panel);"></div>
+      </div>
+    </div>
+
+    <!-- Active Media Card Injection Target -->
+    <div id="media-card-container"></div>
+
+    <!-- Download Tasks Queue Container -->
+    <div id="tasks-container" style="margin-top:2rem;"></div>
+
+    <!-- Section 02: Supported Network Interfaces -->
+    <section style="margin-top:4rem; margin-bottom:4rem;">
+      <div style="margin-bottom:1.5rem;">
+        <div style="font-family:var(--font-mono); font-size:0.6875rem; font-weight:700; color:var(--accent-signal); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.5rem;">[ 02 / NETWORK INTERFACES ]</div>
+        <h2 style="font-size:1.5rem; margin-bottom:0.5rem;">Dedicated Ingestion Endpoints</h2>
+        <p style="font-size:0.875rem; color:var(--text-secondary);">Direct platform modules configured with format presets for maximum speed.</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr)); gap:1px; background-color:var(--border-hairline); border:1px solid var(--border-hairline);">
+        <a class="deck-panel" href="/youtube-downloader.html" style="padding:1.25rem; display:flex; flex-direction:column; gap:0.5rem; border:none; text-decoration:none;">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <span style="font-family:var(--font-display); font-weight:700; font-size:1rem; color:var(--text-primary);">YouTube</span>
+            <span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#D9261C; vertical-align:middle;"></span>
+          </div>
+          <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted);">4K UHD · 60FPS · OPUS/MP3</span>
+        </a>
+
+        <a class="deck-panel" href="/tiktok-downloader.html" style="padding:1.25rem; display:flex; flex-direction:column; gap:0.5rem; border:none; text-decoration:none;">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <span style="font-family:var(--font-display); font-weight:700; font-size:1rem; color:var(--text-primary);">TikTok</span>
+            <span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#0F9D9A; vertical-align:middle;"></span>
+          </div>
+          <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted);">CLEAN MP4 · NO WATERMARK</span>
+        </a>
+
+        <a class="deck-panel" href="/instagram-downloader.html" style="padding:1.25rem; display:flex; flex-direction:column; gap:0.5rem; border:none; text-decoration:none;">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <span style="font-family:var(--font-display); font-weight:700; font-size:1rem; color:var(--text-primary);">Instagram</span>
+            <span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#C92A76; vertical-align:middle;"></span>
+          </div>
+          <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted);">REELS · POSTS · CAROUSELS</span>
+        </a>
+
+        <a class="deck-panel" href="/twitter-downloader.html" style="padding:1.25rem; display:flex; flex-direction:column; gap:0.5rem; border:none; text-decoration:none;">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <span style="font-family:var(--font-display); font-weight:700; font-size:1rem; color:var(--text-primary);">Twitter / X</span>
+            <span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:var(--text-primary); vertical-align:middle;"></span>
+          </div>
+          <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted);">HD VIDEO CLIPS · MP4 &amp; GIF</span>
+        </a>
+
+        <a class="deck-panel" href="/reddit-downloader.html" style="padding:1.25rem; display:flex; flex-direction:column; gap:0.5rem; border:none; text-decoration:none;">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <span style="font-family:var(--font-display); font-weight:700; font-size:1rem; color:var(--text-primary);">Reddit</span>
+            <span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#E04416; vertical-align:middle;"></span>
+          </div>
+          <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted);">VIDEO + AUDIO AUTO-MUXED</span>
+        </a>
+
+        <a class="deck-panel" href="/soundcloud-downloader.html" style="padding:1.25rem; display:flex; flex-direction:column; gap:0.5rem; border:none; text-decoration:none;">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <span style="font-family:var(--font-display); font-weight:700; font-size:1rem; color:var(--text-primary);">SoundCloud</span>
+            <span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#EA580C; vertical-align:middle;"></span>
+          </div>
+          <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted);">320 KBPS STUDIO AUDIO</span>
+        </a>
+
+        <a class="deck-panel" href="/twitch-downloader.html" style="padding:1.25rem; display:flex; flex-direction:column; gap:0.5rem; border:none; text-decoration:none;">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <span style="font-family:var(--font-display); font-weight:700; font-size:1rem; color:var(--text-primary);">Twitch</span>
+            <span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#6D28D9; vertical-align:middle;"></span>
+          </div>
+          <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted);">CLIPS &amp; VOD HIGHLIGHTS</span>
+        </a>
+
+        <a class="deck-panel" href="/facebook-downloader.html" style="padding:1.25rem; display:flex; flex-direction:column; gap:0.5rem; border:none; text-decoration:none;">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <span style="font-family:var(--font-display); font-weight:700; font-size:1rem; color:var(--text-primary);">Facebook</span>
+            <span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#1B5FD6; vertical-align:middle;"></span>
+          </div>
+          <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted);">WATCH &amp; PUBLIC REELS HD</span>
+        </a>
+
+        <a class="deck-panel" href="/pinterest-downloader.html" style="padding:1.25rem; display:flex; flex-direction:column; gap:0.5rem; border:none; text-decoration:none;">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <span style="font-family:var(--font-display); font-weight:700; font-size:1rem; color:var(--text-primary);">Pinterest</span>
+            <span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#BD1E2D; vertical-align:middle;"></span>
+          </div>
+          <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted);">ORIGINAL BITRATE MEDIA PINS</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Section 03: 4-Cell Architectural Spec Grid -->
+    <section style="margin-bottom:4rem;">
+      <div style="margin-bottom:1.5rem;">
+        <div style="font-family:var(--font-mono); font-size:0.6875rem; font-weight:700; color:var(--accent-signal); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.5rem;">[ 03 / SYSTEM ARCHITECTURE ]</div>
+        <h2 style="font-size:1.5rem; margin-bottom:0.5rem;">Engineered for High-Bitrate Media</h2>
+        <p style="font-size:0.875rem; color:var(--text-secondary);">Direct stream parsing replacing fragile third-party ad converters.</p>
+      </div>
+
+      <div class="spec-grid">
+        <div class="spec-cell">
+          <span class="spec-cell-index">01 // PIPELINE</span>
+          <h3 class="spec-cell-title">Direct yt-dlp Core</h3>
+          <p class="spec-cell-desc">Powered by the industry standard media extractor. Continuously maintained against upstream platform changes.</p>
+        </div>
+        <div class="spec-cell">
+          <span class="spec-cell-index">02 // AUDIO ENGINE</span>
+          <h3 class="spec-cell-title">Lossless Audio Remuxing</h3>
+          <p class="spec-cell-desc">Extracts native Opus and AAC audio streams without destructive recompression, delivering full 320kbps fidelity.</p>
+        </div>
+        <div class="spec-cell">
+          <span class="spec-cell-index">03 // ACCESS POLICY</span>
+          <h3 class="spec-cell-title">No Account Walls</h3>
+          <p class="spec-cell-desc">Zero registration requirements, zero subscriptions, and zero analytics tracking. Pure utility tool with nothing between you and the file.</p>
+        </div>
+        <div class="spec-cell">
+          <span class="spec-cell-index">04 // ECOSYSTEM</span>
+          <h3 class="spec-cell-title">Cross-Platform Binaries</h3>
+          <p class="spec-cell-desc">Take the pipeline offline with standalone client binaries for Android, Windows, macOS, and Linux supporting full 8K muxing.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 04: Technical Workflow Sequence -->
+    <section style="margin-bottom:4rem;">
+      <div style="margin-bottom:1.5rem;">
+        <div style="font-family:var(--font-mono); font-size:0.6875rem; font-weight:700; color:var(--accent-signal); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.5rem;">[ 04 / INGESTION PROTOCOL ]</div>
+        <h2 style="font-size:1.5rem; margin-bottom:0.5rem;">Extraction Sequence</h2>
+        <p style="font-size:0.875rem; color:var(--text-secondary);">Three deterministic steps to archive media streams.</p>
+      </div>
+
+      <div class="step-sequence">
+        <div class="step-card">
+          <span class="step-badge">STEP 01</span>
+          <h4 style="font-family:var(--font-display); font-weight:700; font-size:1rem; color:var(--text-primary);">Copy Stream URL</h4>
+          <p style="font-size:0.8125rem; color:var(--text-secondary); line-height:1.5;">Navigate to any video, reel, or track on YouTube, TikTok, or Instagram. Copy the full link from your browser or share menu.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-badge">STEP 02</span>
+          <h4 style="font-family:var(--font-display); font-weight:700; font-size:1rem; color:var(--text-primary);">Select Format &amp; Codec</h4>
+          <p style="font-size:0.8125rem; color:var(--text-secondary); line-height:1.5;">Paste into the input bay and trigger fetch. The engine inspects DASH manifests and displays bitrate-verified streams.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-badge">STEP 03</span>
+          <h4 style="font-family:var(--font-display); font-weight:700; font-size:1rem; color:var(--text-primary);">Local Storage Write</h4>
+          <p style="font-size:0.8125rem; color:var(--text-secondary); line-height:1.5;">Trigger download to stream binary directly to local storage at line speed. Zero intermediate cloud queueing.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 05: Hairline FAQ Accordion -->
+    <section style="margin-bottom:4rem;">
+      <div style="margin-bottom:1.5rem;">
+        <div style="font-family:var(--font-mono); font-size:0.6875rem; font-weight:700; color:var(--accent-signal); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.5rem;">[ 05 / TECHNICAL ARCHIVE ]</div>
+        <h2 style="font-size:1.5rem; margin-bottom:0.5rem;">Frequently Asked Questions</h2>
+      </div>
+
+      <div class="faq-accordion">
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span>Is UnimaxDL free to use?</span>
+            <span class="faq-icon">+</span>
+          </summary>
+          <div class="faq-content">
+            Yes, 100% free with no subscription, no pop-up advertisements, and no registration required. The project is open-source under the MIT license.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span>Why are 4K and 8K downloads exclusive to the Native App?</span>
+            <span class="faq-icon">+</span>
+          </summary>
+          <div class="faq-content">
+            High-definition streams (1440p, 2160p, 4320p) on YouTube and other platforms separate video and audio into distinct DASH feeds. Muxing multi-gigabyte streams in a browser sandbox causes fatal memory limits. The native client leverages local GPU acceleration and static FFmpeg with zero server lag.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span>Can I extract 320kbps MP3 audio?</span>
+            <span class="faq-icon">+</span>
+          </summary>
+          <div class="faq-content">
+            Yes. The Audio tab isolates the highest-bitrate audio stream and provides studio-grade 320kbps MP3 or original lossless M4A/Opus downloads.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span>Does UnimaxDL log or store my downloads?</span>
+            <span class="faq-icon">+</span>
+          </summary>
+          <div class="faq-content">
+            No. UnimaxDL operates with zero user tracking, zero download logging, and zero telemetry. Stream resolution occurs client-side and via ephemeral proxy pipelines.
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- Entity Disambiguation Block -->
+    <section class="deck-panel" style="padding:1.5rem; margin-bottom:2rem;">
+      <div style="display:flex; align-items:flex-start; gap:1rem;">
+        <div style="width:36px; height:36px; background-color:var(--bg-subtle); border:1px solid var(--border-hairline); border-radius:var(--radius-panel); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <svg style="width:18px; height:18px; color:var(--text-muted);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+        </div>
+        <div style="font-size:0.8125rem; line-height:1.6; color:var(--text-secondary);">
+          <strong style="color:var(--text-primary); display:block; margin-bottom:0.25rem;">Entity Notice &amp; Scope:</strong>
+          UnimaxDL is purely a digital software application and multimedia utility. It is not affiliated with, nor does it refer to, any vaping devices, Joyetech hardware products, or corporate telecommunications management software.
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Global Studio Footer -->
+  <footer class="deck-footer">
+    <div class="deck-footer-top">
+      <div class="deck-footer-brand">
+        <div style="display:flex; align-items:center; gap:0.5rem; font-family:var(--font-display); font-weight:800; font-size:1.125rem;">
+          <img alt="UnimaxDL" height="24" src="/assets/images/unimaxdl-mark.svg" width="24"/>
+          <span>UNIMAXDL</span>
+        </div>
+        <p style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">
+          PRECISION BROADCAST STUDIO MEDIA EXTRACTOR // MIT LICENSED
+        </p>
+      </div>
+
+      <nav class="deck-footer-nav">
+        <a href="/">Home</a>
+        <a href="/download.html">Apps</a>
+        <a href="/youtube-downloader.html">YouTube</a>
+        <a href="/tiktok-downloader.html">TikTok</a>
+        <a href="/instagram-downloader.html">Instagram</a>
+        <a href="/reddit-downloader.html">Reddit</a>
+        <a href="/soundcloud-downloader.html">SoundCloud</a>
+        <a href="/twitch-downloader.html">Twitch</a>
+        <a href="/twitter-downloader.html">Twitter / X</a>
+        <a href="/facebook-downloader.html">Facebook</a>
+        <a href="/pinterest-downloader.html">Pinterest</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/dmca.html">DMCA</a>
+        <a href="https://github.com/UnimaxDL/unimaxdl.github.io" rel="noopener" target="_blank">GitHub</a>
+      </nav>
+    </div>
+
+    <div class="deck-footer-bottom">
+      <span>ENGINEERED BY ATOMIC DHRUBA</span>
+      <span>STATUS: ALL SIGNAL PIPELINES NOMINAL</span>
+    </div>
+  </footer>
+
+</div>
+
+<!-- Global Client Scripts -->
+<script src="/assets/js/analytics.js?v=3.1"></script>
+<script src="/assets/js/nav.js?v=3.0"></script>
+<script src="/assets/js/downloader.js?v=4.5"></script>
+
+<script>
+  const urlInput = document.getElementById('url-input');
+  const clearBtn = document.getElementById('clear-btn');
+
+  if (urlInput) {
     urlInput.addEventListener('input', () => {
-      clearBtn.classList.toggle('hidden', !urlInput.value);
+      if (clearBtn) clearBtn.classList.toggle('hidden', !urlInput.value);
     });
 
     urlInput.addEventListener('keydown', (e) => {
@@ -618,78 +637,88 @@ UnimaxDL is an open-source web and desktop multimedia application engineered to 
         handleAnalyze();
       }
     });
+  }
 
-    function clearInput() {
+  function clearInput() {
+    if (urlInput) {
       urlInput.value = '';
-      clearBtn.classList.add('hidden');
+      if (clearBtn) clearBtn.classList.add('hidden');
       urlInput.focus();
     }
+  }
 
-    async function pasteClipboard() {
-      try {
-        const text = await navigator.clipboard.readText();
-        if (text) {
-          urlInput.value = text;
-          clearBtn.classList.remove('hidden');
-          handleAnalyze();
-        }
-      } catch (err) {
-        UDL_DOWNLOADER.showToast("Clipboard access denied. Please paste manually.");
+  async function pasteClipboard() {
+    try {
+      const text = await navigator.clipboard.readText();
+      if (text && urlInput) {
+        urlInput.value = text;
+        if (clearBtn) clearBtn.classList.remove('hidden');
+        handleAnalyze();
       }
+    } catch (err) {
+      UDL_DOWNLOADER.showToast("Clipboard access denied. Please paste manually.");
     }
+  }
 
-    function setSample(url) {
+  function setSample(url) {
+    if (urlInput) {
       urlInput.value = url;
-      clearBtn.classList.remove('hidden');
+      if (clearBtn) clearBtn.classList.remove('hidden');
       handleAnalyze();
     }
+  }
 
-    async function handleAnalyze() {
-      const url = urlInput.value.trim();
-      const mediaContainer = document.getElementById('media-card-container');
-      const skeleton = document.getElementById('loading-skeleton');
-      const btnText = document.getElementById('btn-text');
-      const spinner = document.getElementById('btn-spinner');
+  async function handleAnalyze() {
+    const url = urlInput ? urlInput.value.trim() : '';
+    const mediaContainer = document.getElementById('media-card-container');
+    const skeleton = document.getElementById('loading-skeleton');
+    const btnText = document.getElementById('btn-text');
+    const spinner = document.getElementById('btn-spinner');
+    const deckStatus = document.getElementById('deck-status');
 
-      if (!url) {
-        UDL_DOWNLOADER.showToast("Please enter a video URL first.");
-        return;
-      }
-
-      btnText.innerText = "Analyzing...";
-      spinner.classList.remove('hidden');
-      skeleton.classList.remove('hidden');
-      mediaContainer.innerHTML = '';
-
-      try {
-        const info = await UDL_DOWNLOADER.analyzeUrl(url);
-        skeleton.classList.add('hidden');
-        if (info) {
-          UDL_DOWNLOADER.renderMediaCard(info, mediaContainer);
-          mediaContainer.scrollIntoView({ behavior: 'smooth' });
-        }
-      } catch (err) {
-        skeleton.classList.add('hidden');
-        UDL_DOWNLOADER.showToast(err.message || "Failed to analyze URL.");
-      } finally {
-        btnText.innerText = "Analyze";
-        spinner.classList.add('hidden');
-      }
+    if (!url) {
+      UDL_DOWNLOADER.showToast("Please enter a video URL first.");
+      return;
     }
-  </script>
-<!-- Monetag MultiTag Official Script (Deferred to zero-impact background execution) -->
+
+    if (btnText) btnText.innerText = "PROBING STREAM...";
+    if (spinner) spinner.classList.remove('hidden');
+    if (skeleton) skeleton.classList.remove('hidden');
+    if (deckStatus) deckStatus.innerText = "PROBING STREAM...";
+    if (mediaContainer) mediaContainer.innerHTML = '';
+
+    try {
+      const info = await UDL_DOWNLOADER.analyzeUrl(url);
+      if (skeleton) skeleton.classList.add('hidden');
+      if (deckStatus) deckStatus.innerText = "STREAM LOCKED";
+      if (info && mediaContainer) {
+        UDL_DOWNLOADER.renderMediaCard(info, mediaContainer);
+        mediaContainer.scrollIntoView({ behavior: 'smooth' });
+      }
+    } catch (err) {
+      if (skeleton) skeleton.classList.add('hidden');
+      if (deckStatus) deckStatus.innerText = "SIGNAL ERROR";
+      UDL_DOWNLOADER.showToast(err.message || "Failed to analyze URL.");
+    } finally {
+      if (btnText) btnText.innerText = "FETCH STREAM →";
+      if (spinner) spinner.classList.add('hidden');
+    }
+  }
+</script>
+
+<!-- Monetag MultiTag Official Script (Deferred) -->
 <script>
-    window.addEventListener('load', function() {
-      setTimeout(function() {
-        var s = document.createElement('script');
-        s.src = "https://quge5.com/88/tag.min.js";
-        s.dataset.zone = "305301";
-        s.async = true;
-        s.dataset.cfasync = "false";
-        document.body.appendChild(s);
-      }, 500);
-    });
-  </script>
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      var s = document.createElement('script');
+      s.src = "https://quge5.com/88/tag.min.js";
+      s.dataset.zone = "305301";
+      s.async = true;
+      s.dataset.cfasync = "false";
+      document.body.appendChild(s);
+    }, 500);
+  });
+</script>
 <!-- Adsterra Social Bar Official Script -->
 <script data-cfasync="false" src="https://bellnewyork.org/14/9ee0588abd51114c8dc6784b6ea788c8"></script>
 </body>

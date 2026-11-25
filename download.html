@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-
-<html class="dark scroll-smooth" lang="en">
+<html class="scroll-smooth" data-theme="light" lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport"/>
@@ -8,12 +7,18 @@
 <meta content="Download official UnimaxDL apps for Android (.apk), Windows (.exe/.msi), macOS (.dmg), and Linux (.AppImage). Unlock unlimited 4K 60FPS downloads, zero server queues, and native GPU hardware acceleration." name="description"/>
 <link href="https://unimaxdl.github.io/download.html" rel="canonical"/>
 
-
+<!-- Prevent Flash of Unstyled Content (FOUC) -->
+<script>
+  (function() {
+    const t = localStorage.getItem('udl-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
 
 <link href="/manifest.json" rel="manifest"/>
-<meta content="#07070a" name="theme-color"/>
-<!-- Robots & Directives -->
+<meta content="#F4F1EA" name="theme-color"/>
 <meta content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" name="robots"/>
+
 <!-- Open Graph -->
 <meta content="website" property="og:type"/>
 <meta content="https://unimaxdl.github.io/download.html" property="og:url"/>
@@ -21,798 +26,584 @@
 <meta content="Get the free UnimaxDL native application for uncompressed 4K &amp; 8K video downloads, batch playlist processing, and zero cloud queues." property="og:description"/>
 <meta content="https://unimaxdl.github.io/assets/images/icon2.png" property="og:image"/>
 <meta content="UnimaxDL" property="og:site_name"/>
+
 <!-- Twitter Card -->
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="https://unimaxdl.github.io/download.html" name="twitter:url"/>
 <meta content="Download UnimaxDL Native App — UnimaxDL" name="twitter:title"/>
 <meta content="Download official UnimaxDL native builds for Android, Windows, macOS, and Linux with full 4K support." name="twitter:description"/>
 <meta content="https://unimaxdl.github.io/assets/images/icon2.png" name="twitter:image"/>
-<!-- Schema.org SoftwareApplication Structured Data -->
-<script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "UnimaxDL Native App",
-    "operatingSystem": "Android, Windows, macOS, Linux",
-    "applicationCategory": "MultimediaApplication",
-    "downloadUrl": "https://unimaxdl.github.io/download.html",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    },
-    "description": "High-performance multi-threaded universal video and audio downloader for desktop and mobile devices with native 4K/8K stream merging."
-  }
-  </script>
-<!-- Tailwind CSS & Fonts -->
-<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Typography -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
-<script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            display: ['"Space Grotesk"', 'sans-serif'],
-            sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace'],
-          },
-          colors: {
-            brand: {
-              orange: '#ff6b00',
-              cyan: '#00d8f6',
-              green: '#10e775',
-              purple: '#a855f7',
-            },
-            obsidian: {
-              950: '#090a0f',
-              900: '#10131b',
-              850: '#161a25',
-              800: '#1c2230',
-            }
-          }
-        }
-      }
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&amp;family=IBM+Plex+Mono:wght@400;500;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+
+<!-- SIGNAL DECK Stylesheet -->
+<link href="/assets/css/style.css?v=4.0" rel="stylesheet"/>
+
+<!-- Favicons -->
+<meta content="UnimaxDL" name="application-name"/>
+<link href="/assets/images/unimaxdl-mark.svg" rel="icon" type="image/svg+xml"/>
+<link href="/assets/images/icon-48.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="/assets/images/icon-96.png" rel="icon" sizes="96x96" type="image/png"/>
+<link href="/assets/images/icon2-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="/assets/images/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/favicon.ico" rel="shortcut icon"/>
+<link href="/assets/images/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+
+<!-- Schema.org SoftwareApplication Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "UnimaxDL Native App",
+  "operatingSystem": "Android, Windows, macOS, Linux",
+  "applicationCategory": "MultimediaApplication",
+  "downloadUrl": "https://unimaxdl.github.io/download.html",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "description": "High-performance multi-threaded universal video and audio downloader for desktop and mobile devices with native 4K/8K stream merging."
+}
+</script>
+</head>
+<body>
+
+<div class="frame-container">
+
+  <!-- Studio Header Navigation Bar -->
+  <header class="deck-header">
+    <div style="display:flex; align-items:center; gap:1.5rem;">
+      <a class="deck-brand" href="/">
+        <img alt="UnimaxDL Logomark" height="28" src="/assets/images/unimaxdl-mark.svg" width="28"/>
+        <span>UNIMAXDL</span>
+        <span class="deck-brand-badge">v4.0 PRO</span>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="deck-nav-links" style="display:none;" id="desktop-nav">
+        <a class="deck-nav-link" href="/">Web Tool</a>
+        
+        <div style="position:relative;">
+          <button id="platforms-dropdown-btn" class="deck-nav-link" style="background:none; border:none; cursor:pointer; font-family:var(--font-mono); font-size:0.8125rem; display:flex; align-items:center; gap:0.25rem;" onclick="togglePlatformsDropdown(event)">
+            <span>Platforms</span>
+            <svg style="width:12px; height:12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+          </button>
+          <div id="platforms-dropdown" class="dropdown-menu hidden opacity-0 scale-95">
+            <a class="dropdown-item" href="/youtube-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#D9261C; vertical-align:middle;"></span> YouTube (4K &amp; Audio)</a>
+            <a class="dropdown-item" href="/tiktok-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#0F9D9A; vertical-align:middle;"></span> TikTok (Clean MP4)</a>
+            <a class="dropdown-item" href="/instagram-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#C92A76; vertical-align:middle;"></span> Instagram (Reels &amp; Posts)</a>
+            <a class="dropdown-item" href="/twitter-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:var(--text-primary); vertical-align:middle;"></span> Twitter / X (Video &amp; GIF)</a>
+            <a class="dropdown-item" href="/reddit-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#E04416; vertical-align:middle;"></span> Reddit (Auto-Muxed)</a>
+            <a class="dropdown-item" href="/soundcloud-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#EA580C; vertical-align:middle;"></span> SoundCloud (320k Audio)</a>
+            <a class="dropdown-item" href="/twitch-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#6D28D9; vertical-align:middle;"></span> Twitch (Clips &amp; VODs)</a>
+            <a class="dropdown-item" href="/facebook-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#1B5FD6; vertical-align:middle;"></span> Facebook (Watch &amp; Reels)</a>
+            <a class="dropdown-item" href="/pinterest-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#BD1E2D; vertical-align:middle;"></span> Pinterest (Video Pins)</a>
+          </div>
+        </div>
+
+        <a class="deck-nav-link active" href="/download.html">Native Apps</a>
+        <a class="deck-nav-link" href="/terms.html">Docs</a>
+      </nav>
+    </div>
+
+    <!-- Header Actions -->
+    <div class="deck-header-actions">
+      <button aria-label="Toggle dark/light mode" class="theme-toggle-btn" onclick="toggleTheme()" type="button">
+        <svg class="icon-moon" style="width:18px; height:18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+        <svg class="icon-sun hidden" style="width:18px; height:18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+      </button>
+
+      <a aria-label="GitHub Repository" class="theme-toggle-btn" href="https://github.com/UnimaxDL/unimaxdl.github.io" rel="noopener" target="_blank">
+        <svg style="width:18px; height:18px;" fill="currentColor" viewBox="0 0 24 24"><path clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" fill-rule="evenodd"></path></svg>
+      </a>
+
+      <button aria-label="Toggle mobile menu" class="theme-toggle-btn" id="mobile-menu-btn" onclick="toggleMobileMenu()" type="button">
+        <svg style="width:18px; height:18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Overlay & Drawer -->
+  <div class="hidden opacity-0" id="mobile-overlay" onclick="toggleMobileMenu(false)"></div>
+  <aside class="-translate-x-full" id="mobile-drawer">
+    <div style="padding:1.25rem; border-bottom:1px solid var(--border-hairline); display:flex; align-items:center; justify-content:space-between;">
+      <div style="display:flex; align-items:center; gap:0.5rem; font-family:var(--font-display); font-weight:800; font-size:1rem;">
+        <img alt="" height="24" src="/assets/images/unimaxdl-mark.svg" width="24"/>
+        <span>UNIMAXDL</span>
+      </div>
+      <button class="theme-toggle-btn" onclick="toggleMobileMenu(false)" style="width:30px; height:30px;" type="button">
+        <svg style="width:16px; height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+      </button>
+    </div>
+    <div style="padding:1rem 1.25rem; display:flex; flex-direction:column; gap:0.75rem; font-family:var(--font-mono); font-size:0.875rem;">
+      <a class="deck-nav-link" href="/" onclick="toggleMobileMenu(false)">[01] Web Tool</a>
+      <a class="deck-nav-link active" href="/download.html" onclick="toggleMobileMenu(false)">[02] Native Apps</a>
+      <div style="font-size:0.6875rem; color:var(--text-muted); text-transform:uppercase; margin-top:0.75rem; padding-bottom:0.25rem; border-bottom:1px solid var(--border-hairline);">Supported Platforms</div>
+      <a class="deck-nav-link" href="/youtube-downloader.html" onclick="toggleMobileMenu(false)">YouTube 4K &amp; Audio</a>
+      <a class="deck-nav-link" href="/tiktok-downloader.html" onclick="toggleMobileMenu(false)">TikTok Clean MP4</a>
+      <a class="deck-nav-link" href="/instagram-downloader.html" onclick="toggleMobileMenu(false)">Instagram Reels</a>
+      <a class="deck-nav-link" href="/twitter-downloader.html" onclick="toggleMobileMenu(false)">Twitter / X Video</a>
+      <a class="deck-nav-link" href="/reddit-downloader.html" onclick="toggleMobileMenu(false)">Reddit Video+Audio</a>
+      <a class="deck-nav-link" href="/soundcloud-downloader.html" onclick="toggleMobileMenu(false)">SoundCloud 320k</a>
+      <a class="deck-nav-link" href="/twitch-downloader.html" onclick="toggleMobileMenu(false)">Twitch Clips &amp; VODs</a>
+      <a class="deck-nav-link" href="/facebook-downloader.html" onclick="toggleMobileMenu(false)">Facebook Watch</a>
+      <a class="deck-nav-link" href="/pinterest-downloader.html" onclick="toggleMobileMenu(false)">Pinterest Pins</a>
+    </div>
+  </aside>
+
+  <style>
+    @media (min-width: 768px) {
+      #desktop-nav { display: flex !important; }
+      #mobile-menu-btn { display: none !important; }
     }
-  </script>
-<link href="/assets/css/style.css?v=3.0" rel="stylesheet"/><meta content="UnimaxDL" name="application-name"/><link href="/assets/images/icon-48.png" rel="icon" sizes="48x48" type="image/png"/><link href="/assets/images/icon-96.png" rel="icon" sizes="96x96" type="image/png"/><link href="/assets/images/icon2-192.png" rel="icon" sizes="192x192" type="image/png"/><link href="/assets/images/favicon.ico" rel="icon" type="image/x-icon"/><link href="/favicon.ico" rel="shortcut icon"/><link href="/assets/images/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/></head>
-<body class="text-gray-100 font-sans antialiased selection:bg-cyan-500/30 selection:text-cyan-300">
-<!-- Top Navigation Bar -->
-<header class="sticky top-0 z-50 bg-[#090a0f]/90 backdrop-blur-md border-b border-white/[0.08]">
-<div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-<!-- Brand Logo -->
-<a class="flex items-center gap-3 group" href="/">
-<div class="relative">
-<picture>
-<source srcset="/assets/images/icon-96.webp" type="image/webp"/>
-<img alt="UnimaxDL Icon" class="w-9 h-9 object-contain drop-shadow-[0_0_8px_rgba(0,216,246,0.35)] group-hover:scale-105 transition-all duration-200" height="36" src="/assets/images/icon-48.png" width="36"/>
-</picture>
-<span class="absolute -top-0.5 -right-0.5 status-lamp status-lamp-green"></span>
-</div>
-<div class="flex items-center gap-2">
-<span class="font-display font-bold text-lg tracking-tight text-white">UNIMAX<span class="text-[#00d8f6]">DL</span></span>
-<span class="font-mono text-[9px] font-bold px-2 py-0.5 rounded bg-white/5 text-gray-300 border border-white/10 uppercase tracking-widest">v3.0 PRO</span>
-</div>
-</a>
-<!-- Desktop Navigation Links -->
-<div class="hidden lg:flex items-center gap-6">
-<nav class="flex items-center gap-5 font-mono text-xs font-semibold text-gray-300">
-<a class="hover:text-white transition font-bold text-[#00d8f6]" href="/download.html">[APPS]</a>
-<a class="hover:text-red-400 transition" href="/youtube-downloader.html">YouTube</a>
-<a class="hover:text-teal-400 transition" href="/tiktok-downloader.html">TikTok</a>
-<a class="hover:text-fuchsia-400 transition" href="/instagram-downloader.html">Instagram</a>
-<a class="hover:text-orange-400 transition" href="/reddit-downloader.html">Reddit</a>
-<a class="hover:text-amber-400 transition" href="/soundcloud-downloader.html">SoundCloud</a>
-<a class="hover:text-purple-400 transition" href="/twitch-downloader.html">Twitch</a>
-<!-- More Platforms Dropdown -->
-<div class="relative">
-<button class="flex items-center gap-1 hover:text-white transition focus:outline-none" id="platforms-dropdown-btn" onclick="togglePlatformsDropdown(event)">
-<span>More</span>
-<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</button>
-<div class="hidden opacity-0 scale-95 transition-all duration-150 absolute right-0 mt-3 w-52 deck-panel rounded-lg p-2 z-50 border border-white/15 shadow-2xl" id="platforms-dropdown">
-<a class="flex items-center gap-2.5 px-3 py-2 rounded hover:bg-white/5 font-mono text-xs text-gray-200 hover:text-sky-400 transition" href="/twitter-downloader.html">
-<span class="status-lamp status-lamp-cyan"></span>
-<span>Twitter / X</span>
-</a>
-<a class="flex items-center gap-2.5 px-3 py-2 rounded hover:bg-white/5 font-mono text-xs text-gray-200 hover:text-blue-400 transition" href="/facebook-downloader.html">
-<span class="status-lamp status-lamp-cyan"></span>
-<span>Facebook</span>
-</a>
-<a class="flex items-center gap-2.5 px-3 py-2 rounded hover:bg-white/5 font-mono text-xs text-gray-200 hover:text-rose-400 transition" href="/pinterest-downloader.html">
-<span class="status-lamp status-lamp-orange"></span>
-<span>Pinterest</span>
-</a>
-<div class="border-t border-white/10 my-1"></div>
-<a class="flex items-center gap-2.5 px-3 py-2 rounded hover:bg-white/5 font-mono text-xs font-bold text-[#00d8f6] transition" href="/#tool">
-<span class="status-lamp status-lamp-green"></span>
-<span>All 1000+ Platforms</span>
-</a>
-</div>
-</div>
-</nav>
-<a class="flex items-center gap-1.5 px-3 py-1.5 rounded-md tactile-btn-secondary font-mono text-xs font-bold text-gray-200 transition" href="https://github.com/UnimaxDL/unimaxdl.github.io" rel="noopener" target="_blank">
-<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"></path></svg>
-<span>GitHub</span>
-</a>
-</div>
-<!-- Mobile Actions: Apps Button + Hamburger Menu -->
-<div class="flex lg:hidden items-center gap-2">
-<a class="px-3 py-1.5 rounded-md tactile-btn-cyan font-mono text-xs font-bold transition" href="/download.html">
-          APPS
-        </a>
-<button aria-expanded="false" aria-label="Open Navigation Menu" class="p-2 rounded-md deck-panel text-gray-300 hover:text-white transition" id="mobile-menu-btn" onclick="toggleMobileMenu()">
-<svg class="w-5 h-5 fill-none stroke-current" viewbox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</button>
-</div>
-</div>
-</header>
-<div class="hidden opacity-0 fixed inset-0 bg-black/75 backdrop-blur-sm z-50 transition-opacity duration-200" id="mobile-overlay" onclick="toggleMobileMenu(false)"></div>
-<aside class="-translate-x-full fixed top-0 left-0 bottom-0 w-80 max-w-[85vw] bg-[#0b0d13] border-r border-white/15 z-50 p-5 flex flex-col justify-between overflow-y-auto shadow-2xl" id="mobile-drawer">
-<div class="space-y-6">
-<!-- Drawer Header -->
-<div class="flex items-center justify-between pb-4 border-b border-white/10">
-<a class="flex items-center gap-2.5" href="/">
-<picture>
-<source srcset="/assets/images/icon-96.webp" type="image/webp"/>
-<img alt="UnimaxDL" class="w-8 h-8 object-contain" height="32" src="/assets/images/icon-48.png" width="32"/>
-</picture>
-<span class="font-display font-bold text-base text-white tracking-tight">UNIMAX<span class="text-[#00d8f6]">DL</span></span>
-</a>
-<button aria-label="Close Navigation" class="p-1.5 rounded deck-panel text-gray-400 hover:text-white" onclick="toggleMobileMenu(false)">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</button>
-</div>
-<!-- Quick Platform Jump Links -->
-<div class="space-y-2">
-<span class="font-mono text-[10px] font-bold uppercase tracking-widest text-gray-400 px-1">// STREAM SOURCES</span>
-<div class="grid grid-cols-1 gap-1.5 font-mono text-xs">
-<a class="flex items-center justify-between px-3 py-2.5 rounded deck-panel hover:bg-white/5 text-gray-200 hover:text-red-400 transition" href="/youtube-downloader.html">
-<span class="flex items-center gap-2">
-<span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
-<span>YouTube</span>
-</span>
-<span class="text-[10px] text-gray-500">4K // SHORTS</span>
-</a>
-<a class="flex items-center justify-between px-3 py-2.5 rounded deck-panel hover:bg-white/5 text-gray-200 hover:text-teal-400 transition" href="/tiktok-downloader.html">
-<span class="flex items-center gap-2">
-<span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
-<span>TikTok</span>
-</span>
-<span class="text-[10px] text-gray-500">NO WATERMARK</span>
-</a>
-<a class="flex items-center justify-between px-3 py-2.5 rounded deck-panel hover:bg-white/5 text-gray-200 hover:text-fuchsia-400 transition" href="/instagram-downloader.html">
-<span class="flex items-center gap-2">
-<span class="w-1.5 h-1.5 rounded-full bg-fuchsia-400"></span>
-<span>Instagram</span>
-</span>
-<span class="text-[10px] text-gray-500">REELS // AUDIO</span>
-</a>
-<a class="flex items-center justify-between px-3 py-2.5 rounded deck-panel hover:bg-white/5 text-gray-200 hover:text-orange-400 transition" href="/reddit-downloader.html">
-<span class="flex items-center gap-2">
-<span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-<span>Reddit</span>
-</span>
-<span class="text-[10px] text-gray-500">WITH SOUND</span>
-</a>
-<a class="flex items-center justify-between px-3 py-2.5 rounded deck-panel hover:bg-white/5 text-gray-200 hover:text-amber-400 transition" href="/soundcloud-downloader.html">
-<span class="flex items-center gap-2">
-<span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-<span>SoundCloud</span>
-</span>
-<span class="text-[10px] text-gray-500">320KBPS MP3</span>
-</a>
-<a class="flex items-center justify-between px-3 py-2.5 rounded deck-panel hover:bg-white/5 text-gray-200 hover:text-purple-400 transition" href="/twitch-downloader.html">
-<span class="flex items-center gap-2">
-<span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
-<span>Twitch</span>
-</span>
-<span class="text-[10px] text-gray-500">60FPS CLIPS</span>
-</a>
-<a class="flex items-center justify-between px-3 py-2.5 rounded deck-panel hover:bg-white/5 text-gray-200 hover:text-sky-400 transition" href="/twitter-downloader.html">
-<span class="flex items-center gap-2">
-<span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
-<span>Twitter / X</span>
-</span>
-<span class="text-[10px] text-gray-500">HD VIDEO</span>
-</a>
-<a class="flex items-center justify-between px-3 py-2.5 rounded deck-panel hover:bg-white/5 text-gray-200 hover:text-blue-400 transition" href="/facebook-downloader.html">
-<span class="flex items-center gap-2">
-<span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
-<span>Facebook</span>
-</span>
-<span class="text-[10px] text-gray-500">REELS</span>
-</a>
-<a class="flex items-center justify-between px-3 py-2.5 rounded deck-panel hover:bg-white/5 text-gray-200 hover:text-rose-400 transition" href="/pinterest-downloader.html">
-<span class="flex items-center gap-2">
-<span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
-<span>Pinterest</span>
-</span>
-<span class="text-[10px] text-gray-500">VIDEO PINS</span>
-</a>
-</div>
-</div>
-<!-- App Download Banner Inside Drawer -->
-<div class="p-4 rounded-lg deck-panel-raised border border-white/10 space-y-2">
-<span class="font-mono text-[10px] font-bold uppercase tracking-wider text-[#00d8f6] block">// NATIVE ENGINE</span>
-<p class="font-sans text-xs text-gray-300">Desktop &amp; Android companion builds for offline playlist extraction and hardware 4K muxing.</p>
-<a class="inline-flex items-center justify-center w-full py-2 px-3 rounded tactile-btn-primary font-bold text-xs transition" href="/download.html">
-          GET NATIVE APPS
-        </a>
-</div>
-</div>
-<!-- Drawer Footer -->
-<div class="pt-6 border-t border-white/10 space-y-3 font-mono text-xs text-gray-400">
-<div class="flex items-center justify-between">
-<a class="hover:text-white transition" href="/terms.html">Terms</a>
-<a class="hover:text-white transition" href="/privacy.html">Privacy</a>
-<a class="hover:text-white transition" href="/dmca.html">DMCA</a>
-<a class="hover:text-white transition" href="https://github.com/UnimaxDL/unimaxdl.github.io" rel="noopener" target="_blank">GitHub</a>
-</div>
-<p class="text-[10px] text-gray-500 text-center">UnimaxDL // MIT Open Source</p>
-</div>
-</aside>
-<!-- Hero Section -->
-<section class="pt-16 pb-12 px-4 text-center relative overflow-hidden">
-<div class="max-w-4xl mx-auto space-y-5">
-<div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#10131b] border border-white/10 font-mono text-[11px] uppercase tracking-wider text-gray-300">
-<span class="status-lamp status-lamp-orange"></span>
-<span>OFFICIAL NATIVE SUITE // HARDWARE 4K MUX // ZERO QUEUES</span>
-</div>
-<h1 class="font-display text-3xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight">
-UNIMAX <span class="text-[#00d8f6]">//</span> NATIVE ENGINE SUITE
-</h1>
-<p class="text-gray-400 font-sans text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
-Direct hardware clients engineered for uncompressed 4K &amp; 8K 60FPS stream extraction, unlimited batch playlist processing, and local GPU FFmpeg muxing. Zero cloud proxy rate limits, zero server queues.
-</p>
-<!-- Quick Platform Jump Anchor Pills -->
-<div class="flex flex-wrap items-center justify-center gap-2 pt-2">
-<a class="cartridge-btn" href="#android">
-<span class="text-emerald-400 font-bold">[APK]</span> Android 7.0+
-</a>
-<a class="cartridge-btn" href="#windows">
-<span class="text-sky-400 font-bold">[WIN]</span> Windows PC
-</a>
-<a class="cartridge-btn" href="#macos">
-<span class="text-gray-300 font-bold">[MAC]</span> macOS M/Intel
-</a>
-<a class="cartridge-btn" href="#linux">
-<span class="text-amber-400 font-bold">[LNX]</span> Linux AppImage
-</a>
-</div>
-</div>
-</section>
-<!-- Download Cards Grid (Industrial Hardware Cartridges) -->
-<section class="max-w-6xl mx-auto px-4 pb-16" id="downloads-grid">
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-<!-- Android Card (Featured Hardware Module) -->
-<div class="deck-panel bracket-corners rounded-xl p-6 sm:p-7 flex flex-col justify-between hover:-translate-y-1 transition-all duration-200 border-2 border-emerald-500/40 relative shadow-2xl" id="android">
-<div class="mb-4">
-<div class="flex items-center justify-between mb-4">
-<div class="w-12 h-12 rounded bg-[#131722] border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-<svg class="w-7 h-7 fill-current" viewbox="0 0 24 24"><path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.551 0 .9993.4482.9993.9993.0001.5511-.4483.9997-.9993.9997m-11.046 0c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993 0 .5511-.4482.9997-.9993.9997m11.4045-6.02l1.9973-3.4592a.416.416 0 00-.1521-.5676.416.416 0 00-.5676.1521l-2.0223 3.503C15.5902 8.4116 13.8533 8.082 12 8.082s-3.5902.3296-5.1368.8677L4.8409 5.4467a.4161.4161 0 00-.5677-.1521.4157.4157 0 00-.1521.5676l1.9973 3.4592C2.6889 11.1867.3432 14.6589 0 18.761h24c-.3432-4.1021-2.6889-7.5743-6.1185-9.4396"></path></svg>
-</div>
-<span class="tech-badge tech-badge-green font-mono">v2.1.0 PRO // CURRENT</span>
-</div>
-<div class="flex items-center justify-between mb-1">
-<h2 class="font-display text-xl font-bold text-white">Android</h2>
-<span class="font-mono text-[10px] text-emerald-400">ARM64/UNIVERSAL</span>
-</div>
-<p class="font-mono text-xs text-gray-400 mb-4">Android 7.0 &amp; Above</p>
-<ul class="text-xs text-gray-300 space-y-2.5 mb-6 font-sans">
-<li class="flex items-start gap-2">
-<span class="status-lamp status-lamp-green mt-1.5"></span>
-<span><strong>Synced Video + Audio:</strong> Hardware mux guarantees 100% audio on YouTube &amp; Reels</span>
-</li>
-<li class="flex items-start gap-2">
-<span class="status-lamp status-lamp-green mt-1.5"></span>
-<span><strong>Built-in Media Player:</strong> Full scrub timeline, speed controls &amp; background queue</span>
-</li>
-<li class="flex items-start gap-2">
-<span class="status-lamp status-lamp-green mt-1.5"></span>
-<span><strong>Active Download Bay:</strong> Live telemetry MB/s, ETA, and segmented meters</span>
-</li>
-<li class="flex items-start gap-2">
-<span class="status-lamp status-lamp-green mt-1.5"></span>
-<span><strong>Direct Gallery Sync:</strong> Saves directly via native Android FileProvider</span>
-</li>
-</ul>
-</div>
-<div class="space-y-2">
-<a id="btn-download-android" class="w-full py-3 rounded-md tactile-btn-primary font-bold text-xs text-center transition flex items-center justify-center gap-2" href="/downloads/UnimaxDL-v2.1.0.apk" download="UnimaxDL-v2.1.0.apk">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span>DOWNLOAD APK (v2.1.0 PRO)</span>
-</a>
-<div class="p-2.5 rounded deck-panel-inset font-mono text-[10px] text-gray-400 leading-snug">
-<span class="text-emerald-400 font-bold">[UPDATE PROTOCOL]:</span> Tap downloaded file in notification shade and select <strong>Install/Update</strong>. (If upgrading from old v1.0.0, uninstall previous version first).
-</div>
-<a class="w-full py-2 rounded-md font-mono text-[11px] font-bold bg-[#ff6b00]/10 hover:bg-[#ff6b00]/20 text-[#ff8833] border border-[#ff6b00]/25 text-center transition flex items-center justify-center gap-1.5" href="https://asiafilm.org/4/0b90618d4229234e89f68c862523c621" rel="noopener noreferrer" target="_blank">
-<span>FAST CLOUD MIRROR</span>
-</a>
-<button class="w-full py-2 rounded-md tactile-btn-secondary font-mono text-[11px] font-bold text-gray-300 text-center transition flex items-center justify-center gap-1.5 cursor-pointer" onclick="toggleQrModal()">
-<svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span>SCAN QR ON MOBILE</span>
-</button>
-</div>
-</div>
-<!-- Windows Card -->
-<div class="deck-panel bracket-corners rounded-xl p-6 sm:p-7 flex flex-col justify-between hover:-translate-y-1 transition-all duration-200 border border-white/10 group relative" id="windows">
-<div class="mb-4">
-<div class="flex items-center justify-between mb-4">
-<div class="w-12 h-12 rounded bg-[#131722] border border-sky-500/30 flex items-center justify-center text-sky-400">
-<svg class="w-7 h-7 fill-current" viewbox="0 0 24 24"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"></path></svg>
-</div>
-<span class="tech-badge tech-badge-cyan font-mono">64-BIT // WIN 10-11</span>
-</div>
-<div class="flex items-center justify-between mb-1">
-<h2 class="font-display text-xl font-bold text-white">Windows</h2>
-<span class="font-mono text-[10px] text-gray-400">DESKTOP + ENGINE</span>
-</div>
-<p class="font-mono text-xs text-gray-400 mb-4">Windows 10 / 11 (x64)</p>
-<ul class="text-xs text-gray-300 space-y-2.5 mb-6 font-sans">
-<li class="flex items-start gap-2">
-<span class="status-lamp status-lamp-cyan mt-1.5"></span>
-<span><strong>Hardware Muxing:</strong> Bundled FFmpeg &amp; yt-dlp binaries for 4K 60FPS</span>
-</li>
-<li class="flex items-start gap-2">
-<span class="status-lamp status-lamp-cyan mt-1.5"></span>
-<span><strong>Batch Processing:</strong> Download full playlists, channels, and sound collections</span>
-</li>
-<li class="flex items-start gap-2">
-<span class="status-lamp status-lamp-cyan mt-1.5"></span>
-<span><strong>1-Click Local Engine:</strong> Powers browser companion on port 8000</span>
-</li>
-<li class="flex items-start gap-2">
-<span class="status-lamp status-lamp-cyan mt-1.5"></span>
-<span><strong>System Tray:</strong> Clipboard auto-watcher &amp; background task manager</span>
-</li>
-</ul>
-</div>
-<div class="space-y-2">
-<a id="btn-download-win" class="w-full py-3 rounded-md tactile-btn-cyan font-bold text-xs text-center transition flex items-center justify-center gap-2" href="/downloads/UnimaxDL-Setup-v1.0.0.exe" download="UnimaxDL-Setup-v1.0.0.exe">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span>DOWNLOAD WINDOWS SETUP (.exe)</span>
-</a>
-<a class="w-full py-2 rounded-md font-mono text-[11px] font-bold bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 text-center transition flex items-center justify-center gap-1.5" href="/downloads/Setup-UnimaxDL.bat" download="Setup-UnimaxDL.bat">
-<span>1-CLICK SETUP SCRIPT (.bat)</span>
-</a>
-<a class="w-full py-2 rounded-md font-mono text-[11px] font-bold bg-[#ff6b00]/10 hover:bg-[#ff6b00]/20 border border-[#ff6b00]/25 text-[#ff8833] text-center transition flex items-center justify-center gap-1.5" href="https://asiafilm.org/4/0b90618d4229234e89f68c862523c621" rel="noopener noreferrer" target="_blank">
-<span>FAST CLOUD MIRROR</span>
-</a>
-<a class="w-full py-2 rounded-md font-mono text-[11px] font-bold bg-white/5 hover:bg-white/10 border border-white/5 text-gray-400 text-center transition flex items-center justify-center gap-1.5" href="/downloads/UnimaxDL-v1.0.0-windows-x64.zip" download="UnimaxDL-v1.0.0-windows-x64.zip">
-<span>PORTABLE ZIP EDITION</span>
-</a>
-</div>
-</div>
-<!-- macOS Card -->
-<div class="deck-panel bracket-corners rounded-xl p-6 sm:p-7 flex flex-col justify-between hover:-translate-y-1 transition-all duration-200 border border-white/10 group relative" id="macos">
-<div class="mb-4">
-<div class="flex items-center justify-between mb-4">
-<div class="w-12 h-12 rounded bg-[#131722] border border-white/20 flex items-center justify-center text-gray-200">
-<svg class="w-7 h-7 fill-current" viewbox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.4c.66-.82 1.11-1.96.99-3.1-.96.04-2.13.64-2.81 1.44-.59.69-1.11 1.83-.97 2.95 1.07.08 2.14-.52 2.79-1.29z"></path></svg>
-</div>
-<span class="tech-badge tech-badge-muted font-mono">UNIVERSAL // ARM+X64</span>
-</div>
-<div class="flex items-center justify-between mb-1">
-<h2 class="font-display text-xl font-bold text-white">macOS</h2>
-<span class="font-mono text-[10px] text-gray-400">APPLE SILICON &amp; INTEL</span>
-</div>
-<p class="font-mono text-xs text-gray-400 mb-4">macOS 12.0 Monterey or later</p>
-<ul class="text-xs text-gray-300 space-y-2.5 mb-6 font-sans">
-<li class="flex items-start gap-2">
-<span class="status-lamp status-lamp-cyan mt-1.5"></span>
-<span><strong>Universal Binary:</strong> Native M1/M2/M3 and Intel x64 compilation</span>
-</li>
-<li class="flex items-start gap-2">
-<span class="status-lamp status-lamp-cyan mt-1.5"></span>
-<span><strong>Metal Engine:</strong> Hardware accelerated audio and 4K stream demux</span>
-</li>
-<li class="flex items-start gap-2">
-<span class="status-lamp status-lamp-cyan mt-1.5"></span>
-<span><strong>Zero Daemons:</strong> No background trackers, telemetry, or analytics</span>
-</li>
-<li class="flex items-start gap-2">
-<span class="status-lamp status-lamp-cyan mt-1.5"></span>
-<span><strong>Standard DMG:</strong> Drag &amp; drop installation into Applications folder</span>
-</li>
-</ul>
-</div>
-<div class="space-y-2">
-<a id="btn-download-mac" class="w-full py-3 rounded-md tactile-btn-secondary font-mono font-bold text-xs text-center transition flex items-center justify-center gap-2" href="/downloads/UnimaxDL-v1.0.0-macos.dmg" download="UnimaxDL-v1.0.0-macos.dmg">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span>DOWNLOAD MACOS (.dmg)</span>
-</a>
-<div class="text-center font-mono text-[10px] text-gray-500 py-1">UNIVERSAL STANDALONE DMG</div>
-</div>
-</div>
-<!-- Linux Card -->
-<div class="deck-panel bracket-corners rounded-xl p-6 sm:p-7 flex flex-col justify-between hover:-translate-y-1 transition-all duration-200 border border-white/10 group relative" id="linux">
-<div class="mb-4">
-<div class="flex items-center justify-between mb-4">
-<div class="w-12 h-12 rounded bg-[#131722] border border-amber-500/30 flex items-center justify-center">
-<img src="/assets/images/tux.png" alt="Linux Tux" class="w-8 h-8 object-contain drop-shadow" />
-</div>
-<span class="tech-badge tech-badge-orange font-mono">APPIMAGE // NO-ROOT</span>
-</div>
-<div class="flex items-center justify-between mb-1">
-<h2 class="font-display text-xl font-bold text-white">Linux</h2>
-<span class="font-mono text-[10px] text-gray-400">UNIVERSAL BINARY</span>
-</div>
-<p class="font-mono text-xs text-gray-400 mb-4">Ubuntu, Debian, Fedora, Arch Linux</p>
-<ul class="text-xs text-gray-300 space-y-2.5 mb-6 font-sans">
-<li class="flex items-start gap-2">
-<span class="status-lamp status-lamp-orange mt-1.5"></span>
-<span><strong>Portable AppImage:</strong> Run without root privileges or distro package hell</span>
-</li>
-<li class="flex items-start gap-2">
-<span class="status-lamp status-lamp-orange mt-1.5"></span>
-<span><strong>CLI + Web GUI:</strong> Flexible workflow with stdout/stdin pipes</span>
-</li>
-<li class="flex items-start gap-2">
-<span class="status-lamp status-lamp-orange mt-1.5"></span>
-<span><strong>Pure Open Source:</strong> 100% auditable source tree under MIT license</span>
-</li>
-<li class="flex items-start gap-2">
-<span class="status-lamp status-lamp-orange mt-1.5"></span>
-<span><strong>Zero Dependencies:</strong> Bundles Python runtime and static FFmpeg</span>
-</li>
-</ul>
-</div>
-<div class="space-y-2">
-<a id="btn-download-linux" class="w-full py-3 rounded-md tactile-btn-secondary font-mono font-bold text-xs text-center transition flex items-center justify-center gap-2" href="/downloads/UnimaxDL-v1.0.0-linux.AppImage" download="UnimaxDL-v1.0.0-linux.AppImage">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span>DOWNLOAD LINUX (.AppImage)</span>
-</a>
-<a class="w-full py-2 rounded-md font-mono text-[11px] font-bold bg-white/5 hover:bg-white/10 border border-white/5 text-gray-400 text-center transition flex items-center justify-center gap-1.5" href="/downloads/UnimaxDL-v1.0.0-linux.AppImage" download="UnimaxDL-v1.0.0-linux.AppImage">
-<span>LINUX TARBALL (.tar.gz)</span>
-</a>
-</div>
-</div>
-</div>
-</section>
-<!-- Instant QR Code Modal / Drawer -->
-<div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md hidden animate-in fade-in duration-200" id="qr-modal">
-<div class="relative w-full max-w-sm deck-panel bracket-corners rounded-xl p-6 border border-[#10e775]/40 text-center space-y-5 shadow-2xl">
-<div class="flex items-center justify-between border-b border-white/[0.08] pb-3">
-<div class="flex items-center gap-2">
-<span class="status-lamp status-lamp-green"></span>
-<h3 class="font-display font-bold text-sm tracking-wider text-white uppercase">
-SCAN // DIRECT MOBILE APK
-</h3>
-</div>
-<button class="p-1 rounded text-gray-400 hover:text-white transition cursor-pointer font-mono text-xs" onclick="toggleQrModal()">
-[CLOSE]
-</button>
-</div>
-<div class="p-3 bg-white rounded-lg mx-auto w-fit shadow-xl border-2 border-white/20">
-<img alt="Scan QR Code to Download UnimaxDL Android APK" class="w-44 h-44 object-contain" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&amp;data=https://unimaxdl.github.io/downloads/UnimaxDL-v2.1.0.apk"/>
-</div>
-<div class="space-y-1 font-mono text-[11px] text-gray-400">
-<p class="text-gray-300">Point mobile optical sensor / camera at matrix to initiate payload delivery.</p>
-<p class="text-[10px] text-gray-500">PAYLOAD: UNIMAXDL-V2.1.0-PRO.APK // SIZE: 4.2 MB</p>
-</div>
-<a class="block w-full py-2.5 rounded tactile-btn-primary font-mono font-bold text-xs text-center transition" href="/downloads/UnimaxDL-v2.1.0.apk" download="UnimaxDL-v2.1.0.apk">
-DIRECT BROWSER DOWNLOAD (.APK)
-</a>
-</div>
-</div>
-<!-- Feature Comparison Table (Web vs. Native App) -->
-<section class="max-w-5xl mx-auto px-4 pb-20" id="comparison">
-<div class="text-center max-w-2xl mx-auto mb-10 space-y-3">
-<div class="inline-flex items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded bg-[#00d8f6]/10 text-[#00d8f6] border border-[#00d8f6]/30">
-<span class="status-lamp status-lamp-cyan"></span>
-<span>SYS // CAPABILITY BENCHMARK</span>
-</div>
-<h2 class="text-2xl sm:text-3xl font-display font-black text-white tracking-tight uppercase">
-Web Downloader vs. Native Engine
-</h2>
-<p class="font-mono text-xs text-gray-400">
-Hardware acceleration telemetry comparison: Ephemeral Cloud Proxy vs. Local Subsystem.
-</p>
-</div>
-<div class="deck-panel bracket-corners rounded-xl overflow-hidden shadow-2xl">
-<div class="overflow-x-auto">
-<table class="w-full text-left border-collapse text-xs">
-<thead>
-<tr class="border-b border-white/[0.08] bg-[#0c0f16] font-mono text-[11px] uppercase tracking-wider">
-<th class="py-4 px-5 font-bold text-gray-400">FEATURE METRIC</th>
-<th class="py-4 px-5 font-bold text-[#00d8f6] w-1/3">WEB DOWNLOADER (BROWSER)</th>
-<th class="py-4 px-5 font-bold text-[#10e775] w-1/3 bg-[#10e775]/5">NATIVE APP (ANDROID / PC)</th>
-</tr>
-</thead>
-<tbody class="divide-y divide-white/[0.06] text-gray-300 font-sans">
-<tr class="hover:bg-white/[0.02] transition">
-<td class="py-3.5 px-5 font-bold text-white font-mono text-[11px]">MAX RESOLUTION</td>
-<td class="py-3.5 px-5 text-gray-400">Up to 1080p FHD</td>
-<td class="py-3.5 px-5 font-bold text-[#10e775] bg-[#10e775]/5">Full 4K (2160p) &amp; 8K (4320p)</td>
-</tr>
-<tr class="hover:bg-white/[0.02] transition">
-<td class="py-3.5 px-5 font-bold text-white font-mono text-[11px]">FRAME RATES</td>
-<td class="py-3.5 px-5 text-gray-400">Standard 30fps / 60fps</td>
-<td class="py-3.5 px-5 font-bold text-[#10e775] bg-[#10e775]/5">Uncompressed 60fps HDR</td>
-</tr>
-<tr class="hover:bg-white/[0.02] transition">
-<td class="py-3.5 px-5 font-bold text-white font-mono text-[11px]">AUDIO BITRATE</td>
-<td class="py-3.5 px-5 text-gray-400">192 kbps MP3</td>
-<td class="py-3.5 px-5 font-bold text-[#10e775] bg-[#10e775]/5">320 kbps Studio &amp; Lossless M4A/FLAC</td>
-</tr>
-<tr class="hover:bg-white/[0.02] transition">
-<td class="py-3.5 px-5 font-bold text-white font-mono text-[11px]">PROCESSING SUBSYSTEM</td>
-<td class="py-3.5 px-5 text-gray-400">Cloud ephemeral proxy</td>
-<td class="py-3.5 px-5 font-bold text-[#10e775] bg-[#10e775]/5">Local GPU Acceleration (NVENC / VAAPI)</td>
-</tr>
-<tr class="hover:bg-white/[0.02] transition">
-<td class="py-3.5 px-5 font-bold text-white font-mono text-[11px]">THROUGHPUT &amp; QUEUES</td>
-<td class="py-3.5 px-5 text-gray-400">FIFO queue during peak hours</td>
-<td class="py-3.5 px-5 font-bold text-[#10e775] bg-[#10e775]/5">Zero Queue • Direct CDN line speed</td>
-</tr>
-<tr class="hover:bg-white/[0.02] transition">
-<td class="py-3.5 px-5 font-bold text-white font-mono text-[11px]">BATCH &amp; PLAYLISTS</td>
-<td class="py-3.5 px-5 text-gray-400">Single link only</td>
-<td class="py-3.5 px-5 font-bold text-[#10e775] bg-[#10e775]/5">Full YouTube &amp; TikTok channel batching</td>
-</tr>
-<tr class="hover:bg-white/[0.02] transition">
-<td class="py-3.5 px-5 font-bold text-white font-mono text-[11px]">SYSTEM INTEGRATION</td>
-<td class="py-3.5 px-5 text-gray-400">Manual copy and paste</td>
-<td class="py-3.5 px-5 font-bold text-[#10e775] bg-[#10e775]/5">1-Tap Android Share &amp; Clipboard Watcher</td>
-</tr>
-<tr class="hover:bg-white/[0.02] transition">
-<td class="py-3.5 px-5 font-bold text-white font-mono text-[11px]">INSTALL FOOTPRINT</td>
-<td class="py-3.5 px-5 text-gray-400">Zero footprint • Web client</td>
-<td class="py-3.5 px-5 font-bold text-[#10e775] bg-[#10e775]/5">Lightweight binary (~4MB APK / native bundle)</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</section>
-<!-- Deep Link Test & Companion Launch Widget -->
-<section class="max-w-4xl mx-auto px-4 pb-20" id="deep-link-widget">
-<div class="deck-panel bracket-corners rounded-xl p-6 sm:p-8 space-y-5">
-<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/[0.08] pb-5">
-<div class="space-y-1">
-<div class="flex items-center gap-2">
-<span class="tech-badge text-[#00d8f6] border-[#00d8f6]/30 bg-[#00d8f6]/10">PROTOCOL HANDLER</span>
-<span class="font-mono text-xs text-gray-400">unimaxdl://</span>
-</div>
-<h3 class="font-display font-bold text-lg text-white uppercase tracking-wider">App Deep Link Launcher</h3>
-<p class="font-mono text-xs text-gray-400">Already installed UnimaxDL? Dispatch media links directly to local client subsystem.</p>
-</div>
-</div>
-<div class="space-y-3">
-<div class="flex flex-col sm:flex-row gap-2">
-<div class="flex-1 deck-input-container rounded-lg px-4 py-2 flex items-center">
-<input class="w-full bg-transparent text-white font-mono text-xs sm:text-sm placeholder-gray-500 focus:outline-none" id="deep-link-input" placeholder="Paste YouTube, Instagram, TikTok, Twitter URL..." type="url"/>
-</div>
-<button class="px-5 py-3 rounded tactile-btn-primary font-mono font-bold text-xs transition flex items-center justify-center gap-2 cursor-pointer" onclick="testDeepLink()">
-<svg class="w-4 h-4 fill-none stroke-current" viewbox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path></svg>
-<span>LAUNCH IN APP</span>
-</button>
-</div>
-<div class="hidden p-3.5 rounded-lg deck-panel-inset flex items-center justify-between gap-3 text-xs" id="deep-link-output">
-<span class="font-mono text-[#00d8f6] truncate text-[11px]" id="deep-link-text"></span>
-<button class="px-3 py-1.5 rounded tactile-btn-secondary text-[11px] font-mono font-bold transition flex-shrink-0 cursor-pointer" onclick="copyGeneratedDeepLink()">
-[COPY LINK]
-</button>
-</div>
-</div>
-</div>
-</section>
-<!-- Android 3-Step Setup Guide -->
-<section class="max-w-4xl mx-auto px-4 pb-20">
-<div class="deck-panel bracket-corners rounded-xl p-6 sm:p-8 space-y-6">
-<div class="flex items-center gap-3 border-b border-white/[0.08] pb-4">
-<div class="w-10 h-10 rounded-lg bg-[#10e775]/10 border border-[#10e775]/30 flex items-center justify-center text-[#10e775] flex-shrink-0 font-mono font-bold text-xs">
-APK
-</div>
-<div>
-<h3 class="font-display font-bold text-lg text-white uppercase tracking-wider">Android Provisioning Sequence</h3>
-<p class="font-mono text-xs text-gray-400">Initialize local media interception in 3 operational steps.</p>
-</div>
-</div>
-<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-<div class="p-4 rounded-lg deck-panel-inset space-y-2 border border-white/5">
-<div class="flex items-center justify-between">
-<span class="font-mono text-[10px] font-bold px-2 py-0.5 rounded bg-[#10e775]/10 text-[#10e775] border border-[#10e775]/20">STEP 01</span>
-<span class="status-lamp status-lamp-green"></span>
-</div>
-<h4 class="font-display font-bold text-white text-sm">Download Binary</h4>
-<p class="font-mono text-gray-400 leading-relaxed text-[11px]">Trigger green "DOWNLOAD APK" button above. System saves lightweight ~4.2MB standalone payload.</p>
-</div>
-<div class="p-4 rounded-lg deck-panel-inset space-y-2 border border-white/5">
-<div class="flex items-center justify-between">
-<span class="font-mono text-[10px] font-bold px-2 py-0.5 rounded bg-[#00d8f6]/10 text-[#00d8f6] border border-[#00d8f6]/20">STEP 02</span>
-<span class="status-lamp status-lamp-cyan"></span>
-</div>
-<h4 class="font-display font-bold text-white text-sm">Package Install</h4>
-<p class="font-mono text-gray-400 leading-relaxed text-[11px]">Access notification shade or Downloads folder. Execute package. Enable "Install Unknown Apps" permission.</p>
-</div>
-<div class="p-4 rounded-lg deck-panel-inset space-y-2 border border-white/5">
-<div class="flex items-center justify-between">
-<span class="font-mono text-[10px] font-bold px-2 py-0.5 rounded bg-[#ff6b00]/10 text-[#ff6b00] border border-[#ff6b00]/20">STEP 03</span>
-<span class="status-lamp status-lamp-orange"></span>
-</div>
-<h4 class="font-display font-bold text-white text-sm">OS Stream Capture</h4>
-<p class="font-mono text-gray-400 leading-relaxed text-[11px]">In YouTube, TikTok, or Instagram, tap Share &gt; UnimaxDL. Pipeline immediately captures, muxes, and writes 4K.</p>
-</div>
-</div>
-</div>
-</section>
-<!-- Security & Trust Badges -->
-<section class="max-w-4xl mx-auto px-4 pb-20">
-<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-<div class="deck-panel bracket-corners p-5 rounded-xl border border-white/5 space-y-2">
-<span class="status-lamp status-lamp-cyan mx-auto"></span>
-<span class="font-mono font-bold text-white text-xs block tracking-wider">VIRUSTOTAL: 0/72</span>
-<span class="font-mono text-[10px] text-gray-400 block">Verified malware-free binary</span>
-</div>
-<div class="deck-panel bracket-corners p-5 rounded-xl border border-white/5 space-y-2">
-<span class="status-lamp status-lamp-green mx-auto"></span>
-<span class="font-mono font-bold text-white text-xs block tracking-wider">100% OPEN SOURCE</span>
-<span class="font-mono text-[10px] text-gray-400 block">Auditable MIT source tree</span>
-</div>
-<div class="deck-panel bracket-corners p-5 rounded-xl border border-white/5 space-y-2">
-<span class="status-lamp status-lamp-purple mx-auto"></span>
-<span class="font-mono font-bold text-white text-xs block tracking-wider">ZERO TELEMETRY</span>
-<span class="font-mono text-[10px] text-gray-400 block">No tracking or background daemons</span>
-</div>
-<div class="deck-panel bracket-corners p-5 rounded-xl border border-white/5 space-y-2">
-<span class="status-lamp status-lamp-orange mx-auto"></span>
-<span class="font-mono font-bold text-white text-xs block tracking-wider">HARDWARE MUXING</span>
-<span class="font-mono text-[10px] text-gray-400 block">Local GPU accelerated FFmpeg</span>
-</div>
-</div>
-</section>
-<!-- FAQ Accordion Section -->
-<section class="max-w-4xl mx-auto px-4 pb-24" id="faq">
-<div class="text-center max-w-xl mx-auto mb-10 space-y-3">
-<div class="inline-flex items-center gap-2 font-mono text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded bg-[#00d8f6]/10 text-[#00d8f6] border border-[#00d8f6]/30">
-<span class="status-lamp status-lamp-cyan"></span>
-<span>SYS // TECHNICAL ARCHIVE</span>
-</div>
-<h2 class="text-2xl sm:text-3xl font-display font-black text-white tracking-tight uppercase">
-Frequently Asked Questions
-</h2>
-</div>
-<div class="space-y-3 text-xs sm:text-sm">
-<div class="deck-panel bracket-corners rounded-xl p-5 border border-white/5 space-y-2">
-<h4 class="font-display font-bold text-white flex items-center justify-between cursor-pointer">
-<span class="flex items-center gap-2">
-<span class="status-lamp status-lamp-cyan"></span>
-<span>Why are 4K and 8K downloads exclusive to the Native App?</span>
-</span>
-<span class="font-mono text-xs text-gray-500">[INFO]</span>
-</h4>
-<p class="font-mono text-gray-400 leading-relaxed text-xs pl-4 border-l border-white/10 mt-2">
-High-definition streams (1440p, 2160p, 4320p) on YouTube and other platforms separate video and audio into distinct high-bitrate DASH feeds. Muxing multi-gigabyte video files in a web browser sandbox causes fatal memory limits. The native client leverages local GPU hardware acceleration and bundled static FFmpeg to combine video and audio streams with zero server lag and zero data caps.
-</p>
-</div>
-<div class="deck-panel bracket-corners rounded-xl p-5 border border-white/5 space-y-2">
-<h4 class="font-display font-bold text-white flex items-center justify-between cursor-pointer">
-<span class="flex items-center gap-2">
-<span class="status-lamp status-lamp-green"></span>
-<span>Is the UnimaxDL APK safe to install on Android devices?</span>
-</span>
-<span class="font-mono text-xs text-gray-500">[SECURITY]</span>
-</h4>
-<p class="font-mono text-gray-400 leading-relaxed text-xs pl-4 border-l border-white/10 mt-2">
-Yes, 100%. UnimaxDL is open-source under the MIT license, with every line of code inspectable on GitHub. The APK contains zero analytics trackers, zero background services, and requires only standard internet and download storage permissions.
-</p>
-</div>
-<div class="deck-panel bracket-corners rounded-xl p-5 border border-white/5 space-y-2">
-<h4 class="font-display font-bold text-white flex items-center justify-between cursor-pointer">
-<span class="flex items-center gap-2">
-<span class="status-lamp status-lamp-orange"></span>
-<span>How do client updates execute?</span>
-</span>
-<span class="font-mono text-xs text-gray-500">[LIFECYCLE]</span>
-</h4>
-<p class="font-mono text-gray-400 leading-relaxed text-xs pl-4 border-l border-white/10 mt-2">
-On PC and Android, UnimaxDL polls official GitHub releases on launch. When a newer tag is verified, an alert offers a 1-tap direct package download.
-</p>
-</div>
-<div class="deck-panel bracket-corners rounded-xl p-5 border border-white/5 space-y-2">
-<h4 class="font-display font-bold text-white flex items-center justify-between cursor-pointer">
-<span class="flex items-center gap-2">
-<span class="status-lamp status-lamp-purple"></span>
-<span>Does the native app persist background daemons when closed?</span>
-</span>
-<span class="font-mono text-xs text-gray-500">[RUNTIME]</span>
-</h4>
-<p class="font-mono text-gray-400 leading-relaxed text-xs pl-4 border-l border-white/10 mt-2">
-No. When closed, the process terminates immediately. Zero background daemons, zero battery drain, zero telemetry.
-</p>
-</div>
-</div>
-</section>
-<!-- Global Footer -->
-<footer class="border-t border-white/[0.08] bg-[#07080c] py-12 px-4 text-xs text-gray-400">
-<div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-<div class="flex items-center gap-3">
-<picture>
-<source srcset="/assets/images/icon-96.webp" type="image/webp"/>
-<img alt="UnimaxDL" class="w-8 h-8 object-contain drop-shadow-[0_0_8px_rgba(0,216,246,0.35)]" height="32" src="/assets/images/icon-48.png" width="32"/>
-</picture>
-<div>
-<span class="font-display font-bold text-white text-sm">UNIMAX<span class="text-[#00d8f6]">DL</span></span>
-<p class="font-mono text-[11px] text-gray-500">UNIVERSAL MEDIA WORKSTATION // MIT CORE</p>
-</div>
-</div>
-<div class="flex flex-wrap items-center justify-center gap-6 font-mono text-gray-400">
-<a class="hover:text-white transition" href="/">Home</a>
-<a class="hover:text-white transition" href="/download.html">Apps</a>
-<a class="hover:text-white transition" href="/youtube-downloader.html">YouTube</a>
-<a class="hover:text-white transition" href="/tiktok-downloader.html">TikTok</a>
-<a class="hover:text-white transition" href="/instagram-downloader.html">Instagram</a>
-<a class="hover:text-orange-400 transition" href="/reddit-downloader.html">Reddit</a>
-<a class="hover:text-amber-400 transition" href="/soundcloud-downloader.html">SoundCloud</a>
-<a class="hover:text-purple-400 transition" href="/twitch-downloader.html">Twitch</a>
-<a class="hover:text-white transition" href="/twitter-downloader.html">Twitter / X</a>
-<a class="hover:text-white transition" href="/facebook-downloader.html">Facebook</a>
-<a class="hover:text-white transition" href="/pinterest-downloader.html">Pinterest</a>
-<a class="hover:text-[#00d8f6] transition" href="/terms.html">Terms</a>
-<a class="hover:text-[#00d8f6] transition" href="/privacy.html">Privacy</a>
-<a class="hover:text-amber-400 transition" href="/dmca.html">DMCA</a>
-<a class="hover:text-white transition" href="https://github.com/UnimaxDL/unimaxdl.github.io" rel="noopener" target="_blank">GitHub</a>
-</div>
-<div class="text-center md:text-right font-mono text-[11px] text-gray-500">
-<span>ENGINEERED BY ATOMIC DHRUBA</span><br/>
-<span>LICENSED UNDER MIT OPEN SOURCE</span>
-</div>
-</div>
-</footer>
+  </style>
+
+  <!-- Workstation Content -->
+  <main style="flex:1; padding:2rem 1.25rem 4rem;">
+
+    <!-- Hero Section -->
+    <section style="margin-bottom:3rem;">
+      <div style="display:inline-flex; align-items:center; gap:0.5rem; font-family:var(--font-mono); font-size:0.6875rem; font-weight:700; color:var(--accent-signal); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.75rem;">
+        <span>[ 01 / NATIVE CLIENT ENGINE ]</span>
+      </div>
+      <h1 style="margin-bottom:0.75rem;">Open-Source Media Client Suite</h1>
+      <p style="max-width:64ch; font-size:1rem; line-height:1.6; color:var(--text-secondary);">
+        High-throughput local binary with GPU-accelerated stream merging, zero cloud queues, and full 4K/8K uncompressed DASH remuxing. Direct downloads at line speed.
+      </p>
+
+      <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:1.5rem;">
+        <a class="btn-secondary" href="#android">ANDROID APK</a>
+        <a class="btn-secondary" href="#windows">WINDOWS x64</a>
+        <a class="btn-secondary" href="#macos">macOS UNIVERSAL</a>
+        <a class="btn-secondary" href="#linux">LINUX APPIMAGE</a>
+        <a class="btn-secondary" href="#comparison">BENCHMARK</a>
+      </div>
+    </section>
+
+    <!-- Native Client Binary Modules Grid -->
+    <section style="display:grid; grid-template-columns:1fr; gap:1.5rem; margin-bottom:4rem;" id="modules-grid">
+      
+      <!-- Android v2.1.0 PRO Featured Module -->
+      <div class="deck-panel bracket-corners" id="android" style="padding:1.5rem; display:flex; flex-direction:column; justify-content:space-between; gap:1.5rem; border-left:3px solid var(--status-ready);">
+        <div>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.75rem;">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="status-led status-led-ready"></span>
+              <span style="font-family:var(--font-mono); font-size:0.6875rem; font-weight:700; text-transform:uppercase; color:var(--status-ready);">FEATURED MOBILE CLIENT</span>
+            </div>
+            <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted);">v2.1.0 PRO</span>
+          </div>
+
+          <h3 style="font-size:1.375rem; margin-bottom:0.5rem;">UnimaxDL for Android</h3>
+          <p style="font-size:0.875rem; color:var(--text-secondary); line-height:1.5; margin-bottom:1rem;">
+            Direct 1-tap download from YouTube, TikTok, and Instagram share menus. Background service worker with zero battery drain.
+          </p>
+
+          <div style="display:flex; flex-wrap:wrap; gap:1rem; font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted); margin-bottom:1rem;">
+            <span>SIZE: ~4.2 MB</span>
+            <span>TARGET: Android 8.0+</span>
+            <span>CHECKSUM: SHA-256 OK</span>
+          </div>
+        </div>
+
+        <div style="display:flex; flex-wrap:wrap; gap:0.75rem;">
+          <a class="btn-signal" id="btn-download-android" download="UnimaxDL-v2.1.0.apk" href="/downloads/UnimaxDL-v2.1.0.apk">
+            <span>DOWNLOAD ANDROID (.APK)</span>
+          </a>
+          <button class="btn-secondary" onclick="toggleQrModal()" type="button">
+            <span>SCAN QR CODE</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Desktop Binaries: Windows, macOS, Linux -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.5rem;">
+        
+        <!-- Windows x64 -->
+        <div class="deck-panel bracket-corners" id="windows" style="padding:1.5rem; display:flex; flex-direction:column; justify-content:space-between; gap:1rem;">
+          <div>
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.5rem;">
+              <span style="font-family:var(--font-mono); font-size:0.6875rem; font-weight:700; color:var(--text-muted);">DESKTOP CLIENT</span>
+              <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted);">v1.0.0</span>
+            </div>
+            <h3 style="font-size:1.125rem; margin-bottom:0.5rem;">Windows x64</h3>
+            <p style="font-size:0.8125rem; color:var(--text-secondary); line-height:1.5; margin-bottom:0.75rem;">
+              NVENC / Intel QuickSync accelerated remuxing engine for Windows 10 &amp; 11.
+            </p>
+            <div style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); margin-bottom:1rem;">
+              FILE: UnimaxDL-Setup-v1.0.0.exe (~62 MB)
+            </div>
+          </div>
+          <a class="btn-secondary" id="btn-download-win" download="UnimaxDL-Setup-v1.0.0.exe" href="/downloads/UnimaxDL-Setup-v1.0.0.exe" style="justify-content:center;">
+            <span>DOWNLOAD WINDOWS (.EXE)</span>
+          </a>
+        </div>
+
+        <!-- macOS Universal -->
+        <div class="deck-panel bracket-corners" id="macos" style="padding:1.5rem; display:flex; flex-direction:column; justify-content:space-between; gap:1rem;">
+          <div>
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.5rem;">
+              <span style="font-family:var(--font-mono); font-size:0.6875rem; font-weight:700; color:var(--text-muted);">DESKTOP CLIENT</span>
+              <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted);">v1.0.0</span>
+            </div>
+            <h3 style="font-size:1.125rem; margin-bottom:0.5rem;">macOS Universal</h3>
+            <p style="font-size:0.8125rem; color:var(--text-secondary); line-height:1.5; margin-bottom:0.75rem;">
+              Native Apple Silicon (M1/M2/M3) and Intel 64-bit universal binary dmg.
+            </p>
+            <div style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); margin-bottom:1rem;">
+              FILE: UnimaxDL-v1.0.0-macos.dmg (~68 MB)
+            </div>
+          </div>
+          <a class="btn-secondary" id="btn-download-mac" download="UnimaxDL-v1.0.0-macos.dmg" href="/downloads/UnimaxDL-v1.0.0-macos.dmg" style="justify-content:center;">
+            <span>DOWNLOAD MACOS (.DMG)</span>
+          </a>
+        </div>
+
+        <!-- Linux AppImage & CLI -->
+        <div class="deck-panel bracket-corners" id="linux" style="padding:1.5rem; display:flex; flex-direction:column; justify-content:space-between; gap:1rem;">
+          <div>
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.5rem;">
+              <span style="font-family:var(--font-mono); font-size:0.6875rem; font-weight:700; color:var(--text-muted);">DESKTOP CLIENT</span>
+              <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted);">v1.0.0</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
+              <img alt="Linux" height="20" src="/assets/images/tux.png" width="16"/>
+              <h3 style="font-size:1.125rem;">Linux x86_64</h3>
+            </div>
+            <p style="font-size:0.8125rem; color:var(--text-secondary); line-height:1.5; margin-bottom:0.75rem;">
+              Standalone zero-dependency AppImage compatible with Debian, Ubuntu, Fedora, Arch.
+            </p>
+            <div style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); margin-bottom:1rem;">
+              FILE: UnimaxDL-v1.0.0-linux.AppImage (~74 MB)
+            </div>
+          </div>
+          <a class="btn-secondary" id="btn-download-linux" download="UnimaxDL-v1.0.0-linux.AppImage" href="/downloads/UnimaxDL-v1.0.0-linux.AppImage" style="justify-content:center;">
+            <span>DOWNLOAD LINUX (.APPIMAGE)</span>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Terminal CLI Installation Block -->
+    <section class="deck-panel" style="padding:1.5rem; margin-bottom:4rem;">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.75rem;">
+        <span style="font-family:var(--font-mono); font-size:0.6875rem; font-weight:700; color:var(--accent-signal); text-transform:uppercase;">CLI // ONE-LINE INSTALLER</span>
+        <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted);">BASH / TERMINAL</span>
+      </div>
+      <div class="cli-block">
+        <code style="color:var(--text-primary); overflow-x:auto;">curl -sSL https://unimaxdl.github.io/install.sh | bash</code>
+        <button class="cli-copy-btn" onclick="navigator.clipboard.writeText('curl -sSL https://unimaxdl.github.io/install.sh | bash'); alert('Copied to clipboard!')" type="button">COPY</button>
+      </div>
+    </section>
+
+    <!-- QR Code Modal Drawer -->
+    <div class="hidden" id="qr-modal" style="position:fixed; inset:0; z-index:100; background-color:rgba(0,0,0,0.7); display:flex; align-items:center; justify-content:center; padding:1rem;">
+      <div class="deck-panel bracket-corners" style="max-width:380px; width:100%; padding:1.5rem; text-align:center; display:flex; flex-direction:column; gap:1rem;">
+        <div style="display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border-hairline); padding-bottom:0.5rem;">
+          <span style="font-family:var(--font-mono); font-size:0.75rem; font-weight:700; text-transform:uppercase;">SCAN TO DOWNLOAD APK</span>
+          <button onclick="toggleQrModal()" style="background:none; border:none; cursor:pointer; font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">[CLOSE]</button>
+        </div>
+        <div style="padding:1rem; background-color:#FFFFFF; border:1px solid var(--border-hairline); border-radius:var(--radius-panel); margin:0 auto; width:fit-content;">
+          <img alt="QR Code" height="180" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&amp;data=https://unimaxdl.github.io/downloads/UnimaxDL-v2.1.0.apk" width="180"/>
+        </div>
+        <p style="font-size:0.75rem; color:var(--text-secondary); line-height:1.5;">Point your phone camera at the matrix to download the standalone APK directly.</p>
+        <a class="btn-signal" download="UnimaxDL-v2.1.0.apk" href="/downloads/UnimaxDL-v2.1.0.apk">DIRECT APK DOWNLOAD</a>
+      </div>
+    </div>
+
+    <!-- Section: Capability Benchmark (Comparison Table) -->
+    <section id="comparison" style="margin-bottom:4rem;">
+      <div style="margin-bottom:1.5rem;">
+        <div style="font-family:var(--font-mono); font-size:0.6875rem; font-weight:700; color:var(--accent-signal); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.5rem;">[ 02 / CAPABILITY BENCHMARK ]</div>
+        <h2 style="font-size:1.5rem; margin-bottom:0.5rem;">Web Downloader vs. Native App</h2>
+        <p style="font-size:0.875rem; color:var(--text-secondary);">Hardware telemetry comparison: Ephemeral Cloud Proxy vs. Local Subsystem.</p>
+      </div>
+
+      <div class="deck-panel bracket-corners" style="overflow-x:auto;">
+        <table class="matrix-table">
+          <thead>
+            <tr>
+              <th>Feature Metric</th>
+              <th style="width:35%;">Web Downloader (Browser)</th>
+              <th style="width:35%; color:var(--accent-signal);">Native App (Android / PC)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Max Video Resolution</strong></td>
+              <td>Up to 1080p FHD</td>
+              <td style="color:var(--status-ready); font-weight:700;">Full 4K (2160p) &amp; 8K (4320p)</td>
+            </tr>
+            <tr>
+              <td><strong>Stream Frame Rates</strong></td>
+              <td>Standard 30fps / 60fps</td>
+              <td style="color:var(--status-ready); font-weight:700;">Uncompressed 60fps HDR</td>
+            </tr>
+            <tr>
+              <td><strong>Audio Bitrate</strong></td>
+              <td>192 kbps MP3</td>
+              <td style="color:var(--status-ready); font-weight:700;">320 kbps Studio &amp; Lossless M4A/FLAC</td>
+            </tr>
+            <tr>
+              <td><strong>Processing Subsystem</strong></td>
+              <td>Cloud ephemeral proxy</td>
+              <td style="color:var(--status-ready); font-weight:700;">Local GPU Acceleration (NVENC / VAAPI)</td>
+            </tr>
+            <tr>
+              <td><strong>Throughput &amp; Queues</strong></td>
+              <td>FIFO queue during peak hours</td>
+              <td style="color:var(--status-ready); font-weight:700;">Zero Queue · Direct CDN line speed</td>
+            </tr>
+            <tr>
+              <td><strong>Batch &amp; Playlists</strong></td>
+              <td>Single link only</td>
+              <td style="color:var(--status-ready); font-weight:700;">Full YouTube &amp; TikTok channel batching</td>
+            </tr>
+            <tr>
+              <td><strong>System Integration</strong></td>
+              <td>Manual copy and paste</td>
+              <td style="color:var(--status-ready); font-weight:700;">1-Tap Android Share &amp; Clipboard Watcher</td>
+            </tr>
+            <tr>
+              <td><strong>Install Footprint</strong></td>
+              <td>Zero footprint · Web client</td>
+              <td style="color:var(--status-ready); font-weight:700;">Lightweight binary (~4MB APK / native bundle)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section: Deep Link Protocol Handler Bridge -->
+    <section class="deck-panel bracket-corners" id="deep-link-widget" style="padding:1.5rem; margin-bottom:4rem;">
+      <div style="border-bottom:1px solid var(--border-hairline); padding-bottom:1rem; margin-bottom:1rem;">
+        <div style="font-family:var(--font-mono); font-size:0.6875rem; font-weight:700; color:var(--accent-signal); text-transform:uppercase; margin-bottom:0.25rem;">PROTOCOL INTERFACE // unimaxdl://</div>
+        <h3 style="font-size:1.125rem;">App Deep Link Launcher</h3>
+        <p style="font-size:0.8125rem; color:var(--text-secondary);">Already installed UnimaxDL? Dispatch media links directly to local client subsystem.</p>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:0.75rem;">
+        <div style="display:flex; flex-direction:column; gap:0.75rem;" id="deep-link-flex">
+          <div class="deck-input-wrapper" style="flex:1;">
+            <input class="deck-input" id="deep-link-input" placeholder="Paste YouTube, TikTok, Instagram, Twitter URL..." type="url"/>
+          </div>
+          <button class="btn-signal" onclick="testDeepLink()" type="button">
+            <span>LAUNCH IN APP</span>
+          </button>
+        </div>
+        <div class="hidden deck-panel-inset" id="deep-link-output" style="padding:0.75rem 1rem; display:flex; align-items:center; justify-content:space-between; gap:1rem;">
+          <span class="font-mono text-xs truncate" id="deep-link-text" style="color:var(--accent-signal);"></span>
+          <button class="cli-copy-btn" onclick="copyGeneratedDeepLink()" type="button">[COPY LINK]</button>
+        </div>
+      </div>
+    </section>
+
+    <style>
+      @media (min-width: 640px) {
+        #deep-link-flex { flex-direction: row !important; }
+      }
+    </style>
+
+    <!-- Section: Android 3-Step Setup Sequence -->
+    <section class="deck-panel bracket-corners" style="padding:1.5rem; margin-bottom:4rem;">
+      <div style="border-bottom:1px solid var(--border-hairline); padding-bottom:1rem; margin-bottom:1.5rem;">
+        <div style="font-family:var(--font-mono); font-size:0.6875rem; font-weight:700; color:var(--accent-signal); text-transform:uppercase; margin-bottom:0.25rem;">PROVISIONING SEQUENCE</div>
+        <h3 style="font-size:1.125rem;">Android Installation Guide</h3>
+        <p style="font-size:0.8125rem; color:var(--text-secondary);">Initialize local media interception in 3 operational steps.</p>
+      </div>
+
+      <div class="step-sequence">
+        <div class="step-card">
+          <span class="step-badge">STEP 01</span>
+          <h4 style="font-family:var(--font-display); font-weight:700; font-size:1rem; color:var(--text-primary);">Download Binary</h4>
+          <p style="font-size:0.8125rem; color:var(--text-secondary); line-height:1.5;">Trigger green "DOWNLOAD ANDROID (.APK)" button. System saves lightweight ~4.2MB standalone payload.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-badge">STEP 02</span>
+          <h4 style="font-family:var(--font-display); font-weight:700; font-size:1rem; color:var(--text-primary);">Package Install</h4>
+          <p style="font-size:0.8125rem; color:var(--text-secondary); line-height:1.5;">Access notification shade or Downloads folder. Execute package. Enable "Install Unknown Apps" permission.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-badge">STEP 03</span>
+          <h4 style="font-family:var(--font-display); font-weight:700; font-size:1rem; color:var(--text-primary);">OS Stream Capture</h4>
+          <p style="font-size:0.8125rem; color:var(--text-secondary); line-height:1.5;">In YouTube, TikTok, or Instagram, tap Share &gt; UnimaxDL. Pipeline immediately captures, muxes, and writes 4K.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Security & Trust Telemetry -->
+    <section style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; margin-bottom:4rem;">
+      <div class="deck-panel" style="padding:1.25rem; text-align:center;">
+        <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); display:block; margin-bottom:0.25rem;">SECURITY AUDIT</span>
+        <strong style="font-family:var(--font-mono); font-size:0.875rem; color:var(--text-primary); display:block;">VIRUSTOTAL 0/72</strong>
+        <span style="font-size:0.75rem; color:var(--text-secondary);">Clean verified binary</span>
+      </div>
+      <div class="deck-panel" style="padding:1.25rem; text-align:center;">
+        <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); display:block; margin-bottom:0.25rem;">CODEBASE AUDIT</span>
+        <strong style="font-family:var(--font-mono); font-size:0.875rem; color:var(--text-primary); display:block;">100% OPEN SOURCE</strong>
+        <span style="font-size:0.75rem; color:var(--text-secondary);">Auditable MIT tree</span>
+      </div>
+      <div class="deck-panel" style="padding:1.25rem; text-align:center;">
+        <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); display:block; margin-bottom:0.25rem;">PRIVACY DIRECTIVE</span>
+        <strong style="font-family:var(--font-mono); font-size:0.875rem; color:var(--text-primary); display:block;">ZERO TELEMETRY</strong>
+        <span style="font-size:0.75rem; color:var(--text-secondary);">No background daemons</span>
+      </div>
+      <div class="deck-panel" style="padding:1.25rem; text-align:center;">
+        <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); display:block; margin-bottom:0.25rem;">ACCELERATION</span>
+        <strong style="font-family:var(--font-mono); font-size:0.875rem; color:var(--text-primary); display:block;">GPU HARDWARE MUX</strong>
+        <span style="font-size:0.75rem; color:var(--text-secondary);">NVENC / VAAPI / AMF</span>
+      </div>
+    </section>
+
+    <!-- FAQ Accordion -->
+    <section id="faq" style="margin-bottom:4rem;">
+      <div style="margin-bottom:1.5rem;">
+        <div style="font-family:var(--font-mono); font-size:0.6875rem; font-weight:700; color:var(--accent-signal); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.5rem;">[ 03 / TECHNICAL ARCHIVE ]</div>
+        <h2 style="font-size:1.5rem; margin-bottom:0.5rem;">Frequently Asked Questions</h2>
+      </div>
+
+      <div class="faq-accordion">
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span>Why are 4K and 8K downloads exclusive to the Native App?</span>
+            <span class="faq-icon">+</span>
+          </summary>
+          <div class="faq-content">
+            High-definition streams (1440p, 2160p, 4320p) on YouTube and other platforms separate video and audio into distinct DASH feeds. Muxing multi-gigabyte video files in a web browser sandbox causes fatal memory limits. The native client leverages local GPU hardware acceleration and bundled static FFmpeg to combine video and audio streams with zero server lag and zero data caps.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span>Is the UnimaxDL APK safe to install on Android devices?</span>
+            <span class="faq-icon">+</span>
+          </summary>
+          <div class="faq-content">
+            Yes, 100%. UnimaxDL is open-source under the MIT license, with every line of code inspectable on GitHub. The APK contains zero analytics trackers, zero background services, and requires only standard internet and download storage permissions.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span>How do client updates execute?</span>
+            <span class="faq-icon">+</span>
+          </summary>
+          <div class="faq-content">
+            On PC and Android, UnimaxDL polls official GitHub releases on launch. When a newer tag is verified, an alert offers a 1-tap direct package download.
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span>Does the native app persist background daemons when closed?</span>
+            <span class="faq-icon">+</span>
+          </summary>
+          <div class="faq-content">
+            No. When closed, the process terminates immediately. Zero background daemons, zero battery drain, zero telemetry.
+          </div>
+        </details>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Global Studio Footer -->
+  <footer class="deck-footer">
+    <div class="deck-footer-top">
+      <div class="deck-footer-brand">
+        <div style="display:flex; align-items:center; gap:0.5rem; font-family:var(--font-display); font-weight:800; font-size:1.125rem;">
+          <img alt="UnimaxDL" height="24" src="/assets/images/unimaxdl-mark.svg" width="24"/>
+          <span>UNIMAXDL</span>
+        </div>
+        <p style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">
+          PRECISION BROADCAST STUDIO MEDIA EXTRACTOR // MIT LICENSED
+        </p>
+      </div>
+
+      <nav class="deck-footer-nav">
+        <a href="/">Home</a>
+        <a href="/download.html">Apps</a>
+        <a href="/youtube-downloader.html">YouTube</a>
+        <a href="/tiktok-downloader.html">TikTok</a>
+        <a href="/instagram-downloader.html">Instagram</a>
+        <a href="/reddit-downloader.html">Reddit</a>
+        <a href="/soundcloud-downloader.html">SoundCloud</a>
+        <a href="/twitch-downloader.html">Twitch</a>
+        <a href="/twitter-downloader.html">Twitter / X</a>
+        <a href="/facebook-downloader.html">Facebook</a>
+        <a href="/pinterest-downloader.html">Pinterest</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/dmca.html">DMCA</a>
+        <a href="https://github.com/UnimaxDL/unimaxdl.github.io" rel="noopener" target="_blank">GitHub</a>
+      </nav>
+    </div>
+
+    <div class="deck-footer-bottom">
+      <span>ENGINEERED BY ATOMIC DHRUBA</span>
+      <span>STATUS: ALL SIGNAL PIPELINES NOMINAL</span>
+    </div>
+  </footer>
+
+</div>
+
+<!-- Scripts -->
 <script src="/assets/js/analytics.js?v=3.1"></script>
-<!-- Interactive Scripts -->
-<script>
-    function toggleQrModal() {
-      const modal = document.getElementById('qr-modal');
-      if (modal) modal.classList.toggle('hidden');
-    }
+<script src="/assets/js/nav.js?v=3.0"></script>
+<script src="/assets/js/releases.js" defer></script>
 
-    function testDeepLink() {
-      const input = document.getElementById('deep-link-input');
-      const val = input ? input.value.trim() : '';
-      if (!val) {
-        alert("Please enter a video URL first.");
-        return;
-      }
-      const deepLink = 'unimaxdl://download?url=' + encodeURIComponent(val);
-      const outBox = document.getElementById('deep-link-output');
-      const outText = document.getElementById('deep-link-text');
-      if (outBox && outText) {
-        outText.innerText = deepLink;
-        outBox.classList.remove('hidden');
-      }
-      // Attempt window navigation
-      window.location.href = deepLink;
-    }
-
-    function copyGeneratedDeepLink() {
-      const outText = document.getElementById('deep-link-text');
-      if (outText && outText.innerText) {
-        navigator.clipboard.writeText(outText.innerText).then(() => {
-          alert("Deep link copied to clipboard: " + outText.innerText);
-        });
-      }
-    }
-  </script>
-<!-- Monetag MultiTag Official Script (Deferred to zero-impact background execution) -->
 <script>
-    window.addEventListener('load', function() {
-      setTimeout(function() {
-        var s = document.createElement('script');
-        s.src = "https://quge5.com/88/tag.min.js";
-        s.dataset.zone = "305301";
-        s.async = true;
-        s.dataset.cfasync = "false";
-        document.body.appendChild(s);
-      }, 500);
-    });
-  </script>
+  function toggleQrModal() {
+    const modal = document.getElementById('qr-modal');
+    if (modal) modal.classList.toggle('hidden');
+  }
+
+  function testDeepLink() {
+    const input = document.getElementById('deep-link-input');
+    const val = input ? input.value.trim() : '';
+    if (!val) {
+      alert("Please enter a video URL first.");
+      return;
+    }
+    const deepLink = 'unimaxdl://download?url=' + encodeURIComponent(val);
+    const outBox = document.getElementById('deep-link-output');
+    const outText = document.getElementById('deep-link-text');
+    if (outBox && outText) {
+      outText.innerText = deepLink;
+      outBox.classList.remove('hidden');
+    }
+    window.location.href = deepLink;
+  }
+
+  function copyGeneratedDeepLink() {
+    const outText = document.getElementById('deep-link-text');
+    if (outText && outText.innerText) {
+      navigator.clipboard.writeText(outText.innerText).then(() => {
+        alert("Deep link copied to clipboard: " + outText.innerText);
+      });
+    }
+  }
+</script>
+
+<!-- Monetag MultiTag Official Script (Deferred) -->
+<script>
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      var s = document.createElement('script');
+      s.src = "https://quge5.com/88/tag.min.js";
+      s.dataset.zone = "305301";
+      s.async = true;
+      s.dataset.cfasync = "false";
+      document.body.appendChild(s);
+    }, 500);
+  });
+</script>
 <!-- Adsterra Social Bar Official Script -->
 <script data-cfasync="false" src="https://bellnewyork.org/14/9ee0588abd51114c8dc6784b6ea788c8"></script>
-<script src="/assets/js/nav.js?v=2.0"></script><script src="/assets/js/releases.js" defer></script>
 </body>
 </html>

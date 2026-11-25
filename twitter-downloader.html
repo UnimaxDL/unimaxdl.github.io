@@ -1,72 +1,68 @@
 <!DOCTYPE html>
-
-<html class="dark scroll-smooth" lang="en">
+<html class="scroll-smooth" data-theme="light" data-platform="twitter" lang="en">
 <head>
 <meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport"/>
+<title>Twitter Video Downloader — Download X Videos &amp; GIFs in HD | UnimaxDL</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport"/>
+<title>Twitter Video Downloader — Download X Videos &amp; GIFs in HD | UnimaxDL</title>
+<meta content="Download Twitter / X videos and animated GIFs in 1080p Full HD MP4 or extract audio to MP3. Fast, free, no sign-up required, and 100% clean with UnimaxDL." name="description"/>
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport"/>
 <title>Twitter Video Downloader — Download X Videos &amp; GIFs in HD | UnimaxDL</title>
 <meta content="Download Twitter / X videos and animated GIFs in 1080p Full HD MP4 or extract audio to MP3. Fast, free, no sign-up required, and 100% clean with UnimaxDL." name="description"/>
 <meta content="twitter video downloader, x video downloader, download twitter video, twitter gif download, download x video hd, twitter to mp4" name="keywords"/>
 <link href="https://unimaxdl.github.io/twitter-downloader.html" rel="canonical"/>
-<!-- Favicon & Touch Icons -->
 
-
-
+<!-- Prevent Flash of Unstyled Content (FOUC) -->
+<script>
+  (function() {
+    const t = localStorage.getItem('udl-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
 
 <link href="/manifest.json" rel="manifest"/>
-<meta content="#07070a" name="theme-color"/>
-<!-- Robots & Directives -->
+<meta content="#F4F1EA" name="theme-color"/>
 <meta content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" name="robots"/>
+
 <!-- Open Graph -->
 <meta content="website" property="og:type"/>
 <meta content="https://unimaxdl.github.io/twitter-downloader.html" property="og:url"/>
-<meta content="Twitter Video Downloader — Download X Videos in HD | UnimaxDL" property="og:title"/>
-<meta content="Download Twitter / X videos and animated GIFs in 1080p Full HD MP4. Free and ad-free." property="og:description"/>
+<meta content="Twitter Video Downloader — Download X Videos &amp; GIFs in HD | UnimaxDL" property="og:title"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport"/>
+<title>Twitter Video Downloader — Download X Videos &amp; GIFs in HD | UnimaxDL</title>
+<meta content="Download Twitter / X videos and animated GIFs in 1080p Full HD MP4 or extract audio to MP3. Fast, free, no sign-up required, and 100% clean with UnimaxDL." property="og:description"/>
 <meta content="https://unimaxdl.github.io/assets/images/icon2.png" property="og:image"/>
 <meta content="UnimaxDL" property="og:site_name"/>
+
 <!-- Twitter Card -->
 <meta content="summary_large_image" name="twitter:card"/>
 <meta content="https://unimaxdl.github.io/twitter-downloader.html" name="twitter:url"/>
-<meta content="Twitter / X Video Downloader — UnimaxDL" name="twitter:title"/>
-<meta content="Download Twitter / X videos and GIFs in 1080p Full HD MP4." name="twitter:description"/>
+<meta content="Twitter Video Downloader — Download X Videos &amp; GIFs in HD | UnimaxDL" name="twitter:title"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport"/>
+<title>Twitter Video Downloader — Download X Videos &amp; GIFs in HD | UnimaxDL</title>
+<meta content="Download Twitter / X videos and animated GIFs in 1080p Full HD MP4 or extract audio to MP3. Fast, free, no sign-up required, and 100% clean with UnimaxDL." name="twitter:description"/>
 <meta content="https://unimaxdl.github.io/assets/images/icon2.png" name="twitter:image"/>
-<!-- Schema.org WebApplication, HowTo & FAQPage -->
-<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Typography -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
-<style>
-    body {
-      background-color: #07070a;
-      min-height: 100vh;
-      position: relative;
-    }
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background-image: 
-        radial-gradient(at 0% 0%, rgba(2, 132, 199, 0.12) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.10) 0px, transparent 50%),
-        radial-gradient(at 50% 50%, rgba(15, 15, 21, 0.9) 0px, #07070a 100%);
-      pointer-events: none;
-      z-index: -1;
-      transform: translateZ(0);
-      will-change: transform;
-    }
-    .glass-card {
-      background: rgba(22, 22, 32, 0.85);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5);
-      transform: translateZ(0);
-    }
-    .glass-card:hover {
-      border-color: rgba(2, 132, 199, 0.4);
-    }
-  </style>
-<link href="/assets/css/style.css?v=2.0" rel="stylesheet"/><script type="application/ld+json">[
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+
+<!-- SIGNAL DECK Stylesheet -->
+<link href="/assets/css/style.css?v=4.0" rel="stylesheet"/>
+
+<!-- Favicons -->
+<meta content="UnimaxDL" name="application-name"/>
+<link href="/assets/images/unimaxdl-mark.svg" rel="icon" type="image/svg+xml"/>
+<link href="/assets/images/icon-48.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="/assets/images/icon-96.png" rel="icon" sizes="96x96" type="image/png"/>
+<link href="/assets/images/icon2-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="/assets/images/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/favicon.ico" rel="shortcut icon"/>
+<link href="/assets/images/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+
+<script type="application/ld+json">[
   {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
@@ -169,395 +165,463 @@
       }
     ]
   }
-]</script><meta content="UnimaxDL" name="application-name"/><link href="/assets/images/icon-48.png" rel="icon" sizes="48x48" type="image/png"/><link href="/assets/images/icon-96.png" rel="icon" sizes="96x96" type="image/png"/><link href="/assets/images/icon2-192.png" rel="icon" sizes="192x192" type="image/png"/><link href="/assets/images/favicon.ico" rel="icon" type="image/x-icon"/><link href="/favicon.ico" rel="shortcut icon"/><link href="/assets/images/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/></head>
-<body class="text-gray-100 font-sans antialiased selection:bg-sky-500/30 selection:text-sky-300">
-<!-- Header -->
-<header class="sticky top-0 z-50 bg-[#07070a]/85 backdrop-blur-xl border-b border-white/[0.08]">
-<div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-<!-- Brand Logo with Responsive WebP Icon -->
-<a class="flex items-center gap-3 group" href="/">
-<div class="relative">
-<picture>
-<source srcset="/assets/images/icon-96.webp" type="image/webp"/>
-<img alt="UnimaxDL Icon" class="w-10 h-10 object-contain drop-shadow-[0_0_12px_rgba(34,211,238,0.4)] group-hover:scale-105 transition-all duration-300" height="40" src="/assets/images/icon-48.png" width="40"/>
-</picture>
-<span class="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-cyan-400 animate-ping opacity-75"></span>
-<span class="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
-</div>
-<div class="flex items-center gap-2">
-<span class="font-black text-lg tracking-tight text-white">Unimax<span class="text-cyan-400">DL</span></span>
-<span class="text-[9px] font-extrabold px-2 py-0.5 rounded-full bg-cyan-400/10 text-cyan-400 border border-cyan-400/20 uppercase tracking-wider">v2.0</span>
-</div>
-</a>
-<!-- Desktop Navigation Links -->
-<div class="hidden lg:flex items-center gap-6">
-<nav class="flex items-center gap-5 text-xs font-semibold text-gray-300">
-<a class="hover:text-cyan-400 transition font-bold text-cyan-400" href="/download.html">Apps</a>
-<a class="hover:text-red-400 transition" href="/youtube-downloader.html">YouTube</a>
-<a class="hover:text-teal-400 transition" href="/tiktok-downloader.html">TikTok</a>
-<a class="hover:text-fuchsia-400 transition" href="/instagram-downloader.html">Instagram</a>
-<a class="hover:text-orange-400 transition" href="/reddit-downloader.html">Reddit</a>
-<a class="hover:text-amber-400 transition" href="/soundcloud-downloader.html">SoundCloud</a>
-<a class="hover:text-purple-400 transition" href="/twitch-downloader.html">Twitch</a>
-<!-- More Platforms Dropdown -->
-<div class="relative">
-<button class="flex items-center gap-1 hover:text-white transition focus:outline-none" id="platforms-dropdown-btn" onclick="togglePlatformsDropdown(event)">
-<span>More</span>
-<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</button>
-<div class="hidden opacity-0 scale-95 transition-all duration-150 absolute right-0 mt-3 w-48 glass-card rounded-2xl p-2 z-50 border border-white/10 shadow-2xl" id="platforms-dropdown">
-<a class="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-white/5 text-xs font-semibold text-gray-200 hover:text-sky-400 transition" href="/twitter-downloader.html">
-<span class="w-2 h-2 rounded-full bg-sky-400"></span>
-<span>Twitter / X</span>
-</a>
-<a class="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-white/5 text-xs font-semibold text-gray-200 hover:text-blue-400 transition" href="/facebook-downloader.html">
-<span class="w-2 h-2 rounded-full bg-blue-500"></span>
-<span>Facebook</span>
-</a>
-<a class="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-white/5 text-xs font-semibold text-gray-200 hover:text-rose-400 transition" href="/pinterest-downloader.html">
-<span class="w-2 h-2 rounded-full bg-rose-500"></span>
-<span>Pinterest</span>
-</a>
-<div class="border-t border-white/10 my-1"></div>
-<a class="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-white/5 text-xs font-semibold text-cyan-400 transition" href="/#tool">
-<span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-<span>All 1000+ Platforms</span>
-</a>
-</div>
-</div>
-</nav>
-<a class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl glass-card hover:bg-white/10 text-xs font-bold text-gray-200 transition" href="https://github.com/UnimaxDL/unimaxdl.github.io" rel="noopener" target="_blank">
-<svg class="w-3.5 h-3.5 fill-current" viewbox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"></path></svg>
-<span>GitHub</span>
-</a>
-</div>
-<!-- Mobile Actions: Apps Button + Hamburger Menu -->
-<div class="flex lg:hidden items-center gap-2.5">
-<a class="px-3 py-1.5 rounded-xl bg-cyan-500/10 border border-cyan-500/25 text-cyan-400 text-xs font-bold transition" href="/download.html">
-          Apps
-        </a>
-<button aria-expanded="false" aria-label="Open Navigation Menu" class="p-2 rounded-xl glass-card text-gray-300 hover:text-white hover:border-cyan-400/40 transition" id="mobile-menu-btn" onclick="toggleMobileMenu()">
-<svg class="w-5 h-5 fill-none stroke-current" viewbox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</button>
-</div>
-</div>
-</header>
-<div class="hidden opacity-0 fixed inset-0 bg-black/70 backdrop-blur-sm z-50 transition-opacity duration-300" id="mobile-overlay" onclick="toggleMobileMenu(false)"></div>
-<aside class="-translate-x-full fixed top-0 left-0 bottom-0 w-80 max-w-[85vw] bg-[#090910] border-r border-white/10 z-50 p-5 flex flex-col justify-between overflow-y-auto shadow-2xl" id="mobile-drawer">
-<div class="space-y-6">
-<!-- Drawer Header -->
-<div class="flex items-center justify-between pb-4 border-b border-white/10">
-<a class="flex items-center gap-2.5" href="/">
-<picture>
-<source srcset="/assets/images/icon-96.webp" type="image/webp"/>
-<img alt="UnimaxDL" class="w-8 h-8 object-contain" height="32" src="/assets/images/icon-48.png" width="32"/>
-</picture>
-<span class="font-black text-base text-white tracking-tight">Unimax<span class="text-cyan-400">DL</span></span>
-</a>
-<button aria-label="Close Navigation" class="p-1.5 rounded-xl text-gray-400 hover:text-white glass-card" onclick="toggleMobileMenu(false)">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-</button>
-</div>
-<!-- Quick Platform Jump Links -->
-<div class="space-y-2">
-<span class="text-[10px] font-black uppercase tracking-widest text-gray-400 px-1">Platforms</span>
-<div class="grid grid-cols-1 gap-1.5 text-xs font-semibold">
-<a class="flex items-center justify-between px-3 py-2.5 rounded-xl glass-card hover:bg-white/5 text-gray-200 hover:text-red-400 transition" href="/youtube-downloader.html">
-<span class="flex items-center gap-2.5">
-<span class="w-2 h-2 rounded-full bg-red-500"></span>
-<span>YouTube</span>
-</span>
-<span class="text-[10px] text-gray-400">4K &amp; Shorts</span>
-</a>
-<a class="flex items-center justify-between px-3 py-2.5 rounded-xl glass-card hover:bg-white/5 text-gray-200 hover:text-teal-400 transition" href="/tiktok-downloader.html">
-<span class="flex items-center gap-2.5">
-<span class="w-2 h-2 rounded-full bg-teal-400"></span>
-<span>TikTok</span>
-</span>
-<span class="text-[10px] text-gray-400">No Watermark</span>
-</a>
-<a class="flex items-center justify-between px-3 py-2.5 rounded-xl glass-card hover:bg-white/5 text-gray-200 hover:text-fuchsia-400 transition" href="/instagram-downloader.html">
-<span class="flex items-center gap-2.5">
-<span class="w-2 h-2 rounded-full bg-fuchsia-400"></span>
-<span>Instagram</span>
-</span>
-<span class="text-[10px] text-gray-400">Reels &amp; Audio</span>
-</a>
-<a class="flex items-center justify-between px-3 py-2.5 rounded-xl glass-card hover:bg-white/5 text-gray-200 hover:text-orange-400 transition" href="/reddit-downloader.html">
-<span class="flex items-center gap-2.5">
-<span class="w-2 h-2 rounded-full bg-orange-500"></span>
-<span>Reddit</span>
-</span>
-<span class="text-[10px] text-gray-400">With Sound</span>
-</a>
-<a class="flex items-center justify-between px-3 py-2.5 rounded-xl glass-card hover:bg-white/5 text-gray-200 hover:text-amber-400 transition" href="/soundcloud-downloader.html">
-<span class="flex items-center gap-2.5">
-<span class="w-2 h-2 rounded-full bg-amber-400"></span>
-<span>SoundCloud</span>
-</span>
-<span class="text-[10px] text-gray-400">320kbps MP3</span>
-</a>
-<a class="flex items-center justify-between px-3 py-2.5 rounded-xl glass-card hover:bg-white/5 text-gray-200 hover:text-purple-400 transition" href="/twitch-downloader.html">
-<span class="flex items-center gap-2.5">
-<span class="w-2 h-2 rounded-full bg-purple-400"></span>
-<span>Twitch</span>
-</span>
-<span class="text-[10px] text-gray-400">60FPS Clips</span>
-</a>
-<a class="flex items-center justify-between px-3 py-2.5 rounded-xl glass-card hover:bg-white/5 text-gray-200 hover:text-sky-400 transition" href="/twitter-downloader.html">
-<span class="flex items-center gap-2.5">
-<span class="w-2 h-2 rounded-full bg-sky-400"></span>
-<span>Twitter / X</span>
-</span>
-<span class="text-[10px] text-gray-400">HD Video</span>
-</a>
-<a class="flex items-center justify-between px-3 py-2.5 rounded-xl glass-card hover:bg-white/5 text-gray-200 hover:text-blue-400 transition" href="/facebook-downloader.html">
-<span class="flex items-center gap-2.5">
-<span class="w-2 h-2 rounded-full bg-blue-500"></span>
-<span>Facebook</span>
-</span>
-<span class="text-[10px] text-gray-400">Reels</span>
-</a>
-<a class="flex items-center justify-between px-3 py-2.5 rounded-xl glass-card hover:bg-white/5 text-gray-200 hover:text-rose-400 transition" href="/pinterest-downloader.html">
-<span class="flex items-center gap-2.5">
-<span class="w-2 h-2 rounded-full bg-rose-500"></span>
-<span>Pinterest</span>
-</span>
-<span class="text-[10px] text-gray-400">Video Pins</span>
-</a>
-</div>
-</div>
-<!-- App Download Banner Inside Drawer -->
-<div class="p-4 rounded-2xl glass-card border border-cyan-500/20 bg-cyan-500/5 space-y-2">
-<span class="text-[10px] font-black uppercase tracking-wider text-cyan-400 block">Desktop &amp; Android</span>
-<p class="text-xs text-gray-300 font-medium">Download companion apps for offline playlist muxing and background downloads.</p>
-<a class="inline-flex items-center justify-center w-full py-2 px-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-dark-950 font-bold text-xs transition" href="/download.html">
-          Get Free Apps
-        </a>
-</div>
-</div>
-<!-- Drawer Footer -->
-<div class="pt-6 border-t border-white/10 space-y-3">
-<div class="flex items-center justify-between text-xs text-gray-400">
-<a class="hover:text-white transition" href="/terms.html">Terms</a>
-<a class="hover:text-white transition" href="/privacy.html">Privacy</a>
-<a class="hover:text-white transition" href="/dmca.html">DMCA</a>
-<a class="hover:text-white transition" href="https://github.com/UnimaxDL/unimaxdl.github.io" rel="noopener" target="_blank">GitHub</a>
-</div>
-<p class="text-[10px] text-gray-400 text-center">UnimaxDL · MIT Open Source</p>
-</div>
-</aside>
-<!-- Hero Section -->
-<section class="pt-14 pb-10 px-4 text-center">
-<div class="max-w-3xl mx-auto space-y-4">
-<div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-sky-500/10 border border-sky-500/25 text-sky-400 text-xs font-bold shadow-sm">
-<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span>X Video · Animated GIFs · Full HD 1080p</span>
-</div>
-<h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
-        Download Twitter / X Videos in HD
-      </h1>
-<p class="text-gray-400 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
-        Save high-definition Twitter / X videos and animated GIFs in 1080p Full HD MP4 directly to your device without logging in.
-      </p>
-</div>
-</section>
-<!-- Downloader Widget -->
-<section class="max-w-3xl mx-auto px-4 pb-16">
-<div class="glass-card rounded-3xl p-6 sm:p-8 space-y-5">
-<div class="space-y-2">
-<div class="flex items-center justify-between text-xs">
-<label class="font-bold text-gray-300 uppercase tracking-wider" for="url-input">Paste Twitter / X Post Link</label>
-<button class="text-sky-400 hover:text-sky-300 font-bold flex items-center gap-1.5 text-[11px] transition" onclick="pasteClipboard()">
-<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span>Paste</span>
-</button>
-</div>
-<div class="relative flex items-center rounded-2xl border border-white/10 bg-[#0c0c12]">
-<span class="pl-4 text-sky-400 flex items-center">
-<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
-</span>
-<input class="w-full bg-transparent py-4 pl-3 pr-28 text-sm text-white placeholder-gray-500 focus:outline-none" id="url-input" placeholder="https://x.com/user/status/... or https://twitter.com/..." type="url"/>
-<button class="mr-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-500 hover:brightness-110 text-white font-black text-xs shadow-md transition flex-shrink-0 flex items-center gap-1.5" id="analyze-btn" onclick="handleAnalyze()">
-<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span id="btn-text">Analyze</span>
-</button>
-</div>
-</div>
-<div id="media-card-container"></div>
-<div id="tasks-container"></div>
-<div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-3 border-t border-white/[0.06] text-[11px] text-gray-400">
-<div class="flex items-center gap-1.5 justify-center py-1">
-<svg class="w-3.5 h-3.5 text-cyan-400 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span class="font-semibold text-gray-300">100% Virus Free</span>
-</div>
-<div class="flex items-center gap-1.5 justify-center py-1">
-<svg class="w-3.5 h-3.5 text-amber-400 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span class="font-semibold text-gray-300">Zero Logs &amp; Secure</span>
-</div>
-<div class="flex items-center gap-1.5 justify-center py-1">
-<svg class="w-3.5 h-3.5 text-teal-400 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span class="font-semibold text-gray-300">Direct 4K Streams</span>
-</div>
-<div class="flex items-center gap-1.5 justify-center py-1">
-<svg class="w-3.5 h-3.5 text-fuchsia-400 flex-shrink-0" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-<span class="font-semibold text-gray-300">MIT Open Source</span>
-</div>
-</div></div>
-</section>
-<!-- How to Download in 3 Steps -->
-<section class="max-w-4xl mx-auto px-4 pb-16 space-y-6">
-<div class="text-center space-y-2">
-<h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">How to Download Twitter / X Videos</h2>
-<p class="text-sm text-gray-400 max-w-lg mx-auto">Fast, 100% free, and works on all devices.</p>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-<div class="glass-card p-6 rounded-3xl space-y-3 border border-white/5">
-<div class="w-10 h-10 rounded-2xl bg-sky-500/10 border border-sky-500/20 text-sky-400 font-black text-sm flex items-center justify-center">01</div>
-<h3 class="font-bold text-white text-base">Copy Link on X</h3>
-<p class="text-xs text-gray-400 leading-relaxed">Find the post or tweet with the video, tap the share icon, and select Copy link to Post.</p>
-</div>
-<div class="glass-card p-6 rounded-3xl space-y-3 border border-white/5">
-<div class="w-10 h-10 rounded-2xl bg-sky-500/10 border border-sky-500/20 text-sky-400 font-black text-sm flex items-center justify-center">02</div>
-<h3 class="font-bold text-white text-base">Paste in UnimaxDL</h3>
-<p class="text-xs text-gray-400 leading-relaxed">Paste the link into the search box above and click the Analyze button.</p>
-</div>
-<div class="glass-card p-6 rounded-3xl space-y-3 border border-white/5">
-<div class="w-10 h-10 rounded-2xl bg-sky-500/10 border border-sky-500/20 text-sky-400 font-black text-sm flex items-center justify-center">03</div>
-<h3 class="font-bold text-white text-base">Save 1080p Video</h3>
-<p class="text-xs text-gray-400 leading-relaxed">Select your preferred video resolution or audio format and download directly to your drive.</p>
-</div>
-</div>
-</section>
-<!-- FAQ Accordion Section -->
-<section class="max-w-3xl mx-auto px-4 pb-20 space-y-6">
-<div class="text-center space-y-2">
-<h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Frequently Asked Questions</h2>
-<p class="text-sm text-gray-400">Everything you need to know about downloading X / Twitter videos.</p>
-</div>
-<div class="space-y-3">
-<details class="glass-card p-5 rounded-2xl border border-white/5 text-xs sm:text-sm group cursor-pointer" open="">
-<summary class="font-bold text-white flex items-center justify-between list-none">
-<span>Is UnimaxDL Twitter / X Downloader free?</span>
-<span class="text-sky-400 text-lg group-open:rotate-45 transition-transform duration-200">+</span>
-</summary>
-<p class="text-gray-400 mt-3 leading-relaxed">
-          Yes, UnimaxDL is completely free with unlimited downloads and no registration required.
-        </p>
-</details>
-<details class="glass-card p-5 rounded-2xl border border-white/5 text-xs sm:text-sm group cursor-pointer">
-<summary class="font-bold text-white flex items-center justify-between list-none">
-<span>Can I download Twitter GIFs as MP4?</span>
-<span class="text-sky-400 text-lg group-open:rotate-45 transition-transform duration-200">+</span>
-</summary>
-<p class="text-gray-400 mt-3 leading-relaxed">
-          Yes, Twitter stores GIFs as loopable MP4 video files, which you can save in high quality.
-        </p>
-</details>
-<details class="glass-card p-5 rounded-2xl border border-white/5 text-xs sm:text-sm group cursor-pointer">
-<summary class="font-bold text-white flex items-center justify-between list-none">
-<span>Does it work on mobile phones?</span>
-<span class="text-sky-400 text-lg group-open:rotate-45 transition-transform duration-200">+</span>
-</summary>
-<p class="text-gray-400 mt-3 leading-relaxed">
-          Yes, works seamlessly across iPhone (Safari), Android (Chrome), and desktop browsers.
-        </p>
-</details>
-<details class="glass-card p-5 rounded-2xl border border-white/5 text-xs sm:text-sm group cursor-pointer">
-<summary class="font-bold text-white flex items-center justify-between list-none">
-<span>Can I convert Twitter videos to MP3?</span>
-<span class="text-sky-400 text-lg group-open:rotate-45 transition-transform duration-200">+</span>
-</summary>
-<p class="text-gray-400 mt-3 leading-relaxed">
-          Yes, switch to the Audio (MP3) tab after analyzing to extract high-bitrate MP3 audio.
-        </p>
-</details>
-</div>
-</section>
-<!-- Footer -->
-<footer class="border-t border-white/[0.08] bg-[#050508] py-12 px-4 text-xs text-gray-400">
-<div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-<div class="flex items-center gap-3">
-<picture>
-<source srcset="/assets/images/icon-96.webp" type="image/webp"/>
-<img alt="UnimaxDL" class="w-8 h-8 object-contain drop-shadow-[0_0_8px_rgba(34,211,238,0.35)]" height="32" src="/assets/images/icon-48.png" width="32"/>
-</picture>
-<div>
-<span class="font-bold text-white text-sm">UnimaxDL</span>
-<p class="text-[11px] text-gray-500">Universal Media Downloader · Open Source</p>
-</div>
-</div>
-<div class="flex flex-wrap items-center justify-center gap-6 text-gray-400">
-<a class="hover:text-white transition" href="/">Home</a>
-<a class="hover:text-white transition" href="/download.html">Apps</a>
-<a class="hover:text-white transition" href="/youtube-downloader.html">YouTube</a>
-<a class="hover:text-white transition" href="/tiktok-downloader.html">TikTok</a>
-<a class="hover:text-white transition" href="/instagram-downloader.html">Instagram</a>
-<a class="hover:text-orange-400 transition" href="/reddit-downloader.html">Reddit</a>
-<a class="hover:text-amber-400 transition" href="/soundcloud-downloader.html">SoundCloud</a>
-<a class="hover:text-purple-400 transition" href="/twitch-downloader.html">Twitch</a>
-<a class="hover:text-white transition" href="/twitter-downloader.html">Twitter / X</a>
-<a class="hover:text-white transition" href="/facebook-downloader.html">Facebook</a>
-<a class="hover:text-white transition" href="/pinterest-downloader.html">Pinterest</a>
-<a class="hover:text-cyan-400 transition" href="/terms.html">Terms</a>
-<a class="hover:text-cyan-400 transition" href="/privacy.html">Privacy</a>
-<a class="hover:text-amber-400 transition" href="/dmca.html">DMCA</a>
-<a class="hover:text-white transition" href="https://github.com/UnimaxDL/unimaxdl.github.io" rel="noopener" target="_blank">GitHub</a>
-</div>
-<div class="text-center md:text-right text-[11px] text-gray-500">
-<span>Built with passion by Atomic Dhruba</span><br/>
-<span>Licensed under MIT</span>
-</div>
-</div>
-</footer>
-<script src="/assets/js/analytics.js?v=3.1"></script>
-<script src="/assets/js/nav.js?v=2.0"></script><script src="/assets/js/downloader.js?v=4.5"></script>
-<script>
-    async function pasteClipboard() {
-      try {
-        const text = await navigator.clipboard.readText();
-        if (text) {
-          document.getElementById('url-input').value = text;
-          handleAnalyze();
+]</script>
+</head>
+<body>
+
+<div class="frame-container">
+
+  <!-- Studio Header Navigation Bar -->
+  <header class="deck-header">
+    <div style="display:flex; align-items:center; gap:1.5rem;">
+      <a class="deck-brand" href="/">
+        <img alt="UnimaxDL Logomark" height="28" src="/assets/images/unimaxdl-mark.svg" width="28"/>
+        <span>UNIMAXDL</span>
+        <span class="deck-brand-badge" style="color:var(--platform-accent);">TWITTER</span>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="deck-nav-links" style="display:none;" id="desktop-nav">
+        <a class="deck-nav-link" href="/">Web Tool</a>
+        
+        <div style="position:relative;">
+          <button id="platforms-dropdown-btn" class="deck-nav-link active" style="background:none; border:none; cursor:pointer; font-family:var(--font-mono); font-size:0.8125rem; display:flex; align-items:center; gap:0.25rem;" onclick="togglePlatformsDropdown(event)">
+            <span>Platforms</span>
+            <svg style="width:12px; height:12px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+          </button>
+          <div id="platforms-dropdown" class="dropdown-menu hidden opacity-0 scale-95">
+            <a class="dropdown-item" href="/youtube-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#D9261C; vertical-align:middle;"></span> YouTube (4K & Audio)</a>
+            <a class="dropdown-item" href="/tiktok-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#0F9D9A; vertical-align:middle;"></span> TikTok (Clean MP4)</a>
+            <a class="dropdown-item" href="/instagram-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#C92A76; vertical-align:middle;"></span> Instagram (Reels & Posts)</a>
+            <a class="dropdown-item" href="/twitter-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:var(--text-primary); vertical-align:middle;"></span> Twitter / X (Video & GIF)</a>
+            <a class="dropdown-item" href="/reddit-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#E04416; vertical-align:middle;"></span> Reddit (Auto-Muxed)</a>
+            <a class="dropdown-item" href="/soundcloud-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#EA580C; vertical-align:middle;"></span> SoundCloud (320k Audio)</a>
+            <a class="dropdown-item" href="/twitch-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#6D28D9; vertical-align:middle;"></span> Twitch (Clips & VODs)</a>
+            <a class="dropdown-item" href="/facebook-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#1B5FD6; vertical-align:middle;"></span> Facebook (Watch & Reels)</a>
+            <a class="dropdown-item" href="/pinterest-downloader.html"><span class="status-dot" style="display:inline-block; width:6px; height:6px; border-radius:50%; background-color:#BD1E2D; vertical-align:middle;"></span> Pinterest (Video Pins)</a>
+          </div>
+        </div>
+
+        <a class="deck-nav-link" href="/download.html">Native Apps</a>
+        <a class="deck-nav-link" href="/terms.html">Docs</a>
+      </nav>
+    </div>
+
+    <!-- Header Actions -->
+    <div class="deck-header-actions">
+      <button aria-label="Toggle dark/light mode" class="theme-toggle-btn" onclick="toggleTheme()" type="button">
+        <svg class="icon-moon" style="width:18px; height:18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+        <svg class="icon-sun hidden" style="width:18px; height:18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+      </button>
+
+      <a aria-label="GitHub Repository" class="theme-toggle-btn" href="https://github.com/UnimaxDL/unimaxdl.github.io" rel="noopener" target="_blank">
+        <svg style="width:18px; height:18px;" fill="currentColor" viewBox="0 0 24 24"><path clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" fill-rule="evenodd"></path></svg>
+      </a>
+
+      <button aria-label="Toggle mobile menu" class="theme-toggle-btn" id="mobile-menu-btn" onclick="toggleMobileMenu()" type="button">
+        <svg style="width:18px; height:18px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Overlay & Drawer -->
+  <div class="hidden opacity-0" id="mobile-overlay" onclick="toggleMobileMenu(false)"></div>
+  <aside class="-translate-x-full" id="mobile-drawer">
+    <div style="padding:1.25rem; border-bottom:1px solid var(--border-hairline); display:flex; align-items:center; justify-content:space-between;">
+      <div style="display:flex; align-items:center; gap:0.5rem; font-family:var(--font-display); font-weight:800; font-size:1rem;">
+        <img alt="" height="24" src="/assets/images/unimaxdl-mark.svg" width="24"/>
+        <span>UNIMAXDL</span>
+      </div>
+      <button class="theme-toggle-btn" onclick="toggleMobileMenu(false)" style="width:30px; height:30px;" type="button">
+        <svg style="width:16px; height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+      </button>
+    </div>
+    <div style="padding:1rem 1.25rem; display:flex; flex-direction:column; gap:0.75rem; font-family:var(--font-mono); font-size:0.875rem;">
+      <a class="deck-nav-link" href="/" onclick="toggleMobileMenu(false)">[01] Web Tool</a>
+      <a class="deck-nav-link" href="/download.html" onclick="toggleMobileMenu(false)">[02] Native Apps</a>
+      <div style="font-size:0.6875rem; color:var(--text-muted); text-transform:uppercase; margin-top:0.75rem; padding-bottom:0.25rem; border-bottom:1px solid var(--border-hairline);">Supported Platforms</div>
+      <a class="deck-nav-link" href="/youtube-downloader.html" onclick="toggleMobileMenu(false)">YouTube 4K & Audio</a>
+      <a class="deck-nav-link" href="/tiktok-downloader.html" onclick="toggleMobileMenu(false)">TikTok Clean MP4</a>
+      <a class="deck-nav-link" href="/instagram-downloader.html" onclick="toggleMobileMenu(false)">Instagram Reels</a>
+      <a class="deck-nav-link" href="/twitter-downloader.html" onclick="toggleMobileMenu(false)">Twitter / X Video</a>
+      <a class="deck-nav-link" href="/reddit-downloader.html" onclick="toggleMobileMenu(false)">Reddit Video+Audio</a>
+      <a class="deck-nav-link" href="/soundcloud-downloader.html" onclick="toggleMobileMenu(false)">SoundCloud 320k</a>
+      <a class="deck-nav-link" href="/twitch-downloader.html" onclick="toggleMobileMenu(false)">Twitch Clips & VODs</a>
+      <a class="deck-nav-link" href="/facebook-downloader.html" onclick="toggleMobileMenu(false)">Facebook Watch</a>
+      <a class="deck-nav-link" href="/pinterest-downloader.html" onclick="toggleMobileMenu(false)">Pinterest Pins</a>
+    </div>
+  </aside>
+
+  <style>
+    @media (min-width: 768px) {
+      #desktop-nav { display: flex !important; }
+      #mobile-menu-btn { display: none !important; }
+    }
+  </style>
+
+  <!-- Workstation Content -->
+  <main style="flex:1; padding:2rem 1.25rem 4rem;">
+
+    <!-- Platform Hero Section -->
+    <section style="margin-bottom:2rem;">
+      <div style="display:flex; flex-direction:column; gap:1.5rem;" id="hero-split">
+        <div style="flex:1;">
+          <div style="display:inline-flex; align-items:center; gap:0.5rem; font-family:var(--font-mono); font-size:0.6875rem; font-weight:700; color:var(--platform-accent); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.75rem;">
+            <span>[ 01 / X & TWITTER INGESTION INTERFACE ]</span>
+          </div>
+          <div style="display:flex; gap:0.75rem; align-items:flex-start;">
+            <div style="width:4px; height:2.5rem; background-color:var(--platform-accent); border-radius:2px; flex-shrink:0; margin-top:0.25rem;"></div>
+            <div>
+              <h1 style="margin-bottom:0.75rem;">Download Twitter / X Videos & Animated GIFs in HD</h1>
+              <p style="max-width:58ch; font-size:1rem; line-height:1.6; color:var(--text-secondary);">
+                Extract videos and looping animated GIFs from Twitter/X tweets at maximum available bitrates (1080p, 720p, 480p) or capture Spaces audio recordings.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Telemetry Box -->
+        <div class="telemetry-box" style="min-width:280px; align-self:flex-start;">
+          <div class="telemetry-row">
+            <span class="telemetry-label">Interface</span>
+            <span class="telemetry-val" style="color:var(--platform-accent);">TWITTER GATEWAY</span>
+          </div>
+          <div class="telemetry-row">
+            <span class="telemetry-label">Status</span>
+            <span class="telemetry-val" style="color:var(--status-ready);">ONLINE · PASS</span>
+          </div>
+          <div class="telemetry-row">
+            <span class="telemetry-label">Rate Limit</span>
+            <span class="telemetry-val">UNLIMITED</span>
+          </div>
+          <div class="telemetry-row">
+            <span class="telemetry-label">Subsystem</span>
+            <span class="telemetry-val">Direct CDN Line Speed</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <style>
+      @media (min-width: 900px) {
+        #hero-split {
+          flex-direction: row !important;
+          align-items: flex-start !important;
+          justify-content: space-between !important;
         }
-      } catch {}
+      }
+    </style>
+
+    <!-- Extraction Deck -->
+    <section class="deck-panel bracket-corners" style="margin-bottom:3rem;">
+      <div class="deck-strip">
+        <div style="display:flex; align-items:center; gap:0.625rem;">
+          <span class="status-led status-led-ready"></span>
+          <span id="deck-status" style="font-weight:700; letter-spacing:0.04em;">DECK READY</span>
+          <span style="color:var(--text-muted); font-size:0.6875rem;" class="hidden sm:inline">// TWITTER INGESTION ACTIVE</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:0.5rem;">
+          <span style="font-size:0.6875rem; color:var(--text-muted); text-transform:uppercase;">MODE:</span>
+          <span style="font-weight:700; color:var(--platform-accent); font-size:0.6875rem;">AUTO (MAX BITRATE)</span>
+        </div>
+      </div>
+
+      <div class="deck-input-bay">
+        <div class="deck-input-wrapper">
+          <svg style="width:18px; height:18px; color:var(--text-muted); flex-shrink:0;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+          <input autocomplete="off" class="deck-input" id="url-input" placeholder="Paste Twitter link here..." type="url"/>
+          <button class="hidden" id="clear-btn" onclick="clearInput()" style="background:none; border:none; cursor:pointer; font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); padding:0.25rem;" type="button">[CLEAR]</button>
+          <button class="btn-secondary" onclick="pasteClipboard()" style="font-size:0.6875rem; padding:0.25rem 0.625rem;" type="button">PASTE</button>
+        </div>
+        <button class="btn-signal" id="btn-analyze" onclick="handleAnalyze()" type="button" style="background-color:var(--platform-accent); border-color:var(--border-strong);">
+          <svg class="hidden" id="btn-spinner" style="width:16px; height:16px; animation:spin 1s linear infinite;" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-dasharray="32" stroke-width="4"></circle></svg>
+          <span id="btn-text">FETCH STREAM →</span>
+        </button>
+      </div>
+
+      <div class="deck-strip deck-strip-bottom" style="overflow-x:auto;">
+        <span style="color:var(--text-muted); font-size:0.6875rem; white-space:nowrap; text-transform:uppercase;">PRESETS:</span>
+        <div style="display:flex; align-items:center; gap:0.5rem;">
+          <button class="cartridge-btn" onclick="setSample('https://twitter.com/user/status/123456789')">[X] 1080p HD</button><button class="cartridge-btn" onclick="setSample('https://twitter.com/user/status/123456789')">[X] 720p Video</button><button class="cartridge-btn" onclick="setSample('https://twitter.com/user/status/123456789')">[X] Looping GIF</button><button class="cartridge-btn" onclick="setSample('https://twitter.com/user/status/123456789')">[X] Spaces Audio</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dynamic Results Bay -->
+    <div class="hidden" id="loading-skeleton" style="margin-bottom:2rem;">
+      <div class="deck-panel" style="padding:1.5rem; display:flex; flex-direction:column; gap:1rem;">
+        <div style="display:flex; align-items:center; gap:1rem;">
+          <div style="width:180px; height:100px; background-color:var(--bg-subtle); border-radius:var(--radius-panel);"></div>
+          <div style="flex:1; display:flex; flex-direction:column; gap:0.5rem;">
+            <div style="height:1.25rem; width:70%; background-color:var(--bg-subtle); border-radius:var(--radius-panel);"></div>
+            <div style="height:0.875rem; width:40%; background-color:var(--bg-subtle); border-radius:var(--radius-panel);"></div>
+          </div>
+        </div>
+        <div style="height:2rem; background-color:var(--bg-subtle); border-radius:var(--radius-panel);"></div>
+      </div>
+    </div>
+
+    <!-- Active Media Card Container -->
+    <div id="media-card-container"></div>
+    <div id="tasks-container" style="margin-top:2rem;"></div>
+
+    <!-- Section: Platform Specifications Grid -->
+    <section style="margin-top:4rem; margin-bottom:4rem;">
+      <div style="margin-bottom:1.5rem;">
+        <div style="font-family:var(--font-mono); font-size:0.6875rem; font-weight:700; color:var(--platform-accent); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.5rem;">[ 02 / STREAM CAPABILITIES ]</div>
+        <h2 style="font-size:1.5rem; margin-bottom:0.5rem;">Twitter Extraction Capabilities</h2>
+        <p style="font-size:0.875rem; color:var(--text-secondary);">Technical specifications for media ingested from Twitter.</p>
+      </div>
+
+      <div class="spec-grid">
+        
+        <div class="spec-cell">
+          <span class="spec-cell-index">01 // VIDEO CODECS</span>
+          <h3 class="spec-cell-title">Multi-Bitrate H.264</h3>
+          <p class="spec-cell-desc">Inspects all available MP4 video variants from 240p up to 1080p Full HD.</p>
+        </div>
+        <div class="spec-cell">
+          <span class="spec-cell-index">02 // GIF CONVERSION</span>
+          <h3 class="spec-cell-title">Native Animated GIFs</h3>
+          <p class="spec-cell-desc">Extract looping Twitter GIFs directly as MP4 video files with zero frame drops.</p>
+        </div>
+        <div class="spec-cell">
+          <span class="spec-cell-index">03 // X SPACES</span>
+          <h3 class="spec-cell-title">Spaces Audio Capture</h3>
+          <p class="spec-cell-desc">Archive complete public Twitter/X audio Spaces in clean MP3 format.</p>
+        </div>
+        <div class="spec-cell">
+          <span class="spec-cell-index">04 // API RESILIENCE</span>
+          <h3 class="spec-cell-title">Upstream Anti-Block</h3>
+          <p class="spec-cell-desc">Engine automatically handles token rotation to prevent Twitter rate limit errors.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Step-by-Step Sequence -->
+    <section style="margin-bottom:4rem;">
+      <div style="margin-bottom:1.5rem;">
+        <div style="font-family:var(--font-mono); font-size:0.6875rem; font-weight:700; color:var(--platform-accent); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.5rem;">[ 03 / OPERATING INSTRUCTIONS ]</div>
+        <h2 style="font-size:1.5rem; margin-bottom:0.5rem;">How to Download from Twitter</h2>
+        <p style="font-size:0.875rem; color:var(--text-secondary);">Direct 3-step extraction procedure.</p>
+      </div>
+
+      <div class="step-sequence">
+        <div class="step-card">
+          <span class="step-badge" style="color:var(--platform-accent);">STEP 01</span>
+          <h4 style="font-family:var(--font-display); font-weight:700; font-size:1rem; color:var(--text-primary);">Copy Twitter URL</h4>
+          <p style="font-size:0.8125rem; color:var(--text-secondary); line-height:1.5;">Open Twitter in your browser or app. Find the video, reel, or track you wish to save and copy its URL.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-badge" style="color:var(--platform-accent);">STEP 02</span>
+          <h4 style="font-family:var(--font-display); font-weight:700; font-size:1rem; color:var(--text-primary);">Analyze Stream</h4>
+          <p style="font-size:0.8125rem; color:var(--text-secondary); line-height:1.5;">Paste into the input bay above and trigger fetch. The engine inspects formats, bitrates, and codecs.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-badge" style="color:var(--platform-accent);">STEP 03</span>
+          <h4 style="font-family:var(--font-display); font-weight:700; font-size:1rem; color:var(--text-primary);">Download File</h4>
+          <p style="font-size:0.8125rem; color:var(--text-secondary); line-height:1.5;">Select your preferred resolution or MP3 audio track and click Download to save directly to local storage.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: FAQ Accordion -->
+    <section style="margin-bottom:4rem;">
+      <div style="margin-bottom:1.5rem;">
+        <div style="font-family:var(--font-mono); font-size:0.6875rem; font-weight:700; color:var(--platform-accent); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.5rem;">[ 04 / TECHNICAL ARCHIVE ]</div>
+        <h2 style="font-size:1.5rem; margin-bottom:0.5rem;">Frequently Asked Questions</h2>
+      </div>
+
+      <div class="faq-accordion">
+        
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span>How do I save a Twitter video to my camera roll?</span>
+            <span class="faq-icon">+</span>
+          </summary>
+          <div class="faq-content">Copy the tweet URL from the X/Twitter app, paste it into UnimaxDL, click Fetch Stream, and tap Download.</div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span>Can I convert Twitter GIFs to video?</span>
+            <span class="faq-icon">+</span>
+          </summary>
+          <div class="faq-content">Yes. Twitter stores GIFs as MP4 video files. UnimaxDL downloads the original MP4 so you can share or edit it anywhere.</div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span>Why are some Twitter videos lower resolution?</span>
+            <span class="faq-icon">+</span>
+          </summary>
+          <div class="faq-content">UnimaxDL displays every resolution provided by Twitter. If the creator uploaded in 720p, 720p is the maximum available source resolution.</div>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span>Does UnimaxDL support new x.com URLs?</span>
+            <span class="faq-icon">+</span>
+          </summary>
+          <div class="faq-content">Yes. Both x.com and twitter.com URLs are fully supported with automatic redirect normalization.</div>
+        </details>
+      </div>
+    </section>
+
+    <!-- Entity Disambiguation Block -->
+    <section class="deck-panel" style="padding:1.5rem; margin-bottom:2rem;">
+      <div style="display:flex; align-items:flex-start; gap:1rem;">
+        <div style="width:36px; height:36px; background-color:var(--bg-subtle); border:1px solid var(--border-hairline); border-radius:var(--radius-panel); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <svg style="width:18px; height:18px; color:var(--text-muted);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+        </div>
+        <div style="font-size:0.8125rem; line-height:1.6; color:var(--text-secondary);">
+          <strong style="color:var(--text-primary); display:block; margin-bottom:0.25rem;">Entity Notice & Scope:</strong>
+          UnimaxDL is purely a digital software application and multimedia utility. It is not affiliated with, nor does it refer to, any vaping devices, Joyetech hardware products, or corporate telecommunications management software.
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Global Studio Footer -->
+  <footer class="deck-footer">
+    <div class="deck-footer-top">
+      <div class="deck-footer-brand">
+        <div style="display:flex; align-items:center; gap:0.5rem; font-family:var(--font-display); font-weight:800; font-size:1.125rem;">
+          <img alt="UnimaxDL" height="24" src="/assets/images/unimaxdl-mark.svg" width="24"/>
+          <span>UNIMAXDL</span>
+        </div>
+        <p style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">
+          PRECISION BROADCAST STUDIO MEDIA EXTRACTOR // MIT LICENSED
+        </p>
+      </div>
+
+      <nav class="deck-footer-nav">
+        <a href="/">Home</a>
+        <a href="/download.html">Apps</a>
+        <a href="/youtube-downloader.html">YouTube</a>
+        <a href="/tiktok-downloader.html">TikTok</a>
+        <a href="/instagram-downloader.html">Instagram</a>
+        <a href="/reddit-downloader.html">Reddit</a>
+        <a href="/soundcloud-downloader.html">SoundCloud</a>
+        <a href="/twitch-downloader.html">Twitch</a>
+        <a href="/twitter-downloader.html">Twitter / X</a>
+        <a href="/facebook-downloader.html">Facebook</a>
+        <a href="/pinterest-downloader.html">Pinterest</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/dmca.html">DMCA</a>
+        <a href="https://github.com/UnimaxDL/unimaxdl.github.io" rel="noopener" target="_blank">GitHub</a>
+      </nav>
+    </div>
+
+    <div class="deck-footer-bottom">
+      <span>ENGINEERED BY ATOMIC DHRUBA</span>
+      <span>STATUS: ALL SIGNAL PIPELINES NOMINAL</span>
+    </div>
+  </footer>
+
+</div>
+
+<!-- Client Scripts -->
+<script src="/assets/js/analytics.js?v=3.1"></script>
+<script src="/assets/js/nav.js?v=3.0"></script>
+<script src="/assets/js/downloader.js?v=4.5"></script>
+
+<script>
+  const urlInput = document.getElementById('url-input');
+  const clearBtn = document.getElementById('clear-btn');
+
+  if (urlInput) {
+    urlInput.addEventListener('input', () => {
+      if (clearBtn) clearBtn.classList.toggle('hidden', !urlInput.value);
+    });
+
+    urlInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        handleAnalyze();
+      }
+    });
+  }
+
+  function clearInput() {
+    if (urlInput) {
+      urlInput.value = '';
+      if (clearBtn) clearBtn.classList.add('hidden');
+      urlInput.focus();
+    }
+  }
+
+  async function pasteClipboard() {
+    try {
+      const text = await navigator.clipboard.readText();
+      if (text && urlInput) {
+        urlInput.value = text;
+        if (clearBtn) clearBtn.classList.remove('hidden');
+        handleAnalyze();
+      }
+    } catch (err) {
+      UDL_DOWNLOADER.showToast("Clipboard access denied. Please paste manually.");
+    }
+  }
+
+  function setSample(url) {
+    if (urlInput) {
+      urlInput.value = url;
+      if (clearBtn) clearBtn.classList.remove('hidden');
+      handleAnalyze();
+    }
+  }
+
+  async function handleAnalyze() {
+    const url = urlInput ? urlInput.value.trim() : '';
+    const mediaContainer = document.getElementById('media-card-container');
+    const skeleton = document.getElementById('loading-skeleton');
+    const btnText = document.getElementById('btn-text');
+    const spinner = document.getElementById('btn-spinner');
+    const deckStatus = document.getElementById('deck-status');
+
+    if (!url) {
+      UDL_DOWNLOADER.showToast("Please enter a video URL first.");
+      return;
     }
 
-    async function handleAnalyze() {
-      const url = document.getElementById('url-input').value.trim();
-      const mediaContainer = document.getElementById('media-card-container');
-      const btnText = document.getElementById('btn-text');
-      if (!url) {
-        UDL_DOWNLOADER.showToast("Please enter a Twitter / X video URL");
-        return;
+    if (btnText) btnText.innerText = "PROBING STREAM...";
+    if (spinner) spinner.classList.remove('hidden');
+    if (skeleton) skeleton.classList.remove('hidden');
+    if (deckStatus) deckStatus.innerText = "PROBING STREAM...";
+    if (mediaContainer) mediaContainer.innerHTML = '';
+
+    try {
+      const info = await UDL_DOWNLOADER.analyzeUrl(url);
+      if (skeleton) skeleton.classList.add('hidden');
+      if (deckStatus) deckStatus.innerText = "STREAM LOCKED";
+      if (info && mediaContainer) {
+        UDL_DOWNLOADER.renderMediaCard(info, mediaContainer);
+        mediaContainer.scrollIntoView({ behavior: 'smooth' });
       }
-      btnText.innerText = "Analyzing...";
-      try {
-        const info = await UDL_DOWNLOADER.analyzeUrl(url);
-        if (info) {
-          UDL_DOWNLOADER.renderMediaCard(info, mediaContainer);
-          mediaContainer.scrollIntoView({ behavior: 'smooth' });
-        }
-      } catch (err) {
-        UDL_DOWNLOADER.showToast(err.message || "Failed to analyze Twitter link.");
-      } finally {
-        btnText.innerText = "Analyze";
-      }
+    } catch (err) {
+      if (skeleton) skeleton.classList.add('hidden');
+      if (deckStatus) deckStatus.innerText = "SIGNAL ERROR";
+      UDL_DOWNLOADER.showToast(err.message || "Failed to analyze URL.");
+    } finally {
+      if (btnText) btnText.innerText = "FETCH STREAM →";
+      if (spinner) spinner.classList.add('hidden');
     }
-  </script>
-<!-- Monetag MultiTag Official Script (Deferred to zero-impact background execution) -->
+  }
+</script>
+
+<!-- Monetag MultiTag Official Script (Deferred) -->
 <script>
-    window.addEventListener('load', function() {
-      setTimeout(function() {
-        var s = document.createElement('script');
-        s.src = "https://quge5.com/88/tag.min.js";
-        s.dataset.zone = "305301";
-        s.async = true;
-        s.dataset.cfasync = "false";
-        document.body.appendChild(s);
-      }, 500);
-    });
-  </script>
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      var s = document.createElement('script');
+      s.src = "https://quge5.com/88/tag.min.js";
+      s.dataset.zone = "305301";
+      s.async = true;
+      s.dataset.cfasync = "false";
+      document.body.appendChild(s);
+    }, 500);
+  });
+</script>
 <!-- Adsterra Social Bar Official Script -->
 <script data-cfasync="false" src="https://bellnewyork.org/14/9ee0588abd51114c8dc6784b6ea788c8"></script>
 </body>

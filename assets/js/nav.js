@@ -1,10 +1,45 @@
 /**
- * UnimaxDL Navigation & UI Interaction Controller v2.0
+ * UniMaxDL Navigation & Theme Interaction Controller v3.0
  * Zero Emojis | Pure SVG | Hardware Accelerated
  */
 
 (function () {
   'use strict';
+
+  // Theme Controller (Archival Paper Light <-> Studio Rack Dark)
+  window.toggleTheme = function () {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', nextTheme);
+    try {
+      localStorage.setItem('udl-theme', nextTheme);
+    } catch (e) {}
+    updateThemeIcons(nextTheme);
+  };
+
+  function updateThemeIcons(theme) {
+    const btns = document.querySelectorAll('.theme-toggle-btn');
+    btns.forEach(btn => {
+      btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+      const sun = btn.querySelector('.icon-sun');
+      const moon = btn.querySelector('.icon-moon');
+      if (sun && moon) {
+        if (theme === 'dark') {
+          sun.classList.remove('hidden');
+          moon.classList.add('hidden');
+        } else {
+          sun.classList.add('hidden');
+          moon.classList.remove('hidden');
+        }
+      }
+    });
+  }
+
+  // Initialize theme on load
+  document.addEventListener('DOMContentLoaded', function () {
+    const activeTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    updateThemeIcons(activeTheme);
+  });
 
   // Toggle Mobile Navigation Drawer
   window.toggleMobileMenu = function (forceState) {
