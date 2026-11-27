@@ -227,11 +227,11 @@
   // Interactive Stageshow Example Controller
   const STAGESHOW_SCENARIOS = {
     youtube: {
-      sampleUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      sampleUrl: 'https://www.youtube.com/watch?v=aqz-KE-bpKQ',
       mode: 'wide',
-      title: '4K City Timelapse — Creator Edit',
+      title: 'Big Buck Bunny 60fps 4K — Blender Short',
       source: 'YouTube Video',
-      durationSec: 212,
+      durationSec: 634,
       videoTitle: '1080p MP4 Ready',
       videoSub: '4K HDR available via free Native App',
       videoBadge: '1080p + 4K',
@@ -255,9 +255,9 @@
       caption: 'TikTok clips strip the corner logo automatically cleanly at 9:16 portrait ratio.'
     },
     reddit: {
-      sampleUrl: 'https://www.reddit.com/r/videos/comments/example_clip/',
+      sampleUrl: 'https://www.reddit.com/r/Blender/comments/101v4d5/',
       mode: 'wide',
-      title: 'Workshop Time-Lapse Build',
+      title: 'Blender Open Movie Breakdown Clip',
       source: 'Reddit Clip',
       durationSec: 74,
       videoTitle: 'Sound + Video Merged',
@@ -271,7 +271,7 @@
     soundcloud: {
       sampleUrl: 'https://soundcloud.com/forss/flickermood',
       mode: 'audio',
-      title: 'Late Night Analog Synth Set',
+      title: 'Flickermood by Forss',
       source: 'SoundCloud Track',
       durationSec: 198,
       videoTitle: 'Audio-Only Source',

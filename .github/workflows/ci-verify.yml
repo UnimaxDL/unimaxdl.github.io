@@ -1,0 +1,83 @@
+name: CI Verification Gate
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Syntax check JavaScript modules and worker
+        run: |
+          node --check assets/js/downloader.js
+          node --check assets/js/nav.js
+          node --check assets/js/analytics.js
+          node --check assets/js/releases.js
+          node --check workers/edge-resolver.js
+
+      - name: Verify installer SHA-256 checksums
+        run: |
+          cd downloads
+          sha256sum -c SHA256SUMS.txt
+
+      - name: Validate JSON, JSON-LD, sitemap, links, and DOM contract
+        run: |
+          node -e '
+            const fs = require("node:fs");
+            const path = require("node:path");
+
+            // 1. Validate JSON manifests
+            for (const f of ["manifest.json", "assets/data/mirrors.json"]) {
+              JSON.parse(fs.readFileSync(f, "utf8"));
+            }
+
+            // 2. Check no dead unimaxdl.org emails remain in HTML
+            const htmlFiles = fs.readdirSync(".").filter(f => f.endsWith(".html") && f !== "google021fd839d14f44e1.html");
+            const errors = [];
+            for (const f of htmlFiles) {
+              const raw = fs.readFileSync(f, "utf8");
+              if (/@unimaxdl\.org/i.test(raw)) errors.push(`${f}: dead @unimaxdl.org email reference`);
+              // Validate every JSON-LD block
+              const ldMatches = raw.matchAll(/<script[^>]*type=["\x27]application\/ld\+json["\x27][^>]*>([\s\S]*?)<\/script>/gi);
+              for (const m of ldMatches) {
+                try { JSON.parse(m[1]); } catch (e) { errors.push(`${f}: invalid JSON-LD (${e.message})`); }
+              }
+              // Check all local asset/link paths resolve on disk
+              const refs = raw.matchAll(/(?:href|src)=["\x27](\/[^"\x27#?]+)/gi);
+              for (const r of refs) {
+                const target = r[1] === "/" ? "index.html" : r[1].slice(1);
+                if (!fs.existsSync(target)) errors.push(`${f}: missing local target ${r[1]}`);
+              }
+            }
+
+            // 3. Check core DOM contract IDs
+            const idx = fs.readFileSync("index.html", "utf8");
+            for (const id of ["url-input", "clear-btn", "btn-text", "btn-spinner", "loading-skeleton", "media-card-container", "tasks-container"]) {
+              if (!idx.includes(`id="${id}"`)) errors.push(`index.html: missing contract id #${id}`);
+            }
+            const dl = fs.readFileSync("download.html", "utf8");
+            for (const id of ["btn-download-android", "btn-download-win", "btn-download-mac", "btn-download-linux", "qr-modal", "deep-link-input", "deep-link-output", "deep-link-text"]) {
+              if (!dl.includes(`id="${id}"`)) errors.push(`download.html: missing contract id #${id}`);
+            }
+
+            if (errors.length) {
+              console.error(errors.join("\n"));
+              process.exit(1);
+            }
+            console.log(`Verified ${htmlFiles.length} HTML files, JSON-LD schemas, local links, and DOM contract.`);
+          '

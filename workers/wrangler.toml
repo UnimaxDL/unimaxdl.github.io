@@ -1,0 +1,3 @@
+name = "unimaxdl-edge-resolver"
+main = "edge-resolver.js"
+compatibility_date = "2026-11-01"

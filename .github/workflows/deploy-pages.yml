@@ -3,6 +3,11 @@ name: Deploy GitHub Pages
 on:
   push:
     branches: ["main"]
+    paths-ignore:
+      - "README.md"
+      - "CHANGELOG.md"
+      - "PRODUCTION-CHECKLIST.md"
+      - "docs/**"
   workflow_dispatch:
 
 permissions:
@@ -15,14 +20,40 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
+  build-and-deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Assemble lean _site artifact
+        run: |
+          rm -rf _site
+          mkdir -p _site/downloads
+
+          # Copy public site entrypoints and static metadata
+          cp .nojekyll *.html favicon.ico manifest.json robots.txt sitemap.xml sw.js install.sh install.ps1 _site/
+
+          # Copy public frontend assets cleanly
+          cp -r assets _site/assets
+
+          # Include only verified active installers + checksums (excludes legacy APKs & 185MB dist/ bloat)
+          cp downloads/SHA256SUMS.txt downloads/Setup-UnimaxDL.bat _site/downloads/
+          cp downloads/UnimaxDL-v2.1.0.apk _site/downloads/
+          cp downloads/UnimaxDL-Setup-v1.0.0.exe _site/downloads/
+          cp downloads/UnimaxDL-v1.0.0-macos.dmg _site/downloads/
+          cp downloads/UnimaxDL-v1.0.0-linux.AppImage _site/downloads/
+
+          # Verify essential production artifacts exist before upload
+          test -f _site/index.html
+          test -f _site/download.html
+          test -f _site/assets/images/og-cover.png
+          test -f _site/assets/data/mirrors.json
+          test -f _site/downloads/SHA256SUMS.txt
+          du -sh _site
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -30,7 +61,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: "_site"
 
       - name: Deploy to GitHub Pages
         id: deployment

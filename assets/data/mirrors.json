@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "updatedAt": "2026-11-27T00:00:00Z",
+  "cloudBackend": "https://unimaxdl-server.onrender.com",
+  "edgeResolver": "",
+  "invidious": [
+    "https://yt.chocolatemoo53.com"
+  ],
+  "oembed": [
+    "https://noembed.com/embed?url="
+  ]
+}

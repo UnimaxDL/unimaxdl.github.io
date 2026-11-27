@@ -19,9 +19,41 @@
   <link href="https://fonts.googleapis.com" rel="preconnect"/>
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet"/>
+  <meta content="index, follow, max-image-preview:large" name="robots"/>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' https: data:; connect-src 'self' https: http://127.0.0.1:* http://localhost:*; object-src 'none'; base-uri 'self';"/>
+  <meta content="website" property="og:type"/>
+  <meta content="https://unimaxdl.github.io/reddit-downloader.html" property="og:url"/>
+  <meta content="Reddit Video Downloader With Sound — Free HD MP4 | UnimaxDL" property="og:title"/>
+  <meta content="Download Reddit videos with merged sound in crisp HD MP4. Automatic video and audio merging so Reddit clips never play silent." property="og:description"/>
+  <meta content="https://unimaxdl.github.io/assets/images/og-cover.png" property="og:image"/>
+  <meta content="1200" property="og:image:width"/>
+  <meta content="630" property="og:image:height"/>
+  <meta content="UnimaxDL" property="og:site_name"/>
+  <meta content="summary_large_image" name="twitter:card"/>
+  <meta content="Reddit Video Downloader With Sound — Free HD MP4 | UnimaxDL" property="twitter:title"/>
+  <meta content="Download Reddit videos with merged sound in crisp HD MP4. Automatic video and audio merging so Reddit clips never play silent." property="twitter:description"/>
+  <meta content="https://unimaxdl.github.io/assets/images/og-cover.png" property="twitter:image"/>
   <link href="/assets/css/style.css?v=5.0" rel="stylesheet"/>
   <link href="/assets/images/icon2-192.png" rel="icon" sizes="192x192" type="image/png"/>
   <link href="/assets/images/favicon.ico" rel="icon" type="image/x-icon"/>
+  <script type="application/ld+json">[
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "UnimaxDL Reddit Sound + Video Downloader",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Web, Android, Windows, macOS, Linux",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": "Download Reddit videos with merged DASH video and audio into one synchronized MP4 file."
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Why do other Reddit downloaders save muted videos?", "acceptedAnswer": { "@type": "Answer", "text": "Reddit splits video frames and sound streams into separate tracks. UnimaxDL automatically combines both streams into one complete MP4 file." } }
+      ]
+    }
+  ]</script>
 </head>
 <body>
 
@@ -110,7 +142,7 @@
         </div>
 
         <div style="margin-top:12px; display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
-          <button type="button" class="pill-btn" style="background:var(--bg-cyan-tint); border-color:var(--border-cyan-tint); color:var(--brand-cyan-text);" onclick="setSample('https://www.reddit.com/r/videos/comments/xyz123/')">
+          <button type="button" class="pill-btn" style="background:var(--bg-cyan-tint); border-color:var(--border-cyan-tint); color:var(--brand-cyan-text);" onclick="setSample('https://www.reddit.com/r/Blender/comments/101v4d5/')">
             Try Sample Reddit Post &rarr;
           </button>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">

@@ -18,11 +18,19 @@
   <link href="/manifest.json" rel="manifest"/>
   <meta content="#F5F6FA" name="theme-color"/>
   <meta content="index, follow, max-image-preview:large" name="robots"/>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' https: data:; connect-src 'self' https: http://127.0.0.1:* http://localhost:*; object-src 'none'; base-uri 'self';"/>
   <meta content="website" property="og:type"/>
   <meta content="https://unimaxdl.github.io/download.html" property="og:url"/>
   <meta content="Download UnimaxDL — Free Android APK v2.1.0 &amp; Desktop 4K Apps" property="og:title"/>
   <meta content="Get the free UnimaxDL app for 4K HDR 60fps videos, full playlist saving, and direct Android Share Sheet integration." property="og:description"/>
-  <meta content="https://unimaxdl.github.io/assets/images/icon2-512.png" property="og:image"/>
+  <meta content="https://unimaxdl.github.io/assets/images/og-cover.png" property="og:image"/>
+  <meta content="1200" property="og:image:width"/>
+  <meta content="630" property="og:image:height"/>
+  <meta content="UnimaxDL" property="og:site_name"/>
+  <meta content="summary_large_image" name="twitter:card"/>
+  <meta content="Download UnimaxDL — Free Android APK v2.1.0 &amp; Desktop 4K Apps" property="twitter:title"/>
+  <meta content="Get the free UnimaxDL app for 4K HDR 60fps videos, full playlist saving, and direct Android Share Sheet integration." property="twitter:description"/>
+  <meta content="https://unimaxdl.github.io/assets/images/og-cover.png" property="twitter:image"/>
   <link href="https://fonts.googleapis.com" rel="preconnect"/>
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet"/>
@@ -31,6 +39,40 @@
   <link href="/assets/images/favicon.ico" rel="icon" type="image/x-icon"/>
   <link href="/favicon.ico" rel="shortcut icon"/>
   <link href="/assets/images/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+  <script type="application/ld+json">[
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "UnimaxDL Native App",
+      "softwareVersion": "2.1.0",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Android, Windows, macOS, Linux",
+      "downloadUrl": "https://unimaxdl.github.io/download.html",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "description": "Free open-source native app for 4K 60fps HDR video merging, playlist downloads, and Android Share Sheet handoff."
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How to install UnimaxDL on Android (v2.1.0 APK)",
+          "acceptedAnswer": { "@type": "Answer", "text": "Tap Download .APK above, open the downloaded file in notifications or your Files app, allow Install unknown apps once when prompted by Android, and tap Install." }
+        },
+        {
+          "@type": "Question",
+          "name": "Windows SmartScreen \"Windows protected your PC\" prompt",
+          "acceptedAnswer": { "@type": "Answer", "text": "New open-source apps without an expensive EV certificate trigger an informational check on first launch. Click More info then Run anyway to install cleanly." }
+        },
+        {
+          "@type": "Question",
+          "name": "macOS Gatekeeper & Linux AppImage permissions",
+          "acceptedAnswer": { "@type": "Answer", "text": "On macOS, drag UnimaxDL to Applications, Control-click it once, and choose Open. On Linux, run chmod +x UnimaxDL-v1.0.0-linux.AppImage or toggle Allow executing file as program." }
+        }
+      ]
+    }
+  ]</script>
 </head>
 <body>
 
@@ -192,7 +234,7 @@
             <span class="tech-badge tech-badge-amber" style="align-self:flex-start;">Mobile &middot; v2.1.0</span>
             <h3 style="font-size:1.125rem; margin:10px 0 4px;">Android APK</h3>
             <p class="installer-card-desc">Share links straight from YouTube, TikTok, or Instagram and save in background.</p>
-            <div class="checksum-chip">Android 8.0+ &middot; ARM64/ARM32</div>
+            <div class="checksum-chip" title="SHA-256: d3b380fbcf6c57e6606355b06fc9a4c0c5f5dde84e21c62f9055e48436972676">SHA-256: d3b380fbcf6c57e6</div>
           </div>
           <div style="display:flex; flex-direction:column; gap:8px;">
             <a href="/downloads/UnimaxDL-v2.1.0.apk" id="btn-download-android" download="UnimaxDL-v2.1.0.apk" class="btn-primary btn-amber" style="width:100%;">Download .APK</a>
@@ -205,11 +247,11 @@
             <span class="tech-badge tech-badge-cyan" style="align-self:flex-start;">Windows &middot; v1.0.0</span>
             <h3 style="font-size:1.125rem; margin:10px 0 4px;">Windows Installer</h3>
             <p class="installer-card-desc">Simple 1-click setup with FFmpeg pre-bundled for 4K &amp; 8K saves.</p>
-            <div class="checksum-chip">Windows 10 &amp; 11 (64-bit)</div>
+            <div class="checksum-chip" title="SHA-256: 3fa4e7812400b0108e2938916b1493a556d57193f134f5a2502126c0a1123e60">SHA-256: 3fa4e7812400b010</div>
           </div>
           <div style="display:flex; flex-direction:column; gap:8px;">
             <a href="/downloads/UnimaxDL-Setup-v1.0.0.exe" id="btn-download-win" download="UnimaxDL-Setup-v1.0.0.exe" class="btn-primary" style="width:100%;">Download .EXE</a>
-            <span class="pill-btn" style="visibility:hidden; pointer-events:none;" aria-hidden="true">Spacer</span>
+            <a href="/downloads/SHA256SUMS.txt" target="_blank" rel="noopener noreferrer" class="pill-btn" style="width:100%;">Verify SHA-256</a>
           </div>
         </div>
 
@@ -218,11 +260,11 @@
             <span class="tech-badge" style="align-self:flex-start;">macOS &middot; v1.0.0</span>
             <h3 style="font-size:1.125rem; margin:10px 0 4px;">macOS Universal</h3>
             <p class="installer-card-desc">Universal DMG running smoothly on M1/M2/M3 Apple Silicon and Intel.</p>
-            <div class="checksum-chip">Apple Silicon + Intel DMG</div>
+            <div class="checksum-chip" title="SHA-256: 8e20b1ab0d62adf5f3e1f56a363cec1840e3bb504c4172a44bb95aff5a43c66f">SHA-256: 8e20b1ab0d62adf5</div>
           </div>
           <div style="display:flex; flex-direction:column; gap:8px;">
             <a href="/downloads/UnimaxDL-v1.0.0-macos.dmg" id="btn-download-mac" download="UnimaxDL-v1.0.0-macos.dmg" class="btn-secondary" style="width:100%; min-height:46px;">Download .DMG</a>
-            <span class="pill-btn" style="visibility:hidden; pointer-events:none;" aria-hidden="true">Spacer</span>
+            <a href="/downloads/SHA256SUMS.txt" target="_blank" rel="noopener noreferrer" class="pill-btn" style="width:100%;">Verify SHA-256</a>
           </div>
         </div>
 
@@ -231,11 +273,11 @@
             <span class="tech-badge" style="align-self:flex-start;">Linux &middot; v1.0.0</span>
             <h3 style="font-size:1.125rem; margin:10px 0 4px;">Linux AppImage</h3>
             <p class="installer-card-desc">Portable AppImage tested on Ubuntu, Fedora, Debian, and Arch Linux.</p>
-            <div class="checksum-chip">Portable x86_64 AppImage</div>
+            <div class="checksum-chip" title="SHA-256: 6bbb7e141748ea162de83b981f75f86fe29236283af31457f42dce8fead5712e">SHA-256: 6bbb7e141748ea16</div>
           </div>
           <div style="display:flex; flex-direction:column; gap:8px;">
             <a href="/downloads/UnimaxDL-v1.0.0-linux.AppImage" id="btn-download-linux" download="UnimaxDL-v1.0.0-linux.AppImage" class="btn-secondary" style="width:100%; min-height:46px;">Download .AppImage</a>
-            <span class="pill-btn" style="visibility:hidden; pointer-events:none;" aria-hidden="true">Spacer</span>
+            <a href="/downloads/SHA256SUMS.txt" target="_blank" rel="noopener noreferrer" class="pill-btn" style="width:100%;">Verify SHA-256</a>
           </div>
         </div>
       </div>
@@ -340,14 +382,16 @@
         <summary>For Power Users: Command-Line Install Commands</summary>
         <div style="margin-top:12px; display:flex; flex-direction:column; gap:10px;">
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <button type="button" class="pill-btn os-tab-btn" onclick="switchCliTab(this, 'bash')">macOS / Linux</button>
+            <button type="button" class="pill-btn os-tab-btn active" onclick="switchCliTab(this, 'bash')">macOS / Linux</button>
             <button type="button" class="pill-btn os-tab-btn" onclick="switchCliTab(this, 'powershell')">Windows PowerShell</button>
-            <button type="button" class="pill-btn os-tab-btn" onclick="switchCliTab(this, 'winget')">Winget</button>
           </div>
           <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px; border-radius:10px; background:var(--bg-well); border:1px solid var(--line-subtle);">
             <code id="cli-cmd-text" class="tabular" style="font-size:0.875rem; overflow-x:auto;">curl -sSL https://unimaxdl.github.io/install.sh | bash</code>
             <button type="button" class="pill-btn" id="cli-copy-btn" onclick="copyCliCommand()">Copy</button>
           </div>
+          <p style="font-size:0.8125rem; color:var(--text-secondary); margin:0;">
+            Both installers verify cryptographic SHA-256 checksums against <a href="/downloads/SHA256SUMS.txt" style="color:var(--brand-cyan-text); text-decoration:underline;">SHA256SUMS.txt</a> before setup. Mirror builds are also published on <a href="https://github.com/UnimaxDL/unimaxdl.github.io/releases" target="_blank" rel="noopener noreferrer" style="color:var(--brand-cyan-text); text-decoration:underline;">GitHub Releases</a>.
+          </p>
         </div>
       </details>
     </div>
@@ -453,8 +497,7 @@
 
   var cliCommands = {
     bash: 'curl -sSL https://unimaxdl.github.io/install.sh | bash',
-    powershell: 'iwr -useb https://unimaxdl.github.io/install.ps1 | iex',
-    winget: 'winget install UnimaxDL.UnimaxDL'
+    powershell: 'iwr -useb https://unimaxdl.github.io/install.ps1 | iex'
   };
   var currentCli = 'bash';
 

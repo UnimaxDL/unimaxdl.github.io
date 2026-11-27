@@ -19,17 +19,21 @@
   <meta content="#F5F6FA" name="theme-color"/>
   <meta content="google021fd839d14f44e1" name="google-site-verification"/>
   <meta content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" name="robots"/>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: blob: https:; font-src 'self' https: data:; connect-src 'self' https: http://127.0.0.1:* http://localhost:*; object-src 'none'; base-uri 'self';"/>
   <meta content="website" property="og:type"/>
   <meta content="https://unimaxdl.github.io/" property="og:url"/>
   <meta content="UnimaxDL — Free Video &amp; Audio Downloader | 4K &amp; 320k MP3" property="og:title"/>
   <meta content="Save YouTube, TikTok without watermark, Instagram Reels, Reddit audio+video, and SoundCloud MP3s cleanly in seconds." property="og:description"/>
-  <meta content="https://unimaxdl.github.io/assets/images/icon2-512.png" property="og:image"/>
+  <meta content="https://unimaxdl.github.io/assets/images/og-cover.png" property="og:image"/>
+  <meta content="1200" property="og:image:width"/>
+  <meta content="630" property="og:image:height"/>
+  <meta content="UnimaxDL Prism Studio — Clean 4K Video and 320k MP3 Downloader" property="og:image:alt"/>
   <meta content="UnimaxDL" property="og:site_name"/>
   <meta content="summary_large_image" name="twitter:card"/>
-  <meta content="https://unimaxdl.github.io/" name="twitter:url"/>
+  <meta content="https://unimaxdl.github.io/" property="twitter:url"/>
   <meta content="UnimaxDL — Free Video &amp; Audio Downloader" property="twitter:title"/>
   <meta content="Save YouTube 4K, TikTok clean clips, Instagram Reels, and 320k MP3s cleanly." property="twitter:description"/>
-  <meta content="https://unimaxdl.github.io/assets/images/icon2-512.png" property="twitter:image"/>
+  <meta content="https://unimaxdl.github.io/assets/images/og-cover.png" property="twitter:image"/>
   <link href="https://fonts.googleapis.com" rel="preconnect"/>
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet"/>
@@ -60,6 +64,32 @@
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
       "description": "Free open-source media downloader supporting 1,000+ websites with 4K native video saves and 320k MP3 conversion.",
       "disambiguatingDescription": "UnimaxDL is an open-source multimedia web application and software utility for saving online videos and audio."
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why do 4K UHD & 60fps videos open the Free Native App option?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Most streaming sites store 4K video and high-bitrate audio as two separate streams that web browsers cannot combine natively without timing out. The free UnimaxDL Android APK and Desktop App merge them cleanly right on your own device." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does UnimaxDL remove the TikTok watermark automatically?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Pasting any public TikTok link extracts the clean source video without the floating corner watermark, while also offering direct MP3 audio saving." }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do Reddit videos saved elsewhere often have no sound?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Reddit separates video frames and audio tracks across two URLs. UnimaxDL's stream preparation automatically locks and merges both tracks so your clip plays back with synced sound." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is UnimaxDL free to use on Android, Windows, macOS, and Linux?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Every tool, APK build, and desktop installer is free and MIT open source, funded ethically via transparent partner slots so users never face paywalls or subscriptions." }
+        }
+      ]
     }
   ]</script>
 </head>
@@ -472,7 +502,7 @@
             <p style="font-size:0.875rem;">Save widescreen 1080p/4K videos, vertical Shorts, or crisp 320kbps MP3 audio tracks.</p>
           </div>
           <div style="display:flex; gap:8px;">
-            <button type="button" class="pill-btn" onclick="setSample('https://www.youtube.com/watch?v=dQw4w9WgXcQ')">Try Sample</button>
+            <button type="button" class="pill-btn" onclick="setSample('https://www.youtube.com/watch?v=aqz-KE-bpKQ')">Try Sample</button>
             <a href="/youtube-downloader.html" class="btn-secondary" style="flex:1;">Open Guide &rarr;</a>
           </div>
         </div>
@@ -508,7 +538,7 @@
             <p style="font-size:0.875rem;">Automatically merges Reddit's split video and audio files so your saved clip never loses sound.</p>
           </div>
           <div style="display:flex; gap:8px;">
-            <button type="button" class="pill-btn" onclick="setSample('https://www.reddit.com/r/videos/comments/example_clip/')">Try Sample</button>
+            <button type="button" class="pill-btn" onclick="setSample('https://www.reddit.com/r/Blender/comments/101v4d5/')">Try Sample</button>
             <a href="/reddit-downloader.html" class="btn-secondary" style="flex:1;">Open Guide &rarr;</a>
           </div>
         </div>

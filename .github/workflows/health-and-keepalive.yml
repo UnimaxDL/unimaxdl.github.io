@@ -1,0 +1,91 @@
+name: Mirror Health and Free Tier Keep-Alive
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Keep Supabase and Render awake + refresh active mirrors
+        run: |
+          node - <<'NODE'
+          const fs = require('fs');
+
+          async function safeFetch(url, headers = {}) {
+            const c = new AbortController();
+            const t = setTimeout(() => c.abort(), 8000);
+            try {
+              const res = await fetch(url, { headers, signal: c.signal });
+              clearTimeout(t);
+              return res;
+            } catch (e) {
+              clearTimeout(t);
+              return null;
+            }
+          }
+
+          (async () => {
+            // 1. Keep free Supabase tier active cleanly
+            await safeFetch(
+              'https://olxgfytiyiupfzthoris.supabase.co/rest/v1/user_visits?select=id&limit=1',
+              {
+                apikey: 'sb_publishable_n836xYAnIUD0d0qIyoXLTQ_GQ0KJSH0',
+                Authorization: 'Bearer sb_publishable_n836xYAnIUD0d0qIyoXLTQ_GQ0KJSH0'
+              }
+            );
+
+            // 2. Warm Render companion engine
+            await safeFetch('https://unimaxdl-server.onrender.com/api/ping');
+
+            // 3. Probe candidate community Invidious mirrors
+            const candidates = [
+              'https://yt.chocolatemoo53.com',
+              'https://inv.nadeko.net',
+              'https://invidious.nerdvpn.de',
+              'https://yewtu.be'
+            ];
+            const healthy = [];
+            for (const base of candidates) {
+              const res = await safeFetch(`${base}/api/v1/videos/aqz-KE-bpKQ`);
+              if (res && res.ok) {
+                healthy.push(base);
+              }
+            }
+
+            if (healthy.length > 0) {
+              const manifestPath = 'assets/data/mirrors.json';
+              const current = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+              const prevList = JSON.stringify(current.invidious || []);
+              const nextList = JSON.stringify(healthy);
+              if (prevList !== nextList) {
+                current.invidious = healthy;
+                current.updatedAt = new Date().toISOString();
+                fs.writeFileSync(manifestPath, JSON.stringify(current, null, 2) + '\n', 'utf8');
+                console.log('Updated healthy mirrors:', healthy);
+              } else {
+                console.log('Healthy mirrors unchanged:', healthy);
+              }
+            }
+          })();
+          NODE
+
+      - name: Commit mirror updates if changed
+        run: |
+          if [ -n "$(git status --porcelain assets/data/mirrors.json)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.com"
+            git add assets/data/mirrors.json
+            git commit -m "chore(mirrors): update verified extraction mirrors [skip ci]"
+            git push
+          else
+            echo "No mirror changes to commit."
+          fi
