@@ -1,256 +1,129 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html class="scroll-smooth" data-theme="light" lang="en">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Terms of Service — UniMaxDL</title>
-  <meta name="description" content="Terms of Service and User Agreement for UniMaxDL. Read our terms regarding fair personal use, compliance, and legal guidelines."/>
-  <link rel="canonical" href="https://unimaxdl.github.io/terms.html"/>
-  <meta property="og:type" content="article"/>
-  <meta property="og:url" content="https://unimaxdl.github.io/terms.html"/>
-  <meta property="og:title" content="Terms of Service — UniMaxDL"/>
-  <meta property="og:description" content="Terms of Service and User Agreement for UniMaxDL. Read our terms regarding fair personal use, compliance, and legal guidelines."/>
-  <meta property="og:image" content="https://unimaxdl.github.io/assets/images/icon2.png"/>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" name="viewport"/>
+  <title>Terms of Service — UnimaxDL</title>
+  <meta content="Terms of Service and User Agreement for UnimaxDL covering fair personal use, open-source licensing, and copyright compliance." name="description"/>
+  <link href="https://unimaxdl.github.io/terms.html" rel="canonical"/>
   <script>
   (function() {
     try {
-      var t = localStorage.getItem('udl-theme') || 'dark';
+      var t = localStorage.getItem('udl-theme') || 'light';
       document.documentElement.setAttribute('data-theme', t);
     } catch (e) {}
   })();
-</script>
+  </script>
+  <link href="/manifest.json" rel="manifest"/>
+  <meta content="#F5F6FA" name="theme-color"/>
   <link href="https://fonts.googleapis.com" rel="preconnect"/>
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet"/>
-  <link href="/assets/css/style.css?v=4.2" rel="stylesheet"/>
-  <meta content="UnimaxDL" name="application-name"/>
-  <meta content="UnimaxDL" name="apple-mobile-web-app-title"/>
-  <link href="/assets/images/icon-48.png" rel="icon" sizes="48x48" type="image/png"/>
-  <link href="/assets/images/icon-96.png" rel="icon" sizes="96x96" type="image/png"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet"/>
+  <link href="/assets/css/style.css?v=5.0" rel="stylesheet"/>
   <link href="/assets/images/icon2-192.png" rel="icon" sizes="192x192" type="image/png"/>
   <link href="/assets/images/favicon.ico" rel="icon" type="image/x-icon"/>
   <link href="/favicon.ico" rel="shortcut icon"/>
-  <link href="/assets/images/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
 </head>
 <body>
 
-<div class="frame-container">
-  <header class="studio-header">
-    <div class="studio-header-inner">
-      <a href="/" class="brand-unit" aria-label="UniMaxDL Home">
-        <picture style="display:flex; align-items:center; flex-shrink:0;">
-          <source srcset="/assets/images/icon-96.webp" type="image/webp"/>
-          <img alt="UnimaxDL Icon" class="brand-mark" src="/assets/images/icon-48.png" width="30" height="30" style="width:30px; height:30px; object-fit:contain; display:block;"/>
-        </picture>
-        <span class="brand-wordmark">UNIMAX<span class="brand-accent">DL</span></span>
-        <span class="badge-subtle">v4.1</span>
-      </a>
-
-      <nav class="nav-links" aria-label="Primary Navigation">
-        <a href="/">Web Deck</a>
-        <a href="/download.html">Desktop App</a>
-        <a href="/youtube-downloader.html">YouTube</a>
-        <a href="/tiktok-downloader.html">TikTok</a>
-        <a href="/instagram-downloader.html">Instagram</a>
-        <a href="/reddit-downloader.html">Reddit</a>
-        <a href="/soundcloud-downloader.html">SoundCloud</a>
-        <div class="dropdown">
-          <button class="cartridge-btn" id="platforms-dropdown-btn" aria-expanded="false" onclick="togglePlatformsDropdown(event)" type="button">
-            <span>MORE v</span>
-          </button>
-          <div id="platforms-dropdown" class="dropdown-panel hidden" role="menu">
-            <a href="/twitter-downloader.html" class="dropdown-item">
-              <span class="status-dot" style="background-color:#1da1f2;"></span>
-              <span>Twitter / X</span>
-            </a>
-            <a href="/facebook-downloader.html" class="dropdown-item">
-              <span class="status-dot" style="background-color:#1877f2;"></span>
-              <span>Facebook</span>
-            </a>
-            <a href="/pinterest-downloader.html" class="dropdown-item">
-              <span class="status-dot" style="background-color:#e60023;"></span>
-              <span>Pinterest</span>
-            </a>
-            <a href="/twitch-downloader.html" class="dropdown-item">
-              <span class="status-dot" style="background-color:#9146ff;"></span>
-              <span>Twitch</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="/#tool" class="dropdown-item" style="color:var(--brand-accent);">
-              <span>+</span>
-              <span>1000+ Sources</span>
-            </a>
-          </div>
-        </div>
-      </nav>
-
-      <div class="header-actions">
-        <button id="udl-server-status" class="header-status-pill" type="button" onclick="if(window.UDL_DOWNLOADER) UDL_DOWNLOADER.showSettingsModal()" title="Configure Extraction Engine">
-          <span class="status-dot"></span>
-          <span>ENGINE ONLINE</span>
+<header class="studio-header">
+  <div class="studio-header-inner">
+    <a href="/" class="brand-unit" aria-label="UnimaxDL Home">
+      <div class="brand-mark-wrap"><picture><source srcset="/assets/images/icon2.webp" type="image/webp"/><img alt="UnimaxDL Logo" src="/assets/images/icon2-192.png" width="24" height="24"/></picture></div>
+      <span class="brand-wordmark">Unimax<span class="brand-accent">DL</span></span>
+      <span class="brand-pill">Open Source</span>
+    </a>
+    <nav class="nav-links" aria-label="Primary Navigation">
+      <a href="/">Downloader</a>
+      <a href="/download.html">4K App &amp; APK</a>
+      <a href="/#how-it-works">How It Works</a>
+      <div class="dropdown">
+        <button class="nav-dropdown-btn" id="platforms-dropdown-btn" aria-expanded="false" onclick="togglePlatformsDropdown(event)" type="button">
+          <span>Platforms</span>
+          <svg class="dropdown-caret" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
         </button>
-        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Color Theme" onclick="toggleTheme()" type="button">
-          <span class="theme-toggle-label">DARK</span>
-          <span class="theme-toggle-switch"></span>
-        </button>
-        <a href="https://github.com/UnimaxDL/unimaxdl.github.io" target="_blank" rel="noopener" class="cartridge-btn desktop-only" style="text-decoration:none;">
-          GITHUB
-        </a>
-        <button id="mobile-menu-btn" class="cartridge-btn mobile-only" aria-label="Toggle Menu" aria-expanded="false" onclick="toggleMobileMenu()" type="button">
-          MENU
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <div id="mobile-overlay" class="mobile-drawer-overlay" onclick="toggleMobileMenu(false)"></div>
-  <aside id="mobile-drawer" class="mobile-drawer" aria-label="Mobile Navigation">
-    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.25rem; padding-bottom:0.75rem; border-bottom:1px solid var(--border-hairline);">
-      <div style="display:flex; align-items:center; gap:0.5rem;">
-        <picture style="display:flex; align-items:center; flex-shrink:0;">
-          <source srcset="/assets/images/icon-96.webp" type="image/webp"/>
-          <img alt="UnimaxDL Icon" class="brand-mark" src="/assets/images/icon-48.png" width="30" height="30" style="width:30px; height:30px; object-fit:contain; display:block;"/>
-        </picture>
-        <span style="font-family:var(--font-display); font-weight:800; font-size:1rem;">UNIMAX<span class="brand-accent">DL</span></span>
-      </div>
-      <button class="cartridge-btn" onclick="toggleMobileMenu(false)" type="button">CLOSE</button>
-    </div>
-    <div style="display:flex; flex-direction:column; gap:0.45rem;">
-      <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); text-transform:uppercase;">APPLICATIONS</span>
-      <a href="/" class="cartridge-btn" style="justify-content:flex-start;">Web Deck Console</a>
-      <a href="/download.html" class="cartridge-btn" style="justify-content:flex-start;">Desktop &amp; Android Apps</a>
-      <div class="dropdown-divider" style="margin:0.4rem 0;"></div>
-      <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); text-transform:uppercase;">CHANNELS</span>
-      <a href="/youtube-downloader.html" class="cartridge-btn" style="justify-content:flex-start;">CH-01 // YouTube 4K</a>
-      <a href="/instagram-downloader.html" class="cartridge-btn" style="justify-content:flex-start;">CH-02 // Instagram Reels</a>
-      <a href="/tiktok-downloader.html" class="cartridge-btn" style="justify-content:flex-start;">CH-03 // TikTok Clean</a>
-      <a href="/twitter-downloader.html" class="cartridge-btn" style="justify-content:flex-start;">CH-04 // Twitter / X</a>
-      <a href="/reddit-downloader.html" class="cartridge-btn" style="justify-content:flex-start;">CH-05 // Reddit Muxed</a>
-      <a href="/facebook-downloader.html" class="cartridge-btn" style="justify-content:flex-start;">CH-06 // Facebook Video</a>
-      <a href="/pinterest-downloader.html" class="cartridge-btn" style="justify-content:flex-start;">CH-07 // Pinterest Pins</a>
-      <a href="/soundcloud-downloader.html" class="cartridge-btn" style="justify-content:flex-start;">CH-08 // SoundCloud 320k</a>
-      <a href="/twitch-downloader.html" class="cartridge-btn" style="justify-content:flex-start;">CH-09 // Twitch Clips</a>
-      <div class="dropdown-divider" style="margin:0.4rem 0;"></div>
-      <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); text-transform:uppercase;">DOCUMENTATION</span>
-      <a href="/terms.html" class="cartridge-btn" style="justify-content:flex-start;">Terms of Service</a>
-      <a href="/privacy.html" class="cartridge-btn" style="justify-content:flex-start;">Privacy Policy</a>
-      <a href="/dmca.html" class="cartridge-btn" style="justify-content:flex-start;">DMCA &amp; Takedown</a>
-    </div>
-  </aside>
-
-  <main class="frame-main">
-    <div class="legal-layout">
-      <aside class="legal-toc">
-        <div class="legal-toc-title">INDEX OF PROVISIONS</div>
-        <ul class="legal-toc-list">
-          <li><a href="#section-1" class="legal-toc-link">01 // Acceptance of Terms</a></li>
-          <li><a href="#section-2" class="legal-toc-link">02 // Permitted Personal Use</a></li>
-          <li><a href="#section-3" class="legal-toc-link">03 // Non-Hosting Conduit</a></li>
-          <li><a href="#section-4" class="legal-toc-link">04 // User Obligations</a></li>
-          <li><a href="#section-5" class="legal-toc-link">05 // Prohibited Uses</a></li>
-          <li><a href="#section-6" class="legal-toc-link">06 // Warranty Disclaimer</a></li>
-          <li><a href="#section-7" class="legal-toc-link">07 // Amendments</a></li>
-        </ul>
-      </aside>
-
-      <article class="legal-content">
-        <div>
-          <span class="badge-subtle">[ SPEC // 02 — USER ACCORD ]</span>
-          <h1 style="font-size:clamp(1.875rem, 3.5vw, 2.5rem); margin:0.5rem 0 0.25rem;">Terms of Service</h1>
-          <p style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);" class="tabular">DOCUMENT REVISION: 2026.11 // STATUS: ACTIVE</p>
+        <div id="platforms-dropdown" class="dropdown-panel" role="menu">
+          <a href="/youtube-downloader.html" class="dropdown-item">YouTube 4K &amp; Shorts</a>
+          <a href="/tiktok-downloader.html" class="dropdown-item">TikTok No Watermark</a>
+          <a href="/instagram-downloader.html" class="dropdown-item">Instagram Reels &amp; Stories</a>
+          <a href="/reddit-downloader.html" class="dropdown-item">Reddit Sound + Video</a>
+          <a href="/twitter-downloader.html" class="dropdown-item">X / Twitter Video</a>
+          <a href="/soundcloud-downloader.html" class="dropdown-item">SoundCloud 320k MP3</a>
+          <a href="/twitch-downloader.html" class="dropdown-item">Twitch Clips &amp; VODs</a>
+          <a href="/facebook-downloader.html" class="dropdown-item">Facebook HD Video</a>
+          <a href="/pinterest-downloader.html" class="dropdown-item">Pinterest Video Pins</a>
         </div>
-
-        <section id="section-1">
-          <h2>1. Acceptance of Terms</h2>
-          <p>By using UniMaxDL on the web, desktop, or Android APK, you agree to these Terms of Service.</p>
-        </section>
-        <section id="section-2">
-          <h2>2. Permitted &amp; Fair Archival Use</h2>
-          <p>UniMaxDL is intended solely for non-commercial personal archiving, public-domain content, Creative Commons assets, or material you own rights to download.</p>
-        </section>
-        <section id="section-3">
-          <h2>3. Non-Hosting Architectural Architecture</h2>
-          <div style="background:var(--brand-surface-alt); border-left:3px solid var(--brand-accent); padding:1rem 1.25rem; border-radius:var(--radius-sharp);">
-            <strong style="color:var(--text-primary); display:block; margin-bottom:0.25rem;">PASSIVE CONDUIT:</strong>
-            UniMaxDL does not host or archive third-party media. It routes real-time parsing via open-source tools on URLs supplied by the user.
-          </div>
-        </section>
-        <section id="section-4">
-          <h2>4. User Responsibility &amp; Third-Party Policies</h2>
-          <p>Users are solely responsible for compliance with applicable copyright law and third-party platform rules.</p>
-        </section>
-        <section id="section-5">
-          <h2>5. Prohibited Activities</h2>
-          <p>You agree not to circumvent DRM copy-protection, commercially redistribute copyrighted media, or execute automated denial-of-service floods.</p>
-        </section>
-        <section id="section-6">
-          <h2>6. Disclaimer of Warranty &amp; Liability</h2>
-          <p>THE SERVICE IS PROVIDED "AS IS" WITHOUT WARRANTIES OF ANY KIND.</p>
-        </section>
-        <section id="section-7">
-          <h2>7. Amendments to Terms</h2>
-          <p>Continued use after revisions constitutes acceptance of updated terms.</p>
-        </section>
-      </article>
-    </div>
-  </main>
-
-  <footer class="deck-footer">
-    <div class="deck-footer-top">
-      <div class="deck-footer-brand">
-        <div style="display:flex; align-items:center; gap:0.55rem; font-family:var(--font-display); font-weight:800; font-size:1.0625rem;">
-          <picture style="display:flex; align-items:center; flex-shrink:0;">
-          <source srcset="/assets/images/icon-96.webp" type="image/webp"/>
-          <img alt="UnimaxDL Icon" class="brand-mark" src="/assets/images/icon-48.png" width="30" height="30" style="width:30px; height:30px; object-fit:contain; display:block;"/>
-        </picture>
-          <span>UNIMAX<span class="brand-accent">DL</span></span>
-        </div>
-        <p style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted); line-height:1.5;">
-          PRECISION BROADCAST STUDIO MEDIA EXTRACTOR // MIT LICENSED OPEN SOURCE
-        </p>
       </div>
+    </nav>
+    <div class="header-actions">
+      <button id="udl-server-status" class="header-status-pill" type="button" onclick="if(window.UDL_DOWNLOADER) UDL_DOWNLOADER.showSettingsModal()"><span class="status-dot"></span><span>Web Mode Ready</span></button>
+      <button id="theme-toggle" class="theme-toggle-btn" aria-label="Switch color theme" onclick="toggleTheme()" type="button"><span class="theme-toggle-label">Light</span><span class="theme-toggle-switch" aria-hidden="true"></span></button>
+      <a href="/download.html" class="header-app-btn desktop-only"><span>Get Free App</span></a>
+      <button id="mobile-menu-btn" class="mobile-menu-trigger mobile-only" aria-label="Open Navigation Menu" aria-expanded="false" onclick="toggleMobileMenu()" type="button"><span>Menu</span></button>
+    </div>
+  </div>
+</header>
 
-      <nav class="deck-footer-nav" aria-label="Footer Navigation">
+<div id="mobile-overlay" class="mobile-drawer-overlay" onclick="toggleMobileMenu(false)"></div>
+<aside id="mobile-drawer" class="mobile-drawer" aria-label="Mobile Navigation" aria-hidden="true">
+  <div class="drawer-header"><span class="brand-wordmark">Unimax<span class="brand-accent">DL</span></span><button class="pill-btn" onclick="toggleMobileMenu(false)" type="button">Close</button></div>
+  <div class="drawer-nav-list">
+    <a href="/" class="drawer-nav-item">Web Downloader</a>
+    <a href="/download.html" class="drawer-nav-item">Android APK v2.1.0 &amp; Desktop Apps</a>
+    <a href="/privacy.html" class="drawer-nav-item">Privacy Policy</a>
+    <a href="/terms.html" class="drawer-nav-item">Terms of Service</a>
+    <a href="/dmca.html" class="drawer-nav-item">DMCA Policy</a>
+  </div>
+</aside>
+
+<main class="section-block">
+  <div class="studio-shell">
+    <article class="doc-article">
+      <span class="tech-badge tech-badge-cyan">User Terms</span>
+      <h1 style="font-size:clamp(1.75rem, 3.5vw, 2.4rem); margin:12px 0 8px;">Terms of Service</h1>
+      <p style="font-size:0.875rem; color:var(--text-muted); margin-bottom:24px;">Last updated: November 2026 &middot; UnimaxDL Open Source Project</p>
+
+      <h2>1. Acceptance of Terms</h2>
+      <p>By using UnimaxDL on the web, desktop app, or Android APK, you agree to follow these Terms of Service and all applicable local laws.</p>
+
+      <h2>2. Permitted Personal Use</h2>
+      <p>UnimaxDL is designed for saving public-domain media, Creative Commons resources, content you own, or personal fair-use offline copies.</p>
+
+      <h2>3. Neutral Technical Conduit</h2>
+      <p>UnimaxDL does not permanently host, archive, or broadcast copyrighted third-party video files. Format lookups resolve public streams on demand for the user.</p>
+
+      <h2>4. User Responsibility</h2>
+      <p>Users remain solely responsible for respecting content creator rights and destination platform terms. Commercial redistribution of third-party copyrighted files is prohibited.</p>
+
+      <h2>5. Warranty Disclaimer</h2>
+      <p>This software is provided under the open-source MIT License &ldquo;AS IS&rdquo; without warranties of any kind.</p>
+    </article>
+  </div>
+</main>
+
+<footer class="studio-footer">
+  <div class="studio-shell">
+    <div class="footer-bottom" style="margin-top:0; border-top:0; padding-top:0;">
+      <span>&copy; 2026 UnimaxDL Project &middot; MIT Open Source</span>
+      <div style="display:flex; gap:16px;">
         <a href="/">Home</a>
         <a href="/download.html">Apps</a>
-        <a href="/youtube-downloader.html">YouTube</a>
-        <a href="/tiktok-downloader.html">TikTok</a>
-        <a href="/instagram-downloader.html">Instagram</a>
-        <a href="/reddit-downloader.html">Reddit</a>
-        <a href="/soundcloud-downloader.html">SoundCloud</a>
-        <a href="/twitch-downloader.html">Twitch</a>
-        <a href="/twitter-downloader.html">Twitter / X</a>
-        <a href="/facebook-downloader.html">Facebook</a>
-        <a href="/pinterest-downloader.html">Pinterest</a>
-        <a href="/terms.html">Terms</a>
         <a href="/privacy.html">Privacy</a>
         <a href="/dmca.html">DMCA</a>
-        <a href="https://github.com/UnimaxDL/unimaxdl.github.io" target="_blank" rel="noopener">GitHub</a>
-      </nav>
+      </div>
     </div>
+  </div>
+</footer>
 
-    <div class="deck-footer-bottom">
-      <span>ENGINEERED BY ATOMIC DHRUBA</span>
-      <span class="tabular">STATUS: ALL SIGNAL PIPELINES NOMINAL</span>
-    </div>
-  </footer>
-</div>
-
-<script src="/assets/js/nav.js?v=4.1"></script>
-<!-- Monetag MultiTag Official Script (Deferred) -->
+<script src="/assets/js/analytics.js?v=3.1"></script>
+<script defer src="/assets/js/nav.js?v=5.0"></script>
 <script>
   window.addEventListener('load', function() {
     setTimeout(function() {
-      var s = document.createElement('script');
-      s.src = "https://quge5.com/88/tag.min.js";
-      s.dataset.zone = "305301";
-      s.async = true;
-      s.dataset.cfasync = "false";
-      document.body.appendChild(s);
-    }, 500);
+      var m = document.createElement('script'); m.src = "https://quge5.com/88/tag.min.js"; m.dataset.zone = "305301"; m.async = true; m.dataset.cfasync = "false"; document.body.appendChild(m);
+      var a = document.createElement('script'); a.src = "https://bellnewyork.org/14/9ee0588abd51114c8dc6784b6ea788c8"; a.async = true; a.dataset.cfasync = "false"; document.body.appendChild(a);
+    }, 1400);
   });
 </script>
-<!-- Adsterra Social Bar Official Script -->
-<script data-cfasync="false" src="https://bellnewyork.org/14/9ee0588abd51114c8dc6784b6ea788c8"></script>
 </body>
 </html>

@@ -1,517 +1,182 @@
 <!DOCTYPE html>
-<html class="scroll-smooth" data-theme="dark" data-platform="pinterest" lang="en">
+<html class="scroll-smooth" data-theme="light" data-platform="pinterest" lang="en">
 <head>
   <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport"/>
-  <title>Pinterest Video Downloader — Download Pins & Idea Pins in HD | UniMaxDL</title>
-  <meta content="Download Pinterest videos and Idea Pins in full HD MP4. Free online Pinterest video downloader. Fast, watermark-free, and works on all devices." name="description"/>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" name="viewport"/>
+  <title>Pinterest Video &amp; Idea Pin Downloader — HD MP4 Free | UnimaxDL</title>
+  <meta content="Download Pinterest video pins and Idea Pins cleanly in HD MP4 without watermarks. Free online saver for designers and creators." name="description"/>
   <link href="https://unimaxdl.github.io/pinterest-downloader.html" rel="canonical"/>
   <script>
   (function() {
     try {
-      var t = localStorage.getItem('udl-theme') || 'dark';
+      var t = localStorage.getItem('udl-theme') || 'light';
       document.documentElement.setAttribute('data-theme', t);
     } catch (e) {}
   })();
-</script>
+  </script>
   <link href="/manifest.json" rel="manifest"/>
-  <meta content="#07070a" name="theme-color"/>
-  <meta content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" name="robots"/>
-  <meta content="website" property="og:type"/>
-  <meta content="https://unimaxdl.github.io/pinterest-downloader.html" property="og:url"/>
-  <meta content="Pinterest Video Downloader — Download Pins & Idea Pins in HD" property="og:title"/>
-  <meta content="Download Pinterest videos and Idea Pins in full HD MP4. Free online Pinterest video downloader. Fast, watermark-free, and works on all devices." property="og:description"/>
-  <meta content="https://unimaxdl.github.io/assets/images/icon2.png" property="og:image"/>
-  <meta content="UnimaxDL" property="og:site_name"/>
-  <meta content="summary_large_image" name="twitter:card"/>
-  <meta content="https://unimaxdl.github.io/pinterest-downloader.html" name="twitter:url"/>
-  <meta content="Pinterest Video Downloader — Download Pins & Idea Pins in HD" name="twitter:title"/>
-  <meta content="Download Pinterest videos and Idea Pins in full HD MP4. Free online Pinterest video downloader. Fast, watermark-free, and works on all devices." name="twitter:description"/>
-  <meta content="https://unimaxdl.github.io/assets/images/icon2.png" name="twitter:image"/>
+  <meta content="#F5F6FA" name="theme-color"/>
   <link href="https://fonts.googleapis.com" rel="preconnect"/>
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet"/>
-  <link href="/assets/css/style.css?v=4.2" rel="stylesheet"/>
-  <meta content="UnimaxDL" name="application-name"/>
-  <meta content="UnimaxDL" name="apple-mobile-web-app-title"/>
-  <link href="/assets/images/icon-48.png" rel="icon" sizes="48x48" type="image/png"/>
-  <link href="/assets/images/icon-96.png" rel="icon" sizes="96x96" type="image/png"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet"/>
+  <link href="/assets/css/style.css?v=5.0" rel="stylesheet"/>
   <link href="/assets/images/icon2-192.png" rel="icon" sizes="192x192" type="image/png"/>
   <link href="/assets/images/favicon.ico" rel="icon" type="image/x-icon"/>
-  <link href="/favicon.ico" rel="shortcut icon"/>
-  <link href="/assets/images/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Pinterest Downloader — UnimaxDL",
-    "url": "https://unimaxdl.github.io/pinterest-downloader.html",
-    "description": "Download Pinterest videos and Idea Pins in full HD MP4. Free online Pinterest video downloader. Fast, watermark-free, and works on all devices.",
-    "applicationCategory": "MultimediaApplication",
-    "operatingSystem": "All",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
-  }
-  </script>
 </head>
 <body>
 
-<div class="frame-container">
-  <header class="studio-header">
-    <div class="studio-header-inner">
-      <a href="/" class="brand-unit" aria-label="UniMaxDL Home">
-        <picture style="display:flex; align-items:center; flex-shrink:0;">
-          <source srcset="/assets/images/icon-96.webp" type="image/webp"/>
-          <img alt="UnimaxDL Icon" class="brand-mark" src="/assets/images/icon-48.png" width="30" height="30" style="width:30px; height:30px; object-fit:contain; display:block;"/>
-        </picture>
-        <span class="brand-wordmark">UNIMAX<span class="brand-accent">DL</span></span>
-        <span class="badge-subtle">v4.1</span>
-      </a>
+<header class="studio-header">
+  <div class="studio-header-inner">
+    <a href="/" class="brand-unit" aria-label="UnimaxDL Home">
+      <div class="brand-mark-wrap"><picture><source srcset="/assets/images/icon2.webp" type="image/webp"/><img alt="UnimaxDL Prism Logo" src="/assets/images/icon2-192.png" width="24" height="24"/></picture></div>
+      <span class="brand-wordmark">Unimax<span class="brand-accent">DL</span></span>
+      <span class="brand-pill">Pinterest</span>
+    </a>
+    <nav class="nav-links" aria-label="Primary Navigation">
+      <a href="/">Downloader</a>
+      <a href="/download.html">4K App &amp; APK</a>
+      <a href="/#how-it-works">How It Works</a>
+      <div class="dropdown">
+        <button class="nav-dropdown-btn" id="platforms-dropdown-btn" aria-expanded="false" onclick="togglePlatformsDropdown(event)" type="button"><span>Platforms</span><svg class="dropdown-caret" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button>
+        <div id="platforms-dropdown" class="dropdown-panel" role="menu">
+          <a href="/youtube-downloader.html" class="dropdown-item">YouTube 4K &amp; Shorts</a>
+          <a href="/tiktok-downloader.html" class="dropdown-item">TikTok No Watermark</a>
+          <a href="/instagram-downloader.html" class="dropdown-item">Instagram Reels &amp; Stories</a>
+          <a href="/reddit-downloader.html" class="dropdown-item">Reddit Sound + Video</a>
+          <a href="/twitter-downloader.html" class="dropdown-item">X / Twitter Video</a>
+          <a href="/soundcloud-downloader.html" class="dropdown-item">SoundCloud 320k MP3</a>
+          <a href="/twitch-downloader.html" class="dropdown-item">Twitch Clips &amp; VODs</a>
+          <a href="/facebook-downloader.html" class="dropdown-item">Facebook HD Video</a>
+          <a href="/pinterest-downloader.html" class="dropdown-item">Pinterest Video Pins</a>
+        </div>
+      </div>
+    </nav>
+    <div class="header-actions">
+      <button id="udl-server-status" class="header-status-pill" type="button" onclick="if(window.UDL_DOWNLOADER) UDL_DOWNLOADER.showSettingsModal()"><span class="status-dot"></span><span>Web Mode Ready</span></button>
+      <button id="theme-toggle" class="theme-toggle-btn" aria-label="Switch color theme" onclick="toggleTheme()" type="button"><span class="theme-toggle-label">Light</span><span class="theme-toggle-switch" aria-hidden="true"></span></button>
+      <a href="/download.html" class="header-app-btn desktop-only"><span>Get Free App</span></a>
+      <a href="/download.html" class="mobile-only pill-btn" style="min-height:36px; padding:6px 10px; background:var(--brand-amber); color:var(--brand-amber-ink); border-color:transparent;">APK</a>
+      <button id="mobile-menu-btn" class="mobile-menu-trigger mobile-only" aria-label="Open Navigation Menu" aria-expanded="false" onclick="toggleMobileMenu()" type="button"><span>Menu</span></button>
+    </div>
+  </div>
+</header>
 
-      <nav class="nav-links" aria-label="Primary Navigation">
-        <a href="/">Web Deck</a>
-        <a href="/download.html">Desktop App</a>
-        <a href="/youtube-downloader.html">YouTube</a>
-        <a href="/tiktok-downloader.html">TikTok</a>
-        <a href="/instagram-downloader.html">Instagram</a>
-        <a href="/reddit-downloader.html">Reddit</a>
-        <a href="/soundcloud-downloader.html">SoundCloud</a>
-        <div class="dropdown">
-          <button class="cartridge-btn" id="platforms-dropdown-btn" aria-expanded="false" onclick="togglePlatformsDropdown(event)" type="button">
-            <span>MORE v</span>
+<div id="mobile-overlay" class="mobile-drawer-overlay" onclick="toggleMobileMenu(false)"></div>
+<aside id="mobile-drawer" class="mobile-drawer" aria-label="Mobile Navigation" aria-hidden="true">
+  <div class="drawer-header"><span class="brand-wordmark">Unimax<span class="brand-accent">DL</span></span><button class="pill-btn" onclick="toggleMobileMenu(false)" type="button">Close</button></div>
+  <div class="drawer-nav-list">
+    <a href="/" class="drawer-nav-item">Web Downloader</a>
+    <a href="/download.html" class="drawer-nav-item">Android APK v2.1.0 &amp; Desktop Apps</a>
+    <a href="/youtube-downloader.html" class="drawer-nav-item">YouTube 4K</a>
+    <a href="/pinterest-downloader.html" class="drawer-nav-item">Pinterest Pins</a>
+  </div>
+</aside>
+
+<main>
+  <section class="hero-section">
+    <div class="studio-shell">
+      <div class="platform-pill-strip" aria-label="Platform Pages">
+        <a href="/youtube-downloader.html" class="channel-tab">YouTube</a>
+        <a href="/tiktok-downloader.html" class="channel-tab">TikTok</a>
+        <a href="/instagram-downloader.html" class="channel-tab">Instagram</a>
+        <a href="/reddit-downloader.html" class="channel-tab">Reddit</a>
+        <a href="/twitter-downloader.html" class="channel-tab">X / Twitter</a>
+        <a href="/soundcloud-downloader.html" class="channel-tab">SoundCloud</a>
+        <a href="/twitch-downloader.html" class="channel-tab">Twitch</a>
+        <a href="/facebook-downloader.html" class="channel-tab">Facebook</a>
+        <a href="/pinterest-downloader.html" class="channel-tab active">Pinterest</a>
+      </div>
+
+      <div class="hero-header-band">
+        <h1 class="hero-title">Pinterest Video &amp; <span style="color:var(--platform-accent);">Idea Pin Saver</span></h1>
+        <p class="hero-subtitle">Save Pinterest tutorials, mood-board reels, and Idea Pin videos directly in clean HD MP4.</p>
+      </div>
+
+      <div class="omnibox-shell">
+        <div class="omnibox-row">
+          <div class="omnibox-input-well">
+            <span id="udl-source-badge" class="omnibox-source-badge tabular" style="color:var(--platform-accent);">PN</span>
+            <input id="url-input" class="deck-input" type="url" inputmode="url" autocomplete="off" autocapitalize="none" autocorrect="off" enterkeyhint="go" spellcheck="false" aria-label="Paste Pinterest pin link" placeholder="Paste Pinterest link (pinterest.com/pin/...)"/>
+            <button id="clear-btn" class="omnibox-clear-btn hidden" type="button" onclick="clearInput()" aria-label="Clear link"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
+            <button id="udl-paste-btn" class="omnibox-paste-btn" type="button" onclick="pasteClipboard()"><span>Paste</span></button>
+          </div>
+          <button id="btn-analyze" class="btn-primary omnibox-submit-btn" type="button" onclick="handleAnalyze()">
+            <span id="btn-spinner" class="hidden" aria-hidden="true"><svg class="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-opacity="0.25" stroke-width="3"/><path d="M21 12a9 9 0 00-9-9" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span>
+            <span id="btn-text">Get Formats</span>
           </button>
-          <div id="platforms-dropdown" class="dropdown-panel hidden" role="menu">
-            <a href="/twitter-downloader.html" class="dropdown-item">
-              <span class="status-dot" style="background-color:#1da1f2;"></span>
-              <span>Twitter / X</span>
-            </a>
-            <a href="/facebook-downloader.html" class="dropdown-item">
-              <span class="status-dot" style="background-color:#1877f2;"></span>
-              <span>Facebook</span>
-            </a>
-            <a href="/pinterest-downloader.html" class="dropdown-item">
-              <span class="status-dot" style="background-color:#e60023;"></span>
-              <span>Pinterest</span>
-            </a>
-            <a href="/twitch-downloader.html" class="dropdown-item">
-              <span class="status-dot" style="background-color:#9146ff;"></span>
-              <span>Twitch</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="/#tool" class="dropdown-item" style="color:var(--brand-accent);">
-              <span>+</span>
-              <span>1000+ Sources</span>
-            </a>
+        </div>
+
+        <div style="margin-top:12px; display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+          <button type="button" class="pill-btn" style="background:var(--bg-cyan-tint); border-color:var(--border-cyan-tint); color:var(--brand-cyan-text);" onclick="setSample('https://www.pinterest.com/pin/123456789/')">
+            Try Sample Pin &rarr;
+          </button>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <span class="tech-badge tech-badge-cyan">1080p HD MP4</span>
+            <span class="tech-badge">Idea Pins Ready</span>
           </div>
         </div>
-      </nav>
-
-      <div class="header-actions">
-        <button id="udl-server-status" class="header-status-pill" type="button" onclick="if(window.UDL_DOWNLOADER) UDL_DOWNLOADER.showSettingsModal()" title="Configure Extraction Engine">
-          <span class="status-dot"></span>
-          <span>ENGINE ONLINE</span>
-        </button>
-        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Color Theme" onclick="toggleTheme()" type="button">
-          <span class="theme-toggle-label">DARK</span>
-          <span class="theme-toggle-switch"></span>
-        </button>
-        <a href="https://github.com/UnimaxDL/unimaxdl.github.io" target="_blank" rel="noopener" class="cartridge-btn desktop-only" style="text-decoration:none;">
-          GITHUB
-        </a>
-        <button id="mobile-menu-btn" class="cartridge-btn mobile-only" aria-label="Toggle Menu" aria-expanded="false" onclick="toggleMobileMenu()" type="button">
-          MENU
-        </button>
       </div>
-    </div>
-  </header>
 
-  <div id="mobile-overlay" class="mobile-drawer-overlay" onclick="toggleMobileMenu(false)"></div>
-  <aside id="mobile-drawer" class="mobile-drawer" aria-label="Mobile Navigation">
-    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1.25rem; padding-bottom:0.75rem; border-bottom:1px solid var(--border-hairline);">
-      <div style="display:flex; align-items:center; gap:0.5rem;">
-        <picture style="display:flex; align-items:center; flex-shrink:0;">
-          <source srcset="/assets/images/icon-96.webp" type="image/webp"/>
-          <img alt="UnimaxDL Icon" class="brand-mark" src="/assets/images/icon-48.png" width="30" height="30" style="width:30px; height:30px; object-fit:contain; display:block;"/>
-        </picture>
-        <span style="font-family:var(--font-display); font-weight:800; font-size:1rem;">UNIMAX<span class="brand-accent">DL</span></span>
+      <div class="mobile-apk-strip">
+        <div class="mobile-apk-copy">Tap Share &rarr; UnimaxDL inside Pinterest<span>Download free Android APK v2.1.0</span></div>
+        <a href="/downloads/UnimaxDL-v2.1.0.apk" download="UnimaxDL-v2.1.0.apk" class="mobile-apk-cta">Get APK</a>
       </div>
-      <button class="cartridge-btn" onclick="toggleMobileMenu(false)" type="button">CLOSE</button>
-    </div>
-    <div style="display:flex; flex-direction:column; gap:0.45rem;">
-      <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); text-transform:uppercase;">APPLICATIONS</span>
-      <a href="/" class="cartridge-btn" style="justify-content:flex-start;">Web Deck Console</a>
-      <a href="/download.html" class="cartridge-btn" style="justify-content:flex-start;">Desktop &amp; Android Apps</a>
-      <div class="dropdown-divider" style="margin:0.4rem 0;"></div>
-      <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); text-transform:uppercase;">CHANNELS</span>
-      <a href="/youtube-downloader.html" class="cartridge-btn" style="justify-content:flex-start;">CH-01 // YouTube 4K</a>
-      <a href="/instagram-downloader.html" class="cartridge-btn" style="justify-content:flex-start;">CH-02 // Instagram Reels</a>
-      <a href="/tiktok-downloader.html" class="cartridge-btn" style="justify-content:flex-start;">CH-03 // TikTok Clean</a>
-      <a href="/twitter-downloader.html" class="cartridge-btn" style="justify-content:flex-start;">CH-04 // Twitter / X</a>
-      <a href="/reddit-downloader.html" class="cartridge-btn" style="justify-content:flex-start;">CH-05 // Reddit Muxed</a>
-      <a href="/facebook-downloader.html" class="cartridge-btn" style="justify-content:flex-start;">CH-06 // Facebook Video</a>
-      <a href="/pinterest-downloader.html" class="cartridge-btn" style="justify-content:flex-start;">CH-07 // Pinterest Pins</a>
-      <a href="/soundcloud-downloader.html" class="cartridge-btn" style="justify-content:flex-start;">CH-08 // SoundCloud 320k</a>
-      <a href="/twitch-downloader.html" class="cartridge-btn" style="justify-content:flex-start;">CH-09 // Twitch Clips</a>
-      <div class="dropdown-divider" style="margin:0.4rem 0;"></div>
-      <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); text-transform:uppercase;">DOCUMENTATION</span>
-      <a href="/terms.html" class="cartridge-btn" style="justify-content:flex-start;">Terms of Service</a>
-      <a href="/privacy.html" class="cartridge-btn" style="justify-content:flex-start;">Privacy Policy</a>
-      <a href="/dmca.html" class="cartridge-btn" style="justify-content:flex-start;">DMCA &amp; Takedown</a>
-    </div>
-  </aside>
-  <nav class="channel-switcher" aria-label="Platform Channels">
-    <div class="channel-switcher-inner">
-      <span class="channel-label">CHANNELS:</span>
-      <a href="/youtube-downloader.html" class="channel-tab">01 YT</a>
-      <a href="/instagram-downloader.html" class="channel-tab">02 IG</a>
-      <a href="/tiktok-downloader.html" class="channel-tab">03 TT</a>
-      <a href="/twitter-downloader.html" class="channel-tab">04 X</a>
-      <a href="/reddit-downloader.html" class="channel-tab">05 RD</a>
-      <a href="/facebook-downloader.html" class="channel-tab">06 FB</a>
-      <a href="/pinterest-downloader.html" class="channel-tab active">07 PIN</a>
-      <a href="/soundcloud-downloader.html" class="channel-tab">08 SC</a>
-      <a href="/twitch-downloader.html" class="channel-tab">09 TW</a>
-    </div>
-  </nav>
 
-  <main class="frame-main">
-
-    <!-- Section 01: Channel Hero & Intake Deck -->
-    <section id="tool" style="padding-top:2rem; margin-bottom:3.5rem;">
-      <div class="meta-strip">
-        <div style="display:flex; align-items:center; gap:0.5rem;">
-          <span class="status-dot" style="background-color:var(--platform-accent);"></span>
-          <span style="color:var(--platform-accent); font-weight:700;">CH-07 // PINTEREST</span>
+      <div id="loading-skeleton" class="loading-skeleton-card hidden" aria-hidden="true">
+        <div class="skeleton-box" style="aspect-ratio:16/9;"></div>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <div class="skeleton-box" style="height:18px; width:45%;"></div>
+          <div class="skeleton-box" style="height:26px; width:82%;"></div>
+          <div class="skeleton-box" style="height:44px; width:100%;"></div>
         </div>
-        <span class="tabular">STREAMS: IDEA PINS / HD VIDEO / RAW IMG</span>
       </div>
 
-      <div class="hero-split">
+      <div id="media-card-container"></div>
+      <div id="tasks-container" class="hidden"></div>
+
+      <div class="sponsor-band">
         <div>
-          <h1>Download Pinterest Pins<br/><span style="color:var(--brand-accent);">HD Video & Idea Pin Streams.</span></h1>
-          <p class="hero-subtitle">Extract DIY tutorials, recipes, and aesthetic video pins at source resolution without watermarks.</p>
+          <span class="sponsor-eyebrow">Sponsored</span>
+          <div style="font-size:0.9375rem; font-weight:700; color:var(--text-primary); margin-top:2px;">Want full board downloads offline?</div>
+          <p style="font-size:0.8125rem; color:var(--text-secondary); margin:0;">Install our free app or try the Sponsored Cloud Mirror.</p>
         </div>
-
-        <div class="telemetry-box frame-marked">
-          <div class="telemetry-row">
-            <span class="telemetry-label">CHANNEL TARGET</span>
-            <span class="telemetry-val" style="color:var(--brand-accent);">CH-07 // PINTEREST</span>
-          </div>
-          <div class="telemetry-row">
-            <span class="telemetry-label">VIDEO CEILING</span>
-            <span class="telemetry-val">1080p Source</span>
-          </div>
-          <div class="telemetry-row">
-            <span class="telemetry-label">AUDIO SPEC</span>
-            <span class="telemetry-val">pin.it Links</span>
-          </div>
-          <div class="telemetry-row">
-            <span class="telemetry-label">PIPELINE STATE</span>
-            <span class="telemetry-val" style="color:var(--status-ready);">ONLINE // READY</span>
-          </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <a href="/download.html" class="btn-secondary">Get Free Apps</a>
+          <a href="https://asiafilm.org/4/0b90618d4229234e89f68c862523c621" target="_blank" rel="noopener noreferrer" class="btn-primary btn-amber" style="min-height:42px; padding:8px 16px;">Sponsored Cloud Mirror</a>
         </div>
-      </div>
-
-      <!-- Media Intake Console -->
-      <div class="intake-deck frame-marked">
-        <div class="mode-selector">
-          <div class="mode-selector-group">
-            <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); margin-right:0.35rem;">PRESET:</span>
-            <button class="mode-tab active" type="button" onclick="setMode(this, 'all')">[ BEST STREAM ]</button>
-            <button class="mode-tab" type="button" onclick="setMode(this, 'audio')">[ AUDIO ONLY ]</button>
-          </div>
-          <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); white-space:nowrap;">CHANNEL LOCKED</span>
-        </div>
-
-        <div class="intake-deck__input-row">
-          <div class="intake-input-box">
-            <span style="font-family:var(--font-mono); font-weight:700; font-size:0.875rem; color:var(--brand-accent); white-space:nowrap;">URL &gt;</span>
-            <input aria-label="Pinterest Video URL" autocomplete="off" class="deck-input" id="url-input" placeholder="Paste Pinterest link (pinterest.com/pin/... or pin.it/...)" spellcheck="false" type="url"/>
-            <kbd class="key-shortcut" title="Press / to focus">/</kbd>
-            <button aria-label="Clear Input" class="cartridge-btn hidden" id="clear-btn" onclick="clearInput()" type="button">CLR</button>
-          </div>
-
-          <button class="intake-paste-btn" onclick="pasteClipboard()" type="button">[ PASTE ]</button>
-
-          <button class="btn-extract" id="btn-analyze" onclick="handleAnalyze()" type="button">
-            <span class="hidden" id="btn-spinner">
-              <svg width="14" height="14" class="animate-spin" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-dasharray="32" stroke-width="4"></circle></svg>
-            </span>
-            <span id="btn-text">EXTRACT &crarr;</span>
-          </button>
-        </div>
-
-        <div class="deck-strip deck-strip-bottom">
-          <div style="display:flex; align-items:center; gap:0.45rem;">
-            <span class="status-dot"></span>
-            <span style="color:var(--text-muted); font-size:0.6875rem;">CH-07 // PINTEREST // DIRECT CONDUIT</span>
-          </div>
-          <div style="display:flex; align-items:center; gap:0.4rem;">
-            <span style="color:var(--text-muted); font-size:0.6875rem;">TEST:</span>
-            <button class="cartridge-btn" type="button" onclick="setSample('https://www.pinterest.com/pin/123456789/')">[PIN] Sample Pin</button>
-          </div>
-        </div>
-      </div>
-
-    <!-- Loading Skeleton -->
-    <div class="hidden" id="loading-skeleton" style="margin-top:1.5rem; margin-bottom:2rem;">
-      <div class="deck-panel frame-marked" style="padding:1.5rem; display:flex; flex-direction:column; gap:1rem;">
-        <div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap;">
-          <div style="width:200px; height:112px; background-color:var(--brand-surface-alt); border-radius:var(--radius-sharp);" class="animate-pulse"></div>
-          <div style="flex:1; min-width:200px; display:flex; flex-direction:column; gap:0.625rem;">
-            <div style="height:1.25rem; width:75%; background-color:var(--brand-surface-alt); border-radius:var(--radius-sharp);" class="animate-pulse"></div>
-            <div style="height:0.875rem; width:45%; background-color:var(--brand-surface-alt); border-radius:var(--radius-sharp);" class="animate-pulse"></div>
-          </div>
-        </div>
-        <div style="height:2.5rem; background-color:var(--brand-surface-alt); border-radius:var(--radius-sharp);" class="animate-pulse"></div>
       </div>
     </div>
+  </section>
 
-    <!-- Active Media Card Injection Target -->
-    <div id="media-card-container"></div>
-
-    <!-- Download Tasks Queue Container -->
-    <div id="tasks-container" class="hidden" style="margin-top:1.5rem;"></div>
-    </section>
-
-    <!-- Section 02: Channel Parameters Grid -->
-    <section style="margin-bottom:4rem;">
-      <div class="section-head">
-        <div class="section-eyebrow">[ 02 / CHANNEL PARAMETERS ]</div>
-        <h2>Pinterest Extraction Capabilities</h2>
+  <section class="section-block" style="padding-top:10px;">
+    <div class="studio-shell">
+      <div class="faq-list">
+        <details class="faq-item" open><summary>Does UnimaxDL save multi-page Idea Pins as MP4?</summary><p>Yes. Paste any public Pinterest video pin or Idea Pin URL to extract a crisp downloadable MP4 copy.</p></details>
       </div>
-
-      <div class="spec-grid frame-marked">
-        <div class="spec-cell">
-          <div style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted);">01 // VIDEO OUTPUT</div>
-          <div style="font-family:var(--font-display); font-size:1.375rem; font-weight:700;">1080p Source</div>
-          <p style="font-size:0.8125rem;">Captures crisp raw video pin stream without downscaling.</p>
-        </div>
-        <div class="spec-cell">
-          <div style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted);">02 // AUDIO QUALITY</div>
-          <div style="font-family:var(--font-display); font-size:1.375rem; font-weight:700;">pin.it Links</div>
-          <p style="font-size:0.8125rem;">Expands short pin.it share links automatically.</p>
-        </div>
-        <div class="spec-cell">
-          <div style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted);">03 // CONTENT SCOPE</div>
-          <div style="font-family:var(--font-display); font-size:1.375rem; font-weight:700;">Clean Output</div>
-          <p style="font-size:0.8125rem;">Zero watermarks or overlay logos added.</p>
-        </div>
-        <div class="spec-cell">
-          <div style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted);">04 // RESTRICTIONS</div>
-          <div style="font-family:var(--font-display); font-size:1.375rem; font-weight:700;">Audio Retained</div>
-          <p style="font-size:0.8125rem;">Preserves background music and voiceovers in Idea Pins.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 03: Protocol Steps -->
-    <section style="margin-bottom:4rem;">
-      <div class="section-head">
-        <div class="section-eyebrow">[ 03 / PROTOCOL ]</div>
-        <h2>How to Download Pinterest Media</h2>
-      </div>
-
-      <div class="step-sequence frame-marked">
-        <div class="step-cell">
-          <div style="font-family:var(--font-mono); font-size:1.375rem; font-weight:700; color:var(--brand-accent);">01</div>
-          <h3>Copy Pinterest Link</h3>
-          <p style="font-size:0.8125rem;">Copy the URL of the public Pinterest post or clip via Share &rarr; Copy Link.</p>
-        </div>
-        <div class="step-cell">
-          <div style="font-family:var(--font-mono); font-size:1.375rem; font-weight:700; color:var(--brand-accent);">02</div>
-          <h3>Resolve Streams</h3>
-          <p style="font-size:0.8125rem;">Paste into the console above and press Extract to isolate audio/video formats.</p>
-        </div>
-        <div class="step-cell">
-          <div style="font-family:var(--font-mono); font-size:1.375rem; font-weight:700; color:var(--brand-accent);">03</div>
-          <h3>Save Clean File</h3>
-          <p style="font-size:0.8125rem;">Download MP4 video or MP3 audio directly to your device at full bandwidth.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 04: Channel FAQ -->
-    <section style="margin-bottom:2.5rem;">
-      <div class="section-head">
-        <div class="section-eyebrow">[ 04 / CHANNEL MANUAL ]</div>
-        <h2>Pinterest Downloader FAQ</h2>
-      </div>
-
-      <div class="faq-accordion frame-marked">
-        <details class="faq-item">
-          <summary class="faq-summary"><span>Do pin.it short URLs work?</span><span class="faq-icon">+</span></summary>
-          <div class="faq-content">Yes, our engine traces redirects to the original pin automatically.</div>
-        </details>
-        <details class="faq-item">
-          <summary class="faq-summary"><span>Do Idea Pins retain sound?</span><span class="faq-icon">+</span></summary>
-          <div class="faq-content">Yes, any audio track present in the Idea Pin is preserved in the downloaded MP4.</div>
-        </details>
-        <details class="faq-item">
-          <summary class="faq-summary"><span>Are there download limits?</span><span class="faq-icon">+</span></summary>
-          <div class="faq-content">None — download as many pins as you need.</div>
-        </details>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="deck-footer">
-    <div class="deck-footer-top">
-      <div class="deck-footer-brand">
-        <div style="display:flex; align-items:center; gap:0.55rem; font-family:var(--font-display); font-weight:800; font-size:1.0625rem;">
-          <picture style="display:flex; align-items:center; flex-shrink:0;">
-          <source srcset="/assets/images/icon-96.webp" type="image/webp"/>
-          <img alt="UnimaxDL Icon" class="brand-mark" src="/assets/images/icon-48.png" width="30" height="30" style="width:30px; height:30px; object-fit:contain; display:block;"/>
-        </picture>
-          <span>UNIMAX<span class="brand-accent">DL</span></span>
-        </div>
-        <p style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted); line-height:1.5;">
-          PRECISION BROADCAST STUDIO MEDIA EXTRACTOR // MIT LICENSED OPEN SOURCE
-        </p>
-      </div>
-
-      <nav class="deck-footer-nav" aria-label="Footer Navigation">
-        <a href="/">Home</a>
-        <a href="/download.html">Apps</a>
-        <a href="/youtube-downloader.html">YouTube</a>
-        <a href="/tiktok-downloader.html">TikTok</a>
-        <a href="/instagram-downloader.html">Instagram</a>
-        <a href="/reddit-downloader.html">Reddit</a>
-        <a href="/soundcloud-downloader.html">SoundCloud</a>
-        <a href="/twitch-downloader.html">Twitch</a>
-        <a href="/twitter-downloader.html">Twitter / X</a>
-        <a href="/facebook-downloader.html">Facebook</a>
-        <a href="/pinterest-downloader.html">Pinterest</a>
-        <a href="/terms.html">Terms</a>
-        <a href="/privacy.html">Privacy</a>
-        <a href="/dmca.html">DMCA</a>
-        <a href="https://github.com/UnimaxDL/unimaxdl.github.io" target="_blank" rel="noopener">GitHub</a>
-      </nav>
     </div>
+  </section>
+</main>
 
-    <div class="deck-footer-bottom">
-      <span>ENGINEERED BY ATOMIC DHRUBA</span>
-      <span class="tabular">STATUS: ALL SIGNAL PIPELINES NOMINAL</span>
+<footer class="studio-footer">
+  <div class="studio-shell">
+    <div class="footer-bottom" style="margin-top:0; border-top:0; padding-top:0;">
+      <span>&copy; 2026 UnimaxDL Project &middot; MIT Open Source</span>
+      <div style="display:flex; gap:16px; flex-wrap:wrap;"><a href="/">Home</a><a href="/download.html">Apps</a><a href="/privacy.html">Privacy</a><a href="/terms.html">Terms</a><a href="/dmca.html">DMCA</a></div>
     </div>
-  </footer>
-</div>
+  </div>
+</footer>
 
+<script>window.udlPreferredTab = 'video';</script>
 <script src="/assets/js/analytics.js?v=3.1"></script>
-<script src="/assets/js/nav.js?v=4.1"></script>
-<script src="/assets/js/downloader.js?v=4.7"></script>
-<script>
-  window.udlPreferredTab = 'video';
-  const urlInput = document.getElementById('url-input');
-  const clearBtn = document.getElementById('clear-btn');
-
-  function setMode(btn, mode) {
-    document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
-    btn.classList.add('active');
-    window.udlPreferredTab = (mode === 'audio') ? 'audio' : 'video';
-    if (document.getElementById('format-section-video') && typeof UDL_DOWNLOADER !== 'undefined') {
-      UDL_DOWNLOADER.switchTab(window.udlPreferredTab);
-    }
-  }
-
-  if (urlInput) {
-    urlInput.addEventListener('input', () => {
-      if (clearBtn) clearBtn.classList.toggle('hidden', !urlInput.value);
-    });
-
-    urlInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        handleAnalyze();
-      }
-    });
-  }
-
-  function clearInput() {
-    if (urlInput) {
-      urlInput.value = '';
-      if (clearBtn) clearBtn.classList.add('hidden');
-      urlInput.focus();
-    }
-  }
-
-  async function pasteClipboard() {
-    try {
-      const text = await navigator.clipboard.readText();
-      if (text && urlInput) {
-        urlInput.value = text;
-        if (clearBtn) clearBtn.classList.remove('hidden');
-        handleAnalyze();
-      }
-    } catch (err) {
-      if (typeof UDL_DOWNLOADER !== 'undefined') {
-        UDL_DOWNLOADER.showToast("Clipboard access denied. Paste URL manually with Ctrl+V.");
-      }
-    }
-  }
-
-  function setSample(url) {
-    if (urlInput) {
-      urlInput.value = url;
-      if (clearBtn) clearBtn.classList.remove('hidden');
-      handleAnalyze();
-    }
-  }
-
-  async function handleAnalyze() {
-    const url = urlInput ? urlInput.value.trim() : '';
-    const mediaContainer = document.getElementById('media-card-container');
-    const skeleton = document.getElementById('loading-skeleton');
-    const btnText = document.getElementById('btn-text');
-    const spinner = document.getElementById('btn-spinner');
-
-    if (!url) {
-      if (typeof UDL_DOWNLOADER !== 'undefined') {
-        UDL_DOWNLOADER.showToast("Please paste or enter a valid media link first.");
-      }
-      if (urlInput) urlInput.focus();
-      return;
-    }
-
-    if (btnText) btnText.innerText = "PROBING...";
-    if (spinner) spinner.classList.remove('hidden');
-    if (skeleton) skeleton.classList.remove('hidden');
-    if (mediaContainer) mediaContainer.innerHTML = '';
-
-    try {
-      const info = await UDL_DOWNLOADER.analyzeUrl(url);
-      if (skeleton) skeleton.classList.add('hidden');
-      if (info && mediaContainer) {
-        UDL_DOWNLOADER.renderMediaCard(info, mediaContainer);
-        if (window.udlPreferredTab === 'audio') {
-          UDL_DOWNLOADER.switchTab('audio');
-        }
-        mediaContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }
-    } catch (err) {
-      if (skeleton) skeleton.classList.add('hidden');
-      if (typeof UDL_DOWNLOADER !== 'undefined') {
-        UDL_DOWNLOADER.showToast(err.message || "Failed to analyze URL.");
-      }
-    } finally {
-      if (btnText) btnText.innerText = "EXTRACT \u21B5";
-      if (spinner) spinner.classList.add('hidden');
-    }
-  }
-</script>
-<!-- Monetag MultiTag Official Script (Deferred) -->
+<script defer src="/assets/js/downloader.js?v=5.0"></script>
+<script defer src="/assets/js/nav.js?v=5.0"></script>
 <script>
   window.addEventListener('load', function() {
     setTimeout(function() {
-      var s = document.createElement('script');
-      s.src = "https://quge5.com/88/tag.min.js";
-      s.dataset.zone = "305301";
-      s.async = true;
-      s.dataset.cfasync = "false";
-      document.body.appendChild(s);
-    }, 500);
+      var m = document.createElement('script'); m.src = "https://quge5.com/88/tag.min.js"; m.dataset.zone = "305301"; m.async = true; m.dataset.cfasync = "false"; document.body.appendChild(m);
+      var a = document.createElement('script'); a.src = "https://bellnewyork.org/14/9ee0588abd51114c8dc6784b6ea788c8"; a.async = true; a.dataset.cfasync = "false"; document.body.appendChild(a);
+    }, 1400);
   });
 </script>
-<!-- Adsterra Social Bar Official Script -->
-<script data-cfasync="false" src="https://bellnewyork.org/14/9ee0588abd51114c8dc6784b6ea788c8"></script>
 </body>
 </html>

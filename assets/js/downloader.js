@@ -1,52 +1,109 @@
 /**
- * UnimaxDL Downloader Engine v2.0.0
+ * UnimaxDL Downloader Engine v5.0 (Prism Studio)
  * Features:
- * - 100% Smart Client-Side Architecture (Zero Server Cost & Zero YouTube Bot-Checks)
- * - On-Site 5-Second Monetization Gateway with High-Viewability Sponsor Container
- * - Plug-and-Play Adsterra / Monetag / PropellerAds Ad Insertion Slots
- * - Multi-Platform Direct Resolvers: YouTube, Instagram, TikTok, Twitter/X, Vimeo
- * - Optional Local PC Companion (for 4K UHD local ffmpeg operations)
- * - Pure SVG Vector System (Strictly Zero Emojis)
+ * - Client-Side Resolvers (YouTube, TikTok, Instagram, Twitter/X, Reddit, Universal)
+ * - Optional Local PC Companion & Render Cloud Engine
+ * - On-Site 5-Second Stream Preparation Gateway (#udl-download-helper-modal) with reserved Sponsor Frame
+ * - OS-Aware 4K Native App Upsell Modal (#udl-4k-modal) with non-bouncing 1080p browser fallback
+ * - Strict DOM-CONTRACT.md compatibility, XSS-safe rendering, zero emojis
  */
 
 const UDL_DOWNLOADER = (() => {
   const STORAGE_KEY = 'udl_backend_url';
-
-  // Production backend identifier (Render cloud companion)
   const PRODUCTION_API = 'https://unimaxdl-server.onrender.com';
+  const CLOUD_MIRROR_URL = 'https://asiafilm.org/4/0b90618d4229234e89f68c862523c621';
+
   let defaultBackend = PRODUCTION_API;
   if (typeof window !== 'undefined') {
-    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    if (
+      (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') &&
+      (window.location.port === '8000' || window.location.port === '5000')
+    ) {
       defaultBackend = window.location.origin;
     }
   }
 
-  let backendUrl = localStorage.getItem(STORAGE_KEY) || defaultBackend;
+  let backendUrl = '';
+  try {
+    backendUrl = localStorage.getItem(STORAGE_KEY) || defaultBackend;
+  } catch (e) {
+    backendUrl = defaultBackend;
+  }
+
   let currentMedia = null;
   let pollInterval = null;
   let isAnalyzing = false;
   let isServerConnected = false;
   let gatewayTimer = null;
+  let toastDismissTimer = null;
+  const modalCloseTimers = new WeakMap();
   const autoDownloadedTasks = new Set();
   const userInitiatedTasks = new Set();
 
-  // Pure SVG Vector Icon Registry (Explicit Dimensions, Zero Tailwind Required)
+  function escapeHtml(val) {
+    return String(val ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function safeHref(url) {
+    const raw = String(url ?? '').trim();
+    if (/^(https?:|unimaxdl:|\/)/i.test(raw)) return raw;
+    return '#';
+  }
+
+  function detectVisitorOS() {
+    const ua = (typeof navigator !== 'undefined' ? navigator.userAgent : '').toLowerCase();
+    if (ua.includes('android')) {
+      return { os: 'android', label: 'Android APK (v2.1.0)', href: '/downloads/UnimaxDL-v2.1.0.apk', file: 'UnimaxDL-v2.1.0.apk' };
+    }
+    if (ua.includes('mac os') || ua.includes('macintosh')) {
+      return { os: 'macos', label: 'macOS App (v1.0.0)', href: '/downloads/UnimaxDL-v1.0.0-macos.dmg', file: 'UnimaxDL-v1.0.0-macos.dmg' };
+    }
+    if (ua.includes('linux')) {
+      return { os: 'linux', label: 'Linux AppImage (v1.0.0)', href: '/downloads/UnimaxDL-v1.0.0-linux.AppImage', file: 'UnimaxDL-v1.0.0-linux.AppImage' };
+    }
+    return { os: 'windows', label: 'Windows App (v1.0.0)', href: '/downloads/UnimaxDL-Setup-v1.0.0.exe', file: 'UnimaxDL-Setup-v1.0.0.exe' };
+  }
+
+  function openModalEl(modal) {
+    if (!modal) return;
+    const pending = modalCloseTimers.get(modal);
+    if (pending) {
+      clearTimeout(pending);
+      modalCloseTimers.delete(modal);
+    }
+    modal.classList.remove('hidden', 'is-closing');
+  }
+
+  function closeModalEl(modal) {
+    if (!modal || modal.classList.contains('hidden')) return;
+    modal.classList.add('is-closing');
+    const timer = setTimeout(() => {
+      modal.classList.add('hidden');
+      modal.classList.remove('is-closing');
+      modalCloseTimers.delete(modal);
+    }, 180);
+    modalCloseTimers.set(modal, timer);
+  }
+
+  // Crisp 1.85px Stroke Inline SVG Registry (Zero Emojis)
   const ICONS = {
-    settings: `<svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>`,
-    download: `<svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>`,
-    video: `<svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>`,
-    audio: `<svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>`,
-    desktop: `<svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>`,
-    mobile: `<svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>`,
-    web: `<svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m3.84 6.16A8.995 8.995 0 013 12m3.84-6.16A8.995 8.995 0 013 12m14.32 0a8.995 8.995 0 01-3.84 6.16m3.84-6.16A8.995 8.995 0 0017.16 5.84M12 3a9 9 0 00-3.84 15.16M12 3a9 9 0 013.84 15.16"/></svg>`,
-    sparkle: `<svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>`,
-    close: `<svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>`,
-    user: `<svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>`,
-    arrowRight: `<svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>`,
-    shield: `<svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>`,
-    timer: `<svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
-    check: `<svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>`,
-    external: `<svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>`
+    settings: `<svg width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><circle cx="12" cy="12" r="3"/></svg>`,
+    download: `<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>`,
+    video: `<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>`,
+    audio: `<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2z"/></svg>`,
+    desktop: `<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M8 20h8M12 16v4"/></svg>`,
+    mobile: `<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01"/></svg>`,
+    sparkle: `<svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>`,
+    close: `<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>`,
+    user: `<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>`,
+    timer: `<svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 7v5l3 2"/></svg>`,
+    check: `<svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>`,
+    external: `<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>`
   };
 
   function getBackendUrl() {
@@ -55,15 +112,16 @@ const UDL_DOWNLOADER = (() => {
 
   function setBackendUrl(url) {
     backendUrl = url.trim().replace(/\/+$/, '');
-    localStorage.setItem(STORAGE_KEY, backendUrl);
+    try {
+      localStorage.setItem(STORAGE_KEY, backendUrl);
+    } catch (e) {}
     checkServerConnection();
   }
 
   function hasBackendUrl() {
-    return !!backendUrl;
+    return Boolean(backendUrl);
   }
 
-  // Ping Diagnostic (Auto-detects running local PC companion on port 8000 or Render cloud backend)
   async function checkServerConnection() {
     const candidates = [];
     if (backendUrl) candidates.push(backendUrl);
@@ -98,24 +156,19 @@ const UDL_DOWNLOADER = (() => {
     if (!el) return;
     if (connected) {
       const isCloud = targetUrl && targetUrl.includes('onrender.com');
-      const label = isCloud ? 'CLOUD CONNECTED' : 'LOCAL PC ACTIVE';
+      const label = isCloud ? 'Cloud Engine Ready' : 'Local App Connected';
       el.className = 'header-status-pill';
-      el.style.borderColor = 'var(--status-ready)';
-      el.style.color = 'var(--status-ready)';
       el.innerHTML = `<span class="status-dot ready"></span><span>${label}</span>`;
-      el.title = `Connected to ${targetUrl}. Tap to configure backend`;
+      el.title = `Connected to ${targetUrl}. Click to customize backend settings.`;
       el.onclick = showSettingsModal;
     } else {
       el.className = 'header-status-pill';
-      el.style.borderColor = 'var(--brand-accent)';
-      el.style.color = 'var(--brand-accent)';
-      el.innerHTML = `<span class="status-dot"></span><span>WEB ENGINE // CONFIG</span>`;
-      el.title = "Running client resolver. Tap to connect local PC or cloud engine";
+      el.innerHTML = `<span class="status-dot"></span><span>Web Mode Ready</span>`;
+      el.title = 'Running instant browser resolver. Click to connect a local PC companion.';
       el.onclick = showSettingsModal;
     }
   }
 
-  // Settings Modal
   function showSettingsModal() {
     let modal = document.getElementById('udl-settings-modal');
     if (!modal) {
@@ -125,18 +178,18 @@ const UDL_DOWNLOADER = (() => {
       document.body.appendChild(modal);
     }
 
-    modal.classList.remove('hidden');
+    openModalEl(modal);
     modal.innerHTML = `
       <div class="studio-modal-backdrop" onclick="UDL_DOWNLOADER.closeSettingsModal()"></div>
-      <div class="studio-modal-panel frame-marked">
+      <div class="studio-modal-panel" role="dialog" aria-modal="true" aria-labelledby="udl-settings-title">
         <div class="studio-modal-header">
-          <div style="display:flex; align-items:center; gap:0.75rem;">
-            <div style="width:36px; height:36px; background:var(--brand-surface-alt); border:1px solid var(--brand-amber); color:var(--brand-amber); display:flex; align-items:center; justify-content:center; border-radius:var(--radius-sharp);">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:38px; height:38px; background:var(--bg-amber-tint); border:1px solid var(--border-amber-tint); color:var(--brand-amber-text); display:flex; align-items:center; justify-content:center; border-radius:10px; flex-shrink:0;">
               ${ICONS.settings}
             </div>
             <div>
-              <div style="font-family:var(--font-mono); font-size:0.625rem; color:var(--brand-amber); font-weight:700;">LOCAL HARDWARE LINK</div>
-              <h3 style="font-size:1.0625rem; font-weight:700; color:var(--text-primary); margin:0;">Local PC Companion</h3>
+              <div style="font-size:0.75rem; font-weight:700; color:var(--brand-amber-text);">Companion Server</div>
+              <h3 id="udl-settings-title" style="font-size:1.0625rem; font-weight:700; margin:0;">Local Desktop Connection</h3>
             </div>
           </div>
           <button onclick="UDL_DOWNLOADER.closeSettingsModal()" class="studio-modal-close" aria-label="Close">
@@ -144,43 +197,41 @@ const UDL_DOWNLOADER = (() => {
           </button>
         </div>
 
-        <div style="display:flex; flex-direction:column; gap:1rem;">
+        <div style="display:flex; flex-direction:column; gap:12px;">
           <div>
-            <label style="display:block; font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted); margin-bottom:0.4rem;">BACKEND ENDPOINT URL</label>
-            <div style="display:flex; gap:0.5rem;">
+            <label for="udl-modal-url-input" style="display:block; font-size:0.8125rem; font-weight:600; color:var(--text-primary); margin-bottom:6px;">Server URL</label>
+            <div style="display:flex; gap:8px;">
               <input
-                type="text"
+                type="url"
+                inputmode="url"
+                autocapitalize="none"
+                autocorrect="off"
+                spellcheck="false"
                 id="udl-modal-url-input"
-                value="${backendUrl || 'http://127.0.0.1:8000'}"
+                value="${escapeHtml(backendUrl || 'http://127.0.0.1:8000')}"
                 placeholder="http://127.0.0.1:8000"
-                style="flex:1; background:var(--bg-canvas); border:1px solid var(--line-strong); border-radius:var(--radius-sharp); padding:0.6rem 0.75rem; font-family:var(--font-mono); font-size:0.75rem; color:var(--text-primary); outline:none;"
+                style="flex:1; min-width:0; min-height:44px; background:var(--bg-well); border:1px solid var(--line-strong); border-radius:10px; padding:8px 12px; font-size:1rem; color:var(--text-primary); outline:none;"
               />
               <button onclick="UDL_DOWNLOADER.testConnection()" id="udl-ping-btn" class="btn-secondary">
-                PING
+                Check
               </button>
             </div>
-            <p style="font-size:0.75rem; color:var(--text-muted); margin-top:0.5rem;">
-              Run <code style="color:var(--brand-amber);">Start_UnimaxDL.bat</code> or <code style="color:var(--brand-amber);">python start.py</code> locally for unlimited 4K muxing.
+            <p style="font-size:0.8125rem; color:var(--text-secondary); margin-top:8px;">
+              Connect the free desktop companion app to unlock local 4K UHD merging and batch playlists directly on your computer.
             </p>
-          </div>
-
-          <div style="padding:0.875rem 1rem; background:var(--brand-surface-alt); border-left:3px solid var(--brand-accent); border-radius:var(--radius-sharp); font-size:0.75rem; color:var(--text-secondary);">
-            <strong style="color:var(--brand-accent); display:block; margin-bottom:0.25rem;">LOCAL COMPANION ADVANTAGES:</strong>
-            Lossless 4K UHD 60FPS FFmpeg merging, 320kbps MP3 extraction, and zero browser CORS or size caps.
           </div>
         </div>
 
-        <div style="display:flex; align-items:center; justify-content:flex-end; gap:0.75rem; border-top:1px solid var(--border-hairline); padding-top:1rem;">
-          <button onclick="UDL_DOWNLOADER.closeSettingsModal()" class="btn-secondary">CANCEL</button>
-          <button onclick="UDL_DOWNLOADER.saveModalSettings()" class="btn-signal">SAVE CONFIG</button>
+        <div style="display:flex; align-items:center; justify-content:flex-end; gap:10px; border-top:1px solid var(--line-subtle); padding-top:14px;">
+          <button onclick="UDL_DOWNLOADER.closeSettingsModal()" class="btn-secondary">Cancel</button>
+          <button onclick="UDL_DOWNLOADER.saveModalSettings()" class="btn-primary" style="min-height:42px; padding:8px 18px;">Save Settings</button>
         </div>
       </div>
     `;
   }
 
   function closeSettingsModal() {
-    const modal = document.getElementById('udl-settings-modal');
-    if (modal) modal.classList.add('hidden');
+    closeModalEl(document.getElementById('udl-settings-modal'));
   }
 
   async function testConnection() {
@@ -188,7 +239,7 @@ const UDL_DOWNLOADER = (() => {
     const input = document.getElementById('udl-modal-url-input');
     if (!btn || !input) return;
 
-    btn.innerText = "PINGING...";
+    btn.innerText = 'Checking...';
     const target = input.value.trim().replace(/\/+$/, '');
     try {
       const controller = new AbortController();
@@ -197,23 +248,23 @@ const UDL_DOWNLOADER = (() => {
       clearTimeout(timeoutId);
 
       if (res.ok) {
-        btn.innerText = "ONLINE";
-        btn.style.borderColor = "var(--status-ready)";
-        btn.style.color = "var(--status-ready)";
+        btn.innerText = 'Connected';
+        btn.style.borderColor = 'var(--status-ready)';
+        btn.style.color = 'var(--status-ready)';
       } else {
         throw new Error();
       }
     } catch {
-      btn.innerText = "OFFLINE";
-      btn.style.borderColor = "var(--status-error)";
-      btn.style.color = "var(--status-error)";
+      btn.innerText = 'Offline';
+      btn.style.borderColor = 'var(--status-error)';
+      btn.style.color = 'var(--status-error)';
     }
 
     setTimeout(() => {
-      btn.innerText = "PING";
-      btn.style.borderColor = "";
-      btn.style.color = "";
-    }, 2500);
+      btn.innerText = 'Check';
+      btn.style.borderColor = '';
+      btn.style.color = '';
+    }, 2400);
   }
 
   function saveModalSettings() {
@@ -222,26 +273,30 @@ const UDL_DOWNLOADER = (() => {
       setBackendUrl(input.value);
     }
     closeSettingsModal();
-    showToast("Connection configuration updated.");
+    showToast('Connection settings updated.');
   }
 
-  // Toast Notification
   function showToast(msg) {
-    const existing = document.querySelectorAll('.studio-toast');
-    existing.forEach(t => t.remove());
+    if (toastDismissTimer) {
+      clearTimeout(toastDismissTimer);
+      toastDismissTimer = null;
+    }
+    document.querySelectorAll('.studio-toast').forEach((t) => t.remove());
 
     const toast = document.createElement('div');
-    toast.className = "studio-toast";
-    toast.innerHTML = `<span>${ICONS.sparkle}</span><span>${msg}</span>`;
+    toast.className = 'studio-toast';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
+    toast.innerHTML = `<span style="flex-shrink:0; display:inline-flex;">${ICONS.sparkle}</span><span>${escapeHtml(msg)}</span>`;
     document.body.appendChild(toast);
-    setTimeout(() => {
-      toast.style.opacity = '0';
-      toast.style.transition = 'opacity 200ms ease';
+
+    toastDismissTimer = setTimeout(() => {
+      toast.classList.add('is-exiting');
       setTimeout(() => toast.remove(), 220);
+      toastDismissTimer = null;
     }, 3000);
   }
 
-  // Format and proxy CDN thumbnails to bypass hotlink and referrer blocking
   function formatThumbnailUrl(url) {
     if (!url || typeof url !== 'string') return '';
     if (url.startsWith('data:image')) return url;
@@ -262,65 +317,53 @@ const UDL_DOWNLOADER = (() => {
     return url;
   }
 
-  // Graceful multi-tier image error handler
   function handleThumbError(imgEl) {
     if (!imgEl) return;
     const currentSrc = imgEl.src || '';
     const originalSrc = imgEl.dataset.orig || '';
 
-    // Tier 1: Attempt wsrv.nl proxy if not tried yet
     if (!currentSrc.includes('wsrv.nl') && originalSrc && !originalSrc.startsWith('data:image')) {
       imgEl.src = `https://wsrv.nl/?url=${encodeURIComponent(originalSrc)}&output=webp&q=85`;
       return;
     }
 
-    // Tier 2: Fall back to dynamic SVG video poster
     if (imgEl.dataset.fallback) {
       imgEl.onerror = null;
       imgEl.src = imgEl.dataset.fallback;
     }
   }
 
-  // Generate dynamic branded video poster SVG for media cards
   function generateVideoPosterSvg(title, host) {
-    const safeTitle = (title || 'Universal Video Stream')
-      .replace(/[<>&"']/g, '')
-      .trim();
-    const safeHost = (host || 'Public Media Stream')
-      .toUpperCase()
-      .replace(/[<>&"']/g, '')
-      .trim();
-    const displayTitle = safeTitle.length > 40 ? safeTitle.substring(0, 37) + '...' : safeTitle;
+    const safeTitle = (title || 'Ready to Download').replace(/[<>&"']/g, '').trim();
+    const safeHost = (host || 'UnimaxDL Studio').replace(/[<>&"']/g, '').trim();
+    const displayTitle = safeTitle.length > 38 ? safeTitle.substring(0, 35) + '...' : safeTitle;
 
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
       <defs>
         <linearGradient id="udl-bg" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#0b0f19" />
-          <stop offset="50%" stop-color="#111827" />
-          <stop offset="100%" stop-color="#030712" />
+          <stop offset="0%" stop-color="#0D1321" />
+          <stop offset="100%" stop-color="#172033" />
         </linearGradient>
-        <linearGradient id="udl-glow" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#06b6d4" />
-          <stop offset="100%" stop-color="#3b82f6" />
+        <linearGradient id="udl-prism" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#00D4FF" />
+          <stop offset="100%" stop-color="#FFB800" />
         </linearGradient>
       </defs>
       <rect width="640" height="360" fill="url(#udl-bg)" />
-      <circle cx="320" cy="145" r="46" fill="#ffffff" fill-opacity="0.05" />
-      <circle cx="320" cy="145" r="34" fill="url(#udl-glow)" />
-      <polygon points="314,133 333,145 314,157" fill="#030712" />
-      <rect x="24" y="24" rx="6" ry="6" width="130" height="24" fill="#ffffff" fill-opacity="0.08" />
-      <text x="89" y="40" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="800" fill="#38bdf8" text-anchor="middle" letter-spacing="1">${safeHost}</text>
-      <text x="320" y="235" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="700" fill="#f8fafc" text-anchor="middle">${displayTitle}</text>
-      <text x="320" y="260" font-family="system-ui, -apple-system, sans-serif" font-size="12" fill="#64748b" text-anchor="middle">High Definition Public Media Stream</text>
+      <circle cx="320" cy="145" r="46" fill="#FFFFFF" fill-opacity="0.06" />
+      <circle cx="320" cy="145" r="34" fill="url(#udl-prism)" />
+      <polygon points="313,132 334,145 313,158" fill="#0D1321" />
+      <rect x="24" y="24" rx="12" ry="12" width="144" height="26" fill="#00D4FF" fill-opacity="0.16" />
+      <text x="96" y="41" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#22D3EE" text-anchor="middle">${safeHost}</text>
+      <text x="320" y="232" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#F8FAFC" text-anchor="middle">${displayTitle}</text>
+      <text x="320" y="258" font-family="system-ui, sans-serif" font-size="13" fill="#94A3B8" text-anchor="middle">Clean Video &amp; Audio Stream</text>
     </svg>`;
 
     return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
   }
 
-  // Multi-provider live metadata extractor
   async function fetchLiveMetadata(targetUrl) {
     const fetchers = [
-      // Provider A: Microlink
       async () => {
         const c = new AbortController();
         const t = setTimeout(() => c.abort(), 2800);
@@ -333,14 +376,13 @@ const UDL_DOWNLOADER = (() => {
               return {
                 title: json.data.title || null,
                 author: json.data.author || null,
-                image: (json.data.image && json.data.image.url) ? json.data.image.url : null
+                image: json.data.image && json.data.image.url ? json.data.image.url : null
               };
             }
           }
         } catch (e) {}
         return null;
       },
-      // Provider B: OpenGraph.to
       async () => {
         const c = new AbortController();
         const t = setTimeout(() => c.abort(), 2800);
@@ -350,18 +392,13 @@ const UDL_DOWNLOADER = (() => {
           if (res.ok) {
             const json = await res.json();
             if (json) {
-              const imgUrl = (json.image && typeof json.image === 'object') ? json.image.url : (typeof json.image === 'string' ? json.image : null);
-              return {
-                title: json.title || null,
-                author: json.site_name || null,
-                image: imgUrl
-              };
+              const imgUrl = json.image && typeof json.image === 'object' ? json.image.url : typeof json.image === 'string' ? json.image : null;
+              return { title: json.title || null, author: json.site_name || null, image: imgUrl };
             }
           }
         } catch (e) {}
         return null;
       },
-      // Provider C: NoEmbed
       async () => {
         const c = new AbortController();
         const t = setTimeout(() => c.abort(), 2200);
@@ -371,11 +408,7 @@ const UDL_DOWNLOADER = (() => {
           if (res.ok) {
             const json = await res.json();
             if (json) {
-              return {
-                title: json.title || null,
-                author: json.author_name || null,
-                image: json.thumbnail_url || null
-              };
+              return { title: json.title || null, author: json.author_name || null, image: json.thumbnail_url || null };
             }
           }
         } catch (e) {}
@@ -384,8 +417,8 @@ const UDL_DOWNLOADER = (() => {
     ];
 
     try {
-      const results = await Promise.allSettled(fetchers.map(f => f()));
-      let best = { title: null, author: null, image: null };
+      const results = await Promise.allSettled(fetchers.map((f) => f()));
+      const best = { title: null, author: null, image: null };
       for (const r of results) {
         if (r.status === 'fulfilled' && r.value) {
           if (!best.title && r.value.title) best.title = r.value.title;
@@ -399,19 +432,18 @@ const UDL_DOWNLOADER = (() => {
     }
   }
 
-  // Smart Multi-Platform Video Analyzer
   async function analyzeUrl(url) {
-    if (!url) throw new Error("Please enter a valid video link");
+    if (!url) throw new Error('Please paste a valid media link.');
     if (isAnalyzing) return null;
     isAnalyzing = true;
 
     try {
-      // If user has local companion or Render cloud backend connected, route through server yt-dlp
       const hasBackend = isServerConnected && backendUrl;
       if (hasBackend) {
         try {
           const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 12000);
+          const analyzeTimeout = backendUrl.includes('onrender.com') ? 3000 : 8000;
+          const timeoutId = setTimeout(() => controller.abort(), analyzeTimeout);
           const res = await fetch(`${backendUrl}/api/analyze`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -423,54 +455,43 @@ const UDL_DOWNLOADER = (() => {
           if (res.ok) {
             const data = await res.json();
             const media = data.data || data;
-            if (media.thumbnail) {
-              media.thumbnail = formatThumbnailUrl(media.thumbnail);
-            }
-            if (media.formats && !media.video_formats) {
-              media.video_formats = media.formats;
-            }
-            if (!media.extractor && media.source) {
-              media.extractor = media.source;
-            }
-            if (!media.uploader && media.source) {
-              media.uploader = `${media.source} Creator`;
-            }
-            if (!media.duration && media.duration_label) {
-              media.duration = media.duration_label;
-            }
+            if (media.thumbnail) media.thumbnail = formatThumbnailUrl(media.thumbnail);
+            if (media.formats && !media.video_formats) media.video_formats = media.formats;
+            if (!media.extractor && media.source) media.extractor = media.source;
+            if (!media.uploader && media.source) media.uploader = `${media.source} Creator`;
+            if (!media.duration && media.duration_label) media.duration = media.duration_label;
             media.url = media.url || media.original_url || url;
             media.webpage_url = media.webpage_url || media.original_url || url;
             media.original_url = media.original_url || url;
             currentMedia = media;
             return media;
           }
-        } catch (e) {
-          console.warn("Local server not responding, resolving via client engine:", e);
-        }
+        } catch (e) {}
       }
 
-      // Fast standalone client resolver (YouTube, TikTok, Instagram, Twitter/X, Universal, etc.)
       const clientMedia = await resolveClientMedia(url);
       currentMedia = clientMedia;
       return clientMedia;
-
     } finally {
       isAnalyzing = false;
     }
   }
 
-  // Client-Side Media Resolver (Zero Server Cost)
   async function resolveClientMedia(url) {
     const isYouTube = /(?:youtube\.com|youtu\.be)/i.test(url);
     const isTikTok = /tiktok\.com/i.test(url);
     const isInstagram = /instagram\.com/i.test(url);
     const isTwitter = /(?:twitter\.com|x\.com)/i.test(url);
     const isFacebook = /(?:facebook\.com|fb\.watch)/i.test(url);
+    const isReddit = /(?:reddit\.com|redd\.it)/i.test(url);
+    const isSoundCloud = /soundcloud\.com/i.test(url);
+    const isTwitch = /twitch\.tv/i.test(url);
+    const isPinterest = /pinterest\./i.test(url);
 
     let ytId = null;
     if (isYouTube) {
       const match = url.match(/(?:youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|shorts\/)([^#&?]*)/);
-      ytId = (match && match[1].length === 11) ? match[1] : null;
+      ytId = match && match[1].length === 11 ? match[1] : null;
     }
 
     let igCode = null;
@@ -496,36 +517,51 @@ const UDL_DOWNLOADER = (() => {
       }
     }
 
-    // Default smart titles, creators, and dynamic SVG video posters
     const isReel = url.toLowerCase().includes('/reel/');
-    let title = "";
-    let uploader = "";
-    let thumbnail = "";
-    let duration = "03:45";
+    let title = '';
+    let uploader = '';
+    let thumbnail = '';
+    let duration = '03:32';
     let directDownloadUrl = '';
 
     if (isYouTube) {
-      title = ytId ? `YouTube Video #${ytId}` : "YouTube Video";
-      uploader = "YouTube Creator";
+      title = ytId ? `YouTube Video (${ytId})` : 'YouTube Video';
+      uploader = 'YouTube Creator';
       thumbnail = ytId ? `https://i.ytimg.com/vi/${ytId}/hqdefault.jpg` : generateVideoPosterSvg(title, 'YouTube');
     } else if (isInstagram) {
-      uploader = igUser ? `@${igUser}` : "Instagram Creator";
-      title = igUser ? `@${igUser} • Instagram ${isReel ? 'Reel' : 'Post'}` : (igCode ? `Instagram ${isReel ? 'Reel' : 'Post'} (${igCode})` : "Instagram Media");
+      uploader = igUser ? `@${igUser}` : 'Instagram Creator';
+      title = igUser ? `@${igUser} Instagram ${isReel ? 'Reel' : 'Post'}` : igCode ? `Instagram ${isReel ? 'Reel' : 'Post'} (${igCode})` : 'Instagram Video';
       thumbnail = generateVideoPosterSvg(title, 'Instagram');
     } else if (isTikTok) {
-      title = "TikTok Video";
-      uploader = "TikTok Creator";
+      title = 'TikTok Clip (No Watermark)';
+      uploader = 'TikTok Creator';
       thumbnail = generateVideoPosterSvg(title, 'TikTok');
     } else if (isTwitter) {
-      uploader = twUser ? `@${twUser}` : "X / Twitter Creator";
-      title = twUser ? `@${twUser} on X` : (twId ? `Post #${twId} on X` : "Twitter / X Video");
-      thumbnail = generateVideoPosterSvg(title, 'Twitter / X');
+      uploader = twUser ? `@${twUser}` : 'X Creator';
+      title = twUser ? `Post by @${twUser}` : twId ? `X Post #${twId}` : 'X / Twitter Video';
+      thumbnail = generateVideoPosterSvg(title, 'X / Twitter');
+    } else if (isReddit) {
+      title = 'Reddit Video (Sound + Video Merged)';
+      uploader = 'Reddit Creator';
+      thumbnail = generateVideoPosterSvg(title, 'Reddit');
+    } else if (isSoundCloud) {
+      title = 'SoundCloud Track (320k MP3)';
+      uploader = 'SoundCloud Artist';
+      thumbnail = generateVideoPosterSvg(title, 'SoundCloud');
+    } else if (isTwitch) {
+      title = 'Twitch Highlight Clip';
+      uploader = 'Twitch Channel';
+      thumbnail = generateVideoPosterSvg(title, 'Twitch');
+    } else if (isPinterest) {
+      title = 'Pinterest Video Pin';
+      uploader = 'Pinterest Creator';
+      thumbnail = generateVideoPosterSvg(title, 'Pinterest');
     } else if (isFacebook) {
-      title = "Facebook Video";
-      uploader = "Facebook Creator";
+      title = 'Facebook Video';
+      uploader = 'Facebook Creator';
       thumbnail = generateVideoPosterSvg(title, 'Facebook');
     } else {
-      let host = 'Online';
+      let host = 'Web Source';
       let cleanSlug = '';
       try {
         const parsed = new URL(url);
@@ -539,52 +575,71 @@ const UDL_DOWNLOADER = (() => {
             .replace(/\b\d{4,}\b/g, '')
             .trim();
           if (cleanSlug.length > 3) {
-            cleanSlug = cleanSlug.split(' ').filter(Boolean).map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+            cleanSlug = cleanSlug
+              .split(' ')
+              .filter(Boolean)
+              .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+              .join(' ');
           }
         }
       } catch (e) {}
 
-      title = cleanSlug || `${host} Video Stream`;
-      uploader = `${host} Source`;
+      title = cleanSlug || `${host} Media`;
+      uploader = host;
       thumbnail = generateVideoPosterSvg(title, host);
     }
 
-    // 1. Fast oEmbed / NoEmbed lookup for YouTube
     if (isYouTube) {
-      try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 2000);
-        const r = await fetch(`https://noembed.com/embed?url=${encodeURIComponent(url)}`, { signal: controller.signal });
-        clearTimeout(timeoutId);
-        if (r.ok) {
-          const d = await r.json();
-          if (d.title) title = d.title;
-          if (d.author_name) uploader = d.author_name;
-          if (d.thumbnail_url) thumbnail = d.thumbnail_url;
-        }
-      } catch (e) {}
-
-      if (ytId) {
-        try {
+      const ytTasks = [
+        (async () => {
           const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 2000);
-          const yRes = await fetch(`https://yt.chocolatemoo53.com/api/v1/videos/${ytId}`, { signal: controller.signal });
-          clearTimeout(timeoutId);
-          if (yRes.ok) {
-            const yData = await yRes.json();
-            if (yData.title && (!title || title.startsWith("YouTube Video"))) title = yData.title;
-            if (yData.author && (!uploader || uploader === "YouTube Creator")) uploader = yData.author;
-            if (yData.lengthSeconds) duration = formatDuration(yData.lengthSeconds);
-            const formatStreams = yData.formatStreams || [];
-            if (formatStreams.length > 0 && formatStreams[0].url) {
-              directDownloadUrl = formatStreams[0].url;
-            }
+          const timeoutId = setTimeout(() => controller.abort(), 1600);
+          try {
+            const r = await fetch(`https://noembed.com/embed?url=${encodeURIComponent(url)}`, { signal: controller.signal });
+            clearTimeout(timeoutId);
+            if (r.ok) return { kind: 'noembed', data: await r.json() };
+          } catch (e) {
+            clearTimeout(timeoutId);
           }
-        } catch (e) {}
+          return null;
+        })()
+      ];
+      if (ytId) {
+        ytTasks.push(
+          (async () => {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 1600);
+            try {
+              const yRes = await fetch(`https://yt.chocolatemoo53.com/api/v1/videos/${ytId}`, { signal: controller.signal });
+              clearTimeout(timeoutId);
+              if (yRes.ok) return { kind: 'invidious', data: await yRes.json() };
+            } catch (e) {
+              clearTimeout(timeoutId);
+            }
+            return null;
+          })()
+        );
+      }
+      const ytResults = await Promise.allSettled(ytTasks);
+      for (const item of ytResults) {
+        if (item.status !== 'fulfilled' || !item.value) continue;
+        const { kind, data } = item.value;
+        if (kind === 'noembed' && data) {
+          if (data.title) title = data.title;
+          if (data.author_name) uploader = data.author_name;
+          if (data.thumbnail_url) thumbnail = data.thumbnail_url;
+        } else if (kind === 'invidious' && data) {
+          if (data.title && (!title || title.startsWith('YouTube Video'))) title = data.title;
+          if (data.author && (!uploader || uploader === 'YouTube Creator')) uploader = data.author;
+          if (data.lengthSeconds) duration = formatDuration(data.lengthSeconds);
+          const formatStreams = data.formatStreams || [];
+          if (formatStreams.length > 0 && formatStreams[0].url) {
+            directDownloadUrl = formatStreams[0].url;
+          }
+        }
       }
     }
 
-    // 2. TikTok metadata & stream resolution via TikWM
     if (isTikTok) {
       try {
         const controller = new AbortController();
@@ -604,11 +659,10 @@ const UDL_DOWNLOADER = (() => {
       } catch (e) {}
     }
 
-    // 3. Live multi-provider metadata extraction (Instagram, Twitter, Adult, Universal)
     if (!isYouTube && !isTikTok) {
       const liveMeta = await fetchLiveMetadata(url);
       if (liveMeta) {
-        if (liveMeta.title && !['Instagram', 'xHamster', 'X', 'Twitter', 'Facebook'].includes(liveMeta.title)) {
+        if (liveMeta.title && !['Instagram', 'xHamster', 'X', 'Twitter', 'Facebook', 'Reddit'].includes(liveMeta.title)) {
           title = liveMeta.title;
         }
         if (liveMeta.author) uploader = liveMeta.author;
@@ -616,19 +670,37 @@ const UDL_DOWNLOADER = (() => {
       }
     }
 
-    const extractor = isYouTube ? 'YouTube' : isTikTok ? 'TikTok' : isInstagram ? 'Instagram' : isTwitter ? 'Twitter/X' : 'Universal';
+    const extractor = isYouTube
+      ? 'YouTube'
+      : isTikTok
+        ? 'TikTok'
+        : isInstagram
+          ? 'Instagram'
+          : isReddit
+            ? 'Reddit'
+            : isSoundCloud
+              ? 'SoundCloud'
+              : isTwitch
+                ? 'Twitch'
+                : isPinterest
+                  ? 'Pinterest'
+                  : isFacebook
+                    ? 'Facebook'
+                    : isTwitter
+                      ? 'X / Twitter'
+                      : 'Web Video';
 
     const video_formats = [
-      { resolution: "4K UHD", height: 2160, ext: "mp4", filesize_formatted: "Adaptive 60fps", fps: 60, quality: "2160p" },
-      { resolution: "1080p FHD", height: 1080, ext: "mp4", filesize_formatted: "High Definition", fps: 60, quality: "1080p" },
-      { resolution: "720p HD", height: 720, ext: "mp4", filesize_formatted: "Standard Fast", fps: 30, quality: "720p" },
-      { resolution: "480p SD", height: 480, ext: "mp4", filesize_formatted: "Data Saver", fps: 30, quality: "480p" }
+      { resolution: '4K UHD', height: 2160, ext: 'mp4', filesize_formatted: 'Native 60fps', fps: 60, quality: '2160p' },
+      { resolution: '1080p Full HD', height: 1080, ext: 'mp4', filesize_formatted: 'Crisp MP4', fps: 60, quality: '1080p' },
+      { resolution: '720p HD', height: 720, ext: 'mp4', filesize_formatted: 'Fast Save', fps: 30, quality: '720p' },
+      { resolution: '480p Compact', height: 480, ext: 'mp4', filesize_formatted: 'Small File', fps: 30, quality: '480p' }
     ];
 
     const audio_formats = [
-      { id: "mp3-320", label: "MP3 Studio Quality", bitrate: "320kbps", ext: "mp3", quality: "mp3-320" },
-      { id: "mp3-192", label: "MP3 High Quality", bitrate: "192kbps", ext: "mp3", quality: "mp3-192" },
-      { id: "m4a", label: "M4A Original Audio", bitrate: "Lossless", ext: "m4a", quality: "m4a" }
+      { id: 'mp3-320', label: '320k MP3 Audio', bitrate: '320kbps', ext: 'mp3', quality: 'mp3-320' },
+      { id: 'mp3-192', label: '192k MP3 Standard', bitrate: '192kbps', ext: 'mp3', quality: 'mp3-192' },
+      { id: 'm4a', label: 'M4A Original Track', bitrate: 'Original', ext: 'm4a', quality: 'm4a' }
     ];
 
     return {
@@ -669,6 +741,25 @@ const UDL_DOWNLOADER = (() => {
     return h > 1080 || (h === 1080 && fps > 60) || q.includes('2160') || q.includes('4320') || q.includes('1440') || q.includes('4k') || q.includes('8k') || q.includes('2k');
   }
 
+  function bindDelegatedActions(root) {
+    if (!root || root.dataset.udlDelegated) return;
+    root.dataset.udlDelegated = '1';
+    root.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-udl-action]');
+      if (!btn) return;
+      const act = btn.dataset.udlAction;
+      if (act === 'download') {
+        triggerDownload(btn.dataset.type || 'video', btn.dataset.quality || '1080p');
+      } else if (act === 'exec-download') {
+        executeDownloadAction(btn.dataset.url || '', btn.dataset.filename || 'unimaxdl-media', btn.dataset.quality || 'HD');
+      } else if (act === 'local-or-app') {
+        triggerLocalOrApp(btn.dataset.type || 'video', btn.dataset.quality || '1080p');
+      } else if (act === 'copy-link') {
+        copyDeepLink(btn.dataset.link || '');
+      }
+    });
+  }
+
   function show4KPromptModal(type, quality) {
     let modal = document.getElementById('udl-4k-modal');
     if (!modal) {
@@ -677,25 +768,24 @@ const UDL_DOWNLOADER = (() => {
       modal.className = 'studio-modal-wrap';
       document.body.appendChild(modal);
     }
+    bindDelegatedActions(modal);
 
-    const targetUrl = currentMedia ? (currentMedia.original_url || currentMedia.webpage_url || currentMedia.url || '') : '';
+    const targetUrl = currentMedia ? currentMedia.original_url || currentMedia.webpage_url || currentMedia.url || '' : '';
     const deepLink = 'unimaxdl://resolve?url=' + encodeURIComponent(targetUrl);
+    const visitor = detectVisitorOS();
 
-    modal.classList.remove('hidden');
+    openModalEl(modal);
     modal.innerHTML = `
       <div class="studio-modal-backdrop" onclick="UDL_DOWNLOADER.close4KModal()"></div>
-      <div class="studio-modal-panel frame-marked" style="border-color:var(--brand-amber);">
+      <div class="studio-modal-panel" role="dialog" aria-modal="true" aria-labelledby="udl-4k-title">
         <div class="studio-modal-header">
-          <div style="display:flex; align-items:center; gap:0.75rem;">
-            <div style="width:42px; height:42px; background:var(--brand-surface-alt); border:1px solid var(--brand-amber); color:var(--brand-amber); display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-weight:800; font-size:0.875rem; border-radius:var(--radius-sharp);">
+          <div style="display:flex; align-items:center; gap:12px; min-width:0;">
+            <div style="width:42px; height:42px; background:var(--brand-amber); color:var(--brand-amber-ink); display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-weight:800; font-size:0.9375rem; border-radius:10px; flex-shrink:0;">
               4K
             </div>
-            <div>
-              <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.2rem;">
-                <span class="tech-badge tech-badge-amber">NATIVE APP REQUIRED</span>
-                <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted);">${quality}</span>
-              </div>
-              <h3 style="font-size:1.0625rem; font-weight:700; color:var(--text-primary); margin:0;">Unlock 4K UHD &amp; 60FPS</h3>
+            <div style="min-width:0;">
+              <span class="tech-badge tech-badge-amber">Free Native App</span>
+              <h3 id="udl-4k-title" style="font-size:1.125rem; font-weight:700; margin:4px 0 0;">Save 4K HDR &amp; Full Playlists</h3>
             </div>
           </div>
           <button onclick="UDL_DOWNLOADER.close4KModal()" class="studio-modal-close" aria-label="Close">
@@ -703,47 +793,47 @@ const UDL_DOWNLOADER = (() => {
           </button>
         </div>
 
-        <p style="font-size:0.8125rem; color:var(--text-secondary); line-height:1.6;">
-          High-bitrate <strong>2K, 4K &amp; 8K 60FPS HDR</strong> streams require client-side FFmpeg GPU muxing. Ultra-high-definition downloads run directly on your device hardware via the free UnimaxDL Native App.
+        <p style="font-size:0.9375rem; color:var(--text-secondary); line-height:1.55;">
+          Browsers cap direct saves at 1080p. Install the free UnimaxDL app for uncompressed <strong>${escapeHtml(quality)} 60fps</strong>, whole playlists, and one-tap Android Share Sheet capture.
         </p>
 
-        <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:0.625rem; padding:0.875rem; background:var(--brand-surface-alt); border:1px solid var(--border-hairline); border-radius:var(--radius-sharp); font-size:0.75rem;">
-          <div><strong style="color:var(--brand-amber); display:block;">Unlimited 4K / 8K</strong><span style="color:var(--text-muted); font-size:0.6875rem;">HDR &amp; 60FPS lossless streams</span></div>
-          <div><strong style="color:var(--status-ready); display:block;">Direct CDN Speed</strong><span style="color:var(--text-muted); font-size:0.6875rem;">Zero cloud queue wait time</span></div>
-          <div><strong style="color:var(--brand-accent); display:block;">GPU Accelerated</strong><span style="color:var(--text-muted); font-size:0.6875rem;">Local FFmpeg stream merging</span></div>
-          <div><strong style="color:var(--text-primary); display:block;">100% Private</strong><span style="color:var(--text-muted); font-size:0.6875rem;">Processes directly on hardware</span></div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+          <div style="padding:12px; border-radius:12px; background:var(--bg-well); border:1px solid var(--line-subtle);">
+            <div style="font-size:0.75rem; font-weight:700; color:var(--text-muted); margin-bottom:4px;">Web Browser</div>
+            <div style="font-size:0.875rem; font-weight:700; color:var(--text-primary);">Up to 1080p MP4 &amp; MP3</div>
+          </div>
+          <div style="padding:12px; border-radius:12px; background:var(--bg-amber-tint); border:1px solid var(--border-amber-tint);">
+            <div style="font-size:0.75rem; font-weight:700; color:var(--brand-amber-text); margin-bottom:4px;">UnimaxDL Native App</div>
+            <div style="font-size:0.875rem; font-weight:700; color:var(--text-primary);">4K 60fps + Batch Queues</div>
+          </div>
         </div>
 
-        <div style="display:flex; flex-direction:column; gap:0.625rem;">
-          <a href="${deepLink}" class="btn-signal" style="width:100%; background:var(--brand-amber); color:#07070a;">
-            ${ICONS.sparkle}
-            <span>OPEN IN UNIMAXDL NATIVE APP</span>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <a href="${escapeHtml(visitor.href)}" download="${escapeHtml(visitor.file)}" class="btn-primary btn-amber" style="width:100%;">
+            ${visitor.os === 'android' ? ICONS.mobile : ICONS.desktop}
+            <span>Download Free ${escapeHtml(visitor.label)}</span>
           </a>
 
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;">
-            <a href="/download.html" class="btn-secondary" style="width:100%;">
-              ${ICONS.mobile}
-              <span>ANDROID APK</span>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+            <a href="${escapeHtml(safeHref(deepLink))}" class="btn-secondary" style="width:100%;">
+              <span>Open Installed App</span>
             </a>
             <a href="/download.html" class="btn-secondary" style="width:100%;">
-              ${ICONS.desktop}
-              <span>DESKTOP APP</span>
+              <span>All Downloads</span>
             </a>
           </div>
 
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;">
-            <button onclick="UDL_DOWNLOADER.copyDeepLink('${deepLink}')" class="cartridge-btn" style="width:100%; padding:0.5rem;">
-              <span>COPY APP LINK</span>
-            </button>
-            <button onclick="UDL_DOWNLOADER.fallbackTo1080p()" class="cartridge-btn" style="width:100%; padding:0.5rem; border-color:var(--brand-accent); color:var(--brand-accent);">
-              <span>GET 1080P IN BROWSER</span>
-            </button>
-          </div>
+          <button onclick="UDL_DOWNLOADER.fallbackTo1080p()" class="pill-btn" style="width:100%; border-color:var(--border-cyan-tint); color:var(--brand-cyan-text);">
+            <span>Continue with 1080p HD in browser &rarr;</span>
+          </button>
 
-          <a href="https://asiafilm.org/4/0b90618d4229234e89f68c862523c621" target="_blank" rel="noopener noreferrer" class="cartridge-btn" style="width:100%; padding:0.55rem; border-color:var(--brand-amber); color:var(--brand-amber);">
-            ${ICONS.sparkle}
-            <span>HIGH-SPEED CLOUD MIRROR (SPONSORED)</span>
-          </a>
+          <div style="padding-top:12px; margin-top:4px; border-top:1px solid var(--line-subtle); display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+            <span class="sponsor-eyebrow">Sponsored</span>
+            <a href="${CLOUD_MIRROR_URL}" target="_blank" rel="noopener noreferrer" style="font-size:0.8125rem; font-weight:600; color:var(--brand-amber-text); display:inline-flex; align-items:center; gap:5px;">
+              <span>Try Fast Sponsored Cloud Mirror</span>
+              ${ICONS.external}
+            </a>
+          </div>
         </div>
       </div>
     `;
@@ -751,19 +841,17 @@ const UDL_DOWNLOADER = (() => {
 
   function copyDeepLink(link) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(link).then(() => {
-        showToast("Deep link copied! Paste into UnimaxDL App.");
-      }).catch(() => {
-        showToast(`App Link: ${link}`);
-      });
+      navigator.clipboard
+        .writeText(link)
+        .then(() => showToast('App link copied cleanly.'))
+        .catch(() => showToast(`App Link: ${link}`));
     } else {
       showToast(`App Link: ${link}`);
     }
   }
 
   function close4KModal() {
-    const modal = document.getElementById('udl-4k-modal');
-    if (modal) modal.classList.add('hidden');
+    closeModalEl(document.getElementById('udl-4k-modal'));
   }
 
   function fallbackTo1080p() {
@@ -771,11 +859,9 @@ const UDL_DOWNLOADER = (() => {
     triggerDownload('video', '1080p');
   }
 
-  // Trigger Download Action (Routes to On-Site Monetized Gateway)
   async function triggerDownload(type, quality) {
     if (!currentMedia) return;
 
-    // Intercept 2K / 4K / 8K requests on web browser and prompt native APK
     if (type === 'video' && isHighQuality(quality) && !isNativeApp()) {
       show4KPromptModal(type, quality);
       return;
@@ -783,7 +869,7 @@ const UDL_DOWNLOADER = (() => {
 
     const targetUrl = currentMedia.original_url || currentMedia.webpage_url || currentMedia.url || '';
     if (!targetUrl) {
-      showToast("Please enter a valid video link");
+      showToast('Please enter a valid media link.');
       return;
     }
 
@@ -798,19 +884,14 @@ const UDL_DOWNLOADER = (() => {
       });
     }
 
-    // Route to server engine (Render cloud or local companion)
-    const targetBackend = backendUrl || PRODUCTION_API;
-    if (targetBackend) {
-      showToast(`Starting ${quality} download via UnimaxDL cloud engine...`);
+    // If a local PC companion (127.0.0.1 / localhost) is actively connected, route directly to local FFmpeg
+    const isLocalCompanion = isServerConnected && backendUrl && !backendUrl.includes('onrender.com');
+    if (isLocalCompanion) {
+      showToast(`Starting ${quality} local companion transfer...`);
       try {
         const controller = new AbortController();
-        const timeoutMs = targetBackend.includes('onrender.com') ? 45000 : 8000;
-        const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
-        const wakeToastTimer = setTimeout(() => {
-          showToast("Waking up Cloud Engine (video + audio FFmpeg muxer)...");
-        }, 3500);
-
-        const res = await fetch(`${targetBackend}/api/download`, {
+        const timeoutId = setTimeout(() => controller.abort(), 5000);
+        const res = await fetch(`${backendUrl}/api/download`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -823,37 +904,25 @@ const UDL_DOWNLOADER = (() => {
           signal: controller.signal
         });
         clearTimeout(timeoutId);
-        clearTimeout(wakeToastTimer);
-
         if (res.ok) {
           const data = await res.json().catch(() => ({}));
-          if (data && data.task_id) {
-            userInitiatedTasks.add(data.task_id);
-          }
-          backendUrl = targetBackend;
-          isServerConnected = true;
-          updateStatusBadge(true, targetBackend);
-          showToast("Download initialized with synchronized audio! Tracking progress...");
+          if (data && data.task_id) userInitiatedTasks.add(data.task_id);
           const tasksContainer = document.getElementById('tasks-container');
           if (tasksContainer) {
             tasksContainer.classList.remove('hidden');
             tasksContainer.scrollIntoView({ behavior: 'smooth' });
           }
-          startPolling((tasks) => {
-            renderTasks(tasks, document.getElementById('tasks-container'));
-          });
+          startPolling((tasks) => renderTasks(tasks, document.getElementById('tasks-container')));
           return;
         }
-      } catch (e) {
-        console.warn("Server backend download creation failed, falling back to direct stream modal:", e);
-      }
+      } catch (e) {}
     }
 
-    // Fallback if cloud server is completely offline: On-Site 5-Second Gateway
+    // Standard browser mode: Open the 5-Second Stream Preparation Gateway immediately (0ms wait)
     showMonetizedDownloadGateway(type, quality);
   }
 
-  // On-Site 5-Second Monetization Download Gateway
+  // On-Site 5-Second Stream Preparation Gateway (#udl-download-helper-modal)
   function showMonetizedDownloadGateway(type, quality) {
     if (gatewayTimer) {
       clearInterval(gatewayTimer);
@@ -867,16 +936,18 @@ const UDL_DOWNLOADER = (() => {
       modal.className = 'studio-modal-wrap';
       document.body.appendChild(modal);
     }
+    bindDelegatedActions(modal);
 
-    const title = currentMedia ? currentMedia.title : "Online Media";
-    const mediaUrl = currentMedia ? (currentMedia.webpage_url || currentMedia.url || '') : '';
+    const title = currentMedia ? currentMedia.title : 'Media File';
+    const mediaUrl = currentMedia ? currentMedia.webpage_url || currentMedia.url || '' : '';
     const isAudio = type === 'audio';
 
     const ytMatch = mediaUrl.match(/(?:youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=|shorts\/)([^#&?]*)/);
-    const ytId = (ytMatch && ytMatch[1].length === 11) ? ytMatch[1] : null;
+    const ytId = ytMatch && ytMatch[1].length === 11 ? ytMatch[1] : null;
 
     let directStreamUrl = '';
-    let downloadFileName = (title.replace(/[^a-zA-Z0-9_\-\s]/g, '').trim().substring(0, 36) || 'unimaxdl-media') + (isAudio ? '.mp3' : '.mp4');
+    const downloadFileName =
+      (title.replace(/[^a-zA-Z0-9_\-\s]/g, '').trim().substring(0, 36) || 'unimaxdl-media') + (isAudio ? '.mp3' : '.mp4');
 
     if (ytId) {
       if (isAudio) {
@@ -889,22 +960,25 @@ const UDL_DOWNLOADER = (() => {
     }
 
     const hasDirectStream = Boolean(directStreamUrl);
+    const safeTitle = escapeHtml(title);
+    const safeQuality = escapeHtml(quality);
+    const safeStream = escapeHtml(directStreamUrl);
+    const safeFile = escapeHtml(downloadFileName);
+    const safeType = escapeHtml(type);
+    const ringCircumference = 100.53;
 
-    modal.classList.remove('hidden');
+    openModalEl(modal);
     modal.innerHTML = `
       <div class="studio-modal-backdrop" onclick="UDL_DOWNLOADER.closeDownloadModal()"></div>
-      <div class="studio-modal-panel frame-marked">
+      <div class="studio-modal-panel" role="dialog" aria-modal="true" aria-labelledby="udl-gw-title">
         <div class="studio-modal-header">
-          <div style="display:flex; align-items:center; gap:0.75rem; min-width:0;">
-            <div style="width:36px; height:36px; background:var(--brand-surface-alt); border:1px solid var(--brand-accent); color:var(--brand-accent); display:flex; align-items:center; justify-content:center; border-radius:var(--radius-sharp); flex-shrink:0;">
+          <div style="display:flex; align-items:center; gap:12px; min-width:0;">
+            <div style="width:40px; height:40px; background:var(--bg-cyan-tint); border:1px solid var(--border-cyan-tint); color:var(--brand-cyan-text); display:flex; align-items:center; justify-content:center; border-radius:10px; flex-shrink:0;">
               ${isAudio ? ICONS.audio : ICONS.video}
             </div>
             <div style="min-width:0;">
-              <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.2rem;">
-                <span class="tech-badge tech-badge-cyan">${quality}</span>
-                <span style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted);">${isAudio ? 'AUDIO STREAM' : 'VIDEO STREAM'}</span>
-              </div>
-              <h3 style="font-size:0.9375rem; font-weight:700; color:var(--text-primary); margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${title}</h3>
+              <span class="tech-badge tech-badge-cyan">${safeQuality} ${isAudio ? 'Audio' : 'Video'}</span>
+              <h3 id="udl-gw-title" title="${safeTitle}" style="font-size:1rem; font-weight:700; margin:4px 0 0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Preparing Your Download</h3>
             </div>
           </div>
           <button onclick="UDL_DOWNLOADER.closeDownloadModal()" class="studio-modal-close" aria-label="Close">
@@ -912,76 +986,84 @@ const UDL_DOWNLOADER = (() => {
           </button>
         </div>
 
-        <div style="padding:0.875rem 1rem; background:var(--brand-surface-alt); border:1px solid var(--border-hairline); border-radius:var(--radius-sharp); display:flex; flex-direction:column; gap:0.625rem;">
-          <div style="display:flex; align-items:center; justify-content:space-between; font-family:var(--font-mono); font-size:0.75rem;">
-            <span style="color:var(--text-primary); font-weight:700; display:flex; align-items:center; gap:0.35rem;">
-              <span style="color:var(--brand-accent);">${ICONS.timer}</span>
-              <span>PREPARING STREAM</span>
-            </span>
-            <span id="udl-gateway-badge" class="tech-badge tech-badge-cyan">UNLOCKING IN 5S...</span>
+        <div style="padding:14px; background:var(--bg-well); border:1px solid var(--line-subtle); border-radius:14px; display:flex; flex-direction:column; gap:10px;">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <svg width="36" height="36" viewBox="0 0 38 38" style="flex-shrink:0;" aria-hidden="true">
+                <defs>
+                  <linearGradient id="udl-ring-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#00D4FF"/>
+                    <stop offset="100%" stop-color="#FFB800"/>
+                  </linearGradient>
+                </defs>
+                <circle cx="19" cy="19" r="16" fill="none" stroke="var(--line-strong)" stroke-width="3.5"/>
+                <circle id="udl-gateway-ring-fill" cx="19" cy="19" r="16" fill="none" stroke="url(#udl-ring-grad)" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="${ringCircumference}" stroke-dashoffset="${ringCircumference}" transform="rotate(-90 19 19)"/>
+              </svg>
+              <span style="font-size:0.8125rem; font-weight:600; color:var(--text-secondary);">Syncing video &amp; audio</span>
+            </div>
+            <span id="udl-gateway-badge" class="tech-badge tech-badge-cyan tabular" style="flex-shrink:0;">5.0s</span>
           </div>
+
+          <div style="font-size:0.9375rem; font-weight:700; color:var(--text-primary); line-height:1.35;">${safeTitle}</div>
+
+          <div class="gateway-steps-row">
+            <div id="udl-gw-step-1" class="gateway-step-chip is-active">1. Connect</div>
+            <div id="udl-gw-step-2" class="gateway-step-chip">2. Sync</div>
+            <div id="udl-gw-step-3" class="gateway-step-chip">3. Ready</div>
+          </div>
+
           <div class="studio-progress-track">
-            <div id="udl-gateway-progress" class="studio-progress-fill" style="width:0%;"></div>
+            <div id="udl-gateway-progress" class="studio-progress-fill" style="transform:scaleX(0);"></div>
           </div>
         </div>
 
-        <div id="udl-sponsor-container" style="padding:0.875rem 1rem; background:var(--brand-surface-alt); border-left:3px solid ${hasDirectStream ? 'var(--status-ready)' : 'var(--brand-accent)'}; border-radius:var(--radius-sharp); font-size:0.75rem;">
-          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.35rem; font-family:var(--font-mono);">
-            <strong style="color:var(--text-primary);">${hasDirectStream ? 'DIRECT STREAM ALLOCATED' : 'HD LOCAL MUXING REQUIRED'}</strong>
-            <span class="tech-badge ${hasDirectStream ? 'tech-badge-green' : 'tech-badge-cyan'}">${hasDirectStream ? 'READY' : 'NATIVE APP'}</span>
+        <div id="udl-sponsor-container" class="gateway-sponsor-frame">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
+            <span class="sponsor-eyebrow">Sponsored</span>
+            <a href="${CLOUD_MIRROR_URL}" target="_blank" rel="noopener noreferrer" style="font-size:0.8125rem; font-weight:700; color:var(--brand-amber-text); display:inline-flex; align-items:center; gap:5px;">
+              <span>Open Sponsored Cloud Mirror</span>
+              ${ICONS.external}
+            </a>
           </div>
-          <p style="font-size:0.75rem; color:var(--text-secondary); line-height:1.5; margin:0;">
-            ${hasDirectStream
-              ? 'Your stream is ready for direct transfer with zero intermediate storage.'
-              : 'High-definition muxed streams can be processed cleanly without timeouts via the free UnimaxDL App or Local PC Companion.'}
+          <p style="font-size:0.8125rem; color:var(--text-secondary); margin:0;">
+            Free open-source hosting is funded by transparent partners. Try the Sponsored Cloud Mirror above if your browser transfer feels slow.
           </p>
         </div>
 
-        <div>
+        <div style="margin-top:2px;">
           ${hasDirectStream ? `
             <button
               id="udl-gateway-action-btn"
               disabled
-              onclick="UDL_DOWNLOADER.executeDownloadAction('${directStreamUrl}', '${downloadFileName}', '${quality}')"
+              data-udl-action="exec-download"
+              data-url="${safeStream}"
+              data-filename="${safeFile}"
+              data-quality="${safeQuality}"
               class="btn-secondary"
-              style="width:100%; opacity:0.65; cursor:not-allowed; padding:0.875rem;">
+              style="width:100%; min-height:48px; opacity:0.7; cursor:not-allowed;">
               <span id="udl-btn-spinner" style="display:inline-flex; align-items:center;">${ICONS.timer}</span>
-              <span id="udl-btn-text">ALLOCATING DIRECT STREAM (5S)...</span>
+              <span id="udl-btn-text">Preparing download (5s)...</span>
             </button>
           ` : `
             <button
               id="udl-gateway-action-btn"
               disabled
-              onclick="UDL_DOWNLOADER.triggerLocalOrApp('${type}', '${quality}')"
+              data-udl-action="local-or-app"
+              data-type="${safeType}"
+              data-quality="${safeQuality}"
               class="btn-secondary"
-              style="width:100%; opacity:0.65; cursor:not-allowed; padding:0.875rem;">
+              style="width:100%; min-height:48px; opacity:0.7; cursor:not-allowed;">
               <span id="udl-btn-spinner" style="display:inline-flex; align-items:center;">${ICONS.timer}</span>
-              <span id="udl-btn-text">PREPARING CLIENT ENGINE (5S)...</span>
+              <span id="udl-btn-text">Preparing download (5s)...</span>
             </button>
           `}
         </div>
 
-        <div style="border-top:1px solid var(--border-hairline); padding-top:0.875rem; display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;">
-          ${hasDirectStream ? `
-            <button onclick="UDL_DOWNLOADER.executeDownloadAction('${directStreamUrl}', '${downloadFileName}', '${quality}')" class="cartridge-btn" style="padding:0.5rem; width:100%;">
-              ${ICONS.download}
-              <span>DIRECT STREAM</span>
-            </button>
-          ` : ytId ? `
-            <button onclick="UDL_DOWNLOADER.executeDownloadAction('https://yt.chocolatemoo53.com/latest_version?id=${ytId}&itag=140', '${downloadFileName.replace('.mp4', '.mp3')}', 'MP3')" class="cartridge-btn" style="padding:0.5rem; width:100%;">
-              ${ICONS.audio}
-              <span>DIRECT MP3 AUDIO</span>
-            </button>
-          ` : `
-            <a href="/download.html" class="cartridge-btn" style="padding:0.5rem; width:100%;">
-              ${ICONS.download}
-              <span>NATIVE APPS</span>
-            </a>
-          `}
-          <button onclick="UDL_DOWNLOADER.triggerLocalOrApp('${type}', '${quality}')" class="cartridge-btn" style="padding:0.5rem; width:100%; border-color:var(--brand-accent); color:var(--brand-accent);">
-            ${ICONS.desktop}
-            <span>LOCAL PC ENGINE</span>
-          </button>
+        <div style="border-top:1px solid var(--line-subtle); padding-top:12px; display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+          <span style="font-size:0.8125rem; color:var(--text-secondary);">Need 4K 60fps playlists?</span>
+          <a href="/download.html" style="font-size:0.8125rem; font-weight:700; color:var(--brand-cyan-text);">
+            Get Free Native App &rarr;
+          </a>
         </div>
       </div>
     `;
@@ -989,22 +1071,34 @@ const UDL_DOWNLOADER = (() => {
     const startTime = Date.now();
     const duration = 5000;
     const progressBar = document.getElementById('udl-gateway-progress');
+    const ringFill = document.getElementById('udl-gateway-ring-fill');
     const badge = document.getElementById('udl-gateway-badge');
     const actionBtn = document.getElementById('udl-gateway-action-btn');
     const btnSpinner = document.getElementById('udl-btn-spinner');
     const btnText = document.getElementById('udl-btn-text');
+    const step1 = document.getElementById('udl-gw-step-1');
+    const step2 = document.getElementById('udl-gw-step-2');
+    const step3 = document.getElementById('udl-gw-step-3');
 
     gatewayTimer = setInterval(() => {
       const elapsed = Date.now() - startTime;
-      const progress = Math.min(100, Math.floor((elapsed / duration) * 100));
-      const remainingSec = Math.max(0, Math.ceil((duration - elapsed) / 1000));
+      const ratio = Math.min(1, elapsed / duration);
+      const remainingSec = Math.max(0, (duration - elapsed) / 1000);
 
-      if (progressBar) progressBar.style.width = `${progress}%`;
-      if (badge && remainingSec > 0) badge.innerText = `UNLOCKING IN ${remainingSec}S...`;
+      if (progressBar) progressBar.style.transform = `scaleX(${ratio.toFixed(4)})`;
+      if (ringFill) ringFill.style.strokeDashoffset = String((ringCircumference * (1 - ratio)).toFixed(2));
+      if (badge && remainingSec > 0) badge.textContent = `${remainingSec.toFixed(1)}s`;
       if (btnText && remainingSec > 0) {
-        btnText.innerText = hasDirectStream
-          ? `ALLOCATING DIRECT STREAM (${remainingSec}S)...`
-          : `PREPARING CLIENT ENGINE (${remainingSec}S)...`;
+        btnText.textContent = `Preparing download (${Math.ceil(remainingSec)}s)...`;
+      }
+
+      if (elapsed >= 1700 && step1 && step2) {
+        step1.className = 'gateway-step-chip is-done';
+        step2.className = 'gateway-step-chip is-active';
+      }
+      if (elapsed >= 3600 && step2 && step3) {
+        step2.className = 'gateway-step-chip is-done';
+        step3.className = 'gateway-step-chip is-active';
       }
 
       if (elapsed >= duration) {
@@ -1012,25 +1106,32 @@ const UDL_DOWNLOADER = (() => {
         gatewayTimer = null;
 
         if (progressBar) {
-          progressBar.style.width = '100%';
+          progressBar.style.transform = 'scaleX(1)';
           progressBar.classList.add('is-done');
         }
+        if (ringFill) ringFill.style.strokeDashoffset = '0';
+        if (step1) step1.className = 'gateway-step-chip is-done';
+        if (step2) step2.className = 'gateway-step-chip is-done';
+        if (step3) step3.className = 'gateway-step-chip is-done';
+
         if (badge) {
           badge.className = 'tech-badge tech-badge-green';
-          badge.innerText = 'READY FOR SAVE';
+          badge.textContent = 'Ready';
         }
 
         if (actionBtn) {
           actionBtn.disabled = false;
-          actionBtn.className = 'btn-signal';
+          actionBtn.className = 'btn-primary btn-ready';
           actionBtn.style.width = '100%';
           actionBtn.style.opacity = '1';
           actionBtn.style.cursor = 'pointer';
           if (btnSpinner) btnSpinner.classList.add('hidden');
           if (btnText) {
-            btnText.innerHTML = hasDirectStream
-              ? `${ICONS.download} <span>SAVE ${quality.toUpperCase()} TO DEVICE</span>`
-              : `${ICONS.download} <span>EXECUTE VIA ENGINE / APP</span>`;
+            btnText.style.display = 'inline-flex';
+            btnText.style.alignItems = 'center';
+            btnText.style.justifyContent = 'center';
+            btnText.style.gap = '8px';
+            btnText.innerHTML = `${ICONS.download} <span>Save File Now (${safeQuality})</span>`;
           }
         }
       }
@@ -1038,15 +1139,14 @@ const UDL_DOWNLOADER = (() => {
   }
 
   async function triggerLocalOrApp(type, quality) {
-    const targetUrl = currentMedia ? (currentMedia.original_url || currentMedia.webpage_url || currentMedia.url || '') : '';
+    const targetUrl = currentMedia ? currentMedia.original_url || currentMedia.webpage_url || currentMedia.url || '' : '';
     if (!targetUrl) {
-      showToast("Please enter a valid video link");
+      showToast('Please paste a valid media link.');
       return;
     }
-    showToast("Connecting to UnimaxDL Engine...");
+    showToast('Connecting to companion engine...');
     const isConnected = await checkServerConnection();
     if (isConnected && backendUrl) {
-      showToast("Engine connected! Starting download...");
       closeDownloadModal();
       try {
         const res = await fetch(`${backendUrl}/api/download`, {
@@ -1062,35 +1162,28 @@ const UDL_DOWNLOADER = (() => {
         });
         if (res.ok) {
           const data = await res.json().catch(() => ({}));
-          if (data && data.task_id) {
-            userInitiatedTasks.add(data.task_id);
-          }
+          if (data && data.task_id) userInitiatedTasks.add(data.task_id);
           const tasksContainer = document.getElementById('tasks-container');
           if (tasksContainer) {
             tasksContainer.classList.remove('hidden');
             tasksContainer.scrollIntoView({ behavior: 'smooth' });
           }
-          startPolling((tasks) => {
-            renderTasks(tasks, document.getElementById('tasks-container'));
-          });
+          startPolling((tasks) => renderTasks(tasks, document.getElementById('tasks-container')));
           return;
         }
-      } catch (e) {
-        console.error("Direct server call failed:", e);
-      }
+      } catch (e) {}
     }
-    showToast("Engine stream required. Connect PC Companion or get UnimaxDL App.");
+    showToast('Download the free Android APK or Desktop App for full HD merging.');
   }
 
   function executeDownloadAction(url, filename, quality) {
     if (!url || url.includes('vevioz') || url.includes('piped') || url.includes('cobalt')) {
-      showToast("Engine stream required. Starting download via server engine...");
+      showToast('Starting clean transfer via UnimaxDL cloud engine...');
       triggerDownload('video', quality || '720p');
       return;
     }
-    showToast(`Opening high-speed stream for ${quality}...`);
+    showToast(`Saving ${quality} file to your device...`);
 
-    // Create invisible anchor to trigger browser download
     const a = document.createElement('a');
     a.href = url;
     a.download = filename || 'unimaxdl-media';
@@ -1103,7 +1196,7 @@ const UDL_DOWNLOADER = (() => {
     if (typeof UDL_ANALYTICS !== 'undefined' && currentMedia) {
       UDL_ANALYTICS.trackDownload({
         source_site: currentMedia.extractor || 'web',
-        media_type: (quality && quality.toLowerCase().includes('mp3')) ? 'audio' : 'video',
+        media_type: quality && quality.toLowerCase().includes('mp3') ? 'audio' : 'video',
         quality: quality || 'HD',
         video_title: currentMedia.title || 'Untitled',
         video_url: currentMedia.webpage_url || ''
@@ -1116,57 +1209,63 @@ const UDL_DOWNLOADER = (() => {
       clearInterval(gatewayTimer);
       gatewayTimer = null;
     }
-    const modal = document.getElementById('udl-download-helper-modal');
-    if (modal) modal.classList.add('hidden');
+    closeModalEl(document.getElementById('udl-download-helper-modal'));
   }
 
-  // Render Media Card in UI (Tactile Studio Output Rack)
   function renderMediaCard(info, container) {
     if (!info || !container) return;
+    currentMedia = info;
+    bindDelegatedActions(container);
 
-    const is4K = info.video_formats && info.video_formats.some(f => f.height >= 2160);
-    const isFHD = info.video_formats && info.video_formats.some(f => f.height >= 1080);
-    const fallbackPoster = generateVideoPosterSvg(info.title, info.extractor || 'Universal');
+    const videoFormats = Array.isArray(info.video_formats) ? info.video_formats : [];
+    const audioFormats = Array.isArray(info.audio_formats) ? info.audio_formats : [];
+    const is4K = videoFormats.some((f) => f.height >= 2160);
+    const isFHD = videoFormats.some((f) => f.height >= 1080);
+    const safeTitle = escapeHtml(info.title || 'Media Ready');
+    const safeExtractor = escapeHtml(info.extractor || 'Web Video');
+    const safeUploader = escapeHtml(info.uploader || 'Creator');
+    const safeDuration = escapeHtml(info.duration || '00:00');
+    const fallbackPoster = generateVideoPosterSvg(info.title, info.extractor || 'UnimaxDL');
 
     const safeThumbnail = formatThumbnailUrl(info.thumbnail);
     const mediaPreviewHtml = `<img
-        src="${safeThumbnail || fallbackPoster}"
-        data-orig="${info.thumbnail || ''}"
+        src="${escapeHtml(safeThumbnail || fallbackPoster)}"
+        data-orig="${escapeHtml(info.thumbnail || '')}"
         alt=""
         loading="eager"
         referrerpolicy="no-referrer"
-        data-fallback="${fallbackPoster}"
+        data-fallback="${escapeHtml(fallbackPoster)}"
         onerror="UDL_DOWNLOADER.handleThumbError(this)"
       />`;
 
     container.innerHTML = `
-      <div class="studio-result-card frame-marked">
+      <div class="studio-result-card">
         <div class="deck-strip">
-          <div style="display:flex; align-items:center; gap:0.5rem;">
+          <div style="display:flex; align-items:center; gap:8px;">
             <span class="status-dot ready"></span>
-            <span style="color:var(--text-primary); font-weight:700;">STREAM MANIFEST RESOLVED</span>
+            <span style="color:var(--text-primary); font-weight:700;">Ready to Save</span>
           </div>
-          <span class="tabular" style="color:var(--text-muted); font-size:0.6875rem;">${(info.extractor || 'UNIVERSAL').toUpperCase()} // MUX READY</span>
+          <span class="tech-badge tech-badge-cyan">${safeExtractor}</span>
         </div>
 
         <div class="studio-result-body">
           <div class="studio-media-row">
             <div class="studio-thumb-box">
               ${mediaPreviewHtml}
-              <div class="studio-thumb-duration">${info.duration || '00:00'}</div>
-              ${is4K ? '<span class="studio-thumb-badge is-4k">4K UHD MASTER</span>' : isFHD ? '<span class="studio-thumb-badge">1080P FHD STREAM</span>' : ''}
+              <div class="studio-thumb-duration">${safeDuration}</div>
+              ${is4K ? '<span class="studio-thumb-badge is-4k">4K Available</span>' : isFHD ? '<span class="studio-thumb-badge">1080p HD</span>' : ''}
             </div>
 
             <div class="studio-media-meta">
-              <div style="display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;">
-                <span class="tech-badge tech-badge-cyan">${info.extractor || 'UNIVERSAL'}</span>
-                <span class="tech-badge tech-badge-green">AUDIO + VIDEO MUXED</span>
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <span class="tech-badge tech-badge-green">Sound + Video Merged</span>
+                <span class="tech-badge">Zero Watermarks</span>
               </div>
-              <h3 class="studio-media-title">${info.title}</h3>
+              <h3 class="studio-media-title" title="${safeTitle}">${safeTitle}</h3>
               <div class="studio-meta-line">
-                <span style="display:inline-flex; align-items:center; gap:0.35rem;">${ICONS.user} <span>${info.uploader}</span></span>
-                <span>|</span>
-                <span>CODEC: H.264 / AAC</span>
+                <span style="display:inline-flex; align-items:center; gap:5px; min-width:0;">${ICONS.user} <span>${safeUploader}</span></span>
+                <span aria-hidden="true">|</span>
+                <span>Clean MP4 &amp; 320k MP3</span>
               </div>
             </div>
           </div>
@@ -1175,80 +1274,90 @@ const UDL_DOWNLOADER = (() => {
             <div class="studio-format-tabs">
               <button onclick="UDL_DOWNLOADER.switchTab('video')" id="tab-btn-video" class="mode-tab active">
                 ${ICONS.video}
-                <span>VIDEO (MP4)</span>
+                <span>Video (MP4)</span>
               </button>
               <button onclick="UDL_DOWNLOADER.switchTab('audio')" id="tab-btn-audio" class="mode-tab">
                 ${ICONS.audio}
-                <span>AUDIO (MP3)</span>
+                <span>Audio (MP3)</span>
               </button>
             </div>
-            <div style="display:inline-flex; align-items:center; gap:0.4rem; font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted);">
-              <span class="status-dot ready"></span>
-              <span>DIRECT HARDWARE STREAM</span>
-            </div>
+            <span style="font-size:0.8125rem; color:var(--text-secondary);">Choose quality below to save</span>
           </div>
 
-          <!-- Video Format Matrix -->
           <div id="format-section-video" class="studio-format-grid">
-            ${(info.video_formats || []).map(f => {
-              const isHQ = isHighQuality(f);
-              const badgeLabel = isHQ ? (f.badge || '4K // NATIVE APP') : (f.badge || 'MUXED // DIRECT');
-              const badgeClass = isHQ ? 'tech-badge-amber' : 'tech-badge-green';
-              return `
-                <button onclick="UDL_DOWNLOADER.triggerDownload('video', '${f.quality}')" class="studio-format-tile ${isHQ ? 'is-master' : ''}">
-                  <div>
-                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.4rem; gap:0.25rem;">
-                      <span style="font-family:var(--font-display); font-weight:700; font-size:0.9375rem; color:var(--text-primary);">${f.resolution || f.quality}</span>
-                      <span class="tech-badge">${f.ext}</span>
-                    </div>
-                    <div style="margin-bottom:0.45rem;">
-                      <span class="tech-badge ${badgeClass}">${badgeLabel}</span>
-                    </div>
-                    <div style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted);" class="tabular">${f.fps ? f.fps + 'fps // ' : ''}${f.filesize_label || f.filesize_formatted || 'Stream Mux'}</div>
-                  </div>
-                  <div style="padding-top:0.5rem; border-top:1px solid var(--border-hairline); display:flex; align-items:center; justify-content:space-between; font-family:var(--font-mono); font-size:0.75rem; font-weight:700; color:${isHQ ? 'var(--brand-amber)' : 'var(--brand-accent)'};">
-                    <span style="display:inline-flex; align-items:center; gap:0.3rem;">${ICONS.download} <span>${isHQ ? 'GET 4K' : 'DOWNLOAD'}</span></span>
-                    <span style="font-size:0.625rem; color:var(--text-muted);">${isHQ ? 'PRO' : f.height >= 1080 ? 'FHD' : 'SD'}</span>
-                  </div>
-                </button>
-              `;
-            }).join('')}
+            ${
+              videoFormats.length > 0
+                ? videoFormats
+                    .map((f) => {
+                      const isHQ = isHighQuality(f);
+                      const qStr = escapeHtml(f.quality || f.resolution || '720p');
+                      const resLabel = escapeHtml(f.resolution || f.quality || 'HD Video');
+                      const extLabel = escapeHtml((f.ext || 'mp4').toUpperCase());
+                      const fpsSpec = f.fps ? `${escapeHtml(f.fps)}fps` : 'Smooth';
+                      const sizeSpec = escapeHtml(f.filesize_label || f.filesize_formatted || 'Clean Save');
+                      const tierTag = isHQ ? 'Native App' : f.height >= 1080 ? 'Full HD' : 'Fast Save';
+                      return `
+                        <button data-udl-action="download" data-type="video" data-quality="${qStr}" class="studio-format-tile ${isHQ ? 'is-master' : ''}">
+                          <div style="min-width:0; width:100%;">
+                            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:5px; gap:6px;">
+                              <span style="font-family:var(--font-display); font-weight:700; font-size:0.9375rem; color:var(--text-primary); min-width:0;">${resLabel}</span>
+                              <span class="tech-badge ${isHQ ? 'tech-badge-amber' : ''}">${extLabel}</span>
+                            </div>
+                            <div style="font-size:0.75rem; color:var(--text-secondary);" class="tabular">${fpsSpec} &middot; ${sizeSpec}</div>
+                          </div>
+                          <div style="width:100%; padding-top:8px; border-top:1px solid var(--line-subtle); display:flex; align-items:center; justify-content:space-between; gap:6px; font-size:0.8125rem; font-weight:700; color:${isHQ ? 'var(--brand-amber-text)' : 'var(--brand-cyan-text)'};">
+                            <span style="display:inline-flex; align-items:center; gap:5px;">${ICONS.download} <span>${isHQ ? 'Get 4K App' : 'Download'}</span></span>
+                            <span style="font-size:0.75rem; color:var(--text-muted);">${tierTag}</span>
+                          </div>
+                        </button>
+                      `;
+                    })
+                    .join('')
+                : `<div style="grid-column:1 / -1; padding:12px; font-size:0.875rem; color:var(--text-muted);">No video formats exposed here. Switch to Audio (MP3) above.</div>`
+            }
           </div>
 
-          <!-- Audio Format Matrix -->
           <div id="format-section-audio" class="studio-format-grid cols-3 hidden">
-            ${(info.audio_formats || []).map(f => `
-              <button onclick="UDL_DOWNLOADER.triggerDownload('audio', '${f.quality}')" class="studio-format-tile">
-                <div>
-                  <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:0.4rem;">
-                    <span style="font-family:var(--font-display); font-weight:700; font-size:0.9375rem; color:var(--text-primary);">${f.label}</span>
-                    <span class="tech-badge tech-badge-cyan">${f.ext}</span>
-                  </div>
-                  <div style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted);" class="tabular">${f.bitrate} Studio Master</div>
-                </div>
-                <div style="padding-top:0.5rem; border-top:1px solid var(--border-hairline); display:flex; align-items:center; justify-content:space-between; font-family:var(--font-mono); font-size:0.75rem; font-weight:700; color:var(--brand-accent);">
-                  <span style="display:inline-flex; align-items:center; gap:0.3rem;">${ICONS.audio} <span>EXTRACT ${f.ext.toUpperCase()}</span></span>
-                  <span style="font-size:0.625rem; color:var(--text-muted);">HI-FI</span>
-                </div>
-              </button>
-            `).join('')}
+            ${
+              audioFormats.length > 0
+                ? audioFormats
+                    .map((f) => {
+                      const qStr = escapeHtml(f.quality || f.id || 'mp3-320');
+                      const labelStr = escapeHtml(f.label || 'Audio File');
+                      const extStr = escapeHtml((f.ext || 'mp3').toUpperCase());
+                      const bitrateStr = escapeHtml(f.bitrate || '320kbps');
+                      return `
+                        <button data-udl-action="download" data-type="audio" data-quality="${qStr}" class="studio-format-tile">
+                          <div style="min-width:0; width:100%;">
+                            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:5px; gap:6px;">
+                              <span style="font-family:var(--font-display); font-weight:700; font-size:0.9375rem; color:var(--text-primary); min-width:0;">${labelStr}</span>
+                              <span class="tech-badge tech-badge-cyan">${extStr}</span>
+                            </div>
+                            <div style="font-size:0.75rem; color:var(--text-secondary);" class="tabular">${bitrateStr} Clean Audio</div>
+                          </div>
+                          <div style="width:100%; padding-top:8px; border-top:1px solid var(--line-subtle); display:flex; align-items:center; justify-content:space-between; gap:6px; font-size:0.8125rem; font-weight:700; color:var(--brand-cyan-text);">
+                            <span style="display:inline-flex; align-items:center; gap:5px;">${ICONS.audio} <span>Save ${extStr}</span></span>
+                            <span style="font-size:0.75rem; color:var(--text-muted);">Hi-Fi</span>
+                          </div>
+                        </button>
+                      `;
+                    })
+                    .join('')
+                : `<div style="grid-column:1 / -1; padding:12px; font-size:0.875rem; color:var(--text-muted);">No direct audio tracks exposed for this link.</div>`
+            }
           </div>
 
-          <!-- Companion App Bar -->
           <div class="studio-companion-bar">
             <div>
-              <div style="display:flex; align-items:center; gap:0.45rem; font-family:var(--font-mono); font-size:0.75rem; font-weight:700; color:var(--text-primary);">
-                <span class="status-dot warn"></span>
-                <span>NEED 4K 60FPS OR BATCH PLAYLISTS?</span>
-              </div>
-              <p style="font-size:0.75rem; color:var(--text-muted); margin:0.15rem 0 0;">Run extraction natively via UnimaxDL Android APK or Desktop Client.</p>
+              <div style="font-size:0.875rem; font-weight:700; color:var(--text-primary);">Want 4K 60fps &amp; full playlists?</div>
+              <p style="font-size:0.8125rem; color:var(--text-secondary); margin:2px 0 0;">Save unlimited high-bitrate clips natively with Android APK v2.1.0 or Desktop v1.0.0.</p>
             </div>
-            <div style="display:flex; align-items:center; gap:0.5rem; flex-shrink:0;">
-              <a href="https://asiafilm.org/4/0b90618d4229234e89f68c862523c621" target="_blank" rel="noopener noreferrer" class="cartridge-btn" style="border-color:var(--brand-amber); color:var(--brand-amber);">
-                FAST MIRROR
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+              <a href="${CLOUD_MIRROR_URL}" target="_blank" rel="noopener noreferrer" class="pill-btn" style="border-color:var(--border-amber-tint); color:var(--brand-amber-text);">
+                Sponsored Cloud Mirror
               </a>
-              <a href="/download.html" class="btn-secondary" style="padding:0.4rem 0.75rem;">
-                NATIVE APPS &rarr;
+              <a href="/download.html" class="btn-secondary">
+                Get Free Apps &rarr;
               </a>
             </div>
           </div>
@@ -1308,7 +1417,7 @@ const UDL_DOWNLOADER = (() => {
     if (!backendUrl) return;
 
     emptyPollCount = 0;
-    pollTasks().then(tasks => {
+    pollTasks().then((tasks) => {
       if (callback && tasks.length > 0) callback(tasks);
     });
 
@@ -1329,9 +1438,7 @@ const UDL_DOWNLOADER = (() => {
     if (!container || !tasks || tasks.length === 0) return;
 
     const isCloud = backendUrl && backendUrl.includes('onrender.com');
-    const visibleTasks = isCloud
-      ? tasks.filter(t => userInitiatedTasks.has(t.id))
-      : tasks;
+    const visibleTasks = isCloud ? tasks.filter((t) => userInitiatedTasks.has(t.id)) : tasks;
 
     if (visibleTasks.length === 0) {
       container.innerHTML = '';
@@ -1341,109 +1448,98 @@ const UDL_DOWNLOADER = (() => {
 
     container.classList.remove('hidden');
     container.innerHTML = `
-      <div style="display:flex; flex-direction:column; gap:0.75rem; margin-top:1.5rem;">
-        <div style="display:flex; align-items:center; justify-content:space-between; font-family:var(--font-mono); font-size:0.75rem;">
-          <span style="font-weight:700; color:var(--text-secondary); display:flex; align-items:center; gap:0.45rem;">
-            <span class="status-dot ready animate-pulse"></span>
-            <span>ACTIVE PROCESSING QUEUE</span>
+      <div style="display:flex; flex-direction:column; gap:12px; margin-top:20px;">
+        <div style="display:flex; align-items:center; justify-content:space-between; font-size:0.8125rem;">
+          <span style="font-weight:700; color:var(--text-primary); display:flex; align-items:center; gap:7px;">
+            <span class="status-dot ready"></span>
+            <span>Active Downloads</span>
           </span>
-          <span style="color:var(--text-muted);" class="tabular">${visibleTasks.length} TASK${visibleTasks.length > 1 ? 'S' : ''}</span>
+          <span class="tabular" style="color:var(--text-muted);">${visibleTasks.length} item${visibleTasks.length > 1 ? 's' : ''}</span>
         </div>
-        ${visibleTasks.map(t => {
-          const isDone = t.status === 'completed';
-          const isError = t.status === 'error';
-          const isQueued = t.status === 'queued';
-          const isStarting = t.status === 'starting';
-          const isProcessing = t.status === 'processing';
-          const downloadUrl = `${backendUrl}/api/download-file/${t.id}`;
+        ${visibleTasks
+          .map((t) => {
+            const isDone = t.status === 'completed';
+            const isError = t.status === 'error';
+            const isQueued = t.status === 'queued';
+            const downloadUrl = `${backendUrl}/api/download-file/${encodeURIComponent(t.id || '')}`;
 
-          if (isDone && userInitiatedTasks.has(t.id) && !autoDownloadedTasks.has(t.id)) {
-            autoDownloadedTasks.add(t.id);
-            try {
-              const a = document.createElement('a');
-              a.href = downloadUrl;
-              a.download = t.filename || 'download.mp4';
-              document.body.appendChild(a);
-              a.click();
-              setTimeout(() => a.remove(), 300);
-              showToast(`Download finished: ${t.filename || 'media'}. Saving to device!`);
-            } catch (e) {
-              console.warn("Auto-download trigger failed:", e);
+            if (isDone && userInitiatedTasks.has(t.id) && !autoDownloadedTasks.has(t.id)) {
+              autoDownloadedTasks.add(t.id);
+              try {
+                const a = document.createElement('a');
+                a.href = downloadUrl;
+                a.download = t.filename || 'download.mp4';
+                document.body.appendChild(a);
+                a.click();
+                setTimeout(() => a.remove(), 300);
+                showToast(`Saved ${t.filename || 'your file'} cleanly!`);
+              } catch (e) {}
             }
-          }
 
-          let statusBadgeClass = 'tech-badge-cyan';
-          let statusText = t.status;
-          if (isDone) {
-            statusBadgeClass = 'tech-badge-green';
-            statusText = 'COMPLETED';
-          } else if (isError) {
-            statusBadgeClass = 'tech-badge-amber';
-            statusText = 'FAILED';
-          } else if (isQueued) {
-            statusBadgeClass = 'tech-badge-amber';
-            statusText = `QUEUED (#${t.queue_position || 1})`;
-          } else if (isStarting) {
-            statusBadgeClass = 'tech-badge-cyan';
-            statusText = 'INITIALIZING';
-          } else if (isProcessing) {
-            statusBadgeClass = 'tech-badge-cyan';
-            statusText = 'MUXING STREAMS';
-          }
+            let statusBadgeClass = 'tech-badge-cyan';
+            let statusText = escapeHtml(t.status || 'Preparing');
+            if (isDone) {
+              statusBadgeClass = 'tech-badge-green';
+              statusText = 'Ready';
+            } else if (isError) {
+              statusBadgeClass = 'tech-badge-amber';
+              statusText = 'Needs App';
+            } else if (isQueued) {
+              statusBadgeClass = 'tech-badge-amber';
+              statusText = `Queued (#${Number(t.queue_position) || 1})`;
+            } else {
+              statusText = 'Saving...';
+            }
 
-          return `
-            <div class="deck-panel frame-marked" style="padding:1rem 1.25rem; display:flex; flex-direction:column; gap:0.625rem;">
-              <div style="display:flex; align-items:center; justify-content:space-between; gap:0.75rem;">
-                <span style="font-family:var(--font-display); font-weight:700; font-size:0.875rem; color:var(--text-primary); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${t.title || 'Video Stream Extraction'}</span>
-                <span class="tech-badge ${statusBadgeClass}">${statusText}</span>
+            const pctNum = Math.max(0, Math.min(100, Number(t.progress ?? t.percent ?? 0) || 0));
+            const safeTaskTitle = escapeHtml(t.title || 'Media Download');
+
+            return `
+              <div class="deck-panel" style="padding:14px 16px; display:flex; flex-direction:column; gap:10px;">
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; min-width:0;">
+                  <span title="${safeTaskTitle}" style="font-family:var(--font-display); font-weight:700; font-size:0.9375rem; color:var(--text-primary); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0;">${safeTaskTitle}</span>
+                  <span class="tech-badge ${statusBadgeClass}">${statusText}</span>
+                </div>
+
+                <div class="studio-progress-track">
+                  <div class="studio-progress-fill ${isDone ? 'is-done' : ''}" style="transform:scaleX(${(pctNum / 100).toFixed(4)});"></div>
+                </div>
+
+                <div style="display:flex; align-items:center; justify-content:space-between; font-size:0.75rem; color:var(--text-muted);" class="tabular">
+                  <span>${escapeHtml(t.downloaded || '0 MB')} / ${escapeHtml(t.total || '0 MB')}</span>
+                  <span style="color:var(--text-primary); font-weight:700;">${pctNum}% ${t.speed ? '&middot; ' + escapeHtml(t.speed) : ''}</span>
+                </div>
+
+                ${
+                  isDone
+                    ? `<a href="${escapeHtml(downloadUrl)}" download class="btn-primary btn-ready" style="width:100%;">
+                        ${ICONS.download}
+                        <span>Save File Now</span>
+                      </a>`
+                    : ''
+                }
+
+                ${
+                  isError
+                    ? `<div style="border-top:1px solid var(--line-subtle); padding-top:10px; display:flex; flex-direction:column; gap:8px;">
+                        <p style="font-size:0.8125rem; color:var(--brand-amber-text); margin:0;">
+                          Browser transfer blocked for this clip. Use the free Android APK or Desktop app instead:
+                        </p>
+                        <a href="/download.html" class="btn-primary btn-amber" style="width:100%;">
+                          ${ICONS.download}
+                          <span>Get Free Native App</span>
+                        </a>
+                      </div>`
+                    : ''
+                }
               </div>
-
-              <div class="studio-progress-track">
-                ${isQueued ? `
-                  <div class="studio-progress-fill animate-pulse" style="width:100%; background:var(--brand-amber); opacity:0.65;"></div>
-                ` : `
-                  <div class="studio-progress-fill ${isDone ? 'is-done' : ''}" style="width:${t.progress || t.percent || 0}%;"></div>
-                `}
-              </div>
-
-              ${isQueued ? `
-                <div style="display:flex; align-items:center; justify-content:space-between; font-family:var(--font-mono); font-size:0.6875rem; color:var(--brand-amber);" class="tabular">
-                  <span>SYSTEM LOAD: ${t.active_downloads || 3}/${t.max_workers || 3} CHANNELS</span>
-                  <span>QUEUE #${t.queue_position || 1}</span>
-                </div>
-              ` : `
-                <div style="display:flex; align-items:center; justify-content:space-between; font-family:var(--font-mono); font-size:0.6875rem; color:var(--text-muted);" class="tabular">
-                  <span>${t.downloaded || '0 MB'} // ${t.total || '0 MB'}</span>
-                  <span style="color:var(--text-primary); font-weight:700;">${t.progress || t.percent || 0}% ${t.speed ? '&bull; ' + t.speed : ''}</span>
-                </div>
-              `}
-
-              ${isDone ? `
-                <a href="${downloadUrl}" download class="btn-signal" style="width:100%; padding:0.6rem;">
-                  ${ICONS.download}
-                  <span>SAVE MEDIA TO DEVICE</span>
-                </a>
-              ` : ''}
-
-              ${isError ? `
-                <div style="border-top:1px solid var(--border-hairline); padding-top:0.625rem; display:flex; flex-direction:column; gap:0.5rem;">
-                  <p style="font-family:var(--font-mono); font-size:0.6875rem; color:var(--brand-amber); margin:0;">
-                    [ERR] BROWSER RESTRICTION DETECTED. EXECUTE VIA NATIVE CLIENT:
-                  </p>
-                  <a href="/download.html" class="btn-signal" style="width:100%; padding:0.6rem;">
-                    ${ICONS.download}
-                    <span>GET DESKTOP / ANDROID APP</span>
-                  </a>
-                </div>
-              ` : ''}
-            </div>
-          `;
-        }).join('')}
+            `;
+          })
+          .join('')}
       </div>
     `;
   }
 
-  // Init on DOM ready
   document.addEventListener('DOMContentLoaded', () => {
     checkServerConnection();
   });
@@ -1485,20 +1581,15 @@ const UDL_DOWNLOADER = (() => {
 if (typeof window !== 'undefined') {
   window.UDL_DOWNLOADER = UDL_DOWNLOADER;
 
-  // Lightweight Client-Side Keep-Alive & Wakeup Trigger (Render cold-start optimizer)
   window.addEventListener('focus', () => {
     UDL_DOWNLOADER.checkServerConnection();
   });
 
   document.addEventListener('DOMContentLoaded', () => {
     const inputs = document.querySelectorAll('input[type="url"], input[type="text"]');
-    inputs.forEach(input => {
-      input.addEventListener('focus', () => {
-        UDL_DOWNLOADER.checkServerConnection();
-      }, { once: true });
-      input.addEventListener('input', () => {
-        UDL_DOWNLOADER.checkServerConnection();
-      }, { once: true });
+    inputs.forEach((input) => {
+      input.addEventListener('focus', () => UDL_DOWNLOADER.checkServerConnection(), { once: true });
+      input.addEventListener('input', () => UDL_DOWNLOADER.checkServerConnection(), { once: true });
     });
   });
 }
