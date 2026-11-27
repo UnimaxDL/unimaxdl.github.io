@@ -78,6 +78,12 @@
 
   /* Platform Accent Override (Set on platform pages via data-platform) */
   --platform-accent: #0369A1;
+
+  /* Prism Studio Kinetic Graphics & Grid Tokens (Light) */
+  --grid-line: rgba(13, 19, 33, 0.045);
+  --prism-cyan-glow: rgba(0, 212, 255, 0.22);
+  --prism-amber-glow: rgba(255, 184, 0, 0.20);
+  --spotlight-glow: rgba(0, 212, 255, 0.11);
 }
 
 [data-theme="dark"] {
@@ -135,6 +141,12 @@
   --status-error: #F87171;
 
   --platform-accent: #22D3EE;
+
+  /* Prism Studio Kinetic Graphics & Grid Tokens (Dark) */
+  --grid-line: rgba(226, 232, 240, 0.048);
+  --prism-cyan-glow: rgba(34, 211, 238, 0.16);
+  --prism-amber-glow: rgba(251, 191, 36, 0.14);
+  --spotlight-glow: rgba(34, 211, 238, 0.14);
 }
 
 /* Platform-Specific Accent Palette (>= 5.0:1 AA Contrast on Light Canvas) */

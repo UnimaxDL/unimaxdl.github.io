@@ -1,6 +1,7 @@
-/* UnimaxDL Prism Studio Master Entrypoint (v5.0) */
-@import url('./tokens.css?v=5.0');
-@import url('./base.css?v=5.0');
-@import url('./layout.css?v=5.0');
-@import url('./components.css?v=5.0');
-@import url('./pages.css?v=5.0');
+/* UnimaxDL Prism Studio Master Entrypoint (v5.2) */
+@import url('./tokens.css?v=5.2');
+@import url('./base.css?v=5.2');
+@import url('./layout.css?v=5.2');
+@import url('./components.css?v=5.2');
+@import url('./pages.css?v=5.2');
+@import url('./animations.css?v=5.2');

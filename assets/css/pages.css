@@ -146,11 +146,33 @@
 }
 
 @media (max-width: 640px) {
+  .os-spotlight-banner {
+    padding: 14px;
+    border-radius: 16px;
+    gap: 14px;
+  }
+
+  .installer-card {
+    padding: 14px;
+    border-radius: 14px;
+    gap: 10px;
+  }
+
   .platform-pill-strip {
     flex-wrap: nowrap;
     justify-content: flex-start;
     overflow-x: auto;
     scrollbar-width: none;
+    margin-bottom: 12px;
+    padding-right: 24px;
+    -webkit-mask-image: linear-gradient(to right, #000 0%, #000 84%, transparent 100%);
+    mask-image: linear-gradient(to right, #000 0%, #000 84%, transparent 100%);
+  }
+
+  .channel-tab {
+    min-height: 30px;
+    padding: 4px 10px;
+    font-size: 0.75rem;
   }
 
   .platform-pill-strip::-webkit-scrollbar {

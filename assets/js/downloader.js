@@ -470,25 +470,59 @@ const UDL_DOWNLOADER = (() => {
   function generateVideoPosterSvg(title, host) {
     const safeTitle = (title || 'Ready to Download').replace(/[<>&"']/g, '').trim();
     const safeHost = (host || 'UnimaxDL Studio').replace(/[<>&"']/g, '').trim();
-    const displayTitle = safeTitle.length > 38 ? safeTitle.substring(0, 35) + '...' : safeTitle;
+    const displayTitle = safeTitle.length > 36 ? safeTitle.substring(0, 33) + '...' : safeTitle;
 
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360">
       <defs>
         <linearGradient id="udl-bg" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#0D1321" />
-          <stop offset="100%" stop-color="#172033" />
+          <stop offset="0%" stop-color="#090E18" />
+          <stop offset="55%" stop-color="#111C2F" />
+          <stop offset="100%" stop-color="#182238" />
         </linearGradient>
         <linearGradient id="udl-prism" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stop-color="#00D4FF" />
           <stop offset="100%" stop-color="#FFB800" />
         </linearGradient>
+        <linearGradient id="udl-horizon" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#00D4FF" stop-opacity="0.22" />
+          <stop offset="100%" stop-color="#FFB800" stop-opacity="0.18" />
+        </linearGradient>
       </defs>
       <rect width="640" height="360" fill="url(#udl-bg)" />
-      <circle cx="320" cy="145" r="46" fill="#FFFFFF" fill-opacity="0.06" />
-      <circle cx="320" cy="145" r="34" fill="url(#udl-prism)" />
-      <polygon points="313,132 334,145 313,158" fill="#0D1321" />
-      <rect x="24" y="24" rx="12" ry="12" width="144" height="26" fill="#00D4FF" fill-opacity="0.16" />
-      <text x="96" y="41" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#22D3EE" text-anchor="middle">${safeHost}</text>
+      <g stroke="#FFFFFF" stroke-opacity="0.04" stroke-width="1">
+        <line x1="0" y1="72" x2="640" y2="72" />
+        <line x1="0" y1="144" x2="640" y2="144" />
+        <line x1="0" y1="216" x2="640" y2="216" />
+        <line x1="0" y1="288" x2="640" y2="288" />
+        <line x1="128" y1="0" x2="128" y2="360" />
+        <line x1="256" y1="0" x2="256" y2="360" />
+        <line x1="384" y1="0" x2="384" y2="360" />
+        <line x1="512" y1="0" x2="512" y2="360" />
+      </g>
+      <polygon points="480,0 640,0 640,170 540,115" fill="#FFB800" fill-opacity="0.11" />
+      <polygon points="0,240 165,360 0,360" fill="#00D4FF" fill-opacity="0.13" />
+      <path d="M0 322 L95 276 L195 305 L310 258 L430 296 L540 264 L640 290 L640 360 L0 360 Z" fill="url(#udl-horizon)" />
+      <circle cx="320" cy="142" r="54" fill="none" stroke="#00D4FF" stroke-opacity="0.25" stroke-width="1.5" stroke-dasharray="10 6" />
+      <circle cx="320" cy="142" r="42" fill="#FFFFFF" fill-opacity="0.06" />
+      <circle cx="320" cy="142" r="32" fill="url(#udl-prism)" />
+      <polygon points="313,129 334,142 313,155" fill="#0A0E15" />
+      <rect x="24" y="24" rx="13" ry="13" width="148" height="26" fill="#00D4FF" fill-opacity="0.16" stroke="#00D4FF" stroke-opacity="0.35" stroke-width="1" />
+      <text x="98" y="41" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#22D3EE" text-anchor="middle">${safeHost}</text>
+      <g fill="url(#udl-prism)" fill-opacity="0.65">
+        <rect x="246" y="316" width="6" height="14" rx="3" />
+        <rect x="258" y="308" width="6" height="22" rx="3" />
+        <rect x="270" y="312" width="6" height="18" rx="3" />
+        <rect x="282" y="302" width="6" height="28" rx="3" />
+        <rect x="294" y="314" width="6" height="16" rx="3" />
+        <rect x="306" y="306" width="6" height="24" rx="3" />
+        <rect x="318" y="300" width="6" height="30" rx="3" />
+        <rect x="330" y="310" width="6" height="20" rx="3" />
+        <rect x="342" y="304" width="6" height="26" rx="3" />
+        <rect x="354" y="313" width="6" height="17" rx="3" />
+        <rect x="366" y="307" width="6" height="23" rx="3" />
+        <rect x="378" y="316" width="6" height="14" rx="3" />
+        <rect x="390" y="311" width="6" height="19" rx="3" />
+      </g>
       <text x="320" y="232" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#F8FAFC" text-anchor="middle">${displayTitle}</text>
       <text x="320" y="258" font-family="system-ui, sans-serif" font-size="13" fill="#94A3B8" text-anchor="middle">Clean Video &amp; Audio Stream</text>
     </svg>`;
@@ -1173,7 +1207,10 @@ const UDL_DOWNLOADER = (() => {
                 <circle cx="19" cy="19" r="16" fill="none" stroke="var(--line-strong)" stroke-width="3.5"/>
                 <circle id="udl-gateway-ring-fill" cx="19" cy="19" r="16" fill="none" stroke="url(#udl-ring-grad)" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="${ringCircumference}" stroke-dashoffset="${ringCircumference}" transform="rotate(-90 19 19)"/>
               </svg>
-              <span style="font-size:0.8125rem; font-weight:600; color:var(--text-secondary);">Syncing video &amp; audio</span>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:0.8125rem; font-weight:600; color:var(--text-secondary);">Syncing video &amp; audio</span>
+                <span id="udl-gw-sync-bars" class="gateway-sync-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+              </div>
             </div>
             <span id="udl-gateway-badge" class="tech-badge tech-badge-cyan tabular" style="flex-shrink:0;">5.0s</span>
           </div>
@@ -1292,6 +1329,8 @@ const UDL_DOWNLOADER = (() => {
           badge.className = 'tech-badge tech-badge-green';
           badge.textContent = 'Ready';
         }
+        const syncBars = document.getElementById('udl-gw-sync-bars');
+        if (syncBars) syncBars.classList.add('hidden');
 
         if (actionBtn) {
           actionBtn.disabled = false;
@@ -1474,14 +1513,14 @@ const UDL_DOWNLOADER = (() => {
                         <button data-udl-action="download" data-type="video" data-quality="${qStr}" class="studio-format-tile ${isHQ ? 'is-master' : ''}">
                           <div style="min-width:0; width:100%;">
                             <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:5px; gap:6px;">
-                              <span style="font-family:var(--font-display); font-weight:700; font-size:0.9375rem; color:var(--text-primary); min-width:0;">${resLabel}</span>
+                              <span class="format-tile-title">${resLabel}</span>
                               <span class="tech-badge ${isHQ ? 'tech-badge-amber' : ''}">${extLabel}</span>
                             </div>
-                            <div style="font-size:0.75rem; color:var(--text-secondary);" class="tabular">${fpsSpec} &middot; ${sizeSpec}</div>
+                            <div class="format-tile-sub tabular">${fpsSpec} &middot; ${sizeSpec}</div>
                           </div>
-                          <div style="width:100%; padding-top:8px; border-top:1px solid var(--line-subtle); display:flex; align-items:center; justify-content:space-between; gap:6px; font-size:0.8125rem; font-weight:700; color:${isHQ ? 'var(--brand-amber-text)' : 'var(--brand-cyan-text)'};">
+                          <div class="format-tile-foot" style="color:${isHQ ? 'var(--brand-amber-text)' : 'var(--brand-cyan-text)'};">
                             <span style="display:inline-flex; align-items:center; gap:5px;">${ICONS.download} <span>${isHQ ? 'Get 4K App' : 'Download'}</span></span>
-                            <span style="font-size:0.75rem; color:var(--text-muted);">${tierTag}</span>
+                            <span class="format-tile-tier">${tierTag}</span>
                           </div>
                         </button>
                       `;
@@ -1504,14 +1543,14 @@ const UDL_DOWNLOADER = (() => {
                         <button data-udl-action="download" data-type="audio" data-quality="${qStr}" class="studio-format-tile">
                           <div style="min-width:0; width:100%;">
                             <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:5px; gap:6px;">
-                              <span style="font-family:var(--font-display); font-weight:700; font-size:0.9375rem; color:var(--text-primary); min-width:0;">${labelStr}</span>
+                              <span class="format-tile-title">${labelStr}</span>
                               <span class="tech-badge tech-badge-cyan">${extStr}</span>
                             </div>
-                            <div style="font-size:0.75rem; color:var(--text-secondary);" class="tabular">${bitrateStr} Clean Audio</div>
+                            <div class="format-tile-sub tabular">${bitrateStr} Clean Audio</div>
                           </div>
-                          <div style="width:100%; padding-top:8px; border-top:1px solid var(--line-subtle); display:flex; align-items:center; justify-content:space-between; gap:6px; font-size:0.8125rem; font-weight:700; color:var(--brand-cyan-text);">
+                          <div class="format-tile-foot" style="color:var(--brand-cyan-text);">
                             <span style="display:inline-flex; align-items:center; gap:5px;">${ICONS.audio} <span>Save ${extStr}</span></span>
-                            <span style="font-size:0.75rem; color:var(--text-muted);">Hi-Fi</span>
+                            <span class="format-tile-tier">Hi-Fi</span>
                           </div>
                         </button>
                       `;

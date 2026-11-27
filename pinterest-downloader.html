@@ -33,7 +33,7 @@
   <meta content="Pinterest Video &amp; Idea Pin Downloader — HD MP4 Free | UnimaxDL" property="twitter:title"/>
   <meta content="Download Pinterest video pins and Idea Pins cleanly in HD MP4 without watermarks. Free online saver for designers and creators." property="twitter:description"/>
   <meta content="https://unimaxdl.github.io/assets/images/og-cover.png" property="twitter:image"/>
-  <link href="/assets/css/style.css?v=5.0" rel="stylesheet"/>
+  <link href="/assets/css/style.css?v=5.2" rel="stylesheet"/>
   <link href="/assets/images/icon2-192.png" rel="icon" sizes="192x192" type="image/png"/>
   <link href="/assets/images/favicon.ico" rel="icon" type="image/x-icon"/>
   <script type="application/ld+json">[
@@ -87,7 +87,7 @@
       <button id="udl-server-status" class="header-status-pill" type="button" onclick="if(window.UDL_DOWNLOADER) UDL_DOWNLOADER.showSettingsModal()"><span class="status-dot"></span><span>Web Mode Ready</span></button>
       <button id="theme-toggle" class="theme-toggle-btn" aria-label="Switch color theme" onclick="toggleTheme()" type="button"><span class="theme-toggle-label">Light</span><span class="theme-toggle-switch" aria-hidden="true"></span></button>
       <a href="/download.html" class="header-app-btn desktop-only"><span>Get Free App</span></a>
-      <a href="/download.html" class="mobile-only pill-btn" style="min-height:36px; padding:6px 10px; background:var(--brand-amber); color:var(--brand-amber-ink); border-color:transparent;">APK</a>
+      <a href="/download.html" class="mobile-only pill-btn" style="min-height:32px; padding:4px 10px; font-size:0.75rem; border-radius:8px; background:var(--brand-amber); color:var(--brand-amber-ink); border-color:transparent;">APK</a>
       <button id="mobile-menu-btn" class="mobile-menu-trigger mobile-only" aria-label="Open Navigation Menu" aria-expanded="false" onclick="toggleMobileMenu()" type="button"><span>Menu</span></button>
     </div>
   </div>
@@ -106,25 +106,35 @@
 
 <main>
   <section class="hero-section">
+    <div class="hero-prism-bg" aria-hidden="true">
+      <div class="hero-grid-layer"></div>
+      <div class="hero-aurora hero-aurora-cyan"></div>
+      <div class="hero-aurora hero-aurora-amber"></div>
+    </div>
     <div class="studio-shell">
       <div class="platform-pill-strip" aria-label="Platform Pages">
-        <a href="/youtube-downloader.html" class="channel-tab">YouTube</a>
-        <a href="/tiktok-downloader.html" class="channel-tab">TikTok</a>
-        <a href="/instagram-downloader.html" class="channel-tab">Instagram</a>
-        <a href="/reddit-downloader.html" class="channel-tab">Reddit</a>
-        <a href="/twitter-downloader.html" class="channel-tab">X / Twitter</a>
-        <a href="/soundcloud-downloader.html" class="channel-tab">SoundCloud</a>
-        <a href="/twitch-downloader.html" class="channel-tab">Twitch</a>
-        <a href="/facebook-downloader.html" class="channel-tab">Facebook</a>
-        <a href="/pinterest-downloader.html" class="channel-tab active">Pinterest</a>
+        <a href="/youtube-downloader.html" class="channel-tab"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4" fill="#FF0000"/><polygon points="10,9 16,12 10,15" fill="#FFF"/></svg><span>YouTube</span></a>
+        <a href="/tiktok-downloader.html" class="channel-tab"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" fill="#0D1321"/><path d="M14 6v8.5a2.5 2.5 0 11-2-2.45V9.5a5 5 0 104 4.9V9.8c1.1.8 2.3 1.2 3.5 1.2V8.2c-1.8-.2-3.2-1.3-3.5-2.2H14z" fill="#00D4FF"/></svg><span>TikTok</span></a>
+        <a href="/instagram-downloader.html" class="channel-tab"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="#E1306C"/><circle cx="12" cy="12" r="4" fill="none" stroke="#FFF" stroke-width="2"/></svg><span>Instagram</span></a>
+        <a href="/reddit-downloader.html" class="channel-tab"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#FF4500"/><circle cx="9.5" cy="11.5" r="1.3" fill="#FFF"/><circle cx="14.5" cy="11.5" r="1.3" fill="#FFF"/></svg><span>Reddit</span></a>
+        <a href="/twitter-downloader.html" class="channel-tab"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" fill="#0D1321"/><path d="M7 7l10 10M17 7L7 17" stroke="#FFF" stroke-width="2" stroke-linecap="round"/></svg><span>X / Twitter</span></a>
+        <a href="/soundcloud-downloader.html" class="channel-tab"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="5" fill="#FF5500"/><path d="M7 15v-3M10 15V9M13 15V8M16 15v-4" stroke="#FFF" stroke-width="2" stroke-linecap="round"/></svg><span>SoundCloud</span></a>
+        <a href="/twitch-downloader.html" class="channel-tab"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4" fill="#9146FF"/><path d="M10 9v4M14 9v4" stroke="#FFF" stroke-width="2" stroke-linecap="round"/></svg><span>Twitch</span></a>
+        <a href="/facebook-downloader.html" class="channel-tab"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#1877F2"/><path d="M13.5 18v-5h1.8l.3-2h-2.1v-1.2c0-.6.3-.8 1-.8h1.1V7.2h-1.8c-1.8 0-2.6 1-2.6 2.6V11H9.5v2h1.7v5h2.3z" fill="#FFF"/></svg><span>Facebook</span></a>
+        <a href="/pinterest-downloader.html" class="channel-tab active"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#E60023"/><path d="M10.2 17.5l1.1-4.5c.3.5 1 .8 1.8.8 2 0 3.4-1.8 3.4-4 0-2.2-1.7-3.8-4.2-3.8-2.8 0-4.6 1.8-4.6 4.1 0 1 .4 1.9 1.1 2.4" stroke="#FFF" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg><span>Pinterest</span></a>
       </div>
 
       <div class="hero-header-band">
+        <div class="hero-eyebrow-pill">
+          <span class="hero-eyebrow-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+          <span>Pinterest Studio · Idea Pins &amp; Reference Loops</span>
+        </div>
         <h1 class="hero-title">Pinterest Video &amp; <span style="color:var(--platform-accent);">Idea Pin Saver</span></h1>
         <p class="hero-subtitle">Save Pinterest tutorials, mood-board reels, and Idea Pin videos directly in clean HD MP4.</p>
       </div>
 
       <div class="omnibox-shell">
+        <div class="omnibox-scan-line" aria-hidden="true"></div>
         <div class="omnibox-row">
           <div class="omnibox-input-well">
             <span id="udl-source-badge" class="omnibox-source-badge tabular" style="color:var(--platform-accent);">PN</span>
@@ -134,15 +144,16 @@
           </div>
           <button id="btn-analyze" class="btn-primary omnibox-submit-btn" type="button" onclick="handleAnalyze()">
             <span id="btn-spinner" class="hidden" aria-hidden="true"><svg class="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-opacity="0.25" stroke-width="3"/><path d="M21 12a9 9 0 00-9-9" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></span>
-            <span id="btn-text">Get Formats</span>
+            <span id="btn-text">Download</span>
+            <svg class="btn-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
           </button>
         </div>
 
-        <div style="margin-top:12px; display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+        <div class="omnibox-sub-bar" style="margin-top:12px; display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
           <button type="button" class="pill-btn" style="background:var(--bg-cyan-tint); border-color:var(--border-cyan-tint); color:var(--brand-cyan-text);" onclick="setSample('https://www.pinterest.com/pin/100000000000000000/')">
             Try Sample Pin &rarr;
           </button>
-          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <div class="omnibox-sub-badges" style="display:flex; gap:8px; flex-wrap:wrap;">
             <span class="tech-badge tech-badge-cyan">1080p HD MP4</span>
             <span class="tech-badge">Idea Pins Ready</span>
           </div>
@@ -155,7 +166,10 @@
       </div>
 
       <div id="loading-skeleton" class="loading-skeleton-card hidden" aria-hidden="true">
-        <div class="skeleton-box" style="aspect-ratio:16/9;"></div>
+        <div class="skeleton-box skeleton-radar-box" style="aspect-ratio:16/9;">
+          <span class="skeleton-radar-ring"></span>
+          <span>Scanning streams...</span>
+        </div>
         <div style="display:flex; flex-direction:column; gap:12px;">
           <div class="skeleton-box" style="height:18px; width:45%;"></div>
           <div class="skeleton-box" style="height:26px; width:82%;"></div>
@@ -182,6 +196,11 @@
 
   <section class="section-block" style="padding-top:10px;">
     <div class="studio-shell">
+      <div class="proof-grid" style="margin-bottom:28px;">
+        <div class="proof-card spotlight-card" data-reveal style="--reveal-delay:0ms;"><div class="platform-emblem-row"><div class="platform-emblem-box" style="color:var(--brand-cyan-text);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path stroke-linecap="round" d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg></div><span class="tech-badge tech-badge-cyan">Step 1</span></div><h3 style="font-size:1.0625rem; margin:10px 0 6px;">Copy Pin or Idea URL</h3><p style="font-size:0.875rem;">Supports full pinterest.com/pin links and short pin.it mobile share links.</p></div>
+        <div class="proof-card spotlight-card" data-reveal style="--reveal-delay:55ms;"><div class="platform-emblem-row"><div class="platform-emblem-box" style="color:var(--brand-amber-text);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 22 12 12 22 2 12"/></svg></div><span class="tech-badge tech-badge-amber">Step 2</span></div><h3 style="font-size:1.0625rem; margin:10px 0 6px;">Extract clean MP4</h3><p style="font-size:0.875rem;">Keep reference videos and DIY tutorials sharp for offline mood boards.</p></div>
+        <div class="proof-card spotlight-card" data-reveal style="--reveal-delay:110ms;"><div class="platform-emblem-row"><div class="platform-emblem-box" style="color:var(--status-ready);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg></div><span class="tech-badge tech-badge-green">Step 3</span></div><h3 style="font-size:1.0625rem; margin:10px 0 6px;">Save in seconds</h3><p style="font-size:0.875rem;">Download cleanly without account walls or third-party extensions.</p></div>
+      </div>
       <div class="faq-list">
         <details class="faq-item" open><summary>Does UnimaxDL save multi-page Idea Pins as MP4?</summary><p>Yes. Paste any public Pinterest video pin or Idea Pin URL to extract a crisp downloadable MP4 copy.</p></details>
       </div>
@@ -200,8 +219,8 @@
 
 <script>window.udlPreferredTab = 'video';</script>
 <script src="/assets/js/analytics.js?v=3.1"></script>
-<script defer src="/assets/js/downloader.js?v=5.0"></script>
-<script defer src="/assets/js/nav.js?v=5.0"></script>
+<script defer src="/assets/js/downloader.js?v=5.2"></script>
+<script defer src="/assets/js/nav.js?v=5.2"></script>
 <script>
   window.addEventListener('load', function() {
     setTimeout(function() {

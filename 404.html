@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com" rel="preconnect"/>
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet"/>
-  <link href="/assets/css/style.css?v=5.0" rel="stylesheet"/>
+  <link href="/assets/css/style.css?v=5.2" rel="stylesheet"/>
   <link href="/assets/images/icon2-192.png" rel="icon" sizes="192x192" type="image/png"/>
   <link href="/assets/images/favicon.ico" rel="icon" type="image/x-icon"/>
 </head>
@@ -37,28 +37,47 @@
   </div>
 </header>
 
-<main class="section-block">
+<main class="section-block hero-section">
+  <div class="hero-prism-bg" aria-hidden="true">
+    <div class="hero-grid-layer"></div>
+    <div class="hero-aurora hero-aurora-cyan"></div>
+    <div class="hero-aurora hero-aurora-amber"></div>
+  </div>
   <div class="studio-shell">
-    <div class="doc-article" style="text-align:center; padding:48px 24px;">
+    <div class="doc-article spotlight-card" style="text-align:center; padding:44px 24px;">
+      <div class="offair-oscilloscope" aria-hidden="true">
+        <svg viewBox="0 0 316 86" width="100%" fill="none">
+          <line x1="0" y1="43" x2="316" y2="43" stroke="#1E293B" stroke-width="1"/>
+          <path d="M4 43 H76 L92 18 L108 68 L124 26 L138 56 L152 43 H196 L208 22 L222 64 L236 43 H312" stroke="url(#offair-grad)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="pipeline-flow-path"/>
+          <text x="14" y="16" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="#FBBF24">SIGNAL: OFF-AIR</text>
+          <text x="302" y="16" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="#22D3EE">ERR 404</text>
+          <defs>
+            <linearGradient id="offair-grad" x1="4" y1="43" x2="312" y2="43" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#00D4FF"/>
+              <stop offset="1" stop-color="#FFB800"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
       <span class="tech-badge tech-badge-amber">404 &middot; Page Not Found</span>
       <h1 style="font-size:clamp(2rem, 5vw, 3.2rem); margin:14px 0 10px;">This link went off-air.</h1>
       <p style="max-width:440px; margin:0 auto 24px;">The page you requested could not be found. Return to the main video downloader or pick a platform below.</p>
       <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:24px;">
-        <a href="/" class="btn-primary">Back to Downloader</a>
+        <a href="/" class="btn-primary">Back to Downloader <span class="btn-arrow">&rarr;</span></a>
         <a href="/download.html" class="btn-secondary">4K App &amp; APK</a>
       </div>
       <div class="platform-pill-strip" style="margin-bottom:0;">
-        <a href="/youtube-downloader.html" class="channel-tab">YouTube</a>
-        <a href="/tiktok-downloader.html" class="channel-tab">TikTok</a>
-        <a href="/instagram-downloader.html" class="channel-tab">Instagram</a>
-        <a href="/reddit-downloader.html" class="channel-tab">Reddit</a>
-        <a href="/soundcloud-downloader.html" class="channel-tab">SoundCloud</a>
+        <a href="/youtube-downloader.html" class="channel-tab"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4" fill="#FF0000"/><polygon points="10,9 16,12 10,15" fill="#FFF"/></svg><span>YouTube</span></a>
+        <a href="/tiktok-downloader.html" class="channel-tab"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" fill="#0D1321"/><path d="M14 6v8.5a2.5 2.5 0 11-2-2.45V9.5a5 5 0 104 4.9V9.8c1.1.8 2.3 1.2 3.5 1.2V8.2c-1.8-.2-3.2-1.3-3.5-2.2H14z" fill="#00D4FF"/></svg><span>TikTok</span></a>
+        <a href="/instagram-downloader.html" class="channel-tab"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="#E1306C"/><circle cx="12" cy="12" r="4" fill="none" stroke="#FFF" stroke-width="2"/></svg><span>Instagram</span></a>
+        <a href="/reddit-downloader.html" class="channel-tab"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#FF4500"/><circle cx="9.5" cy="11.5" r="1.3" fill="#FFF"/><circle cx="14.5" cy="11.5" r="1.3" fill="#FFF"/></svg><span>Reddit</span></a>
+        <a href="/soundcloud-downloader.html" class="channel-tab"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="5" fill="#FF5500"/><path d="M7 15v-3M10 15V9M13 15V8M16 15v-4" stroke="#FFF" stroke-width="2" stroke-linecap="round"/></svg><span>SoundCloud</span></a>
       </div>
     </div>
   </div>
 </main>
 
 <script src="/assets/js/analytics.js?v=3.1"></script>
-<script defer src="/assets/js/nav.js?v=5.0"></script>
+<script defer src="/assets/js/nav.js?v=5.2"></script>
 </body>
 </html>
